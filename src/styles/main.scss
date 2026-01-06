@@ -18,7 +18,7 @@ body {
   justify-content: flex-end;
   width: 100%;
   min-height: 100%;
-  padding: 5vw;
+  padding: 2vw;
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
 
@@ -81,7 +81,7 @@ body {
   @include media-horizontal {
     width: 50%;
     overflow: auto;
-    height: 80vh;
+    height: 92vh;
     justify-content: flex-start;
   }
 }
@@ -111,7 +111,7 @@ li {
   cursor: pointer;
 
   &:hover {
-    background-color: #b2b2b2;
+    background-color: #dadada;
   }
 }
 

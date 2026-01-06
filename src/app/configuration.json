@@ -8,39 +8,79 @@
       "fontListColor": "#f1f1f1",
       "toDos": [
         {
-          "name": "Prysznic",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Kolacja",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Piżama",
-          "color": "#f1f1f1"
-        },
-        {
           "name": "Ubrania na jutro",
-          "color": "#f1f1f1"
+          "color": "#afa"
         },
         {
           "name": "Spakować plecak",
-          "color": "#f1f1f1"
+          "color": "#afa"
+        },
+        {
+          "name": "Prysznic Asia",
+          "color": "#faa"
+        },
+        {
+          "name": "Piżama",
+          "color": "#faa"
+        },
+        {
+          "name": "Kolacja",
+          "color": "#faa"
         },
         {
           "name": "Wziewy",
-          "color": "#f1f1f1"
+          "color": "#faa"
+        },
+        {
+          "name": "Umyć zęby",
+          "color": "#faa"
+        },
+        {
+          "name": "Termofor",
+          "color": "#faa"
         },
         {
           "name": "Inhalacja",
-          "color": "#f1f1f1"
+          "color": "#faa"
+        },
+        {
+          "name": "Siku",
+          "color": "#faa"
         },
         {
           "name": "Martin lek",
+          "color": "#aaf"
+        },
+        {
+          "name": "Kuwety",
+          "color": "#aaf"
+        },
+        {
+          "name": "Kocia kolacja 1",
+          "color": "#aaf"
+        },
+        {
+          "name": "Kocia kolacja 2",
+          "color": "#aaf"
+        },
+        {
+          "name": "Uzupełnić nawilżacz",
           "color": "#f1f1f1"
         },
         {
-          "name": "Kocia kolacja",
+          "name": "Pranie",
+          "color": "#f1f1f1"
+        },
+        {
+          "name": "Zmywarka",
+          "color": "#f1f1f1"
+        },
+        {
+          "name": "Prysznic Daria",
+          "color": "#f1f1f1"
+        },
+        {
+          "name": "Prysznic Jakub",
           "color": "#f1f1f1"
         }
       ]
