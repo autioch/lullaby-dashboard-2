@@ -1,0 +1,49 @@
+---
+import "../styles/main.scss";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/8ddc60c8d8.js"
+      crossorigin="anonymous"></script>
+    <title>Lullaby dashboard</title>
+  </head>
+  <body>
+    <article class="container">
+      <section class="list">
+        <!--      <input type="text" class="list-input" placeholder="Add new task">-->
+        <!--      <button class="button__add-task" disabled>Add task</button>-->
+        <div class="list-name"></div>
+        <ul class="list-elements"></ul>
+      </section>
+      <div>
+        <figure>
+          <iframe
+            class="video"
+            src=""
+            title="YouTube video player"
+            frameborder="0"
+            allow="autoplay"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+          <!-- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" -->
+        </figure>
+        <section class="clock">Time</section>
+        <section class="select">
+          <select class="select-list" name="lists"></select>
+        </section>
+      </div>
+    </article>
+    <script src="../app/app.js"></script>
+  </body>
+</html>
