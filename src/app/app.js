@@ -2,13 +2,9 @@ import logError from './logError';
 import { loadList, loadVideo, select } from "./utils";
 import { showTime } from "./clock";
 import configuration from './configuration.json';
-
 const selectList = document.querySelector('.select-list');
 
 window.addEventListener("DOMContentLoaded", startApp)
-
-
-
 
 function startApp() {
 

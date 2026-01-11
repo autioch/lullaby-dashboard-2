@@ -8,14 +8,6 @@
       "fontListColor": "#f1f1f1",
       "toDos": [
         {
-          "name": "Ubrania na jutro",
-          "color": "#afa"
-        },
-        {
-          "name": "Spakować plecak",
-          "color": "#afa"
-        },
-        {
           "name": "Prysznic Asia",
           "color": "#faa"
         },
@@ -46,6 +38,28 @@
         {
           "name": "Siku",
           "color": "#faa"
+        },
+        {
+          "name": "Krem na suchą skórę",
+          "color": "#faa"
+        },
+        {
+          "name": "Aparat na zęby",
+          "color": "#faa"
+        }
+      ],
+      "toDos2": [
+        {
+          "name": "Ubrania na jutro",
+          "color": "#afa"
+        },
+        {
+          "name": "Spakować plecak",
+          "color": "#afa"
+        },
+        {
+          "name": "Umyć śniadaniówkę",
+          "color": "#afa"
         },
         {
           "name": "Martin lek",
