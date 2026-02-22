@@ -22,7 +22,10 @@ export function select(data) {
 }
 
 export function loadList(list) {
+  video.setAttribute("src", list.embeddedYoutubeVideo + '&autoplay=1')
   const listContainer = document.querySelector('.list-container');
+
+  listContainer.textContent = '';
 
   //List background
   container.style.backgroundColor = list.backgroundListColor;

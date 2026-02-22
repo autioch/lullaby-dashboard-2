@@ -6,6 +6,7 @@
       "listId": "1",
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
+      "embeddedYoutubeVideo": "https://www.youtube.com/embed/4khIPP--FDU?si=qD839KUx_a98e2mR&controls=0",
       "toDos": [
         {
           "name": "Prysznic Asia",
@@ -13,6 +14,10 @@
         },
         {
           "name": "Piżama",
+          "color": "#faa"
+        },
+        {
+          "name": "Termofor",
           "color": "#faa"
         },
         {
@@ -24,23 +29,19 @@
           "color": "#faa"
         },
         {
-          "name": "Umyć zęby",
-          "color": "#faa"
-        },
-        {
-          "name": "Termofor",
-          "color": "#faa"
-        },
-        {
           "name": "Inhalacja",
           "color": "#faa"
         },
         {
-          "name": "Siku",
+          "name": "Krem na suchą skórę",
           "color": "#faa"
         },
         {
-          "name": "Krem na suchą skórę",
+          "name": "Umyć zęby",
+          "color": "#faa"
+        },
+        {
+          "name": "Siku",
           "color": "#faa"
         },
         {
@@ -100,73 +101,99 @@
       ]
     },
     {
-      "label": "Wyjazd",
+      "label": "Przed wyjazdem",
       "listId": "2",
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
+      "embeddedYoutubeVideo": "https://youtu.be/xKCWzccZRys?si=3miF670mqms4N8Ht",
       "toDos": [
         {
-          "name": "Wózek",
+          "name": "Papier toaletowy",
+          "color": "#faa"
+        },
+        {
+          "name": "Ręczniki papierowe",
+          "color": "#faa"
+        },
+        {
+          "name": "Wyrzucić śmieci",
+          "color": "#faa"
+        },
+        {
+          "name": "Posprzątać",
           "color": "#f1f1f1"
         },
         {
-          "name": "Kapcie",
+          "name": "Odkurzyć",
           "color": "#f1f1f1"
         },
         {
-          "name": "Klucze dla Ani",
+          "name": "Zmywarka",
           "color": "#f1f1f1"
         },
         {
-          "name": "Ubrania do spania i na zmianę",
+          "name": "Ręczniki i ścierki",
           "color": "#f1f1f1"
         },
         {
-          "name": "Kosmetyki do mycia",
-          "color": "#f1f1f1"
+          "name": "Naładować urządzenia",
+          "color": "#afa"
         },
         {
-          "name": "Kosmetyki do makijażu",
-          "color": "#f1f1f1"
+          "name": "Spakować prowiant",
+          "color": "#afa"
+        }
+      ],
+      "toDos2": [
+        {
+          "name": "Dosypać żwirku",
+          "color": "#aaf"
         },
         {
-          "name": "Pieluchy",
-          "color": "#f1f1f1"
+          "name": "Obciąć pazury",
+          "color": "#aaf"
         },
         {
-          "name": "1 słoiczek jedzenia",
-          "color": "#f1f1f1"
+          "name": "Sprzątnąć kuwety",
+          "color": "#aaf"
         },
         {
-          "name": "Chusteczki",
-          "color": "#f1f1f1"
+          "name": "Woda do miski",
+          "color": "#aaf"
         },
         {
-          "name": "Podkłady",
-          "color": "#f1f1f1"
+          "name": "Tosia i Rambo do kuwety",
+          "color": "#aaf"
         },
         {
-          "name": "Maść na oparzenia",
-          "color": "#f1f1f1"
+          "name": "Wyciągnąć leki",
+          "color": "#aaf"
         },
         {
-          "name": "Zabawka do kąpieli",
-          "color": "#f1f1f1"
+          "name": "Wyciągnąć miski",
+          "color": "#aaf"
         },
         {
-          "name": "Instrukcja do kotów",
-          "color": "#f1f1f1"
+          "name": "Instrukcja",
+          "color": "#aaf"
         },
         {
-          "name": "Kocie wędki",
-          "color": "#f1f1f1"
+          "name": "Zabawki pod kanapę",
+          "color": "#aaf"
         },
         {
-          "name": "Chrupki i puszki dla kotów",
-          "color": "#f1f1f1"
+          "name": "Wędki na lodówkę",
+          "color": "#aaf"
+        },
+        {
+          "name": "Podkłady i koce zapasowe",
+          "color": "#aaf"
+        },
+        {
+          "name": "Chrupki i puszki",
+          "color": "#aaf"
         }
       ]
     }
-  ],
-  "embeddedYoutubeVideo": "https://www.youtube.com/embed/4khIPP--FDU?si=qD839KUx_a98e2mR&controls=0"
+  ]
 }

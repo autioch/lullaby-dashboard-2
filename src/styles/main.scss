@@ -71,6 +71,7 @@ body {
 .list-container {
   @include media-horizontal {
     display: flex;
+    flex: 1 1 auto;
   }
 }
 
