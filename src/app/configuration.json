@@ -105,6 +105,89 @@
       ]
     },
     {
+      "label": "Rano",
+      "listId": "2",
+      "backgroundListColor": "#212121",
+      "fontListColor": "#f1f1f1",
+      "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
+      "toDos": [
+        {
+          "name": "Ubranie",
+          "color": "#faa"
+        },
+        {
+          "name": "Siku",
+          "color": "#faa"
+        },
+        {
+          "name": "Śniadanie",
+          "color": "#faa"
+        },
+        {
+          "name": "Umyć zęby",
+          "color": "#faa"
+        },
+        {
+          "name": "Wziewy",
+          "color": "#faa"
+        },
+        {
+          "name": "Inhalacja",
+          "color": "#faa"
+        },
+        {
+          "name": "Krem na suchą skórę",
+          "color": "#faa"
+        }
+      ],
+      "toDos2": [
+        {
+          "name": "Kupić pieczywo",
+          "color": "#afa"
+        },
+        {
+          "name": "Przygotować śniadaniówkę",
+          "color": "#afa"
+        },
+        {
+          "name": "Spakować plecak",
+          "color": "#afa"
+        },
+        {
+          "name": "Spakować torbę na basen i w/f",
+          "color": "#afa"
+        },
+        {
+          "name": "Martin lek",
+          "color": "#aaf"
+        },
+        {
+          "name": "Tosia lek",
+          "color": "#aaf"
+        },
+        {
+          "name": "Kuwety",
+          "color": "#aaf"
+        },
+        {
+          "name": "Kocie śniadanie",
+          "color": "#aaf"
+        },
+        {
+          "name": "Uzupełnić nawilżacz",
+          "color": "#f1f1f1"
+        },
+        {
+          "name": "Pranie",
+          "color": "#f1f1f1"
+        },
+        {
+          "name": "Zmywarka",
+          "color": "#f1f1f1"
+        }
+      ]
+    },
+    {
       "label": "Przed wyjazdem",
       "listId": "3",
       "backgroundListColor": "#212121",

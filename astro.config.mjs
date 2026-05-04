@@ -5,7 +5,8 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://autioch.github.io/lullaby-dashboard-2',
+  site: 'https://autioch.github.io/lullaby-dashboard-2/',
+  base: 'lullaby-dashboard-2',
   integrations: [react()],
   outDir: './docs'
 });
