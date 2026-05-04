@@ -1,10 +1,4 @@
-function logError(message) {
-  const el = document.createElement('div');
-  el.textContent = message;
-  el.className = 'error';
-
-  document.body.insertBefore(el, document.body.firstChild)
-}
+function logError() { }
 
 window.onerror = logError;
 
