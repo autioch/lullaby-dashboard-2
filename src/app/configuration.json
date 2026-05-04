@@ -37,6 +37,10 @@
           "color": "#faa"
         },
         {
+          "name": "Syropy",
+          "color": "#faa"
+        },
+        {
           "name": "Umyć zęby",
           "color": "#faa"
         },
@@ -102,7 +106,7 @@
     },
     {
       "label": "Przed wyjazdem",
-      "listId": "2",
+      "listId": "3",
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
       "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
@@ -194,6 +198,15 @@
           "color": "#aaf"
         }
       ]
+    },
+    {
+      "label": "Sprzątanie",
+      "listId": "4",
+      "backgroundListColor": "#212121",
+      "fontListColor": "#f1f1f1",
+      "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
+      "toDos": [],
+      "toDos2": []
     }
   ]
 }
