@@ -3,12 +3,10 @@ const video = document.querySelector('.video');
 const selectList = document.querySelector('.select-list');
 
 
-//Load youtube video
 export function loadVideo(data) {
   video.setAttribute("src", data.embeddedYoutubeVideo + '&autoplay=1')
 }
 
-//Load lists' options
 
 export function select(data) {
   data.savedLists.forEach((list, idx) => {

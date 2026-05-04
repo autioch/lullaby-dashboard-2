@@ -12,7 +12,6 @@ function updateTime() {
   clock.innerText = hours + ':' + minutes;
 }
 
-//Set time
 export function showTime() {
   updateTime();
   setInterval(updateTime, 1000);
