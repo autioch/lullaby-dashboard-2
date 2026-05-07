@@ -138,6 +138,10 @@
         {
           "name": "Krem na suchą skórę",
           "color": "#faa"
+        },
+        {
+          "name": "Spakować plecak",
+          "color": "#faa"
         }
       ],
       "toDos2": [
@@ -146,11 +150,11 @@
           "color": "#afa"
         },
         {
-          "name": "Przygotować śniadaniówkę",
+          "name": "Lista zakupów",
           "color": "#afa"
         },
         {
-          "name": "Spakować plecak",
+          "name": "Przygotować śniadaniówkę",
           "color": "#afa"
         },
         {
