@@ -1,4 +1,9 @@
-export default function TodoList({ list, checkedKeys, onToggle }) {
+import { useDashboardStore } from '../stores/useDashboardStore.js';
+
+export default function TodoList({ list }) {
+  const checkedKeys = useDashboardStore((state) => state.checkedKeys);
+  const toggleItem = useDashboardStore((state) => state.toggleItem);
+
   const renderList = (items, groupKey) => {
     if (!items?.length) return null;
 
@@ -15,7 +20,7 @@ export default function TodoList({ list, checkedKeys, onToggle }) {
                 checked ? 'line-through checked' : ''
               }`}
               style={{ color: item.color }}
-              onClick={() => onToggle(key)}
+              onClick={() => toggleItem(key)}
             >
               <span className="text-[18px] py-[1vw] px-[0.5vw] font-normal md:text-[22px]">{item.name}</span>
             </li>

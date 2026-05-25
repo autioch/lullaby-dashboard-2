@@ -1,31 +1,17 @@
-import { useState } from 'react';
 import Clock from './Clock.jsx';
 import VideoEmbed from './VideoEmbed.jsx';
 import TodoList from './TodoList.jsx';
 import ListSelector from './ListSelector.jsx';
-import configuration from '../data/configuration.json';
-
-const lists = configuration.savedLists ?? [];
+import { useDashboardStore } from '../stores/useDashboardStore.js';
 
 export default function App() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [checkedKeys, setCheckedKeys] = useState({});
+  const selectedIndex = useDashboardStore((state) => state.selectedIndex);
+  const lists = useDashboardStore((state) => state.lists);
 
   const selectedList = lists[selectedIndex] ?? null;
   const backgroundStyle = selectedList?.backgroundListColor
     ? { backgroundColor: selectedList.backgroundListColor }
     : undefined;
-
-  function handleToggle(key) {
-    setCheckedKeys((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  }
-
-  function handleSelectIndex(index) {
-    setSelectedIndex(index);
-  }
 
   return (
     <article
@@ -34,7 +20,7 @@ export default function App() {
     >
       <section className="md:flex md:flex-1">
         {selectedList ? (
-          <TodoList list={selectedList} checkedKeys={checkedKeys} onToggle={handleToggle} />
+          <TodoList list={selectedList} />
         ) : (
           <div className="text-[#f1f1f1] bg-[#212121]">No list selected</div>
         )}
@@ -50,7 +36,7 @@ export default function App() {
         </section>
 
         <section className="flex flex-col justify-center items-center mb-[3vh]">
-          <ListSelector lists={lists} selectedIndex={selectedIndex} onChange={handleSelectIndex} />
+          <ListSelector />
         </section>
       </div>
     </article>
