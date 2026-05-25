@@ -13,27 +13,25 @@ export default function TodoList({ list }: TodoListProps) {
     if (!items?.length) return null;
 
     return (
-      <ul className="flex flex-col justify-center w-[80%] text-[26px] font-bold pl-[4vw] md:w-[50%] md:overflow-auto md:h-[92vh] md:justify-start">
-        {items.map((item, index) => {
-          const key = `${list.listId}-${groupKey}-${index}`;
-          const checked = Boolean(checkedKeys[key]);
+      <div className="todo-list">
+        <ul className="todo-list__group">
+          {items.map((item, index) => {
+            const key = `${list.listId}-${groupKey}-${index}`;
+            const checked = Boolean(checkedKeys[key]);
 
-          return (
-            <li
-              key={key}
-              className={`flex justify-between pr-[1vw] relative cursor-pointer hover:bg-[#dadada] ${
-                checked ? "line-through checked" : ""
-              }`}
-              style={{ color: item.color }}
-              onClick={() => toggleItem(key)}
-            >
-              <span className="text-[18px] py-[0.75vw] px-[0.5vw] font-normal md:text-[22px]">
-                {item.name}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+            return (
+              <li
+                key={key}
+                className={`todo-list__item${checked ? " todo-list__item--checked" : ""}`}
+                style={{ color: item.color }}
+                onClick={() => toggleItem(key)}
+              >
+                <span className="todo-list__item-text">{item.name}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   };
 

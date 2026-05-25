@@ -22,28 +22,25 @@ export default function App() {
 
   return (
     <>
-      <article
-        className="flex flex-col-reverse items-center justify-end w-full min-h-screen p-[2vw] text-white font-['Roboto',sans-serif] md:flex-row md:items-start md:justify-between"
-        style={backgroundStyle}
-      >
-        <section className="md:flex md:flex-1">
+      <article className="app" style={backgroundStyle}>
+        <section className="app__content">
           {selectedList ? (
             <TodoList list={selectedList} />
           ) : (
-            <div className="text-[#f1f1f1] bg-[#212121]">No list selected</div>
+            <div className="app__no-list">No list selected</div>
           )}
         </section>
 
-        <div className="flex flex-col items-center md:w-[40%] md:pl-[2vw] md:h-[50vh]">
-          <figure className="relative w-full pb-[56.25%]">
+        <div className="app__sidebar">
+          <figure className="app__video">
             <VideoEmbed videoUrl={selectedList?.embeddedYoutubeVideo} />
           </figure>
 
-          <section className="p-[5vw] font-bold text-[15vw] md:text-[10vw]">
+          <section className="app__clock">
             <Clock />
           </section>
 
-          <section className="flex flex-col justify-center items-center mb-[3vh]">
+          <section className="app__selector">
             <ListSelector />
           </section>
         </div>

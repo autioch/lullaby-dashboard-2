@@ -82,28 +82,24 @@ export default function DebugOverlay() {
       <button
         type="button"
         onClick={() => setDebugOpen((open) => !open)}
-        className="fixed left-4 bottom-4 z-50 rounded border border-white/20 bg-black/80 px-4 py-2 text-sm font-bold text-white backdrop-blur transition hover:bg-white/10"
-        style={{ minWidth: 88 }}
+        className="debug-overlay__button"
       >
         Debug
       </button>
 
       {debugOpen && (
-        <div
-          className="fixed left-4 bottom-20 z-50 max-h-[45vh] w-[calc(100vw-2rem)] overflow-auto rounded border border-white/20 bg-black/90 p-4 text-[12px] text-white shadow-lg md:w-140"
-          style={{ backdropFilter: "blur(12px)" }}
-        >
-          <div className="mb-3 flex items-center justify-between gap-2">
-            <strong className="text-sm">Debug info</strong>
+        <div className="debug-overlay__panel">
+          <div className="debug-overlay__header">
+            <strong>Debug info</strong>
             <button
               type="button"
               onClick={() => setDebugOpen(false)}
-              className="rounded bg-white/10 px-2 py-1 text-xs text-white hover:bg-white/20"
+              className="debug-overlay__close"
             >
               Close
             </button>
           </div>
-          <pre className="whitespace-pre-wrap wrap-break-word font-mono text-[11px] leading-snug">
+          <pre className="debug-overlay__content">
             {debugInfo
               ? `URL: ${debugInfo.url}\n` +
                 `Pathname: ${debugInfo.pathname}\n` +

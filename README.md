@@ -17,4 +17,4 @@ In the browser: http://localhost:4322/lullaby-dashboard-2
 
 - Astro
 - React
-- Tailwind
+- Zustand

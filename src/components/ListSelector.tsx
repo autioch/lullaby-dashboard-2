@@ -1,5 +1,5 @@
-import type { ChangeEvent } from 'react';
-import { useDashboardStore } from '../stores/useDashboardStore';
+import type { ChangeEvent } from "react";
+import { useDashboardStore } from "../stores/useDashboardStore";
 
 export default function ListSelector() {
   const lists = useDashboardStore((state) => state.lists);
@@ -11,16 +11,18 @@ export default function ListSelector() {
   };
 
   return (
-    <select
-      className="m-[0.5vw] text-[16px] px-[10px] py-[5px] rounded cursor-pointer bg-transparent border border-white/20 hover:bg-[#b2b2b2]"
-      value={selectedIndex}
-      onChange={handleChange}
-    >
-      {lists.map((list, index) => (
-        <option key={list.listId ?? index} value={index}>
-          {list.label}
-        </option>
-      ))}
-    </select>
+    <div className="list-selector">
+      <select
+        className="list-selector__select"
+        value={selectedIndex}
+        onChange={handleChange}
+      >
+        {lists.map((list, index) => (
+          <option key={list.listId ?? index} value={index}>
+            {list.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
