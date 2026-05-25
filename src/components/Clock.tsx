@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function formatPart(num) {
+function formatPart(num: number) {
   return num.toString().padStart(2, '0');
 }
 
@@ -10,7 +10,7 @@ function getCurrentTime() {
 }
 
 export default function Clock() {
-  const [time, setTime] = useState(getCurrentTime());
+  const [time, setTime] = useState<string>(getCurrentTime());
 
   useEffect(() => {
     const intervalId = setInterval(() => {

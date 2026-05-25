@@ -1,10 +1,15 @@
-import { useDashboardStore } from '../stores/useDashboardStore.js';
+import { useDashboardStore } from "../stores/useDashboardStore";
+import type { SavedList, ToDoItem } from "../stores/useDashboardStore";
 
-export default function TodoList({ list }) {
+type TodoListProps = {
+  list: SavedList;
+};
+
+export default function TodoList({ list }: TodoListProps) {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);
   const toggleItem = useDashboardStore((state) => state.toggleItem);
 
-  const renderList = (items, groupKey) => {
+  const renderList = (items: ToDoItem[] | undefined, groupKey: string) => {
     if (!items?.length) return null;
 
     return (
@@ -17,12 +22,14 @@ export default function TodoList({ list }) {
             <li
               key={key}
               className={`flex justify-between pr-[1vw] relative cursor-pointer hover:bg-[#dadada] ${
-                checked ? 'line-through checked' : ''
+                checked ? "line-through checked" : ""
               }`}
               style={{ color: item.color }}
               onClick={() => toggleItem(key)}
             >
-              <span className="text-[18px] py-[1vw] px-[0.5vw] font-normal md:text-[22px]">{item.name}</span>
+              <span className="text-[18px] py-[0.75vw] px-[0.5vw] font-normal md:text-[22px]">
+                {item.name}
+              </span>
             </li>
           );
         })}
@@ -32,8 +39,8 @@ export default function TodoList({ list }) {
 
   return (
     <>
-      {renderList(list.toDos, 'main')}
-      {renderList(list.toDos2, 'extra')}
+      {renderList(list.toDos, "main")}
+      {renderList(list.toDos2, "extra")}
     </>
   );
 }

@@ -24,12 +24,13 @@
     transform: rotate(45deg);
     height: 15px;
     width: 7px;
-    left: -5vw;
+    left: -6vw;
+    top: 1.5vw;
   }
 
   @media (min-width: 768px) {
     .checked::before {
-      left: -3vw;
+      left: -2vw;
     }
   }
 }

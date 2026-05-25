@@ -1,4 +1,8 @@
-export default function VideoEmbed({ videoUrl }) {
+type VideoEmbedProps = {
+  videoUrl?: string;
+};
+
+export default function VideoEmbed({ videoUrl }: VideoEmbedProps) {
   const src = videoUrl ? `${videoUrl}&autoplay=1` : '';
 
   return (

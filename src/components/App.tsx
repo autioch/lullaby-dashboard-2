@@ -1,8 +1,8 @@
-import Clock from './Clock.jsx';
-import VideoEmbed from './VideoEmbed.jsx';
-import TodoList from './TodoList.jsx';
-import ListSelector from './ListSelector.jsx';
-import { useDashboardStore } from '../stores/useDashboardStore.js';
+import Clock from './Clock';
+import VideoEmbed from './VideoEmbed';
+import TodoList from './TodoList';
+import ListSelector from './ListSelector';
+import { useDashboardStore } from '../stores/useDashboardStore';
 
 export default function App() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
