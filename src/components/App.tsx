@@ -10,6 +10,7 @@ export default function App() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);
   const hydrateState = useDashboardStore((state) => state.hydrateState);
+  const resetState = useDashboardStore((state) => state.resetState);
 
   useEffect(() => {
     hydrateState();
@@ -42,6 +43,13 @@ export default function App() {
 
           <section className="app__selector">
             <ListSelector />
+            <button
+              type="button"
+              className="mt-4 px-4 py-2 rounded border border-white/20 bg-black/50 text-white hover:bg-white hover:text-black transition"
+              onClick={resetState}
+            >
+              Reset saved state
+            </button>
           </section>
         </div>
       </article>

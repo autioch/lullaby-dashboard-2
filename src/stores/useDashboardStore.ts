@@ -25,6 +25,7 @@ interface DashboardState {
   setSelectedIndex: (selectedIndex: number) => void;
   toggleItem: (key: string) => void;
   hydrateState: () => void;
+  resetState: () => void;
 }
 
 interface PersistedDashboardState {
@@ -134,6 +135,16 @@ const savePersistedState = (
   }
 };
 
+const clearPersistedState = () => {
+  if (!isBrowser) return;
+
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore localStorage errors
+  }
+};
+
 export const useDashboardStore = create<DashboardState>((set) => ({
   lists,
   selectedIndex: 0,
@@ -194,5 +205,13 @@ export const useDashboardStore = create<DashboardState>((set) => ({
       checkedKeys: nextState.checkedKeys,
       listExpiryTimestamps: nextState.listExpiryTimestamps,
     }));
+  },
+  resetState: () => {
+    clearPersistedState();
+    set({
+      selectedIndex: 0,
+      checkedKeys: {},
+      listExpiryTimestamps: {},
+    });
   },
 }));
