@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    position: relative;
+    min-height: 100vh;
+    font-family: "Roboto", sans-serif;
+  }
+
+  @media (orientation: landscape) {
+    body {
+      overflow: hidden;
+    }
+  }
+
+  .checked::before {
+    content: "";
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+    left: -5vw;
+  }
+
+  @media (min-width: 768px) {
+    .checked::before {
+      left: -3vw;
+    }
+  }
+}

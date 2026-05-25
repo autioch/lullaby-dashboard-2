@@ -3,7 +3,7 @@ export default function VideoEmbed({ videoUrl }) {
 
   return (
     <iframe
-      className="video"
+      className="absolute inset-0 w-full h-full border border-[#b2b2b2]"
       src={src}
       title="YouTube video player"
       frameBorder="0"
