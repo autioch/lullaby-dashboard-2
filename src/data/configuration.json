@@ -7,6 +7,7 @@
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
       "embeddedYoutubeVideo": "https://www.youtube.com/embed/4khIPP--FDU?si=qD839KUx_a98e2mR&controls=0",
+      "retentionHours": 8,
       "toDos": [
         {
           "name": "Prysznic Asia",
@@ -110,6 +111,7 @@
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
       "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
+      "retentionHours": 8,
       "toDos": [
         {
           "name": "Ubranie",
@@ -201,6 +203,7 @@
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
       "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
+      "retentionHours": 72,
       "toDos": [
         {
           "name": "Papier toaletowy",
@@ -296,6 +299,7 @@
       "backgroundListColor": "#212121",
       "fontListColor": "#f1f1f1",
       "embeddedYoutubeVideo": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
+      "retentionHours": 24,
       "toDos": [],
       "toDos2": []
     }
