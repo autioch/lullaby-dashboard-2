@@ -1,5 +1,6 @@
 ---
 import "../styles/main.scss";
+import App from "../components/App.jsx";
 ---
 
 <html lang="en">
@@ -19,26 +20,6 @@ import "../styles/main.scss";
     <title>Lullaby dashboard</title>
   </head>
   <body>
-    <article class="container">
-      <section class="list-container"></section>
-      <div>
-        <figure>
-          <iframe
-            class="video"
-            src=""
-            title="YouTube video player"
-            frameborder="0"
-            allow="autoplay"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
-          <!-- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" -->
-        </figure>
-        <section class="clock">Time</section>
-        <section class="select">
-          <select class="select-list" name="lists"></select>
-        </section>
-      </div>
-    </article>
-    <script src="../app/app.js"></script>
+    <App client:load />
   </body>
 </html>
