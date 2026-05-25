@@ -3,7 +3,7 @@ import Clock from './Clock.jsx';
 import VideoEmbed from './VideoEmbed.jsx';
 import TodoList from './TodoList.jsx';
 import ListSelector from './ListSelector.jsx';
-import configuration from '../app/configuration.json';
+import configuration from '../data/configuration.json';
 
 const lists = configuration.savedLists ?? [];
 
