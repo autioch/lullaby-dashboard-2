@@ -6,100 +6,131 @@
       "bgColor": "#212121",
       "youtubeUrl": "https://www.youtube.com/embed/4khIPP--FDU?si=qD839KUx_a98e2mR&controls=0",
       "retentionHours": 8,
-      "toDos": [
+      "groups": [
         {
-          "name": "Prysznic Asia",
-          "color": "#faa"
+          "id": "main",
+          "items": [
+            {
+              "id": "1",
+              "name": "Prysznic Asia",
+              "color": "#faa"
+            },
+            {
+              "id": "2",
+              "name": "Piżama",
+              "color": "#faa"
+            },
+            {
+              "id": "3",
+              "name": "Termofor",
+              "color": "#faa"
+            },
+            {
+              "id": "4",
+              "name": "Kolacja",
+              "color": "#faa"
+            },
+            {
+              "id": "5",
+              "name": "Wziewy",
+              "color": "#faa"
+            },
+            {
+              "id": "6",
+              "name": "Inhalacja",
+              "color": "#faa"
+            },
+            {
+              "id": "7",
+              "name": "Krem na suchą skórę",
+              "color": "#faa"
+            },
+            {
+              "id": "8",
+              "name": "Syropy",
+              "color": "#faa"
+            },
+            {
+              "id": "9",
+              "name": "Umyć zęby",
+              "color": "#faa"
+            },
+            {
+              "id": "10",
+              "name": "Siku",
+              "color": "#faa"
+            },
+            {
+              "id": "11",
+              "name": "Aparat na zęby",
+              "color": "#faa"
+            }
+          ]
         },
         {
-          "name": "Piżama",
-          "color": "#faa"
-        },
-        {
-          "name": "Termofor",
-          "color": "#faa"
-        },
-        {
-          "name": "Kolacja",
-          "color": "#faa"
-        },
-        {
-          "name": "Wziewy",
-          "color": "#faa"
-        },
-        {
-          "name": "Inhalacja",
-          "color": "#faa"
-        },
-        {
-          "name": "Krem na suchą skórę",
-          "color": "#faa"
-        },
-        {
-          "name": "Syropy",
-          "color": "#faa"
-        },
-        {
-          "name": "Umyć zęby",
-          "color": "#faa"
-        },
-        {
-          "name": "Siku",
-          "color": "#faa"
-        },
-        {
-          "name": "Aparat na zęby",
-          "color": "#faa"
-        }
-      ],
-      "toDos2": [
-        {
-          "name": "Ubrania na jutro",
-          "color": "#afa"
-        },
-        {
-          "name": "Spakować plecak",
-          "color": "#afa"
-        },
-        {
-          "name": "Umyć śniadaniówkę",
-          "color": "#afa"
-        },
-        {
-          "name": "Martin lek",
-          "color": "#aaf"
-        },
-        {
-          "name": "Kuwety",
-          "color": "#aaf"
-        },
-        {
-          "name": "Kocia kolacja 1",
-          "color": "#aaf"
-        },
-        {
-          "name": "Kocia kolacja 2",
-          "color": "#aaf"
-        },
-        {
-          "name": "Uzupełnić nawilżacz",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Pranie",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Zmywarka",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Prysznic Daria",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Prysznic Jakub",
-          "color": "#f1f1f1"
+          "id": "extra",
+          "items": [
+            {
+              "id": "1",
+              "name": "Ubrania na jutro",
+              "color": "#afa"
+            },
+            {
+              "id": "2",
+              "name": "Spakować plecak",
+              "color": "#afa"
+            },
+            {
+              "id": "3",
+              "name": "Umyć śniadaniówkę",
+              "color": "#afa"
+            },
+            {
+              "id": "4",
+              "name": "Martin lek",
+              "color": "#aaf"
+            },
+            {
+              "id": "5",
+              "name": "Kuwety",
+              "color": "#aaf"
+            },
+            {
+              "id": "6",
+              "name": "Kocia kolacja 1",
+              "color": "#aaf"
+            },
+            {
+              "id": "7",
+              "name": "Kocia kolacja 2",
+              "color": "#aaf"
+            },
+            {
+              "id": "8",
+              "name": "Uzupełnić nawilżacz",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "9",
+              "name": "Pranie",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "10",
+              "name": "Zmywarka",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "11",
+              "name": "Prysznic Daria",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "12",
+              "name": "Prysznic Jakub",
+              "color": "#f1f1f1"
+            }
+          ]
         }
       ]
     },
@@ -109,88 +140,116 @@
       "bgColor": "#212121",
       "youtubeUrl": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
       "retentionHours": 8,
-      "toDos": [
+      "groups": [
         {
-          "name": "Ubranie",
-          "color": "#faa"
+          "id": "main",
+          "items": [
+            {
+              "id": "1",
+              "name": "Ubranie",
+              "color": "#faa"
+            },
+            {
+              "id": "2",
+              "name": "Siku",
+              "color": "#faa"
+            },
+            {
+              "id": "3",
+              "name": "Śniadanie",
+              "color": "#faa"
+            },
+            {
+              "id": "4",
+              "name": "Umyć zęby",
+              "color": "#faa"
+            },
+            {
+              "id": "5",
+              "name": "Wziewy",
+              "color": "#faa"
+            },
+            {
+              "id": "6",
+              "name": "Inhalacja",
+              "color": "#faa"
+            },
+            {
+              "id": "7",
+              "name": "Krem na suchą skórę",
+              "color": "#faa"
+            },
+            {
+              "id": "8",
+              "name": "Spakować plecak",
+              "color": "#faa"
+            }
+          ]
         },
         {
-          "name": "Siku",
-          "color": "#faa"
-        },
-        {
-          "name": "Śniadanie",
-          "color": "#faa"
-        },
-        {
-          "name": "Umyć zęby",
-          "color": "#faa"
-        },
-        {
-          "name": "Wziewy",
-          "color": "#faa"
-        },
-        {
-          "name": "Inhalacja",
-          "color": "#faa"
-        },
-        {
-          "name": "Krem na suchą skórę",
-          "color": "#faa"
-        },
-        {
-          "name": "Spakować plecak",
-          "color": "#faa"
-        }
-      ],
-      "toDos2": [
-        {
-          "name": "Kupić pieczywo",
-          "color": "#afa"
-        },
-        {
-          "name": "Lista zakupów",
-          "color": "#afa"
-        },
-        {
-          "name": "Przygotować śniadaniówkę",
-          "color": "#afa"
-        },
-        {
-          "name": "Spakować torbę na basen i w/f",
-          "color": "#afa"
-        },
-        {
-          "name": "Martin lek",
-          "color": "#aaf"
-        },
-        {
-          "name": "Tosia lek",
-          "color": "#aaf"
-        },
-        {
-          "name": "Kuwety",
-          "color": "#aaf"
-        },
-        {
-          "name": "Kocie śniadanie",
-          "color": "#aaf"
-        },
-        {
-          "name": "Uzupełnić nawilżacz",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Pranie",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Zmywarka",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Podlewanie",
-          "color": "#f1f1f1"
+          "id": "extra",
+          "items": [
+            {
+              "id": "1",
+              "name": "Kupić pieczywo",
+              "color": "#afa"
+            },
+            {
+              "id": "2",
+              "name": "Lista zakupów",
+              "color": "#afa"
+            },
+            {
+              "id": "3",
+              "name": "Przygotować śniadaniówkę",
+              "color": "#afa"
+            },
+            {
+              "id": "4",
+              "name": "Spakować torbę na basen i w/f",
+              "color": "#afa"
+            },
+            {
+              "id": "5",
+              "name": "Martin lek",
+              "color": "#aaf"
+            },
+            {
+              "id": "6",
+              "name": "Tosia lek",
+              "color": "#aaf"
+            },
+            {
+              "id": "7",
+              "name": "Kuwety",
+              "color": "#aaf"
+            },
+            {
+              "id": "8",
+              "name": "Kocie śniadanie",
+              "color": "#aaf"
+            },
+            {
+              "id": "9",
+              "name": "Uzupełnić nawilżacz",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "10",
+              "name": "Pranie",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "11",
+              "name": "Zmywarka",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "12",
+              "name": "Podlewanie",
+              "color": "#f1f1f1"
+            }
+          ]
         }
       ]
     },
@@ -200,92 +259,121 @@
       "bgColor": "#212121",
       "youtubeUrl": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
       "retentionHours": 72,
-      "toDos": [
+      "groups": [
         {
-          "name": "Papier toaletowy",
-          "color": "#faa"
+          "id": "main",
+          "items": [
+            {
+              "id": "1",
+              "name": "Papier toaletowy",
+              "color": "#faa"
+            },
+            {
+              "id": "2",
+              "name": "Ręczniki papierowe",
+              "color": "#faa"
+            },
+            {
+              "id": "3",
+              "name": "Wyrzucić śmieci",
+              "color": "#faa"
+            },
+            {
+              "id": "4",
+              "name": "Posprzątać",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "5",
+              "name": "Odkurzyć",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "6",
+              "name": "Zmywarka",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "7",
+              "name": "Ręczniki i ścierki",
+              "color": "#f1f1f1"
+            },
+            {
+              "id": "8",
+              "name": "Naładować urządzenia",
+              "color": "#afa"
+            },
+            {
+              "id": "9",
+              "name": "Spakować prowiant",
+              "color": "#afa"
+            }
+          ]
         },
         {
-          "name": "Ręczniki papierowe",
-          "color": "#faa"
-        },
-        {
-          "name": "Wyrzucić śmieci",
-          "color": "#faa"
-        },
-        {
-          "name": "Posprzątać",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Odkurzyć",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Zmywarka",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Ręczniki i ścierki",
-          "color": "#f1f1f1"
-        },
-        {
-          "name": "Naładować urządzenia",
-          "color": "#afa"
-        },
-        {
-          "name": "Spakować prowiant",
-          "color": "#afa"
-        }
-      ],
-      "toDos2": [
-        {
-          "name": "Dosypać żwirku",
-          "color": "#aaf"
-        },
-        {
-          "name": "Obciąć pazury",
-          "color": "#aaf"
-        },
-        {
-          "name": "Sprzątnąć kuwety",
-          "color": "#aaf"
-        },
-        {
-          "name": "Woda do miski",
-          "color": "#aaf"
-        },
-        {
-          "name": "Tosia i Rambo do kuwety",
-          "color": "#aaf"
-        },
-        {
-          "name": "Wyciągnąć leki",
-          "color": "#aaf"
-        },
-        {
-          "name": "Wyciągnąć miski",
-          "color": "#aaf"
-        },
-        {
-          "name": "Instrukcja",
-          "color": "#aaf"
-        },
-        {
-          "name": "Zabawki pod kanapę",
-          "color": "#aaf"
-        },
-        {
-          "name": "Wędki na lodówkę",
-          "color": "#aaf"
-        },
-        {
-          "name": "Podkłady i koce zapasowe",
-          "color": "#aaf"
-        },
-        {
-          "name": "Chrupki i puszki",
-          "color": "#aaf"
+          "id": "extra",
+          "items": [
+            {
+              "id": "1",
+              "name": "Dosypać żwirku",
+              "color": "#aaf"
+            },
+            {
+              "id": "2",
+              "name": "Obciąć pazury",
+              "color": "#aaf"
+            },
+            {
+              "id": "3",
+              "name": "Sprzątnąć kuwety",
+              "color": "#aaf"
+            },
+            {
+              "id": "4",
+              "name": "Woda do miski",
+              "color": "#aaf"
+            },
+            {
+              "id": "5",
+              "name": "Tosia i Rambo do kuwety",
+              "color": "#aaf"
+            },
+            {
+              "id": "6",
+              "name": "Wyciągnąć leki",
+              "color": "#aaf"
+            },
+            {
+              "id": "7",
+              "name": "Wyciągnąć miski",
+              "color": "#aaf"
+            },
+            {
+              "id": "8",
+              "name": "Instrukcja",
+              "color": "#aaf"
+            },
+            {
+              "id": "9",
+              "name": "Zabawki pod kanapę",
+              "color": "#aaf"
+            },
+            {
+              "id": "10",
+              "name": "Wędki na lodówkę",
+              "color": "#aaf"
+            },
+            {
+              "id": "11",
+              "name": "Podkłady i koce zapasowe",
+              "color": "#aaf"
+            },
+            {
+              "id": "12",
+              "name": "Chrupki i puszki",
+              "color": "#aaf"
+            }
+          ]
         }
       ]
     },
@@ -295,8 +383,16 @@
       "bgColor": "#212121",
       "youtubeUrl": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
       "retentionHours": 24,
-      "toDos": [],
-      "toDos2": []
+      "groups": [
+        {
+          "id": "main",
+          "items": []
+        },
+        {
+          "id": "extra",
+          "items": []
+        }
+      ]
     }
   ]
 }

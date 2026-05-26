@@ -48,7 +48,7 @@ export default function App() {
               className="mt-4 px-4 py-2 rounded border border-white/20 bg-black/50 text-white hover:bg-white hover:text-black transition"
               onClick={resetState}
             >
-              Reset saved state
+              Reset
             </button>
           </section>
         </div>

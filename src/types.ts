@@ -1,6 +1,12 @@
 export interface ToDoItem {
+  id: string;
   name: string;
   color: string;
+}
+
+export interface ToDoGroup {
+  id: string;
+  items: ToDoItem[];
 }
 
 export interface SavedList {
@@ -8,8 +14,7 @@ export interface SavedList {
   id: string;
   bgColor: string;
   youtubeUrl: string;
-  toDos: ToDoItem[];
-  toDos2: ToDoItem[];
+  groups: ToDoGroup[];
   retentionHours?: number;
 }
 
