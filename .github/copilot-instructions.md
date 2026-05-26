@@ -12,6 +12,10 @@ This repository is a small static Astro dashboard app called **Lullaby Dashboard
 
 The build produces a static site under `docs/` with a base path of `lullaby-dashboard-2`.
 
+## Supported browsers
+
+The app must support browser from TV with user agent: Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0 Colt/2.0
+
 ## Project Type and Technology
 
 - Project type: frontend web app / static site
@@ -99,7 +103,7 @@ npm run preview
 - `docs/` — built static site output
 - `public/` — public static assets
 - `src/` — app source code
-- `tools/` — unrelated utility scripts and separate package
+- `tools/` — utility scripts
 
 ### Key source files
 

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
 import Clock from "./Clock";
 import VideoEmbed from "./VideoEmbed";
 import TodoList from "./TodoList";
 import ListSelector from "./ListSelector";
 import DebugOverlay from "./DebugOverlay";
 import { useDashboardStore } from "../stores/useDashboardStore";
-import type { Configuration } from "../types";
+import { db } from "../firebase";
 
 export default function App() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
@@ -16,22 +17,18 @@ export default function App() {
 
   useEffect(() => {
     async function loadConfiguration() {
-      try {
-        const response = await fetch(
-          `${import.meta.env.BASE_URL}/configuration.json`,
-        );
-        if (!response.ok) {
-          throw new Error(
-            `Failed to load configuration: ${response.status} ${response.statusText}`,
-          );
-        }
-
-        const config = (await response.json()) as Configuration;
-        setLists(config.savedLists);
-        hydrateState();
-      } catch (error) {
-        console.error("Error loading dashboard configuration:", error);
+      const snapshot = await getDoc(doc(db, "dashboard", "configuration"));
+      if (!snapshot.exists()) {
+        throw new Error("Firebase configuration document not found");
       }
+
+      const data = snapshot.data();
+      if (!data || !Array.isArray(data.savedLists)) {
+        throw new Error("Firebase configuration is missing savedLists");
+      }
+
+      setLists(data.savedLists);
+      hydrateState();
     }
 
     loadConfiguration();
