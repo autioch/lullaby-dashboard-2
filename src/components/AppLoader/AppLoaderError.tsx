@@ -1,4 +1,4 @@
-import type { FailureInfo } from "../hooks/useAppStartup";
+import type { FailureInfo } from "../../hooks/useAppStartup";
 
 interface AppLoaderErrorProps {
   failureInfo: FailureInfo;

@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
-import { useDashboardStore } from "../stores/useDashboardStore";
+import { useDashboardStore } from "../../stores/useDashboardStore";
+import "./ListSelector.css";
 
 export default function ListSelector() {
   const lists = useDashboardStore((state) => state.lists);

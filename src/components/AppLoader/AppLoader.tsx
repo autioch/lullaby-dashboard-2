@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import AppLoaderError from "./AppLoaderError";
-import useAppStartup from "../hooks/useAppStartup";
+import useAppStartup from "../../hooks/useAppStartup";
+import "./AppLoader.css";
 
 interface AppLoaderProps {
   children: ReactNode;

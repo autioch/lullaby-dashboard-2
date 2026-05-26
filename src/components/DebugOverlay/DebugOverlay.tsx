@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDashboardStore } from "../stores/useDashboardStore";
+import { useDashboardStore } from "../../stores/useDashboardStore";
+import "./DebugOverlay.css";
 
 interface DebugInfo {
   url: string;

@@ -1,0 +1,71 @@
+.debug-overlay__button {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  min-width: 88px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.debug-overlay__button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.debug-overlay__panel {
+  position: fixed;
+  left: 1rem;
+  bottom: 5.5rem;
+  z-index: 50;
+  max-height: 45vh;
+  width: calc(100vw - 2rem);
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 768px) {
+  .debug-overlay__panel {
+    width: 35rem;
+  }
+}
+
+.debug-overlay__header {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.debug-overlay__close {
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.debug-overlay__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.debug-overlay__content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.3;
+}

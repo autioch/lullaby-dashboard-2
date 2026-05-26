@@ -1,10 +1,11 @@
-import AppLoader from "./AppLoader";
-import Clock from "./Clock";
-import VideoEmbed from "./VideoEmbed";
-import TodoList from "./TodoList";
-import ListSelector from "./ListSelector";
-import DebugOverlay from "./DebugOverlay";
-import { useDashboardStore } from "../stores/useDashboardStore";
+import AppLoader from "../AppLoader/AppLoader";
+import Clock from "../Clock/Clock";
+import VideoEmbed from "../VideoEmbed/VideoEmbed";
+import TodoList from "../TodoList/TodoList";
+import ListSelector from "../ListSelector/ListSelector";
+import DebugOverlay from "../DebugOverlay/DebugOverlay";
+import "./App.css";
+import { useDashboardStore } from "../../stores/useDashboardStore";
 
 function AppContent() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
@@ -40,7 +41,7 @@ function AppContent() {
             <ListSelector />
             <button
               type="button"
-              className="mt-4 px-4 py-2 rounded border border-white/20 bg-black/50 text-white hover:bg-white hover:text-black transition"
+              className="app__reset-button"
               onClick={resetState}
             >
               Reset

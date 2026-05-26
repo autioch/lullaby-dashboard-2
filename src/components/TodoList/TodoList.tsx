@@ -1,5 +1,6 @@
-import { useDashboardStore } from "../stores/useDashboardStore";
-import type { SavedList, ToDoItem } from "../types";
+import { useDashboardStore } from "../../stores/useDashboardStore";
+import "./TodoList.css";
+import type { SavedList, ToDoItem } from "../../types";
 
 type TodoListProps = {
   list: SavedList;

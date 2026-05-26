@@ -1,0 +1,94 @@
+.app {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  min-height: 100vh;
+  padding: 2vw;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+}
+
+@media (min-width: 768px) {
+  .app {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.app__content {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .app__content {
+    display: flex;
+    flex: 1;
+  }
+}
+
+.app__sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .app__sidebar {
+    width: 40%;
+    padding-left: 2vw;
+    height: 50vh;
+  }
+}
+
+.app__video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+
+.app__clock {
+  padding: 5vw;
+  font-weight: bold;
+  font-size: 15vw;
+}
+
+@media (min-width: 768px) {
+  .app__clock {
+    font-size: 10vw;
+  }
+}
+
+.app__selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+
+.app__no-list {
+  color: #f1f1f1;
+  background: #212121;
+  padding: 1rem;
+}
+
+.app__reset-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.app__reset-button:hover {
+  background: #fff;
+  color: #000;
+}

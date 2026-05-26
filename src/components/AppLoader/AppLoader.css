@@ -1,0 +1,110 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #000;
+  color: #fff;
+  z-index: 40;
+}
+
+.loader__panel {
+  width: min(100%, 38rem);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(10, 10, 10, 0.96);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.loader__heading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.loader__message {
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+  color: #d9d9d9;
+}
+
+.loader__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.loader__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.loader__item-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+}
+
+.loader__item-status--pending {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.loader__item-status--inProgress {
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-top-color: #fff;
+  animation: loader-spin 0.9s linear infinite;
+}
+
+.loader__item-status--complete {
+  background: #4ade80;
+  color: #000;
+}
+
+.loader__item-status--failed {
+  background: #f87171;
+}
+
+.loader__item--failed {
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+.loader__error {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 0.75rem;
+  background: rgba(248, 113, 113, 0.08);
+  color: #ffdada;
+  text-align: left;
+}
+
+.loader__debug {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f3f3f3;
+  font-family: monospace;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

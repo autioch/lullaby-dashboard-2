@@ -1,13 +1,15 @@
+import "./VideoEmbed.css";
+
 type VideoEmbedProps = {
   videoUrl?: string;
 };
 
 export default function VideoEmbed({ videoUrl }: VideoEmbedProps) {
-  const src = videoUrl ? `${videoUrl}&autoplay=1` : '';
+  const src = videoUrl ? `${videoUrl}&autoplay=1` : "";
 
   return (
     <iframe
-      className="absolute inset-0 w-full h-full border border-[#b2b2b2]"
+      className="video-embed__iframe"
       src={src}
       title="YouTube video player"
       frameBorder="0"
