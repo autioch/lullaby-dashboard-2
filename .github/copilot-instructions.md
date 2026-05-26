@@ -8,7 +8,7 @@ This repository is a small static Astro dashboard app called **Lullaby Dashboard
 - React 19 for client-side components
 - Zustand for state management
 - Sass for styling
-- A JSON configuration file at `src/data/configuration.json`
+- A JSON configuration file at `public/configuration.json`
 
 The build produces a static site under `docs/` with a base path of `lullaby-dashboard-2`.
 
@@ -112,7 +112,7 @@ npm run preview
 - `src/components/DebugOverlay.tsx` — optional debug overlay
 - `src/stores/useDashboardStore.ts` — Zustand state store
 - `src/types.ts` — data structure types
-- `src/data/configuration.json` — routines and task data
+- `public/configuration.json` — routines and task data
 - `src/styles/main.css` — global styling
 
 ### Architecture
@@ -120,7 +120,7 @@ npm run preview
 - Astro renders the static page in `src/pages/index.astro`.
 - React components are used for dynamic client-side behavior.
 - State is stored in a Zustand hook and persisted through the browser.
-- Config data is loaded from `src/data/configuration.json`.
+- Config data is loaded from `public/configuration.json`.
 - The build output is served from `docs/` with base path `lullaby-dashboard-2`.
 
 ## Validation Guidance

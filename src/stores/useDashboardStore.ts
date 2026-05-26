@@ -7,13 +7,13 @@ import {
   loadPersistedState,
   savePersistedState,
 } from "./utils";
-import configuration from "../data/configuration.json";
 
 export interface DashboardState {
   lists: SavedList[];
   selectedIndex: number;
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
+  setLists(lists: SavedList[]): void;
   setSelectedIndex(selectedIndex: number): void;
   toggleItem(key: string): void;
   hydrateState(): void;
@@ -21,13 +21,20 @@ export interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
-  lists: configuration.savedLists,
+  lists: [],
 
   selectedIndex: 0,
 
   checkedKeys: {},
 
   listExpiryTimestamps: {},
+
+  setLists(lists: SavedList[]) {
+    set((state) => ({
+      ...state,
+      lists,
+    }));
+  },
 
   setSelectedIndex(selectedIndex: number) {
     return set((state) => {
