@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { useEffect } from "react";
 import AppLoaderError from "./AppLoaderError";
-import useAppStartup from "../../hooks/useAppStartup";
+import { useStartupStore } from "../../stores/useStartupStore";
 import "./AppLoader.css";
 
 interface AppLoaderProps {
@@ -8,7 +9,17 @@ interface AppLoaderProps {
 }
 
 export default function AppLoader({ children }: AppLoaderProps) {
-  const { steps, failureInfo, isReady } = useAppStartup();
+  const steps = useStartupStore((state) => state.steps);
+  const failureInfo = useStartupStore((state) => state.failureInfo);
+  const isReady = useStartupStore((state) => state.isReady);
+  const startupStarted = useStartupStore((state) => state.startupStarted);
+  const initialize = useStartupStore((state) => state.initialize);
+
+  useEffect(() => {
+    if (!startupStarted) {
+      initialize();
+    }
+  }, [initialize, startupStarted]);
 
   if (failureInfo) {
     return <AppLoaderError failureInfo={failureInfo} />;
