@@ -2,10 +2,11 @@ import type { ChangeEvent } from "react";
 import { useDashboardStore } from "../../stores/useDashboardStore";
 import "./ListSelector.css";
 
+const { setSelectedIndex } = useDashboardStore.getState();
+
 export default function ListSelector() {
   const lists = useDashboardStore((state) => state.lists);
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
-  const setSelectedIndex = useDashboardStore((state) => state.setSelectedIndex);
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedIndex(Number(event.target.value));

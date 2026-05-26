@@ -6,9 +6,10 @@ type TodoListProps = {
   list: SavedList;
 };
 
+const { toggleItem } = useDashboardStore.getState();
+
 export default function TodoList({ list }: TodoListProps) {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);
-  const toggleItem = useDashboardStore((state) => state.toggleItem);
 
   return (
     <>

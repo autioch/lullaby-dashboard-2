@@ -8,21 +8,19 @@ interface AppLoaderProps {
   children: ReactNode;
 }
 
+const { loadData } = useStartupStore.getState();
+
 export default function AppLoader({ children }: AppLoaderProps) {
   const steps = useStartupStore((state) => state.steps);
   const failureInfo = useStartupStore((state) => state.failureInfo);
   const isReady = useStartupStore((state) => state.isReady);
-  const startupStarted = useStartupStore((state) => state.startupStarted);
-  const initialize = useStartupStore((state) => state.initialize);
 
   useEffect(() => {
-    if (!startupStarted) {
-      initialize();
-    }
-  }, [initialize, startupStarted]);
+    loadData();
+  }, [loadData]);
 
   if (failureInfo) {
-    return <AppLoaderError failureInfo={failureInfo} />;
+    return <AppLoaderError />;
   }
 
   if (!isReady) {

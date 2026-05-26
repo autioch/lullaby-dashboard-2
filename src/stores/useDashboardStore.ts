@@ -7,6 +7,8 @@ import {
   loadPersistedState,
   savePersistedState,
 } from "./utils";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 export interface DashboardState {
   lists: SavedList[];
@@ -16,17 +18,15 @@ export interface DashboardState {
   setLists(lists: SavedList[]): void;
   setSelectedIndex(selectedIndex: number): void;
   toggleItem(key: string): void;
+  loadConfiguration(): Promise<void>;
   hydrateState(): void;
   resetState(): void;
 }
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
   lists: [],
-
   selectedIndex: 0,
-
   checkedKeys: {},
-
   listExpiryTimestamps: {},
 
   setLists(lists: SavedList[]) {
@@ -38,18 +38,16 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
 
   setSelectedIndex(selectedIndex: number) {
     return set((state) => {
-      const nextState = {
-        ...state,
-        selectedIndex,
-      };
-
       savePersistedState({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex,
       });
 
-      return nextState;
+      return {
+        ...state,
+        selectedIndex,
+      };
     });
   },
 
@@ -104,5 +102,23 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       checkedKeys: {},
       listExpiryTimestamps: {},
     });
+  },
+
+  async loadConfiguration() {
+    const snapshot = await getDoc(doc(db, "dashboard", "configuration"));
+
+    if (!snapshot.exists()) {
+      throw new Error("Firebase configuration document not found");
+    }
+
+    const data = snapshot.data();
+    if (!data || !Array.isArray(data.savedLists)) {
+      throw new Error("Firebase configuration is missing savedLists");
+    }
+
+    set((state) => ({
+      ...state,
+      lists: data.savedLists,
+    }));
   },
 }));

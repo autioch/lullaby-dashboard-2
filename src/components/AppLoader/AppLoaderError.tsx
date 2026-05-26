@@ -1,10 +1,12 @@
-import type { FailureInfo } from "../../stores/useStartupStore";
+import { useStartupStore } from "../../stores/useStartupStore";
 
-interface AppLoaderErrorProps {
-  failureInfo: FailureInfo;
-}
+export default function AppLoaderError() {
+  const failureInfo = useStartupStore((state) => state.failureInfo);
 
-export default function AppLoaderError({ failureInfo }: AppLoaderErrorProps) {
+  if (!failureInfo) {
+    return null;
+  }
+
   return (
     <div className="loader loader--error">
       <div className="loader__panel">

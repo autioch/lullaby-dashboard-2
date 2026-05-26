@@ -1,16 +1,15 @@
 import { create } from "zustand";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
 import { useDashboardStore } from "./useDashboardStore";
-import type { SavedList } from "../types";
 
-export type StartupStepId = "loadConfiguration" | "hydrateState" | "finalize";
+export type StartupStepId = "loadConfiguration" | "hydrateState";
+
 export type StartupStatus = "pending" | "inProgress" | "complete" | "failed";
 
-export interface StartupStep {
+interface StartupStep {
   id: StartupStepId;
   label: string;
   status: StartupStatus;
+  stepFn: () => Promise<void> | void;
 }
 
 export interface FailureInfo {
@@ -24,11 +23,8 @@ interface StartupState {
   failureInfo: FailureInfo | null;
   isReady: boolean;
   startupStarted: boolean;
-  initialize(): Promise<void>;
-  updateStepStatus(id: StartupStepId, status: StartupStatus): void;
-  setFailureInfo(failureInfo: FailureInfo | null): void;
-  setReady(isReady: boolean): void;
-  setStartupStarted(started: boolean): void;
+  loadData(): Promise<void>;
+  setStepStatus(id: StartupStepId, status: StartupStatus): void;
 }
 
 const initialSteps: StartupStep[] = [
@@ -36,16 +32,13 @@ const initialSteps: StartupStep[] = [
     id: "loadConfiguration",
     label: "Loading configuration",
     status: "pending",
+    stepFn: () => useDashboardStore.getState().loadConfiguration(),
   },
   {
     id: "hydrateState",
     label: "Restoring saved state",
-    status: "pending",
-  },
-  {
-    id: "finalize",
-    label: "Finalizing startup",
-    status: "pending",
+    status: "inProgress",
+    stepFn: async () => await useDashboardStore.getState().hydrateState(),
   },
 ];
 
@@ -55,7 +48,7 @@ export const useStartupStore = create<StartupState>((set, get) => ({
   isReady: false,
   startupStarted: false,
 
-  updateStepStatus(id, status) {
+  setStepStatus(id, status) {
     set((state) => ({
       steps: state.steps.map((step) =>
         step.id === id
@@ -68,62 +61,38 @@ export const useStartupStore = create<StartupState>((set, get) => ({
     }));
   },
 
-  setFailureInfo(failureInfo) {
-    set({ failureInfo });
-  },
+  async loadData() {
+    const { setStepStatus, startupStarted } = get();
 
-  setReady(isReady) {
-    set({ isReady });
-  },
-
-  setStartupStarted(started) {
-    set({ startupStarted: started });
-  },
-
-  async initialize() {
-    if (get().startupStarted) {
+    if (startupStarted) {
       return;
     }
 
     set({ startupStarted: true });
-    const dashboardStore = useDashboardStore.getState();
+
     let currentStep: StartupStepId = "loadConfiguration";
 
     try {
-      get().updateStepStatus(currentStep, "inProgress");
-
-      const snapshot = await getDoc(doc(db, "dashboard", "configuration"));
-      if (!snapshot.exists()) {
-        throw new Error("Firebase configuration document not found");
+      for (const step of get().steps) {
+        currentStep = step.id;
+        setStepStatus(currentStep, "inProgress");
+        await step.stepFn();
+        setStepStatus(currentStep, "complete");
       }
 
-      const data = snapshot.data();
-      if (!data || !Array.isArray(data.savedLists)) {
-        throw new Error("Firebase configuration is missing savedLists");
-      }
-
-      dashboardStore.setLists(data.savedLists as SavedList[]);
-      get().updateStepStatus(currentStep, "complete");
-
-      currentStep = "hydrateState";
-      get().updateStepStatus(currentStep, "inProgress");
-      dashboardStore.hydrateState();
-      get().updateStepStatus(currentStep, "complete");
-
-      currentStep = "finalize";
-      get().updateStepStatus(currentStep, "inProgress");
-      await new Promise((resolve) => setTimeout(resolve, 120));
-      get().updateStepStatus(currentStep, "complete");
-
-      get().setReady(true);
+      set({ isReady: true });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       const stack = error instanceof Error ? error.stack : undefined;
-      get().updateStepStatus(currentStep, "failed");
-      get().setFailureInfo({
-        step: currentStep,
-        message,
-        stack,
+
+      setStepStatus(currentStep, "failed");
+
+      set({
+        failureInfo: {
+          step: currentStep,
+          message,
+          stack,
+        },
       });
     }
   },
