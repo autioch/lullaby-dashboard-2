@@ -1,38 +1,15 @@
-import { useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import AppLoader from "./AppLoader";
 import Clock from "./Clock";
 import VideoEmbed from "./VideoEmbed";
 import TodoList from "./TodoList";
 import ListSelector from "./ListSelector";
 import DebugOverlay from "./DebugOverlay";
 import { useDashboardStore } from "../stores/useDashboardStore";
-import { db } from "../firebase";
 
-export default function App() {
+function AppContent() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);
-  const setLists = useDashboardStore((state) => state.setLists);
-  const hydrateState = useDashboardStore((state) => state.hydrateState);
   const resetState = useDashboardStore((state) => state.resetState);
-
-  useEffect(() => {
-    async function loadConfiguration() {
-      const snapshot = await getDoc(doc(db, "dashboard", "configuration"));
-      if (!snapshot.exists()) {
-        throw new Error("Firebase configuration document not found");
-      }
-
-      const data = snapshot.data();
-      if (!data || !Array.isArray(data.savedLists)) {
-        throw new Error("Firebase configuration is missing savedLists");
-      }
-
-      setLists(data.savedLists);
-      hydrateState();
-    }
-
-    loadConfiguration();
-  }, [hydrateState, setLists]);
 
   const selectedList = lists[selectedIndex] ?? null;
   const backgroundStyle = selectedList?.bgColor
@@ -74,5 +51,13 @@ export default function App() {
 
       <DebugOverlay />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <AppLoader>
+      <AppContent />
+    </AppLoader>
   );
 }

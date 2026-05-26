@@ -125,7 +125,9 @@ npm run preview
 - React components are used for dynamic client-side behavior.
 - State is stored in a Zustand hook and persisted through the browser.
 - Config data is loaded from `public/configuration.json`.
-- The build output is served from `docs/` with base path `lullaby-dashboard-2`.
+- The build output is served from `docs/` with base path `lullaby-dashboard-2`
+- All logic should be kept in the Zustand store
+- React components should render state, avoid using hooks for app logic
 
 ## Validation Guidance
 
