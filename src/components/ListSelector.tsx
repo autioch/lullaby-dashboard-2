@@ -18,7 +18,7 @@ export default function ListSelector() {
         onChange={handleChange}
       >
         {lists.map((list, index) => (
-          <option key={list.listId ?? index} value={index}>
+          <option key={list.id ?? index} value={index}>
             {list.label}
           </option>
         ))}

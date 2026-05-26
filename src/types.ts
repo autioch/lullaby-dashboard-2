@@ -5,11 +5,14 @@ export interface ToDoItem {
 
 export interface SavedList {
   label: string;
-  listId: string;
-  backgroundListColor: string;
-  fontListColor: string;
-  embeddedYoutubeVideo: string;
+  id: string;
+  bgColor: string;
+  youtubeUrl: string;
   toDos: ToDoItem[];
   toDos2: ToDoItem[];
   retentionHours?: number;
+}
+
+export interface Configuration {
+  savedLists: SavedList[];
 }

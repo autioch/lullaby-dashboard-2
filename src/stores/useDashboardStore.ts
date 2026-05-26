@@ -49,7 +49,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   toggleItem(key: string) {
     return set((state) => {
       const [listId] = key.split("-", 2);
-      const list = state.lists.find((item) => item.listId === listId);
+      const list = state.lists.find((list) => list.id === listId);
       const nextCheckedKeys = {
         ...state.checkedKeys,
         [key]: !state.checkedKeys[key],

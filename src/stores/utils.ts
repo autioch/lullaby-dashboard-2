@@ -78,7 +78,7 @@ export function cleanPersistedState(
 
   for (const [key, value] of Object.entries(persisted.checkedKeys)) {
     const [listId] = key.split("-", 2);
-    const list = lists.find((item) => item.listId === listId);
+    const list = lists.find((item) => item.id === listId);
     const expiry = persisted.listExpiryTimestamps[listId];
 
     if (!list?.retentionHours || typeof expiry !== "number") continue;

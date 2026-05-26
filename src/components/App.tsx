@@ -17,8 +17,8 @@ export default function App() {
   }, [hydrateState]);
 
   const selectedList = lists[selectedIndex] ?? null;
-  const backgroundStyle = selectedList?.backgroundListColor
-    ? { backgroundColor: selectedList.backgroundListColor }
+  const backgroundStyle = selectedList?.bgColor
+    ? { backgroundColor: selectedList.bgColor }
     : undefined;
 
   return (
@@ -34,7 +34,7 @@ export default function App() {
 
         <div className="app__sidebar">
           <figure className="app__video">
-            <VideoEmbed videoUrl={selectedList?.embeddedYoutubeVideo} />
+            <VideoEmbed videoUrl={selectedList?.youtubeUrl} />
           </figure>
 
           <section className="app__clock">

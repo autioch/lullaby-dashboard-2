@@ -16,7 +16,7 @@ export default function TodoList({ list }: TodoListProps) {
       <div className="todo-list">
         <ul className="todo-list__group">
           {items.map((item, index) => {
-            const key = `${list.listId}-${groupKey}-${index}`;
+            const key = `${list.id}-${groupKey}-${index}`;
             const checked = Boolean(checkedKeys[key]);
 
             return (
