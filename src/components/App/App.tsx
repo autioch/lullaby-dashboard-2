@@ -23,7 +23,7 @@ function AppContent() {
         {selectedList ? (
           <TodoList list={selectedList} />
         ) : (
-          <div className="app__no-list">No list selected</div>
+          <div className="app__no-list">No lists</div>
         )}
       </section>
 
