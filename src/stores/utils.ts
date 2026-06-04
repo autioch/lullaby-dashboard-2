@@ -7,6 +7,9 @@ interface PersistedDashboardState {
   listExpiryTimestamps: Record<string, number>;
   selectedIndex: number;
   language: AppLanguage;
+  timerRunsByList: Record<string, import("../types").TimerRunState>;
+  fastestRunsByList: Record<string, import("../types").FastestRunRecord>;
+  celebration: import("../types").CelebrationState;
 }
 
 const STORAGE_KEY = "lullaby-dashboard-state";
@@ -23,6 +26,9 @@ function parsePersistedState(
     listExpiryTimestamps?: unknown;
     selectedIndex?: unknown;
     language?: unknown;
+    timerRunsByList?: unknown;
+    fastestRunsByList?: unknown;
+    celebration?: unknown;
   };
 
   if (typeof candidate.selectedIndex !== "number") return undefined;
@@ -55,12 +61,43 @@ function parsePersistedState(
     ).filter(([, value]) => typeof value === "number"),
   ) as Record<string, number>;
 
+  const timerRunsByList =
+    typeof candidate.timerRunsByList === "object" &&
+    candidate.timerRunsByList !== null &&
+    !Array.isArray(candidate.timerRunsByList)
+      ? (candidate.timerRunsByList as Record<string, unknown>)
+      : {};
+
+  const fastestRunsByList =
+    typeof candidate.fastestRunsByList === "object" &&
+    candidate.fastestRunsByList !== null &&
+    !Array.isArray(candidate.fastestRunsByList)
+      ? (candidate.fastestRunsByList as Record<string, unknown>)
+      : {};
+
+  const celebration =
+    typeof candidate.celebration === "object" &&
+    candidate.celebration !== null &&
+    !Array.isArray(candidate.celebration)
+      ? (candidate.celebration as Record<string, unknown>)
+      : { visible: false, listId: null, isNewBest: false, elapsedMs: 0 };
+
   return {
     checkedKeys,
     listExpiryTimestamps,
     selectedIndex: candidate.selectedIndex,
     language,
-  };
+    timerRunsByList,
+    fastestRunsByList,
+    celebration: {
+      visible: Boolean(celebration.visible),
+      listId:
+        typeof celebration.listId === "string" ? celebration.listId : null,
+      isNewBest: Boolean(celebration.isNewBest),
+      elapsedMs:
+        typeof celebration.elapsedMs === "number" ? celebration.elapsedMs : 0,
+    },
+  } as unknown as PersistedDashboardState;
 }
 
 export function loadPersistedState(): PersistedDashboardState | undefined {
@@ -101,13 +138,27 @@ export function cleanPersistedState(
     listExpiryTimestamps,
     selectedIndex: persisted.selectedIndex,
     language: persisted.language ?? DEFAULT_LANGUAGE,
+    timerRunsByList: persisted.timerRunsByList ?? {},
+    fastestRunsByList: persisted.fastestRunsByList ?? {},
+    celebration: persisted.celebration ?? {
+      visible: false,
+      listId: null,
+      isNewBest: false,
+      elapsedMs: 0,
+    },
   };
 }
 
 export function savePersistedState(
   state: Pick<
     DashboardState,
-    "checkedKeys" | "listExpiryTimestamps" | "selectedIndex" | "language"
+    | "checkedKeys"
+    | "listExpiryTimestamps"
+    | "selectedIndex"
+    | "language"
+    | "timerRunsByList"
+    | "fastestRunsByList"
+    | "celebration"
   >,
 ) {
   if (!isBrowser) return;

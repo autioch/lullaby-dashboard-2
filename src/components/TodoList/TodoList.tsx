@@ -1,6 +1,7 @@
 import { useDashboardStore } from "../../stores/useDashboardStore";
 import "./TodoList.css";
 import type { SavedList, ToDoItem } from "../../types";
+import Typography from "../Typography/Typography";
 
 type TodoListProps = {
   list: SavedList;
@@ -8,7 +9,25 @@ type TodoListProps = {
 
 const { toggleItem } = useDashboardStore.getState();
 
-export default function TodoList({ list }: TodoListProps) {
+export default function TodoList() {
+  const selectedIndex = useDashboardStore((state) => state.selectedIndex);
+  const lists = useDashboardStore((state) => state.lists);
+  const selectedList = lists[selectedIndex] ?? null;
+
+  return (
+    <section className="app__content">
+      {selectedList ? (
+        <TodoListInner list={selectedList} />
+      ) : (
+        <div className="app__no-list">
+          <Typography textKey="app.noLists" />
+        </div>
+      )}
+    </section>
+  );
+}
+
+function TodoListInner({ list }: TodoListProps) {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);
 
   return (

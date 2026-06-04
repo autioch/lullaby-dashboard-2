@@ -1,0 +1,30 @@
+.app__timer-card {
+  width: 100%;
+  max-width: 22rem;
+  margin: 0 auto 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 10, 10, 0.55);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+}
+
+.app__timer-label {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  color: #fff8c7;
+}
+
+.app__timer-value {
+  display: block;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.app__timer-fastest {
+  margin: 0.35rem 0 0;
+  color: #e8fff5;
+  font-size: 0.95rem;
+}

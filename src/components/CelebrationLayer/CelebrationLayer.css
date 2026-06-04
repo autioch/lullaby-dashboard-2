@@ -1,0 +1,105 @@
+.app__celebration {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.app__celebration-bubble {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  animation: celebration-pop 1.8s ease forwards;
+}
+
+.app__fireworks {
+  position: absolute;
+  inset: 0;
+}
+
+.app__firework {
+  position: absolute;
+  top: 15%;
+  left: calc(10% + (var(--delay) * 8%));
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  animation: firework-burst 2.2s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.app__firework::before,
+.app__firework::after {
+  content: "";
+  position: absolute;
+  inset: -0.35rem;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  transform: scale(0.6);
+  animation: firework-ring 2.2s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes celebration-pop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-0.4rem);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-0.5rem);
+  }
+}
+
+@keyframes firework-burst {
+  0% {
+    transform: translateY(0) scale(0.4);
+    opacity: 0.2;
+  }
+  30% {
+    transform: translateY(1.2rem) scale(1.1);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(2.6rem) scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(4rem) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-ring {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.2;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}

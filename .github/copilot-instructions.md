@@ -121,6 +121,7 @@ npm run preview
 - The build output is served from `docs/` with base path `lullaby-dashboard-2`
 - All logic should be kept in the Zustand store
 - React components should render state, avoid using hooks for app logic
+- React components should be small, when adding new feature, prefer creating new components
 
 ## Validation Guidance
 
