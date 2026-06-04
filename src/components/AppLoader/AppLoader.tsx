@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AppLoaderError from "./AppLoaderError";
 import { useStartupStore } from "../../stores/useStartupStore";
 import Typography from "../Typography/Typography";
+import AuthGate from "./AuthGate";
 import "./AppLoader.css";
 
 interface AppLoaderProps {
@@ -15,13 +16,20 @@ export default function AppLoader({ children }: AppLoaderProps) {
   const steps = useStartupStore((state) => state.steps);
   const failureInfo = useStartupStore((state) => state.failureInfo);
   const isReady = useStartupStore((state) => state.isReady);
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
   useEffect(() => {
+    if (!isUnlocked) return;
+
     loadData();
-  }, [loadData]);
+  }, [isUnlocked, loadData]);
 
   if (failureInfo) {
     return <AppLoaderError />;
+  }
+
+  if (!isUnlocked) {
+    return <AuthGate onUnlocked={() => setIsUnlocked(true)} />;
   }
 
   if (!isReady) {

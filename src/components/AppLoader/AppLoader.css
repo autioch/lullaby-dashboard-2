@@ -15,6 +15,10 @@
   padding: 2rem;
 }
 
+.loader__panel--compact {
+  width: min(100%, 28rem);
+}
+
 .loader__heading {
   margin: 0 0 1rem;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
@@ -70,6 +74,49 @@
 
 .loader__item--failed {
   border-color: rgba(248, 113, 113, 0.45);
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.auth-form__label {
+  font-size: 0.95rem;
+  color: #d9d9d9;
+}
+
+.auth-form__input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.auth-form__button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #288de0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-form__button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.auth-form__error {
+  margin: 0;
+  color: #fecaca;
+  font-size: 0.95rem;
 }
 
 .loader__error {

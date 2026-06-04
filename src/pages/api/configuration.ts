@@ -1,78 +1,39 @@
-import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestoreDb, jsonResponse } from "./_utils";
 
 export const prerender = false;
 
-function parseServiceAccount(content: string) {
-  const parsed = JSON.parse(content);
-
-  if (!parsed || typeof parsed !== "object") {
-    throw new Error("Firebase service account is invalid");
-  }
-
-  return parsed;
-}
-
-async function getFirestoreDb() {
-  if (!getApps().length) {
-    const key = import.meta.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim() ?? "";
-    const serviceAccount = await parseServiceAccount(key);
-
-    initializeApp({
-      credential: cert(serviceAccount),
-    });
-  }
-
-  return getFirestore();
-}
-
 export async function GET() {
-  console.log(import.meta.env.FIREBASE_SERVICE_ACCOUNT_KEY);
   try {
-    const db = await getFirestoreDb();
-    const snapshot = await db
-      .collection("dashboard")
-      .doc("configuration")
-      .get();
+    const snapshot = await getConfiguration();
 
     if (!snapshot.exists) {
-      return new Response(
-        JSON.stringify({ error: "Configuration document not found" }),
-        {
-          status: 404,
-          headers: { "content-type": "application/json" },
-        },
-      );
+      return jsonResponse({ error: "Configuration document not found" }, 404);
     }
 
     const data = snapshot.data() as { savedLists?: unknown } | undefined;
 
     if (!data || !Array.isArray(data.savedLists)) {
-      return new Response(
-        JSON.stringify({ error: "Configuration is missing savedLists" }),
-        {
-          status: 500,
-          headers: { "content-type": "application/json" },
-        },
+      return jsonResponse(
+        { error: "Configuration is missing savedLists or it's not an array" },
+        500,
       );
     }
 
-    return new Response(JSON.stringify({ savedLists: data.savedLists }), {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    });
+    return jsonResponse({ savedLists: data.savedLists });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-
-    return new Response(
-      JSON.stringify({
-        error: "Failed to load configuration",
-        details: message,
-      }),
+    return jsonResponse(
       {
-        status: 500,
-        headers: { "content-type": "application/json" },
+        error: "Failed to load configuration",
+        details: error instanceof Error ? error.message : String(error),
       },
+      500,
     );
   }
+}
+
+async function getConfiguration() {
+  const db = await getFirestoreDb();
+  const snapshot = await db.collection("dashboard").doc("configuration").get();
+
+  return snapshot;
 }
