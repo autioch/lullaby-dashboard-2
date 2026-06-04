@@ -1,30 +1,22 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
 export const prerender = false;
 
-const serviceAccountKeyPath =
-  process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH ?? "service-account.json";
+function parseServiceAccount(content: string) {
+  const parsed = JSON.parse(content);
 
-function getServiceAccount() {
-  const serviceAccountPath = path.resolve(serviceAccountKeyPath);
+  if (!parsed || typeof parsed !== "object") {
+    throw new Error("Firebase service account is invalid");
+  }
 
-  return fs.readFile(serviceAccountPath, "utf8").then((content) => {
-    const parsed = JSON.parse(content);
-
-    if (!parsed || typeof parsed !== "object") {
-      throw new Error("Firebase service account is invalid");
-    }
-
-    return parsed;
-  });
+  return parsed;
 }
 
 async function getFirestoreDb() {
   if (!getApps().length) {
-    const serviceAccount = await getServiceAccount();
+    const key = import.meta.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim() ?? "";
+    const serviceAccount = await parseServiceAccount(key);
 
     initializeApp({
       credential: cert(serviceAccount),
@@ -35,6 +27,7 @@ async function getFirestoreDb() {
 }
 
 export async function GET() {
+  console.log(import.meta.env.FIREBASE_SERVICE_ACCOUNT_KEY);
   try {
     const db = await getFirestoreDb();
     const snapshot = await db

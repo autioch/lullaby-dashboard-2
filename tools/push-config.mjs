@@ -3,23 +3,20 @@ import path from "node:path";
 import { getApps, initializeApp, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
-const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
+const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 const configurationFilePath = process.env.CONFIGURATION_FILE_PATH ?? "public/configuration.json";
 const collectionName = process.env.FIRESTORE_COLLECTION ?? "dashboard";
 const documentName = process.env.FIRESTORE_DOCUMENT ?? "configuration";
 
-if (!serviceAccountKeyPath) {
+if (!serviceAccountKey) {
   console.error(
-    "Missing FIREBASE_SERVICE_ACCOUNT_KEY_PATH environment variable.",
+    "Missing FIREBASE_SERVICE_ACCOUNT_KEY environment variable.",
   );
   process.exit(1);
 }
 
-const serviceAccountPath = path.resolve(serviceAccountKeyPath);
-
 try {
-  const serviceAccountJson = await fs.readFile(serviceAccountPath, "utf8");
-  const serviceAccount = JSON.parse(serviceAccountJson);
+  const serviceAccount = JSON.parse(serviceAccountKey)
 
   if (!getApps().length) {
     initializeApp({
