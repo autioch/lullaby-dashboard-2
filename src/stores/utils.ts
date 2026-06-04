@@ -2,7 +2,7 @@ import { type AppLanguage, DEFAULT_LANGUAGE } from '../i18n/translations';
 import type { DashboardState } from './useDashboardStore';
 import type { SavedList } from '../types';
 
-interface PersistedDashboardState {
+type PersistedDashboardState = {
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
   selectedIndex: number;

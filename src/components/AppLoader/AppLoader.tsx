@@ -5,7 +5,7 @@ import AuthGate from './AuthGate';
 import Typography from '../Typography/Typography';
 import { useStartupStore } from '../../stores/useStartupStore';
 
-interface AppLoaderProps {
+type AppLoaderProps = {
   children: ReactNode;
 }
 

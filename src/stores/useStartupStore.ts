@@ -5,27 +5,27 @@ export type StartupStepId = 'loadConfiguration' | 'hydrateState';
 
 export type StartupStatus = 'pending' | 'inProgress' | 'complete' | 'failed';
 
-interface StartupStep {
+type StartupStep = {
   id: StartupStepId;
   labelKey: string;
   status: StartupStatus;
   stepFn: () => Promise<void> | void;
-}
+};
 
-export interface FailureInfo {
+export type FailureInfo = {
   step: StartupStepId;
   message: string;
   stack?: string;
-}
+};
 
-interface StartupState {
+type StartupState = {
   steps: StartupStep[];
   failureInfo: FailureInfo | null;
   isReady: boolean;
   startupStarted: boolean;
   loadData(): Promise<void>;
   setStepStatus(id: StartupStepId, status: StartupStatus): void;
-}
+};
 
 const initialSteps: StartupStep[] = [
   {

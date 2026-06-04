@@ -14,7 +14,7 @@ import {
 } from './utils';
 import { create } from 'zustand';
 
-export interface DashboardState {
+export type DashboardState = {
   lists: SavedList[];
   selectedIndex: number;
   checkedKeys: Record<string, boolean>;

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import PasswordForm from './PasswordForm';
 
 const AUTH_STORAGE_KEY = 'lullaby-dashboard-auth';
 
-interface AuthGateProps {
+type AuthGateProps = {
   onUnlocked: () => void;
-}
+};
 
 export default function AuthGate({ onUnlocked }: AuthGateProps) {
   const [password, setPassword] = useState('');
@@ -20,7 +20,7 @@ export default function AuthGate({ onUnlocked }: AuthGateProps) {
     }
   }, [onUnlocked]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!password.trim()) {

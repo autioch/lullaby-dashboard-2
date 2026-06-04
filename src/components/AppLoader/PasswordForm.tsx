@@ -1,12 +1,12 @@
 import type { FormEvent } from 'react';
 
-interface PasswordFormProps {
+type PasswordFormProps = {
   password: string;
   errorMessage: string;
   isSubmitting: boolean;
   onPasswordChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-}
+};
 
 export default function PasswordForm({
   password,

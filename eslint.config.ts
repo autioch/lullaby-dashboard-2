@@ -15,6 +15,7 @@ export default defineConfig([
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
       'sort-imports': ['error'],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     },
   },
   tseslint.configs.recommended,

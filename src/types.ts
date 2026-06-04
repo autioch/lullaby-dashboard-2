@@ -1,15 +1,15 @@
-export interface ToDoItem {
+export type ToDoItem = {
   id: string;
   name: string;
   color: string;
 }
 
-export interface ToDoGroup {
+export type ToDoGroup = {
   id: string;
   items: ToDoItem[];
 }
 
-export interface SavedList {
+export type SavedList = {
   label: string;
   id: string;
   bgColor: string;
@@ -18,7 +18,7 @@ export interface SavedList {
   retentionHours?: number;
 }
 
-export interface TimerRunState {
+export type TimerRunState = {
   listId: string;
   startedAtMs: number;
   elapsedMs: number;
@@ -27,18 +27,18 @@ export interface TimerRunState {
   completedAtMs: number | null;
 }
 
-export interface FastestRunRecord {
+export type FastestRunRecord = {
   elapsedMs: number;
   completedAtMs: number;
 }
 
-export interface CelebrationState {
+export type CelebrationState = {
   visible: boolean;
   listId: string | null;
   isNewBest: boolean;
   elapsedMs: number;
 }
 
-export interface Configuration {
+export type Configuration = {
   savedLists: SavedList[];
 }
