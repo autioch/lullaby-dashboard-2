@@ -29,3 +29,29 @@ export type MissionState = {
   completedAt: string | null;
   completedObjectives: string[];
 };
+
+export type ThemeDefinition = {
+  id: string;
+  name: string;
+
+  labels: {
+    objectives: string;
+    completed: string;
+    remaining: string;
+  };
+
+  messages: {
+    start: string;
+    quarter: string;
+    half: string;
+    threeQuarter: string;
+    final: string;
+    completed: string;
+  };
+
+  assets: {
+    backgroundImage?: string;
+    iconSet?: string;
+    soundPack?: string;
+  };
+};
