@@ -7,7 +7,7 @@ export type StartupStatus = "pending" | "inProgress" | "complete" | "failed";
 
 interface StartupStep {
   id: StartupStepId;
-  label: string;
+  labelKey: string;
   status: StartupStatus;
   stepFn: () => Promise<void> | void;
 }
@@ -30,13 +30,13 @@ interface StartupState {
 const initialSteps: StartupStep[] = [
   {
     id: "loadConfiguration",
-    label: "Loading configuration",
+    labelKey: "loader.loadingConfiguration",
     status: "pending",
     stepFn: () => useDashboardStore.getState().loadConfiguration(),
   },
   {
     id: "hydrateState",
-    label: "Restoring saved state",
+    labelKey: "loader.restoringState",
     status: "inProgress",
     stepFn: async () => await useDashboardStore.getState().hydrateState(),
   },

@@ -109,14 +109,8 @@ npm run preview
 
 - `src/pages/index.astro` — entry page for the dashboard
 - `src/components/App.tsx` — main React application component
-- `src/components/Clock.tsx` — live clock component
-- `src/components/ListSelector.tsx` — routine selector
-- `src/components/TodoList.tsx` — task checklist UI
-- `src/components/VideoEmbed.tsx` — embedded YouTube video component
-- `src/components/DebugOverlay.tsx` — optional debug overlay
-- `src/stores/useDashboardStore.ts` — Zustand state store
+- `src/stores/useDashboardStore.ts` — main Zustand state store
 - `src/types.ts` — data structure types
-- `public/configuration.json` — routines and task data
 - `src/styles/main.css` — global styling
 
 ### Architecture
@@ -124,7 +118,6 @@ npm run preview
 - Astro renders the static page in `src/pages/index.astro`.
 - React components are used for dynamic client-side behavior.
 - State is stored in a Zustand hook and persisted through the browser.
-- Config data is loaded from `public/configuration.json`.
 - The build output is served from `docs/` with base path `lullaby-dashboard-2`
 - All logic should be kept in the Zustand store
 - React components should render state, avoid using hooks for app logic
@@ -134,8 +127,8 @@ npm run preview
 When making changes:
 
 1. Run `npm install` if dependencies changed or if the workspace was cleaned.
-2. Run `npm run build` to verify the site compiles.
-3. Run `npm run typecheck` to verify TypeScript.
-4. If the change is UI-related, optionally run `npm run dev` and inspect locally.
+2. Run `npm run typecheck` to verify TypeScript.
+3. Run `npm run build` to verify the site compiles.
+4. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
 
 If anything in these instructions appears incorrect or incomplete, perform a narrow search only for the missing part. Otherwise, trust these instructions and minimize additional repo exploration.

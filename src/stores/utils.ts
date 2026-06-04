@@ -1,10 +1,12 @@
 import type { SavedList } from "../types";
+import { DEFAULT_LANGUAGE, type AppLanguage } from "../i18n/translations";
 import type { DashboardState } from "./useDashboardStore";
 
 interface PersistedDashboardState {
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
   selectedIndex: number;
+  language: AppLanguage;
 }
 
 const STORAGE_KEY = "lullaby-dashboard-state";
@@ -20,9 +22,14 @@ function parsePersistedState(
     checkedKeys?: unknown;
     listExpiryTimestamps?: unknown;
     selectedIndex?: unknown;
+    language?: unknown;
   };
 
   if (typeof candidate.selectedIndex !== "number") return undefined;
+  const language =
+    candidate.language === "en" || candidate.language === "pl"
+      ? (candidate.language as AppLanguage)
+      : DEFAULT_LANGUAGE;
   if (
     typeof candidate.checkedKeys !== "object" ||
     candidate.checkedKeys === null ||
@@ -52,6 +59,7 @@ function parsePersistedState(
     checkedKeys,
     listExpiryTimestamps,
     selectedIndex: candidate.selectedIndex,
+    language,
   };
 }
 
@@ -92,13 +100,14 @@ export function cleanPersistedState(
     checkedKeys,
     listExpiryTimestamps,
     selectedIndex: persisted.selectedIndex,
+    language: persisted.language ?? DEFAULT_LANGUAGE,
   };
 }
 
 export function savePersistedState(
   state: Pick<
     DashboardState,
-    "checkedKeys" | "listExpiryTimestamps" | "selectedIndex"
+    "checkedKeys" | "listExpiryTimestamps" | "selectedIndex" | "language"
   >,
 ) {
   if (!isBrowser) return;

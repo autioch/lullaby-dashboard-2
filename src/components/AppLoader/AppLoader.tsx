@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useEffect } from "react";
 import AppLoaderError from "./AppLoaderError";
 import { useStartupStore } from "../../stores/useStartupStore";
+import Typography from "../Typography/Typography";
 import "./AppLoader.css";
 
 interface AppLoaderProps {
@@ -27,10 +28,15 @@ export default function AppLoader({ children }: AppLoaderProps) {
     return (
       <div className="loader">
         <div className="loader__panel">
-          <h1 className="loader__heading">Starting dashboard</h1>
+          <h1 className="loader__heading">
+            <Typography
+              textKey="loader.heading"
+              variant="heading"
+              size="large"
+            />
+          </h1>
           <p className="loader__message">
-            Please wait while we load your configuration and restore saved
-            progress.
+            <Typography textKey="loader.message" />
           </p>
           <ol className="loader__list">
             {steps.map((step) => (
@@ -48,7 +54,9 @@ export default function AppLoader({ children }: AppLoaderProps) {
                       ? "✕"
                       : ""}
                 </span>
-                <span>{step.label}</span>
+                <span>
+                  <Typography textKey={step.labelKey} />
+                </span>
               </li>
             ))}
           </ol>

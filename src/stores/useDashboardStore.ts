@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { SavedList } from "../types";
+import { DEFAULT_LANGUAGE, type AppLanguage } from "../i18n/translations";
 import {
   cleanPersistedState,
   clearPersistedState,
@@ -15,8 +16,10 @@ export interface DashboardState {
   selectedIndex: number;
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
+  language: AppLanguage;
   setLists(lists: SavedList[]): void;
   setSelectedIndex(selectedIndex: number): void;
+  setLanguage(language: AppLanguage): void;
   toggleItem(key: string): void;
   loadConfiguration(): Promise<void>;
   hydrateState(): void;
@@ -28,6 +31,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   selectedIndex: 0,
   checkedKeys: {},
   listExpiryTimestamps: {},
+  language: DEFAULT_LANGUAGE,
 
   setLists(lists: SavedList[]) {
     set((state) => ({
@@ -42,11 +46,28 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex,
+        language: state.language,
       });
 
       return {
         ...state,
         selectedIndex,
+      };
+    });
+  },
+
+  setLanguage(language: AppLanguage) {
+    return set((state) => {
+      savePersistedState({
+        checkedKeys: state.checkedKeys,
+        listExpiryTimestamps: state.listExpiryTimestamps,
+        selectedIndex: state.selectedIndex,
+        language,
+      });
+
+      return {
+        ...state,
+        language,
       };
     });
   },
@@ -71,6 +92,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: nextCheckedKeys,
         listExpiryTimestamps: nextListExpiryTimestamps,
         selectedIndex: state.selectedIndex,
+        language: state.language,
       });
 
       return {
@@ -92,15 +114,24 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       selectedIndex: nextState.selectedIndex,
       checkedKeys: nextState.checkedKeys,
       listExpiryTimestamps: nextState.listExpiryTimestamps,
+      language: nextState.language,
     }));
   },
 
   resetState() {
+    const { language } = get();
     clearPersistedState();
+    savePersistedState({
+      checkedKeys: {},
+      listExpiryTimestamps: {},
+      selectedIndex: 0,
+      language,
+    });
     set({
       selectedIndex: 0,
       checkedKeys: {},
       listExpiryTimestamps: {},
+      language,
     });
   },
 

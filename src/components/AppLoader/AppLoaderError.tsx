@@ -1,4 +1,5 @@
 import { useStartupStore } from "../../stores/useStartupStore";
+import Typography from "../Typography/Typography";
 
 export default function AppLoaderError() {
   const failureInfo = useStartupStore((state) => state.failureInfo);
@@ -10,10 +11,15 @@ export default function AppLoaderError() {
   return (
     <div className="loader loader--error">
       <div className="loader__panel">
-        <h1 className="loader__heading">Unable to load the dashboard</h1>
+        <h1 className="loader__heading">
+          <Typography
+            textKey="loader.errorHeading"
+            variant="heading"
+            size="large"
+          />
+        </h1>
         <p className="loader__message">
-          The application could not complete startup. Please refresh the page
-          and try again.
+          <Typography textKey="loader.errorMessage" />
         </p>
         <div className="loader__error">
           <strong>Error during:</strong> {failureInfo.step}
@@ -21,7 +27,9 @@ export default function AppLoaderError() {
           <strong>Message:</strong> {failureInfo.message}
         </div>
         <div className="loader__debug">
-          <strong>Debug details</strong>
+          <strong>
+            <Typography textKey="loader.debugHeading" />
+          </strong>
           <pre>
             {`step: ${failureInfo.step}
 message: ${failureInfo.message}
