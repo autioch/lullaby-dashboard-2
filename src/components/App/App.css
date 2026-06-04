@@ -7,7 +7,7 @@
   min-height: 100vh;
   padding: 2vw;
   color: #fff;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -42,12 +42,6 @@
     padding-left: 2vw;
     height: 50vh;
   }
-}
-
-.app__video {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
 }
 
 .app__clock {

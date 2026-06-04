@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import { useDashboardStore } from "./useDashboardStore";
+import { create } from 'zustand';
+import { useDashboardStore } from './useDashboardStore';
 
-export type StartupStepId = "loadConfiguration" | "hydrateState";
+export type StartupStepId = 'loadConfiguration' | 'hydrateState';
 
-export type StartupStatus = "pending" | "inProgress" | "complete" | "failed";
+export type StartupStatus = 'pending' | 'inProgress' | 'complete' | 'failed';
 
 interface StartupStep {
   id: StartupStepId;
@@ -29,15 +29,15 @@ interface StartupState {
 
 const initialSteps: StartupStep[] = [
   {
-    id: "loadConfiguration",
-    labelKey: "loader.loadingConfiguration",
-    status: "pending",
+    id: 'loadConfiguration',
+    labelKey: 'loader.loadingConfiguration',
+    status: 'pending',
     stepFn: () => useDashboardStore.getState().loadConfiguration(),
   },
   {
-    id: "hydrateState",
-    labelKey: "loader.restoringState",
-    status: "inProgress",
+    id: 'hydrateState',
+    labelKey: 'loader.restoringState',
+    status: 'inProgress',
     stepFn: async () => await useDashboardStore.getState().hydrateState(),
   },
 ];
@@ -56,7 +56,7 @@ export const useStartupStore = create<StartupState>((set, get) => ({
               ...step,
               status,
             }
-          : step,
+          : step
       ),
     }));
   },
@@ -70,14 +70,14 @@ export const useStartupStore = create<StartupState>((set, get) => ({
 
     set({ startupStarted: true });
 
-    let currentStep: StartupStepId = "loadConfiguration";
+    let currentStep: StartupStepId = 'loadConfiguration';
 
     try {
       for (const step of get().steps) {
         currentStep = step.id;
-        setStepStatus(currentStep, "inProgress");
+        setStepStatus(currentStep, 'inProgress');
         await step.stepFn();
-        setStepStatus(currentStep, "complete");
+        setStepStatus(currentStep, 'complete');
       }
 
       set({ isReady: true });
@@ -85,7 +85,7 @@ export const useStartupStore = create<StartupState>((set, get) => ({
       const message = error instanceof Error ? error.message : String(error);
       const stack = error instanceof Error ? error.stack : undefined;
 
-      setStepStatus(currentStep, "failed");
+      setStepStatus(currentStep, 'failed');
 
       set({
         failureInfo: {

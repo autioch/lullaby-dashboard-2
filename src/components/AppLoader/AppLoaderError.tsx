@@ -1,5 +1,5 @@
-import { useStartupStore } from "../../stores/useStartupStore";
-import Typography from "../Typography/Typography";
+import { useStartupStore } from '../../stores/useStartupStore';
+import Typography from '../Typography/Typography';
 
 export default function AppLoaderError() {
   const failureInfo = useStartupStore((state) => state.failureInfo);
@@ -34,7 +34,7 @@ export default function AppLoaderError() {
             {`step: ${failureInfo.step}
 message: ${failureInfo.message}
 stack:
-${failureInfo.stack ?? "(no stack available)"}`}
+${failureInfo.stack ?? '(no stack available)'}`}
           </pre>
         </div>
       </div>

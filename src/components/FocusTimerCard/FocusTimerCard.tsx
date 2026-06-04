@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useDashboardStore } from "../../stores/useDashboardStore";
-import "./FocusTimerCard.css";
+import { useEffect, useRef, useState } from 'react';
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import './FocusTimerCard.css';
 
 type FocusTimerCardProps = {};
 
@@ -8,7 +8,7 @@ function formatDuration(durationMs: number) {
   const totalSeconds = Math.max(0, Math.floor(durationMs / 1000));
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
-  return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 export default function FocusTimerCard({}: FocusTimerCardProps) {
@@ -17,7 +17,7 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
   const lists = useDashboardStore((state) => state.lists);
   const timerRunsByList = useDashboardStore((state) => state.timerRunsByList);
   const fastestRunsByList = useDashboardStore(
-    (state) => state.fastestRunsByList,
+    (state) => state.fastestRunsByList
   );
   const pauseTimer = useDashboardStore((state) => state.pauseTimer);
   const resumeTimer = useDashboardStore((state) => state.resumeTimer);
@@ -34,7 +34,7 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
       ? currentRun.elapsedMs +
         Math.max(
           0,
-          tick - (currentRun.lastResumedAtMs ?? currentRun.startedAtMs),
+          tick - (currentRun.lastResumedAtMs ?? currentRun.startedAtMs)
         )
       : (currentRun?.elapsedMs ?? 0);
   const previousSelectedId = useRef<string | null>(null);
@@ -50,7 +50,7 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
     }
 
     const run = timerRunsByList[selectedList.id];
-    if (run && !run.isRunning && document.visibilityState === "visible") {
+    if (run && !run.isRunning && document.visibilityState === 'visible') {
       resumeTimer(selectedList.id);
     }
 
@@ -61,7 +61,7 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
     if (!selectedList) return;
 
     const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
+      if (document.visibilityState === 'hidden') {
         pauseTimer(selectedList.id);
         return;
       }
@@ -76,12 +76,12 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
       pauseTimer(selectedList.id);
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [pauseTimer, resumeTimer, selectedList, timerRunsByList]);
 
@@ -101,7 +101,7 @@ export default function FocusTimerCard({}: FocusTimerCardProps) {
         {formatDuration(currentElapsedMs)}
       </strong>
       <p className="app__timer-fastest">
-        Fastest: {fastestRun ? formatDuration(fastestRun.elapsedMs) : "—"}
+        Fastest: {fastestRun ? formatDuration(fastestRun.elapsedMs) : '—'}
       </p>
     </section>
   );

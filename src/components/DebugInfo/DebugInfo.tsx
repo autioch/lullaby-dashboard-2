@@ -1,4 +1,4 @@
-import "./DebugInfo.css";
+import './DebugInfo.css';
 
 type DebugItem = {
   label: string;
@@ -7,24 +7,24 @@ type DebugItem = {
 
 export default function DebugInfo() {
   const debugItems: { label: string; value: string }[] = [
-    { label: "Origin", value: window.location.origin },
-    { label: "Pathname", value: window.location.pathname },
-    { label: "User Agent", value: window.navigator.userAgent },
-    ...Array.from(document.querySelectorAll("link[rel=stylesheet]")).map(
+    { label: 'Origin', value: window.location.origin },
+    { label: 'Pathname', value: window.location.pathname },
+    { label: 'User Agent', value: window.navigator.userAgent },
+    ...Array.from(document.querySelectorAll('link[rel=stylesheet]')).map(
       (link, index) => ({
         label: `Link ${index + 1}`,
         value:
-          link.getAttribute("href") ||
-          link.getAttribute("data-vite-dev-id") ||
-          "?",
-      }),
+          link.getAttribute('href') ||
+          link.getAttribute('data-vite-dev-id') ||
+          '?',
+      })
     ),
-    ...Array.from(document.querySelectorAll("style")).map((link, index) => ({
+    ...Array.from(document.querySelectorAll('style')).map((link, index) => ({
       label: `Style ${index + 1}`,
       value:
-        link.getAttribute("href") ||
-        link.getAttribute("data-vite-dev-id") ||
-        "?",
+        link.getAttribute('href') ||
+        link.getAttribute('data-vite-dev-id') ||
+        '?',
     })),
   ];
 

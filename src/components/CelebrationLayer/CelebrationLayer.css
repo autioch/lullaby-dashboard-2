@@ -42,7 +42,7 @@
 
 .app__firework::before,
 .app__firework::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: -0.35rem;
   border-radius: inherit;

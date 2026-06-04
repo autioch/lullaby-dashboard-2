@@ -1,4 +1,4 @@
-import { getFirestoreDb, jsonResponse } from "./_utils";
+import { getFirestoreDb, jsonResponse } from './_utils';
 
 export const prerender = false;
 
@@ -7,7 +7,7 @@ export async function GET() {
     const snapshot = await getConfiguration();
 
     if (!snapshot.exists) {
-      return jsonResponse({ error: "Configuration document not found" }, 404);
+      return jsonResponse({ error: 'Configuration document not found' }, 404);
     }
 
     const data = snapshot.data() as { savedLists?: unknown } | undefined;
@@ -15,7 +15,7 @@ export async function GET() {
     if (!data || !Array.isArray(data.savedLists)) {
       return jsonResponse(
         { error: "Configuration is missing savedLists or it's not an array" },
-        500,
+        500
       );
     }
 
@@ -23,17 +23,17 @@ export async function GET() {
   } catch (error) {
     return jsonResponse(
       {
-        error: "Failed to load configuration",
+        error: 'Failed to load configuration',
         details: error instanceof Error ? error.message : String(error),
       },
-      500,
+      500
     );
   }
 }
 
 async function getConfiguration() {
   const db = await getFirestoreDb();
-  const snapshot = await db.collection("dashboard").doc("configuration").get();
+  const snapshot = await db.collection('dashboard').doc('configuration').get();
 
   return snapshot;
 }

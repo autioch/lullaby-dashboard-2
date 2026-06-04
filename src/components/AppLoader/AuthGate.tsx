@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import PasswordForm from "./PasswordForm";
+import { useEffect, useState } from 'react';
+import PasswordForm from './PasswordForm';
 
-const AUTH_STORAGE_KEY = "lullaby-dashboard-auth";
+const AUTH_STORAGE_KEY = 'lullaby-dashboard-auth';
 
 interface AuthGateProps {
   onUnlocked: () => void;
 }
 
 export default function AuthGate({ onUnlocked }: AuthGateProps) {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
-    if (window.localStorage.getItem(AUTH_STORAGE_KEY) === "true") {
+    if (window.localStorage.getItem(AUTH_STORAGE_KEY) === 'true') {
       onUnlocked();
     }
   }, [onUnlocked]);
@@ -24,35 +24,35 @@ export default function AuthGate({ onUnlocked }: AuthGateProps) {
     event.preventDefault();
 
     if (!password.trim()) {
-      setErrorMessage("Please enter the password.");
+      setErrorMessage('Please enter the password.');
       return;
     }
 
     setIsSubmitting(true);
-    setErrorMessage("");
+    setErrorMessage('');
 
     try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ password }),
       });
 
       const data = (await response.json()) as { ok?: boolean; error?: string };
 
       if (!response.ok || !data.ok) {
-        setErrorMessage(data.error ?? "Incorrect password.");
+        setErrorMessage(data.error ?? 'Incorrect password.');
         return;
       }
 
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(AUTH_STORAGE_KEY, "true");
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(AUTH_STORAGE_KEY, 'true');
       }
 
-      setPassword("");
+      setPassword('');
       onUnlocked();
     } catch {
-      setErrorMessage("Unable to verify the password right now.");
+      setErrorMessage('Unable to verify the password right now.');
     } finally {
       setIsSubmitting(false);
     }

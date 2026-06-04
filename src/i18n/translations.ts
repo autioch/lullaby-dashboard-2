@@ -1,8 +1,8 @@
-import { translations } from "./dictionary";
+import { translations } from './dictionary';
 
-export type AppLanguage = "en" | "pl";
+export type AppLanguage = 'en' | 'pl';
 
-export const DEFAULT_LANGUAGE: AppLanguage = "en";
+export const DEFAULT_LANGUAGE: AppLanguage = 'en';
 
 export function getTranslation(language: AppLanguage = DEFAULT_LANGUAGE) {
   return translations[language] ?? translations[DEFAULT_LANGUAGE];
@@ -11,20 +11,20 @@ export function getTranslation(language: AppLanguage = DEFAULT_LANGUAGE) {
 export function t(
   key: string,
   language: AppLanguage = DEFAULT_LANGUAGE,
-  replacements?: Record<string, string | number>,
+  replacements?: Record<string, string | number>
 ) {
-  const parts = key.split(".");
+  const parts = key.split('.');
   const dictionary = getTranslation(language) as Record<string, unknown>;
   let value: unknown = dictionary;
 
   for (const part of parts) {
-    if (typeof value !== "object" || value === null || !(part in value)) {
+    if (typeof value !== 'object' || value === null || !(part in value)) {
       return key;
     }
     value = (value as Record<string, unknown>)[part];
   }
 
-  if (typeof value !== "string") {
+  if (typeof value !== 'string') {
     return key;
   }
 

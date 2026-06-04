@@ -54,7 +54,7 @@ Expected result: successful Astro build using the Netlify adapter for deployment
 Validate TypeScript correctness:
 
 ```bash
-npm run typecheck
+npm run ci:ts
 ```
 
 This runs `tsc --noEmit`.
@@ -84,7 +84,7 @@ npm run preview
 - There is no `lint` script in `package.json`.
 - There is no `test` script or built-in test suite in this repo.
 - There are no GitHub Actions workflow files in `.github/` currently.
-- Use `npm run build` and `npm run typecheck` as the main validation steps.
+- Use `npm run build` and `npm run ci:ts` as the main validation steps.
 
 ## Environment
 
@@ -128,7 +128,7 @@ npm run preview
 When making changes:
 
 1. Run `npm install` if dependencies changed or if the workspace was cleaned.
-2. Run `npm run typecheck` to verify TypeScript.
+2. Run `npm run ci:ts` to verify TypeScript.
 3. Run `npm run build` to verify the site compiles.
 4. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
 

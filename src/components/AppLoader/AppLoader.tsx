@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
-import AppLoaderError from "./AppLoaderError";
-import { useStartupStore } from "../../stores/useStartupStore";
-import Typography from "../Typography/Typography";
-import AuthGate from "./AuthGate";
-import "./AppLoader.css";
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
+import AppLoaderError from './AppLoaderError';
+import { useStartupStore } from '../../stores/useStartupStore';
+import Typography from '../Typography/Typography';
+import AuthGate from './AuthGate';
+import './AppLoader.css';
 
 interface AppLoaderProps {
   children: ReactNode;
@@ -56,11 +56,11 @@ export default function AppLoader({ children }: AppLoaderProps) {
                   className={`loader__item-status loader__item-status--${step.status}`}
                   aria-hidden="true"
                 >
-                  {step.status === "complete"
-                    ? "✓"
-                    : step.status === "failed"
-                      ? "✕"
-                      : ""}
+                  {step.status === 'complete'
+                    ? '✓'
+                    : step.status === 'failed'
+                      ? '✕'
+                      : ''}
                 </span>
                 <span>
                   <Typography textKey={step.labelKey} />

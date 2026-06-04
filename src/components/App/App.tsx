@@ -1,13 +1,18 @@
-import { useMemo } from "react";
-import AppLoader from "../AppLoader/AppLoader";
-import TodoList from "../TodoList/TodoList";
-import "../ProgressBar/ProgressBar.css";
-import "./App.css";
-import { useDashboardStore } from "../../stores/useDashboardStore";
-import Typography from "../Typography/Typography";
-import AppSidebar from "../AppSidebar/AppSidebar";
-import CelebrationLayer from "../CelebrationLayer/CelebrationLayer";
-import LanguageMenu from "../LanguageMenu/LanguageMenu";
+import AppLoader from '../AppLoader/AppLoader';
+import TodoList from '../TodoList/TodoList';
+import '../ProgressBar/ProgressBar.css';
+import './App.css';
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import Typography from '../Typography/Typography';
+import CelebrationLayer from '../CelebrationLayer/CelebrationLayer';
+import LanguageMenu from '../LanguageMenu/LanguageMenu';
+import Clock from '../Clock/Clock';
+import ListSelector from '../ListSelector/ListSelector';
+import ProgressBar from '../ProgressBar/ProgressBar';
+import FocusTimerCard from '../FocusTimerCard/FocusTimerCard';
+import VideoEmbed from '../VideoEmbed/VideoEmbed';
+
+const { resetState } = useDashboardStore.getState();
 
 function AppContent() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
@@ -21,7 +26,28 @@ function AppContent() {
   return (
     <article className="app" style={backgroundStyle}>
       <TodoList />
-      <AppSidebar />
+      <div className="app__sidebar">
+        <VideoEmbed />
+
+        <section className="app__clock">
+          <Clock />
+        </section>
+
+        <section className="app__selector">
+          <ListSelector />
+          <button
+            type="button"
+            className="app__reset-button"
+            onClick={resetState}
+          >
+            <Typography textKey="app.reset" />
+          </button>
+        </section>
+
+        <ProgressBar />
+
+        <FocusTimerCard />
+      </div>
       <CelebrationLayer />
       <LanguageMenu />
     </article>

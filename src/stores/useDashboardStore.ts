@@ -1,18 +1,18 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 import type {
   CelebrationState,
   FastestRunRecord,
   SavedList,
   TimerRunState,
-} from "../types";
-import { DEFAULT_LANGUAGE, type AppLanguage } from "../i18n/translations";
+} from '../types';
+import { DEFAULT_LANGUAGE, type AppLanguage } from '../i18n/translations';
 import {
   cleanPersistedState,
   clearPersistedState,
   isBrowser,
   loadPersistedState,
   savePersistedState,
-} from "./utils";
+} from './utils';
 
 export interface DashboardState {
   lists: SavedList[];
@@ -94,7 +94,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
 
   toggleItem(key: string) {
     return set((state) => {
-      const [listId] = key.split("-", 2);
+      const [listId] = key.split('-', 2);
       const list = state.lists.find((entry) => entry.id === listId);
       const isNowChecked = !state.checkedKeys[key];
       const nextCheckedKeys = {
@@ -105,7 +105,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       const totalItems =
         list?.groups.reduce(
           (sum, group) => sum + (group.items?.length ?? 0),
-          0,
+          0
         ) ?? 0;
       const completedItems =
         list?.groups.reduce((sum, group) => {
@@ -456,11 +456,11 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   async loadConfiguration() {
-    const response = await fetch("/api/configuration");
+    const response = await fetch('/api/configuration');
 
     if (!response.ok) {
       throw new Error(
-        `Failed to load configuration from proxy endpoint: ${response.status}`,
+        `Failed to load configuration from proxy endpoint: ${response.status}`
       );
     }
 
@@ -469,7 +469,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     };
 
     if (!data || !Array.isArray(data.savedLists)) {
-      throw new Error("Proxy configuration is missing savedLists");
+      throw new Error('Proxy configuration is missing savedLists');
     }
 
     set((state) => ({

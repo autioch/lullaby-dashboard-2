@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useDashboardStore } from "../../stores/useDashboardStore";
-import "./CelebrationLayer.css";
+import { useEffect } from 'react';
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import './CelebrationLayer.css';
 
 export default function CelebrationLayer() {
   const celebration = useDashboardStore((state) => state.celebration);
@@ -27,14 +27,14 @@ function CelebrationLayerInner() {
   return (
     <div className="app__celebration" role="status" aria-live="polite">
       <div className="app__celebration-bubble">
-        {celebration.isNewBest ? "New fastest run!" : "List cleared!"}
+        {celebration.isNewBest ? 'New fastest run!' : 'List cleared!'}
       </div>
       <div className="app__fireworks" aria-hidden="true">
         {Array.from({ length: 14 }).map((_, index) => (
           <span
             key={index}
             className="app__firework"
-            style={{ ["--delay" as string]: `${index * 0.15}s` }}
+            style={{ ['--delay' as string]: `${index * 0.15}s` }}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
-import { useDashboardStore } from "../../stores/useDashboardStore";
-import "./TodoList.css";
-import type { SavedList, ToDoItem } from "../../types";
-import Typography from "../Typography/Typography";
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import './TodoList.css';
+import type { SavedList, ToDoItem } from '../../types';
+import Typography from '../Typography/Typography';
 
 type TodoListProps = {
   list: SavedList;
@@ -45,7 +45,7 @@ function TodoListInner({ list }: TodoListProps) {
                 return (
                   <li
                     key={key}
-                    className={`todo-list__item${checked ? " todo-list__item--checked" : ""}`}
+                    className={`todo-list__item${checked ? ' todo-list__item--checked' : ''}`}
                     style={{ color: item.color }}
                     onClick={() => toggleItem(key)}
                   >

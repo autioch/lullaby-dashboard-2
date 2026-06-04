@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Typography from "../Typography/Typography";
-import { useDashboardStore } from "../../stores/useDashboardStore";
-import "./LanguageMenu.css";
+import { useState } from 'react';
+import Typography from '../Typography/Typography';
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import './LanguageMenu.css';
 
 type LanguageMenuProps = {
   onClose?: () => void;
@@ -29,7 +29,7 @@ export default function LanguageMenu({ onClose }: LanguageMenuProps) {
             type="button"
             className="app__options-menu-button"
             onClick={() => {
-              setLanguage("en");
+              setLanguage('en');
               setIsOptionsOpen(false);
               onClose?.();
             }}
@@ -40,7 +40,7 @@ export default function LanguageMenu({ onClose }: LanguageMenuProps) {
             type="button"
             className="app__options-menu-button"
             onClick={() => {
-              setLanguage("pl");
+              setLanguage('pl');
               setIsOptionsOpen(false);
               onClose?.();
             }}

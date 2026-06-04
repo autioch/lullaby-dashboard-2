@@ -1,13 +1,40 @@
-import Typography from "../Typography/Typography";
+import Typography from '../Typography/Typography';
+import { useMemo } from 'react';
+import { useDashboardStore } from '../../stores/useDashboardStore';
 
-type ProgressBarProps = {
-  completed: number;
-  total: number;
-};
+export default function ProgressBar() {
+  const checkedKeys = useDashboardStore((state) => state.checkedKeys);
 
-export default function ProgressBar({ completed, total }: ProgressBarProps) {
+  const selectedList = useDashboardStore((state) => {
+    const list = state.lists[state.selectedIndex];
+    return list ?? null;
+  });
+
+  const total = useMemo(
+    () =>
+      selectedList?.groups.reduce(
+        (sum, group) => sum + (group.items?.length ?? 0),
+        0
+      ) ?? 0,
+    [selectedList]
+  );
+
+  const completed = selectedList
+    ? selectedList.groups.reduce((sum, group) => {
+        return (
+          sum +
+          group.items.reduce((groupSum, item) => {
+            const key = `${selectedList.id}-${group.id}-${item.id}`;
+            return groupSum + (checkedKeys[key] ? 1 : 0);
+          }, 0)
+        );
+      }, 0)
+    : 0;
+
   const safeTotal = Math.max(total, 1);
+
   const percent = Math.round((completed / safeTotal) * 100);
+
   const fillWidth = `${Math.min(Math.max((completed / safeTotal) * 100, 0), 100)}%`;
 
   return (

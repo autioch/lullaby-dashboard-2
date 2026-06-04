@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { FormEvent } from 'react';
 
 interface PasswordFormProps {
   password: string;
@@ -35,7 +35,7 @@ export default function PasswordForm({
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Checking..." : "Open dashboard"}
+        {isSubmitting ? 'Checking...' : 'Open dashboard'}
       </button>
     </form>
   );
