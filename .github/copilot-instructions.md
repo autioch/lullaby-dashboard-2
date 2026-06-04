@@ -115,13 +115,13 @@ npm run preview
 
 ### Architecture
 
-- Astro renders the static page in `src/pages/index.astro`.
-- React components are used for dynamic client-side behavior.
-- State is stored in a Zustand hook and persisted through the browser.
+- Astro renders the static page in `src/pages/index.astro`
+- React components are used for dynamic client-side behavior
+- State and logic must be stored in a Zustand hook and persisted through the browser
 - The build output is served from `docs/` with base path `lullaby-dashboard-2`
-- All logic should be kept in the Zustand store
-- React components should render state, avoid using hooks for app logic
+- React components must be representational, hooks should be only used to read state or call Zustand actions
 - React components should be small, when adding new feature, prefer creating new components
+- Firebase must be called only from proxy Astro API routes in `src/pages/api/` and never directly from React components or Zustand stores
 
 ## Validation Guidance
 

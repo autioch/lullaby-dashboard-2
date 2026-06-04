@@ -13,8 +13,6 @@ import {
   loadPersistedState,
   savePersistedState,
 } from "./utils";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
 
 export interface DashboardState {
   lists: SavedList[];
@@ -458,15 +456,20 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   async loadConfiguration() {
-    const snapshot = await getDoc(doc(db, "dashboard", "configuration"));
+    const response = await fetch("/api/configuration");
 
-    if (!snapshot.exists()) {
-      throw new Error("Firebase configuration document not found");
+    if (!response.ok) {
+      throw new Error(
+        `Failed to load configuration from proxy endpoint: ${response.status}`,
+      );
     }
 
-    const data = snapshot.data();
+    const data = (await response.json()) as {
+      savedLists?: SavedList[];
+    };
+
     if (!data || !Array.isArray(data.savedLists)) {
-      throw new Error("Firebase configuration is missing savedLists");
+      throw new Error("Proxy configuration is missing savedLists");
     }
 
     set((state) => ({
