@@ -23,3 +23,5 @@ pnpm-debug.log*
 .idea/
 
 service-account.json
+# Local Netlify folder
+.netlify/

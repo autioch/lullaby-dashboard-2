@@ -3,6 +3,8 @@ import path from "node:path";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
+export const prerender = false;
+
 const serviceAccountKeyPath =
   process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH ?? "service-account.json";
 

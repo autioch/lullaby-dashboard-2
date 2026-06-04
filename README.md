@@ -11,7 +11,7 @@ What it does
 ## Development
 
 Dev server: `npm run dev`
-In the browser: http://localhost:4322/lullaby-dashboard-2
+In the browser: http://localhost:4322/
 Create a `.env` file in the project root based on the `.env.example` file.
 
 ## Tech stack

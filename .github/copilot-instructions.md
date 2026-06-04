@@ -10,7 +10,7 @@ This repository is a small static Astro dashboard app called **Lullaby Dashboard
 - Sass for styling
 - A JSON configuration file at `public/configuration.json`
 
-The build produces a static site under `docs/` with a base path of `lullaby-dashboard-2`.
+The build should be prepared for Netlify root-domain hosting, without a GitHub Pages subfolder base path.
 
 ## Supported browsers
 
@@ -47,7 +47,7 @@ Confirm the app compiles and produces the static output:
 npm run build
 ```
 
-Expected result: successful Astro build and output written to `docs/`.
+Expected result: successful Astro build using the Netlify adapter for deployment at the site root.
 
 ### Type Checking
 
@@ -70,7 +70,7 @@ npm run dev
 Then open:
 
 ```text
-http://localhost:4322/lullaby-dashboard-2
+http://localhost:4322/
 ```
 
 To preview the built static site after `npm run build`:
@@ -97,10 +97,10 @@ npm run preview
 
 - `package.json` — primary scripts and dependencies
 - `package-lock.json` — lockfile for npm
-- `astro.config.mjs` — Astro site config, base path, outDir `./docs`
+- `astro.config.mjs` — Astro config for Netlify deployment at the site root
 - `tsconfig.json` — TypeScript config extending `astro/tsconfigs/strict`
 - `README.md` — short project description and dev instruction
-- `docs/` — built static site output
+- deployment output is handled by the Netlify adapter rather than a GitHub Pages `docs/` folder
 - `public/` — public static assets
 - `src/` — app source code
 - `tools/` — utility scripts
@@ -118,7 +118,7 @@ npm run preview
 - Astro renders the static page in `src/pages/index.astro`
 - React components are used for dynamic client-side behavior
 - State and logic must be stored in a Zustand hook and persisted through the browser
-- The build output is served from `docs/` with base path `lullaby-dashboard-2`
+- The build should not rely on a GitHub Pages subfolder base path
 - React components must be representational, hooks should be only used to read state or call Zustand actions
 - React components should be small, when adding new feature, prefer creating new components
 - Firebase must be called only from proxy Astro API routes in `src/pages/api/` and never directly from React components or Zustand stores
