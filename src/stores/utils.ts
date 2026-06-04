@@ -1,6 +1,6 @@
-import { type AppLanguage, DEFAULT_LANGUAGE } from '../i18n/translations';
+import { type AppLanguage, DEFAULT_LANGUAGE } from '@/i18n/translations';
 import type { DashboardState } from './useDashboardStore';
-import type { SavedList } from '../types';
+import type { SavedList } from '@/types';
 
 type PersistedDashboardState = {
   checkedKeys: Record<string, boolean>;
@@ -10,7 +10,7 @@ type PersistedDashboardState = {
   timerRunsByList: Record<string, import('../types').TimerRunState>;
   fastestRunsByList: Record<string, import('../types').FastestRunRecord>;
   celebration: import('../types').CelebrationState;
-}
+};
 
 const STORAGE_KEY = 'lullaby-dashboard-state';
 

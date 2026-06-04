@@ -1,6 +1,6 @@
 import './FocusTimerCard.css';
 import { useEffect, useRef, useState } from 'react';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 
 function formatDuration(durationMs: number) {
   const totalSeconds = Math.max(0, Math.floor(durationMs / 1000));

@@ -1,15 +1,15 @@
 import './App.css';
-import AppLoader from '../AppLoader/AppLoader';
-import CelebrationLayer from '../CelebrationLayer/CelebrationLayer';
-import Clock from '../Clock/Clock';
-import FocusTimerCard from '../FocusTimerCard/FocusTimerCard';
-import LanguageMenu from '../LanguageMenu/LanguageMenu';
-import ListSelector from '../ListSelector/ListSelector';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import TodoList from '../TodoList/TodoList';
-import Typography from '../Typography/Typography';
-import VideoEmbed from '../VideoEmbed/VideoEmbed';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import AppLoader from '@/components/AppLoader/AppLoader';
+import CelebrationLayer from '@/components/CelebrationLayer/CelebrationLayer';
+import Clock from '@/components/Clock/Clock';
+import FocusTimerCard from '@/components/FocusTimerCard/FocusTimerCard';
+import LanguageMenu from '@/components/LanguageMenu/LanguageMenu';
+import ListSelector from '@/components/ListSelector/ListSelector';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import TodoList from '@/components/TodoList/TodoList';
+import Typography from '@/components/Typography/Typography';
+import VideoEmbed from '@/components/VideoEmbed/VideoEmbed';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 
 const { resetState } = useDashboardStore.getState();
 

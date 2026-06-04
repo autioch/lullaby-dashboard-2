@@ -1,5 +1,5 @@
 import './VideoEmbed.css';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 
 export default function VideoEmbed() {
   const videoUrl = useDashboardStore(

@@ -1,10 +1,10 @@
-import { type AppLanguage, DEFAULT_LANGUAGE } from '../i18n/translations';
+import { type AppLanguage, DEFAULT_LANGUAGE } from '@/i18n/translations';
 import type {
   CelebrationState,
   FastestRunRecord,
   SavedList,
   TimerRunState,
-} from '../types';
+} from '@/types';
 import {
   cleanPersistedState,
   clearPersistedState,
@@ -35,7 +35,7 @@ export type DashboardState = {
   loadConfiguration(): Promise<void>;
   hydrateState(): void;
   resetState(): void;
-}
+};
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
   lists: [],

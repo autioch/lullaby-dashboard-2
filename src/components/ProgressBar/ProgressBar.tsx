@@ -1,6 +1,6 @@
 import './ProgressBar.css';
-import Typography from '../Typography/Typography';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import Typography from '@/components/Typography/Typography';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useMemo } from 'react';
 
 export default function ProgressBar() {
@@ -43,18 +43,10 @@ export default function ProgressBar() {
       <header className="progress-bar__header">
         <div>
           <p className="progress-bar__eyebrow">
-            <Typography
-              textKey="progress.eyebrow"
-              variant="eyebrow"
-              size="small"
-            />
+            <Typography textKey="progress.eyebrow" size="small" />
           </p>
           <h2 className="progress-bar__title">
-            <Typography
-              textKey="progress.title"
-              variant="heading"
-              size="large"
-            />
+            <Typography textKey="progress.title" size="large" />
           </h2>
         </div>
         <strong className="progress-bar__percent">{percent}%</strong>
@@ -72,14 +64,10 @@ export default function ProgressBar() {
 
       <footer className="progress-bar__footer">
         <span>
-          <Typography
-            textKey="progress.done"
-            variant="label"
-            values={{ completed, total }}
-          />
+          <Typography textKey="progress.done" values={{ completed, total }} />
         </span>
         <span>
-          <Typography textKey="progress.keepGoing" variant="label" />
+          <Typography textKey="progress.keepGoing" />
         </span>
       </footer>
     </section>

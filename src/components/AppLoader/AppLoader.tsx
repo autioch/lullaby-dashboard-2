@@ -2,12 +2,12 @@ import './AppLoader.css';
 import { type ReactNode, useEffect, useState } from 'react';
 import AppLoaderError from './AppLoaderError';
 import AuthGate from './AuthGate';
-import Typography from '../Typography/Typography';
-import { useStartupStore } from '../../stores/useStartupStore';
+import Typography from '@/components/Typography/Typography';
+import { useStartupStore } from '@/stores/useStartupStore';
 
 type AppLoaderProps = {
   children: ReactNode;
-}
+};
 
 const { loadData } = useStartupStore.getState();
 
@@ -36,11 +36,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
       <div className="loader">
         <div className="loader__panel">
           <h1 className="loader__heading">
-            <Typography
-              textKey="loader.heading"
-              variant="heading"
-              size="large"
-            />
+            <Typography textKey="loader.heading" size="large" />
           </h1>
           <p className="loader__message">
             <Typography textKey="loader.message" />

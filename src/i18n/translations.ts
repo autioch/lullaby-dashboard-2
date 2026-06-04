@@ -4,28 +4,25 @@ export type AppLanguage = 'en' | 'pl';
 
 export const DEFAULT_LANGUAGE: AppLanguage = 'en';
 
-export function getTranslation(language: AppLanguage = DEFAULT_LANGUAGE) {
-  return translations[language] ?? translations[DEFAULT_LANGUAGE];
-}
-
 export function t(
   key: string,
   language: AppLanguage = DEFAULT_LANGUAGE,
   replacements?: Record<string, string | number>
 ) {
   const parts = key.split('.');
-  const dictionary = getTranslation(language) as Record<string, unknown>;
+  const dictionary = translations[language] ?? translations[DEFAULT_LANGUAGE];
+
   let value: unknown = dictionary;
 
   for (const part of parts) {
     if (typeof value !== 'object' || value === null || !(part in value)) {
-      return key;
+      return `<MISSING#${key}>`;
     }
     value = (value as Record<string, unknown>)[part];
   }
 
   if (typeof value !== 'string') {
-    return key;
+    return `<MISSING#${key}>`;
   }
 
   return replacements

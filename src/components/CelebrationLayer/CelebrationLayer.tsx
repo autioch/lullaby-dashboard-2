@@ -1,5 +1,5 @@
 import './CelebrationLayer.css';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useEffect } from 'react';
 
 export default function CelebrationLayer() {

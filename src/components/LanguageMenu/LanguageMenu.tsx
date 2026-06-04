@@ -1,6 +1,6 @@
 import './LanguageMenu.css';
-import Typography from '../Typography/Typography';
-import { useDashboardStore } from '../../stores/useDashboardStore';
+import Typography from '@/components/Typography/Typography';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useState } from 'react';
 
 type LanguageMenuProps = {

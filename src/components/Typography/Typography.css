@@ -1,26 +1,11 @@
-.typography--small {
+.c-typography--small {
   font-size: 0.9rem;
 }
 
-.typography--medium {
+.c-typography--medium {
   font-size: 1rem;
 }
 
-.typography--large {
+.c-typography--large {
   font-size: 1.2rem;
-}
-
-.typography--eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: #fff8c7;
-}
-
-.typography--heading {
-  margin: 0;
-  line-height: 1.2;
-}
-
-.typography--label {
-  color: #f5fff8;
 }
