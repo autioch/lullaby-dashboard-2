@@ -2,15 +2,13 @@
 
 ## Summary
 
-This repository is a small static Astro dashboard app called **Lullaby Dashboard 2**. It uses:
+This repository is a small static Astro dashboard app called **LaunchPad**. It uses:
 
 - Astro 5 for static site generation
 - React 19 for client-side components
 - Zustand for state management
-- Sass for styling
-- A JSON configuration file at `public/configuration.json`
-
-The build should be prepared for Netlify root-domain hosting, without a GitHub Pages subfolder base path.
+- BEM CSS for styling
+- Netlify for deployment at the site root
 
 ## Supported browsers
 
@@ -49,7 +47,7 @@ npm run build
 
 Expected result: successful Astro build using the Netlify adapter for deployment at the site root.
 
-### Type Checking
+### Validating and formatting:
 
 Validate TypeScript correctness:
 
@@ -57,7 +55,17 @@ Validate TypeScript correctness:
 npm run ci:ts
 ```
 
-This runs `tsc --noEmit`.
+Validate Eslint rules:
+
+```bash
+npm run ci:lint
+```
+
+Validate Prettier formatting:
+
+```bash
+npm run ci:format
+```
 
 ### Run Locally
 
@@ -70,7 +78,7 @@ npm run dev
 Then open:
 
 ```text
-http://localhost:4322/
+http://localhost:4321/
 ```
 
 To preview the built static site after `npm run build`:
@@ -78,13 +86,6 @@ To preview the built static site after `npm run build`:
 ```bash
 npm run preview
 ```
-
-### Notes
-
-- There is no `lint` script in `package.json`.
-- There is no `test` script or built-in test suite in this repo.
-- There are no GitHub Actions workflow files in `.github/` currently.
-- Use `npm run build` and `npm run ci:ts` as the main validation steps.
 
 ## Environment
 
@@ -118,9 +119,8 @@ npm run preview
 - Astro renders the static page in `src/pages/index.astro`
 - React components are used for dynamic client-side behavior
 - State and logic must be stored in a Zustand hook and persisted through the browser
-- The build should not rely on a GitHub Pages subfolder base path
-- React components must be representational, hooks should be only used to read state or call Zustand actions
-- React components should be small, when adding new feature, prefer creating new components
+- React components must be small and representational, hooks should be only used to read state or call Zustand actions
+- For each new feature, create new React components and Zustand state/actions as needed, but avoid adding new dependencies or complex logic to existing files
 - Firebase must be called only from proxy Astro API routes in `src/pages/api/` and never directly from React components or Zustand stores
 
 ## Validation Guidance
@@ -129,7 +129,9 @@ When making changes:
 
 1. Run `npm install` if dependencies changed or if the workspace was cleaned.
 2. Run `npm run ci:ts` to verify TypeScript.
-3. Run `npm run build` to verify the site compiles.
-4. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
+3. Run `npm run ci:lint` to verify Eslint.
+4. Run `npm run ci:format` to verify Prettier.
+5. Run `npm run build` to verify the site compiles.
+6. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
 
 If anything in these instructions appears incorrect or incomplete, perform a narrow search only for the missing part. Otherwise, trust these instructions and minimize additional repo exploration.
