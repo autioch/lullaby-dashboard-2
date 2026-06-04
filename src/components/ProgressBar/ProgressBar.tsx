@@ -1,6 +1,7 @@
+import './ProgressBar.css';
 import Typography from '../Typography/Typography';
-import { useMemo } from 'react';
 import { useDashboardStore } from '../../stores/useDashboardStore';
+import { useMemo } from 'react';
 
 export default function ProgressBar() {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);

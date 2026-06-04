@@ -1,6 +1,6 @@
-import type { SavedList } from '../types';
-import { DEFAULT_LANGUAGE, type AppLanguage } from '../i18n/translations';
+import { type AppLanguage, DEFAULT_LANGUAGE } from '../i18n/translations';
 import type { DashboardState } from './useDashboardStore';
+import type { SavedList } from '../types';
 
 interface PersistedDashboardState {
   checkedKeys: Record<string, boolean>;

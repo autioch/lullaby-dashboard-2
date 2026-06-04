@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import './LanguageMenu.css';
 import Typography from '../Typography/Typography';
 import { useDashboardStore } from '../../stores/useDashboardStore';
-import './LanguageMenu.css';
+import { useState } from 'react';
 
 type LanguageMenuProps = {
   onClose?: () => void;

@@ -1,7 +1,7 @@
-import { useDashboardStore } from '../../stores/useDashboardStore';
 import './TodoList.css';
-import type { SavedList, ToDoItem } from '../../types';
+import type { SavedList } from '../../types';
 import Typography from '../Typography/Typography';
+import { useDashboardStore } from '../../stores/useDashboardStore';
 
 type TodoListProps = {
   list: SavedList;

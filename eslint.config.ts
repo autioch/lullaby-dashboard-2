@@ -1,0 +1,40 @@
+import css from '@eslint/css';
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import js from '@eslint/js';
+import json from '@eslint/json';
+import markdown from '@eslint/markdown';
+import tseslint from 'typescript-eslint';
+// import pluginReact from "eslint-plugin-react";
+
+export default defineConfig([
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    plugins: { js },
+    extends: ['js/recommended'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    rules: {
+      'sort-imports': ['error'],
+    },
+  },
+  tseslint.configs.recommended,
+  // pluginReact.configs.flat.recommended,
+  {
+    files: ['**/*.json'],
+    plugins: { json },
+    language: 'json/json',
+    extends: ['json/recommended'],
+  },
+  {
+    files: ['**/*.md'],
+    plugins: { markdown },
+    language: 'markdown/gfm',
+    extends: ['markdown/recommended'],
+  },
+  {
+    files: ['**/*.css'],
+    plugins: { css },
+    language: 'css/css',
+    extends: ['css/recommended'],
+  },
+]);

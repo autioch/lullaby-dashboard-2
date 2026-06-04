@@ -1,11 +1,10 @@
-import { create } from 'zustand';
+import { type AppLanguage, DEFAULT_LANGUAGE } from '../i18n/translations';
 import type {
   CelebrationState,
   FastestRunRecord,
   SavedList,
   TimerRunState,
 } from '../types';
-import { DEFAULT_LANGUAGE, type AppLanguage } from '../i18n/translations';
 import {
   cleanPersistedState,
   clearPersistedState,
@@ -13,6 +12,7 @@ import {
   loadPersistedState,
   savePersistedState,
 } from './utils';
+import { create } from 'zustand';
 
 export interface DashboardState {
   lists: SavedList[];

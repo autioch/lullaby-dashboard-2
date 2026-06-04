@@ -1,8 +1,6 @@
+import './FocusTimerCard.css';
 import { useEffect, useRef, useState } from 'react';
 import { useDashboardStore } from '../../stores/useDashboardStore';
-import './FocusTimerCard.css';
-
-type FocusTimerCardProps = {};
 
 function formatDuration(durationMs: number) {
   const totalSeconds = Math.max(0, Math.floor(durationMs / 1000));
@@ -11,7 +9,7 @@ function formatDuration(durationMs: number) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-export default function FocusTimerCard({}: FocusTimerCardProps) {
+export default function FocusTimerCard() {
   const [tick, setTick] = useState(Date.now());
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);

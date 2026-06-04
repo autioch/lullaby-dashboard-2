@@ -1,5 +1,5 @@
-import { useStartupStore } from '../../stores/useStartupStore';
 import Typography from '../Typography/Typography';
+import { useStartupStore } from '../../stores/useStartupStore';
 
 export default function AppLoaderError() {
   const failureInfo = useStartupStore((state) => state.failureInfo);

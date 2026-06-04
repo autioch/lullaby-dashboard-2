@@ -1,6 +1,6 @@
+import './ListSelector.css';
 import type { ChangeEvent } from 'react';
 import { useDashboardStore } from '../../stores/useDashboardStore';
-import './ListSelector.css';
 
 const { setSelectedIndex } = useDashboardStore.getState();
 

@@ -1,10 +1,9 @@
-import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
-import AppLoaderError from './AppLoaderError';
-import { useStartupStore } from '../../stores/useStartupStore';
-import Typography from '../Typography/Typography';
-import AuthGate from './AuthGate';
 import './AppLoader.css';
+import { type ReactNode, useEffect, useState } from 'react';
+import AppLoaderError from './AppLoaderError';
+import AuthGate from './AuthGate';
+import Typography from '../Typography/Typography';
+import { useStartupStore } from '../../stores/useStartupStore';
 
 interface AppLoaderProps {
   children: ReactNode;

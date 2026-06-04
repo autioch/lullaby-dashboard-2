@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useDashboardStore } from '../../stores/useDashboardStore';
 import './CelebrationLayer.css';
+import { useDashboardStore } from '../../stores/useDashboardStore';
+import { useEffect } from 'react';
 
 export default function CelebrationLayer() {
   const celebration = useDashboardStore((state) => state.celebration);

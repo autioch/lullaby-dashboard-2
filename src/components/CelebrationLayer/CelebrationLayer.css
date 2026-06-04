@@ -27,6 +27,9 @@
   inset: 0;
 }
 
+/* TODO */
+
+/* 
 .app__firework {
   position: absolute;
   top: 15%;
@@ -42,7 +45,7 @@
 
 .app__firework::before,
 .app__firework::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -0.35rem;
   border-radius: inherit;
@@ -102,4 +105,4 @@
     transform: scale(2.4);
     opacity: 0;
   }
-}
+} */

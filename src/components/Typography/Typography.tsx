@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, ElementType } from 'react';
-import { useDashboardStore } from '../../stores/useDashboardStore';
-import { t } from '../../i18n/translations';
 import './Typography.css';
+import type { ComponentPropsWithoutRef, ElementType } from 'react';
+import { t } from '../../i18n/translations';
+import { useDashboardStore } from '../../stores/useDashboardStore';
 
 export type TypographyVariant = 'body' | 'eyebrow' | 'heading' | 'label';
 
