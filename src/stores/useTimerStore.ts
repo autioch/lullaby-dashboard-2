@@ -1,0 +1,227 @@
+import type { SavedList, TimerRunState } from '@/types';
+import { create } from 'zustand';
+import { lsWrapper } from '@/utils/ls';
+
+type TimerState = {
+  timerRunsByList: Record<string, TimerRunState>;
+  fastestRunsByList: Record<string, number>;
+};
+
+type TimerMethods = {
+  startTimer(listId: string): void;
+  pauseTimer(listId: string): void;
+  resumeTimer(listId: string): void;
+  completeRun(listId: string): void;
+  checkFinished(list: SavedList, checkedKeys: Record<string, boolean>): void;
+  resetTimerState(): void;
+};
+
+const ls = lsWrapper<TimerState>('timer');
+
+export const useTimerStore = create<TimerState & TimerMethods>((set, get) => ({
+  timerRunsByList: {},
+  fastestRunsByList: {},
+  ...ls.load(),
+
+  startTimer(listId: string) {
+    return set((state) => {
+      const run = state.timerRunsByList[listId];
+      const now = Date.now();
+      const nextRun = run
+        ? { ...run, isRunning: true, lastResumedAtMs: now }
+        : {
+            listId,
+            startedAtMs: now,
+            elapsedMs: 0,
+            isRunning: true,
+            lastResumedAtMs: now,
+          };
+
+      const nextState = {
+        ...state.timerRunsByList,
+        [listId]: nextRun,
+      };
+
+      ls.save({
+        timerRunsByList: nextState,
+        fastestRunsByList: state.fastestRunsByList,
+      });
+
+      return {
+        ...state,
+        timerRunsByList: nextState,
+      };
+    });
+  },
+
+  pauseTimer(listId: string) {
+    return set((state) => {
+      const run = state.timerRunsByList[listId];
+      if (!run || !run.isRunning) return state;
+
+      const now = Date.now();
+      const elapsedMs =
+        run.elapsedMs +
+        Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs));
+      const nextRun = {
+        ...run,
+        elapsedMs,
+        isRunning: false,
+        lastResumedAtMs: null,
+      };
+
+      const nextState = {
+        ...state.timerRunsByList,
+        [listId]: nextRun,
+      };
+
+      ls.save({
+        timerRunsByList: nextState,
+        fastestRunsByList: state.fastestRunsByList,
+      });
+
+      return {
+        ...state,
+        timerRunsByList: nextState,
+      };
+    });
+  },
+
+  resumeTimer(listId: string) {
+    return set((state) => {
+      const run = state.timerRunsByList[listId];
+      if (!run || run.isRunning) return state;
+
+      const nextRun = {
+        ...run,
+        isRunning: true,
+        lastResumedAtMs: Date.now(),
+      };
+
+      const nextTimerRunsByList = {
+        ...state.timerRunsByList,
+        [listId]: nextRun,
+      };
+
+      ls.save({
+        timerRunsByList: nextTimerRunsByList,
+        fastestRunsByList: state.fastestRunsByList,
+      });
+
+      return {
+        ...state,
+        timerRunsByList: nextTimerRunsByList,
+      };
+    });
+  },
+
+  completeRun(listId: string) {
+    return set((state) => {
+      const run = state.timerRunsByList[listId];
+      const now = Date.now();
+      const elapsedMs = run
+        ? run.elapsedMs +
+          Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs))
+        : 0;
+      const previousBest = state.fastestRunsByList[listId];
+      const isNewBest = previousBest === undefined || elapsedMs < previousBest;
+      const nextFastestRunsByList = { ...state.fastestRunsByList };
+
+      if (isNewBest) {
+        nextFastestRunsByList[listId] = elapsedMs;
+      }
+
+      const nextRun = {
+        ...run,
+        listId,
+        elapsedMs,
+        isRunning: false,
+      } as TimerRunState;
+
+      const nextTimerRunsByList = {
+        ...state.timerRunsByList,
+        [listId]: nextRun,
+      };
+
+      ls.save({
+        timerRunsByList: nextTimerRunsByList,
+        fastestRunsByList: nextFastestRunsByList,
+      });
+
+      return {
+        ...state,
+        timerRunsByList: nextTimerRunsByList,
+        fastestRunsByList: nextFastestRunsByList,
+      };
+    });
+  },
+
+  resetTimerState() {
+    set({
+      timerRunsByList: {},
+      fastestRunsByList: {},
+    });
+    ls.clear();
+  },
+
+  checkFinished(list, checkedKeys) {
+    const listId = list.id;
+    const totalItems =
+      list?.groups.reduce(
+        (sum, group) => sum + (group.items?.length ?? 0),
+        0
+      ) ?? 0;
+    const completedItems =
+      list?.groups.reduce((sum, group) => {
+        return (
+          sum +
+          group.items.reduce((groupSum, item) => {
+            const itemKey = `${list.id}-${group.id}-${item.id}`;
+            return groupSum + (checkedKeys[itemKey] ? 1 : 0);
+          }, 0)
+        );
+      }, 0) ?? 0;
+
+    const nextTimerRunsByList = { ...get().timerRunsByList };
+    if (!get().timerRunsByList[listId]) {
+      nextTimerRunsByList[listId] = {
+        listId,
+        startedAtMs: Date.now(),
+        elapsedMs: 0,
+        isRunning: true,
+        lastResumedAtMs: Date.now(),
+      };
+    }
+    if (totalItems > 0 && completedItems >= totalItems) {
+      const run = nextTimerRunsByList[listId];
+      const now = Date.now();
+      const elapsedMs = run
+        ? Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs)) +
+          run.elapsedMs
+        : 0;
+      const previousBest = get().fastestRunsByList[listId];
+      const isNewBest = previousBest === undefined || elapsedMs < previousBest;
+      const nextFastestRunsByList = { ...get().fastestRunsByList };
+
+      nextTimerRunsByList[listId] = {
+        ...run,
+        elapsedMs,
+        isRunning: false,
+      };
+
+      if (isNewBest) {
+        nextFastestRunsByList[listId] = elapsedMs;
+      }
+
+      set({
+        timerRunsByList: nextTimerRunsByList,
+        fastestRunsByList: nextFastestRunsByList,
+      });
+
+      ls.save({
+        timerRunsByList: nextTimerRunsByList,
+        fastestRunsByList: nextFastestRunsByList,
+      });
+    }
+  },
+}));

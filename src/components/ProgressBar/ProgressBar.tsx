@@ -1,12 +1,12 @@
 import './ProgressBar.css';
 import { Typography } from '@/components/Typography/Typography';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
 import { useMemo, type PropsWithChildren } from 'react';
 
 export function ProgressBar(props: PropsWithChildren) {
-  const checkedKeys = useDashboardStore((state) => state.checkedKeys);
+  const checkedKeys = useMissionStore((state) => state.checkedKeys);
 
-  const selectedList = useDashboardStore(
+  const selectedList = useMissionStore(
     (state) => state.lists[state.selectedIndex] ?? null
   );
 

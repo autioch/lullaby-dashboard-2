@@ -1,19 +1,21 @@
 import './AppOptions.css';
 import { Typography } from '@/components/Typography/Typography';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
 import { Overlay } from '../Overlay/Overlay';
 import { Layout } from '../Layout/Layout';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { Button } from '../Button/Button';
 import { useLanguageStore } from '@/stores/useLanguageStore';
+import { useTimerStore } from '@/stores/useTimerStore';
 
 const { closeOptions } = useControlsStore.getState();
-const { resetState } = useDashboardStore.getState();
+const { resetState } = useMissionStore.getState();
 const { setLanguage } = useLanguageStore.getState();
-const { setSelectedIndex } = useDashboardStore.getState();
+const { setSelectedIndex } = useMissionStore.getState();
+const { resetTimerState } = useTimerStore.getState();
 
 export function AppOptions() {
-  const lists = useDashboardStore((state) => state.lists);
+  const lists = useMissionStore((state) => state.lists);
 
   return (
     <Overlay>
@@ -57,7 +59,13 @@ export function AppOptions() {
           className="c-app-options__header"
         />
 
-        <Button textKey="appOptions.resetData" onClick={resetState} />
+        <Button
+          textKey="appOptions.resetData"
+          onClick={() => {
+            resetState();
+            resetTimerState();
+          }}
+        />
         <Button textKey="appOptions.close" onClick={closeOptions} />
       </Layout>
     </Overlay>

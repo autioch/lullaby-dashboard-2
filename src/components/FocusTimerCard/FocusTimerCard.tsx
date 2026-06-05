@@ -1,6 +1,7 @@
 import './FocusTimerCard.css';
 import { useEffect, useRef, useState } from 'react';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
+import { useTimerStore } from '@/stores/useTimerStore';
 
 function formatDuration(durationMs: number) {
   const totalSeconds = Math.max(0, Math.floor(durationMs / 1000));
@@ -9,16 +10,14 @@ function formatDuration(durationMs: number) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
+const { pauseTimer, resumeTimer } = useTimerStore.getState();
+
 export function FocusTimerCard() {
   const [tick, setTick] = useState(Date.now());
-  const selectedIndex = useDashboardStore((state) => state.selectedIndex);
-  const lists = useDashboardStore((state) => state.lists);
-  const timerRunsByList = useDashboardStore((state) => state.timerRunsByList);
-  const fastestRunsByList = useDashboardStore(
-    (state) => state.fastestRunsByList
-  );
-  const pauseTimer = useDashboardStore((state) => state.pauseTimer);
-  const resumeTimer = useDashboardStore((state) => state.resumeTimer);
+  const selectedIndex = useMissionStore((state) => state.selectedIndex);
+  const lists = useMissionStore((state) => state.lists);
+  const timerRunsByList = useTimerStore((state) => state.timerRunsByList);
+  const fastestRunsByList = useTimerStore((state) => state.fastestRunsByList);
 
   const selectedList = lists[selectedIndex] ?? null;
   const currentRun = selectedList
@@ -97,7 +96,7 @@ export function FocusTimerCard() {
       <div className="app__timer-label">Active focus</div>
       <div className="app__timer-value">{formatDuration(currentElapsedMs)}</div>
       <div className="app__timer-fastest">
-        Fastest: {fastestRun ? formatDuration(fastestRun.elapsedMs) : '—'}
+        Fastest: {fastestRun ? formatDuration(fastestRun) : '—'}
       </div>
     </div>
   );

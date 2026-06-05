@@ -23,12 +23,10 @@ export type TimerRunState = {
   elapsedMs: number;
   isRunning: boolean;
   lastResumedAtMs: number | null;
-  completedAtMs: number | null;
 };
 
 export type FastestRunRecord = {
   elapsedMs: number;
-  completedAtMs: number;
 };
 
 export type Configuration = {

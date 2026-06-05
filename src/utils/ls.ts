@@ -1,42 +1,43 @@
-import { isBrowser } from '@/stores/utils';
-
+const isBrowser = typeof window !== 'undefined';
 const NAMESPACE = 'launchpad';
 const VERSION = 1;
 
-function k(key: string) {
-  return `${NAMESPACE}_${VERSION}_${key}`;
-}
+export function lsWrapper<T = string>(key: string) {
+  const hash = `${NAMESPACE}_${VERSION}_${key}`;
 
-export function lsSave<T = string>(key: string, data: T) {
-  if (!isBrowser) return;
+  function save(data: T) {
+    if (!isBrowser) return;
 
-  try {
-    window.localStorage.setItem(k(key), JSON.stringify(data));
-  } catch {
-    // ignore localStorage errors
-  }
-}
-
-export function lsLoad<T = string>(key: string): T | undefined {
-  if (!isBrowser) {
-    return undefined;
+    try {
+      window.localStorage.setItem(hash, JSON.stringify(data));
+    } catch {
+      // ignore localStorage errors
+    }
   }
 
-  try {
-    const raw = window.localStorage.getItem(k(key));
-
-    if (!raw) {
+  function load(): T | undefined {
+    if (!isBrowser) {
       return undefined;
     }
-    return JSON.parse(raw) as T;
-  } catch {
-    return undefined;
-  }
-}
 
-export function lsClear(key: string) {
-  if (!isBrowser) {
-    return undefined;
+    try {
+      const raw = window.localStorage.getItem(hash);
+
+      if (!raw) {
+        return undefined;
+      }
+      return JSON.parse(raw) as T;
+    } catch {
+      return undefined;
+    }
   }
-  window.localStorage.removeItem(k(key));
+
+  function clear() {
+    if (!isBrowser) {
+      return undefined;
+    }
+    window.localStorage.removeItem(hash);
+  }
+
+  return { save, load, clear };
 }

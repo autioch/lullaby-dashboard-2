@@ -4,14 +4,14 @@ import { AppOptions } from '@/components/AppOptions/AppOptions';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
 import { ObjectiveList } from '@/components/ObjectiveList/ObjectiveList';
 import { VideoEmbed } from '@/components/VideoEmbed/VideoEmbed';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
 import { Button } from '../Button/Button';
 import { useControlsStore } from '@/stores/useControlsStore';
 
 const { openOptions } = useControlsStore.getState();
 
 export function Dashboard() {
-  const selectedIndex = useDashboardStore((state) => state.selectedIndex);
+  const selectedIndex = useMissionStore((state) => state.selectedIndex);
   const isAppOptions = useControlsStore((state) => state.isAppOptions);
 
   return (

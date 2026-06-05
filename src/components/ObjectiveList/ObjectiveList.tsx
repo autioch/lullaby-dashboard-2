@@ -1,12 +1,12 @@
 import './ObjectiveList.css';
 import { Objective } from './Objective';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
 
 export function ObjectiveList() {
-  const selectedList = useDashboardStore(
+  const selectedList = useMissionStore(
     (state) => state.lists[state.selectedIndex]
   );
-  const checkedKeys = useDashboardStore((state) => state.checkedKeys);
+  const checkedKeys = useMissionStore((state) => state.checkedKeys);
 
   if (!selectedList) {
     return null;
@@ -21,10 +21,15 @@ export function ObjectiveList() {
           <div className="c-objective-list__group" key={group.id}>
             {group.items.map((item) => {
               const key = `${selectedList.id}-${group.id}-${item.id}`;
-              const checked = Boolean(checkedKeys[key]);
 
               return (
-                <Objective key={key} item={item} checked={checked} hash={key} />
+                <Objective
+                  key={key}
+                  item={item}
+                  hash={key}
+                  list={selectedList}
+                  checkedKeys={checkedKeys}
+                />
               );
             })}
           </div>

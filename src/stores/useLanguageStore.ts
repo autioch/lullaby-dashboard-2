@@ -1,19 +1,21 @@
 import { type AppLanguage, DEFAULT_LANGUAGE } from '@/i18n/translations';
 import { create } from 'zustand';
-import { lsLoad, lsSave } from '@/utils/ls';
+import { lsWrapper } from '@/utils/ls';
 
-export type DashboardState = {
+type DashboardState = {
   language: AppLanguage;
   setLanguage(language: AppLanguage): void;
 };
 
+const ls = lsWrapper<AppLanguage>('language');
+
 export const useLanguageStore = create<DashboardState>((set) => ({
-  language: lsLoad('language') ?? DEFAULT_LANGUAGE,
+  language: ls.load() ?? DEFAULT_LANGUAGE,
 
   setLanguage(language: AppLanguage) {
     set({
       language,
     });
-    lsSave('language', language);
+    ls.save(language);
   },
 }));

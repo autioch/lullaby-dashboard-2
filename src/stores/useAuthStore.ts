@@ -1,15 +1,20 @@
-import { lsLoad, lsSave } from '@/utils/ls';
+import { lsWrapper } from '@/utils/ls';
 import { create } from 'zustand';
 
 type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
   errorTextKey: string | null;
+};
+
+type AuthMethods = {
   authenticate(password: string): Promise<void>;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: lsLoad('auth') ?? false,
+const ls = lsWrapper<boolean>('auth');
+
+export const useAuthStore = create<AuthState & AuthMethods>((set) => ({
+  isAuthenticated: ls.load() ?? false,
   isLoading: false,
   errorTextKey: null,
 
@@ -35,7 +40,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         return;
       }
       set({ isAuthenticated: true });
-      lsSave('auth', true);
+      ls.save(true);
     } catch {
       set({ errorTextKey: 'authGate.errorUnknown' });
     } finally {

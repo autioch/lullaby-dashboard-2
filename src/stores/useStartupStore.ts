@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { useDashboardStore } from './useDashboardStore';
+import { useMissionStore } from './useMissionStore';
 
-export type StartupStepId = 'loadConfiguration' | 'hydrateState';
+type StartupStepId = 'loadConfiguration' | 'hydrateState';
 
 export type StartupStatus = 'pending' | 'inProgress' | 'complete' | 'failed';
 
@@ -32,13 +32,13 @@ const initialSteps: StartupStep[] = [
     id: 'loadConfiguration',
     labelKey: 'startup.loadingConfiguration',
     status: 'pending',
-    stepFn: () => useDashboardStore.getState().loadConfiguration(),
+    stepFn: () => useMissionStore.getState().loadConfiguration(),
   },
   {
     id: 'hydrateState',
     labelKey: 'startup.restoringState',
     status: 'inProgress',
-    stepFn: () => useDashboardStore.getState().hydrateState(),
+    stepFn: () => useMissionStore.getState().hydrateState(),
   },
 ];
 

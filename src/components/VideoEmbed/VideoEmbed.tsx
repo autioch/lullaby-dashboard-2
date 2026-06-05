@@ -1,8 +1,8 @@
 import './VideoEmbed.css';
-import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMissionStore } from '@/stores/useMissionStore';
 
 export function VideoEmbed() {
-  const videoUrl = useDashboardStore(
+  const videoUrl = useMissionStore(
     (state) => state.lists[state.selectedIndex]?.youtubeUrl ?? null
   );
 
