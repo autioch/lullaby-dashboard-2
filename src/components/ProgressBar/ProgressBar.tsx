@@ -33,36 +33,46 @@ export function ProgressBar() {
 
   const safeTotal = Math.max(total, 1);
 
-  const percent = Math.round((completed / safeTotal) * 100);
+  const percent = Math.ceil((completed / safeTotal) * 100);
 
   const fillWidth = `${Math.min(Math.max((completed / safeTotal) * 100, 0), 100)}%`;
 
   return (
-    <div className="progress-bar">
-      <div className="progress-bar__header">
-        <div>
-          <div className="progress-bar__eyebrow">
-            <Typography textKey="progress.eyebrow" />
-          </div>
-          <div className="progress-bar__title">
-            <Typography textKey="progress.title" />
-          </div>
-        </div>
-        <div className="progress-bar__percent">{percent}%</div>
+    <div className="c-progress-bar">
+      <div className="c-progress-bar__track">
+        <div className="c-progress-bar__fill" style={{ width: fillWidth }} />
       </div>
 
-      <div className="progress-bar__track">
-        <div className="progress-bar__fill" style={{ width: fillWidth }} />
-      </div>
-
-      <div className="progress-bar__footer">
-        <div>
-          <Typography textKey="progress.done" values={{ completed, total }} />
-        </div>
-        <div>
-          <Typography textKey="progress.keepGoing" />
-        </div>
+      <div className="c-progress-bar__footer">
+        <Typography
+          textKey={`progressBar.${getProgressText(percent)}`}
+          as="div"
+        />
+        <Typography
+          textKey="progressBar.count"
+          values={{ completed, total, percent }}
+          as="div"
+        />
       </div>
     </div>
   );
+}
+
+function getProgressText(percent: number) {
+  if (percent === 0) {
+    return 'progressNone';
+  }
+  if (percent < 25) {
+    return 'progressBegin';
+  }
+  if (percent < 50) {
+    return 'progressMiddle';
+  }
+  if (percent < 90) {
+    return 'progressMost';
+  }
+  if (percent < 100) {
+    return 'progressAlmost';
+  }
+  return 'progressDone';
 }

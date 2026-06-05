@@ -52,6 +52,5 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 ## TODO
 
 - extract API communication layer at some point
-- refactor Dashboard, ProgressBar
 - dark/light mode
 - remove bgColor
