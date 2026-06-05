@@ -31,13 +31,6 @@ export type FastestRunRecord = {
   completedAtMs: number;
 };
 
-export type CelebrationState = {
-  visible: boolean;
-  listId: string | null;
-  isNewBest: boolean;
-  elapsedMs: number;
-};
-
 export type Configuration = {
   savedLists: SavedList[];
 };

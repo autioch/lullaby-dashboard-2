@@ -21,3 +21,7 @@ html {
 .is-center {
   text-align: center;
 }
+
+.is-pointer {
+  cursor: pointer;
+}

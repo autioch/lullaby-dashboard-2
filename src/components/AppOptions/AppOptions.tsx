@@ -5,9 +5,11 @@ import { Overlay } from '../Overlay/Overlay';
 import { Layout } from '../Layout/Layout';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { Button } from '../Button/Button';
+import { useLanguageStore } from '@/stores/useLanguageStore';
 
 const { closeOptions } = useControlsStore.getState();
-const { setLanguage, resetState } = useDashboardStore.getState();
+const { resetState } = useDashboardStore.getState();
+const { setLanguage } = useLanguageStore.getState();
 const { setSelectedIndex } = useDashboardStore.getState();
 
 export function AppOptions() {

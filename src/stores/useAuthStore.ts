@@ -1,3 +1,4 @@
+import { lsLoad, lsSave } from '@/utils/ls';
 import { create } from 'zustand';
 
 type AuthState = {
@@ -7,10 +8,8 @@ type AuthState = {
   authenticate(password: string): Promise<void>;
 };
 
-const AUTH_STORAGE_KEY = 'launchpad-auth';
-
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: window.localStorage.getItem(AUTH_STORAGE_KEY) === 'true',
+  isAuthenticated: lsLoad('auth') ?? false,
   isLoading: false,
   errorTextKey: null,
 
@@ -36,7 +35,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         return;
       }
       set({ isAuthenticated: true });
-      window.localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      lsSave('auth', true);
     } catch {
       set({ errorTextKey: 'authGate.errorUnknown' });
     } finally {

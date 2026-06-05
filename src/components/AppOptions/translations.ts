@@ -1,4 +1,4 @@
-import { type TranslationMap } from '@/i18n/types';
+import { type TranslationMap } from '@/i18n/translations';
 
 type AppOptionsTranslationKeys =
   | 'languageMenu'
@@ -20,7 +20,7 @@ export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
       options: 'Options',
       resetData: 'Reset progress',
       close: 'Close menu',
-      open: 'Options',
+      open: '⚙ Menu',
     },
     pl: {
       languageMenu: 'Język',
@@ -30,6 +30,6 @@ export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
       options: 'Opcje',
       resetData: 'Zresetuj postęp',
       close: 'Zamknij menu',
-      open: 'Opcje',
+      open: '⚙ Menu',
     },
   };

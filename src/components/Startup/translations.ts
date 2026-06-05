@@ -1,4 +1,4 @@
-import { type TranslationMap } from '@/i18n/types';
+import { type TranslationMap } from '@/i18n/translations';
 
 type StartupTranslationKeys =
   | 'header'

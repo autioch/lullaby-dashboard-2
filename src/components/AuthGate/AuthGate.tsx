@@ -13,7 +13,9 @@ export function AuthGate() {
   const errorTextKey = useAuthStore((state) => state.errorTextKey);
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (ev: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (
+    ev: React.FormEvent<HTMLButtonElement | HTMLDivElement>
+  ) => {
     ev.preventDefault();
     authenticate(password);
   };

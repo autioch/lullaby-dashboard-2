@@ -9,7 +9,6 @@ type PersistedDashboardState = {
   language: AppLanguage;
   timerRunsByList: Record<string, import('../types').TimerRunState>;
   fastestRunsByList: Record<string, import('../types').FastestRunRecord>;
-  celebration: import('../types').CelebrationState;
 };
 
 const STORAGE_KEY = 'lullaby-dashboard-state';
@@ -28,7 +27,6 @@ function parsePersistedState(
     language?: unknown;
     timerRunsByList?: unknown;
     fastestRunsByList?: unknown;
-    celebration?: unknown;
   };
 
   if (typeof candidate.selectedIndex !== 'number') return undefined;
@@ -75,13 +73,6 @@ function parsePersistedState(
       ? (candidate.fastestRunsByList as Record<string, unknown>)
       : {};
 
-  const celebration =
-    typeof candidate.celebration === 'object' &&
-    candidate.celebration !== null &&
-    !Array.isArray(candidate.celebration)
-      ? (candidate.celebration as Record<string, unknown>)
-      : { visible: false, listId: null, isNewBest: false, elapsedMs: 0 };
-
   return {
     checkedKeys,
     listExpiryTimestamps,
@@ -89,14 +80,6 @@ function parsePersistedState(
     language,
     timerRunsByList,
     fastestRunsByList,
-    celebration: {
-      visible: Boolean(celebration.visible),
-      listId:
-        typeof celebration.listId === 'string' ? celebration.listId : null,
-      isNewBest: Boolean(celebration.isNewBest),
-      elapsedMs:
-        typeof celebration.elapsedMs === 'number' ? celebration.elapsedMs : 0,
-    },
   } as unknown as PersistedDashboardState;
 }
 
@@ -140,12 +123,6 @@ export function cleanPersistedState(
     language: persisted.language ?? DEFAULT_LANGUAGE,
     timerRunsByList: persisted.timerRunsByList ?? {},
     fastestRunsByList: persisted.fastestRunsByList ?? {},
-    celebration: persisted.celebration ?? {
-      visible: false,
-      listId: null,
-      isNewBest: false,
-      elapsedMs: 0,
-    },
   };
 }
 
@@ -155,10 +132,8 @@ export function savePersistedState(
     | 'checkedKeys'
     | 'listExpiryTimestamps'
     | 'selectedIndex'
-    | 'language'
     | 'timerRunsByList'
     | 'fastestRunsByList'
-    | 'celebration'
   >
 ) {
   if (!isBrowser) return;

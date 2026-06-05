@@ -1,10 +1,4 @@
-import { type AppLanguage, DEFAULT_LANGUAGE } from '@/i18n/translations';
-import type {
-  CelebrationState,
-  FastestRunRecord,
-  SavedList,
-  TimerRunState,
-} from '@/types';
+import type { FastestRunRecord, SavedList, TimerRunState } from '@/types';
 import {
   cleanPersistedState,
   clearPersistedState,
@@ -21,17 +15,13 @@ export type DashboardState = {
   listExpiryTimestamps: Record<string, number>;
   timerRunsByList: Record<string, TimerRunState>;
   fastestRunsByList: Record<string, FastestRunRecord>;
-  celebration: CelebrationState;
-  language: AppLanguage;
   setLists(lists: SavedList[]): void;
   setSelectedIndex(selectedIndex: number): void;
-  setLanguage(language: AppLanguage): void;
   toggleItem(key: string): void;
   startTimer(listId: string): void;
   pauseTimer(listId: string): void;
   resumeTimer(listId: string): void;
   completeRun(listId: string): void;
-  clearCelebration(): void;
   loadConfiguration(): Promise<void>;
   hydrateState(): void;
   resetState(): void;
@@ -44,8 +34,6 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   listExpiryTimestamps: {},
   timerRunsByList: {},
   fastestRunsByList: {},
-  celebration: { visible: false, listId: null, isNewBest: false, elapsedMs: 0 },
-  language: DEFAULT_LANGUAGE,
 
   setLists(lists: SavedList[]) {
     set((state) => ({
@@ -60,34 +48,13 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex,
-        language: state.language,
         timerRunsByList: state.timerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       });
 
       return {
         ...state,
         selectedIndex,
-      };
-    });
-  },
-
-  setLanguage(language: AppLanguage) {
-    return set((state) => {
-      savePersistedState({
-        checkedKeys: state.checkedKeys,
-        listExpiryTimestamps: state.listExpiryTimestamps,
-        selectedIndex: state.selectedIndex,
-        language,
-        timerRunsByList: state.timerRunsByList,
-        fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
-      });
-
-      return {
-        ...state,
-        language,
       };
     });
   },
@@ -160,21 +127,12 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
           nextFastestRunsByList[listId] = { elapsedMs, completedAtMs: now };
         }
 
-        const nextCelebration = {
-          visible: true,
-          listId,
-          isNewBest,
-          elapsedMs,
-        };
-
         savePersistedState({
           checkedKeys: nextCheckedKeys,
           listExpiryTimestamps: nextListExpiryTimestamps,
           selectedIndex: state.selectedIndex,
-          language: state.language,
           timerRunsByList: nextTimerRunsByList,
           fastestRunsByList: nextFastestRunsByList,
-          celebration: nextCelebration,
         });
 
         return {
@@ -182,7 +140,6 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
           listExpiryTimestamps: nextListExpiryTimestamps,
           timerRunsByList: nextTimerRunsByList,
           fastestRunsByList: nextFastestRunsByList,
-          celebration: nextCelebration,
         };
       }
 
@@ -190,10 +147,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: nextCheckedKeys,
         listExpiryTimestamps: nextListExpiryTimestamps,
         selectedIndex: state.selectedIndex,
-        language: state.language,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       });
 
       return {
@@ -201,7 +156,6 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         listExpiryTimestamps: nextListExpiryTimestamps,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       };
     });
   },
@@ -230,10 +184,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex: state.selectedIndex,
-        language: state.language,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       });
 
       return {
@@ -268,10 +220,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex: state.selectedIndex,
-        language: state.language,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       });
 
       return {
@@ -301,10 +251,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex: state.selectedIndex,
-        language: state.language,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: state.fastestRunsByList,
-        celebration: state.celebration,
       });
 
       return {
@@ -338,13 +286,6 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         completedAtMs: now,
       } as TimerRunState;
 
-      const nextCelebration = {
-        visible: true,
-        listId,
-        isNewBest,
-        elapsedMs,
-      };
-
       const nextTimerRunsByList = {
         ...state.timerRunsByList,
         [listId]: nextRun,
@@ -354,46 +295,14 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         checkedKeys: state.checkedKeys,
         listExpiryTimestamps: state.listExpiryTimestamps,
         selectedIndex: state.selectedIndex,
-        language: state.language,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: nextFastestRunsByList,
-        celebration: nextCelebration,
       });
 
       return {
         ...state,
         timerRunsByList: nextTimerRunsByList,
         fastestRunsByList: nextFastestRunsByList,
-        celebration: nextCelebration,
-      };
-    });
-  },
-
-  clearCelebration() {
-    return set((state) => {
-      savePersistedState({
-        checkedKeys: state.checkedKeys,
-        listExpiryTimestamps: state.listExpiryTimestamps,
-        selectedIndex: state.selectedIndex,
-        language: state.language,
-        timerRunsByList: state.timerRunsByList,
-        fastestRunsByList: state.fastestRunsByList,
-        celebration: {
-          visible: false,
-          listId: null,
-          isNewBest: false,
-          elapsedMs: 0,
-        },
-      });
-
-      return {
-        ...state,
-        celebration: {
-          visible: false,
-          listId: null,
-          isNewBest: false,
-          elapsedMs: 0,
-        },
       };
     });
   },
@@ -412,32 +321,17 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       listExpiryTimestamps: nextState.listExpiryTimestamps,
       timerRunsByList: nextState.timerRunsByList ?? {},
       fastestRunsByList: nextState.fastestRunsByList ?? {},
-      celebration: nextState.celebration ?? {
-        visible: false,
-        listId: null,
-        isNewBest: false,
-        elapsedMs: 0,
-      },
-      language: nextState.language,
     }));
   },
 
   resetState() {
-    const { language } = get();
     clearPersistedState();
     savePersistedState({
       checkedKeys: {},
       listExpiryTimestamps: {},
       selectedIndex: 0,
-      language,
       timerRunsByList: {},
       fastestRunsByList: {},
-      celebration: {
-        visible: false,
-        listId: null,
-        isNewBest: false,
-        elapsedMs: 0,
-      },
     });
     set({
       selectedIndex: 0,
@@ -445,13 +339,6 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       listExpiryTimestamps: {},
       timerRunsByList: {},
       fastestRunsByList: {},
-      celebration: {
-        visible: false,
-        listId: null,
-        isNewBest: false,
-        elapsedMs: 0,
-      },
-      language,
     });
   },
 
