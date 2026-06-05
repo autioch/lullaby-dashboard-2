@@ -38,7 +38,7 @@ export function ProgressBar() {
   const fillWidth = `${Math.min(Math.max((completed / safeTotal) * 100, 0), 100)}%`;
 
   return (
-    <div className="progress-bar" aria-label="Task progress">
+    <div className="progress-bar">
       <div className="progress-bar__header">
         <div>
           <div className="progress-bar__eyebrow">
@@ -51,13 +51,7 @@ export function ProgressBar() {
         <div className="progress-bar__percent">{percent}%</div>
       </div>
 
-      <div
-        className="progress-bar__track"
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={percent}
-      >
+      <div className="progress-bar__track">
         <div className="progress-bar__fill" style={{ width: fillWidth }} />
       </div>
 

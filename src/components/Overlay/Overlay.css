@@ -6,6 +6,7 @@
   justify-content: center;
   z-index: 40;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .c-overlay__content {

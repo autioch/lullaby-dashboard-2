@@ -1,6 +1,12 @@
 import type { PropsWithChildren } from 'react';
 import './Layout.css';
 
-export function Layout(props: PropsWithChildren) {
-  return <div className="c-layout">{props.children}</div>;
+type LayoutProps = {
+  className?: string;
+};
+
+export function Layout(props: PropsWithChildren<LayoutProps>) {
+  return (
+    <div className={`c-layout ${props.className ?? ''}`}>{props.children}</div>
+  );
 }

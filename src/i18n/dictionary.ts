@@ -1,5 +1,6 @@
 import { authGateTranslations } from '@/components/AuthGate/translations';
 import { startupTranslations } from '@/components/Startup/translations';
+import { appOptionsTranslations } from '@/components/AppOptions/translations';
 
 export const translations = {
   en: {
@@ -20,6 +21,7 @@ export const translations = {
     pageTitle: 'Lullaby dashboard',
     authGate: authGateTranslations.en,
     startup: startupTranslations.en,
+    appOptions: appOptionsTranslations.en,
   },
   pl: {
     app: {
@@ -39,5 +41,6 @@ export const translations = {
     pageTitle: 'Pulpit Lullaby',
     authGate: authGateTranslations.pl,
     startup: startupTranslations.pl,
+    appOptions: appOptionsTranslations.pl,
   },
 } as const;

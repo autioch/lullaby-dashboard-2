@@ -1,0 +1,9 @@
+.c-app-options {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #212121;
+}
+
+.c-app-options__box {
+  display: flex;
+  gap: 1rem;
+}

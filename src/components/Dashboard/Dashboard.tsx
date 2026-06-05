@@ -1,19 +1,21 @@
 import './Dashboard.css';
 import { Clock } from '@/components/Clock/Clock';
 import { FocusTimerCard } from '@/components/FocusTimerCard/FocusTimerCard';
-import { LanguageMenu } from '@/components/LanguageMenu/LanguageMenu';
+import { AppOptions } from '@/components/AppOptions/AppOptions';
 import { ListSelector } from '@/components/ListSelector/ListSelector';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
 import { TodoList } from '@/components/TodoList/TodoList';
-import { Typography } from '@/components/Typography/Typography';
 import { VideoEmbed } from '@/components/VideoEmbed/VideoEmbed';
 import { useDashboardStore } from '@/stores/useDashboardStore';
+import { Button } from '../Button/Button';
+import { useControlsStore } from '@/stores/useControlsStore';
 
-const { resetState } = useDashboardStore.getState();
+const { openOptions } = useControlsStore.getState();
 
 export function Dashboard() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);
+  const isAppOptions = useControlsStore((state) => state.isAppOptions);
 
   const selectedList = lists[selectedIndex] ?? null;
   const backgroundStyle = selectedList?.bgColor
@@ -32,20 +34,14 @@ export function Dashboard() {
 
         <div className="app__selector">
           <ListSelector />
-          <button
-            type="button"
-            className="app__reset-button"
-            onClick={resetState}
-          >
-            <Typography textKey="app.reset" />
-          </button>
         </div>
 
         <ProgressBar />
 
         <FocusTimerCard />
       </div>
-      <LanguageMenu />
+      <Button onClick={openOptions} textKey="appOptions.open" />
+      {isAppOptions ? <AppOptions /> : null}
     </article>
   );
 }

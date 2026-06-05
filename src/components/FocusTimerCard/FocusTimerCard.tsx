@@ -93,7 +93,7 @@ export function FocusTimerCard() {
   if (!selectedList) return null;
 
   return (
-    <div className="app__timer-card" aria-live="polite">
+    <div className="app__timer-card">
       <div className="app__timer-label">Active focus</div>
       <div className="app__timer-value">{formatDuration(currentElapsedMs)}</div>
       <div className="app__timer-fastest">
