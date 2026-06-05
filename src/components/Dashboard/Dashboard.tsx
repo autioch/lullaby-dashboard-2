@@ -5,14 +5,14 @@ import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
 import { ObjectiveList } from '@/components/ObjectiveList/ObjectiveList';
 import { VideoEmbed } from '@/components/VideoEmbed/VideoEmbed';
 import { useMissionStore } from '@/stores/useMissionStore';
-import { Button } from '../Button/Button';
 import { useControlsStore } from '@/stores/useControlsStore';
-
-const { openOptions } = useControlsStore.getState();
+import { Menu } from '../Menu/Menu';
+import { MissionSelect } from '@/components/MissionSelect/MissionSelect';
 
 export function Dashboard() {
   const missionId = useMissionStore((state) => state.missionId);
   const isAppOptions = useControlsStore((state) => state.isAppOptions);
+  const isMissionSelect = useControlsStore((state) => state.isMissionSelect);
 
   return (
     <div className="c-dashboard">
@@ -23,17 +23,14 @@ export function Dashboard() {
         <div className="c-dashboard__aside">
           <VideoEmbed />
           <Clock />
-          <Button
-            onClick={openOptions}
-            textKey="appOptions.open"
-            variant="text"
-          />
+          <Menu />
         </div>
         <div className="c-dashboard__footer">
           <ProgressBar />
         </div>
       </div>
-      {isAppOptions || !missionId ? <AppOptions /> : null}
+      {isAppOptions ? <AppOptions /> : null}
+      {isMissionSelect || !missionId ? <MissionSelect /> : null}
     </div>
   );
 }

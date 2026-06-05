@@ -1,0 +1,20 @@
+.c-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-icon > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.c-icon--button {
+  cursor: pointer;
+}
+
+.c-icon--button:hover {
+  background: #999;
+}

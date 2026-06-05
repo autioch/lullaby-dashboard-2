@@ -1,0 +1,5 @@
+.c-menu {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+}

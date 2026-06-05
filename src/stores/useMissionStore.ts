@@ -104,11 +104,14 @@ export const useMissionStore = create<MissionState & MissionMethods>(
     },
 
     resetState() {
-      ls.clear();
-      set({
-        missionId: null,
+      const { listExpiryTimestamps, missionId } = get();
+      ls.save({
         checkedKeys: {},
-        listExpiryTimestamps: {},
+        listExpiryTimestamps,
+        missionId,
+      });
+      set({
+        checkedKeys: {},
       });
     },
 
