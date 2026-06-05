@@ -1,3 +1,4 @@
+import './Clock.css';
 import { useEffect, useState } from 'react';
 
 function formatPart(num: number) {
@@ -18,5 +19,5 @@ export function Clock() {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <span>{time}</span>;
+  return <div className="c-clock">{time}</div>;
 }

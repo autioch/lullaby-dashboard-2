@@ -12,7 +12,6 @@ export type ToDoGroup = {
 export type SavedList = {
   label: string;
   id: string;
-  bgColor: string;
   youtubeUrl: string;
   groups: ToDoGroup[];
   retentionHours?: number;

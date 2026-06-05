@@ -9,7 +9,7 @@ export function VideoEmbed() {
   const src = videoUrl ? `${videoUrl}&autoplay=1` : '';
 
   return (
-    <figure className="c-video">
+    <div className="c-video">
       <iframe
         className="c-video__iframe"
         src={src}
@@ -19,6 +19,6 @@ export function VideoEmbed() {
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
       ></iframe>
-    </figure>
+    </div>
   );
 }

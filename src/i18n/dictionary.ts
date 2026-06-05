@@ -4,14 +4,6 @@ import { appOptionsTranslations } from '@/components/AppOptions/translations';
 
 export const translations = {
   en: {
-    app: {
-      noLists: 'No lists',
-      reset: 'Reset',
-      options: 'Options',
-      language: 'Language',
-      english: 'English',
-      polish: 'Polish',
-    },
     progress: {
       eyebrow: 'Mission progress',
       title: 'You’re doing great!',
@@ -24,14 +16,6 @@ export const translations = {
     appOptions: appOptionsTranslations.en,
   },
   pl: {
-    app: {
-      noLists: 'Brak list',
-      reset: 'Resetuj',
-      options: 'Opcje',
-      language: 'Język',
-      english: 'Angielski',
-      polish: 'Polski',
-    },
     progress: {
       eyebrow: 'Postęp misji',
       title: 'Świetnie sobie radzisz!',
