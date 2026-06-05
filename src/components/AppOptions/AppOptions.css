@@ -1,9 +1,26 @@
 .c-app-options {
   background-color: rgba(255, 255, 255, 0.9);
   color: #212121;
+  align-items: center;
 }
 
 .c-app-options__box {
   display: flex;
   gap: 1rem;
+  justify-content: center;
+}
+
+.c-app-options__header {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.c-app-options__mission {
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #288de0;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
 }

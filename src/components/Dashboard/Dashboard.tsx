@@ -2,7 +2,6 @@ import './Dashboard.css';
 import { Clock } from '@/components/Clock/Clock';
 import { FocusTimerCard } from '@/components/FocusTimerCard/FocusTimerCard';
 import { AppOptions } from '@/components/AppOptions/AppOptions';
-import { ListSelector } from '@/components/ListSelector/ListSelector';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
 import { TodoList } from '@/components/TodoList/TodoList';
 import { VideoEmbed } from '@/components/VideoEmbed/VideoEmbed';
@@ -30,10 +29,6 @@ export function Dashboard() {
 
         <div className="app__clock">
           <Clock />
-        </div>
-
-        <div className="app__selector">
-          <ListSelector />
         </div>
 
         <ProgressBar />
