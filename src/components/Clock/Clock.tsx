@@ -13,9 +13,7 @@ export function Clock() {
   const [time, setTime] = useState<string>(getCurrentTime());
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTime(getCurrentTime());
-    }, 10000);
+    const intervalId = setInterval(() => setTime(getCurrentTime()), 10000);
 
     return () => clearInterval(intervalId);
   }, []);

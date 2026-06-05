@@ -1,115 +1,30 @@
-.loader {
-  position: fixed;
-  inset: 0;
+.c-startup-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-  background: #000;
-  color: #fff;
-  z-index: 40;
-}
-
-.loader__panel {
-  width: min(100%, 38rem);
-  padding: 2rem;
-}
-
-.loader__panel--compact {
-  width: min(100%, 28rem);
-}
-
-.loader__heading {
-  margin: 0 0 1rem;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-}
-
-.loader__message {
-  margin: 0 0 1.5rem;
-  line-height: 1.55;
-  color: #d9d9d9;
-}
-
-.loader__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.5rem;
-}
-
-.loader__item {
-  display: flex;
-  align-items: center;
   gap: 0.75rem;
-  padding: 0.5rem 0;
 }
 
-.loader__item-status {
+.c-startup-item__status {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.7rem;
   height: 1.7rem;
-  border-radius: 9999px;
-  font-size: 0.9rem;
 }
 
-.loader__item-status--pending {
-  background: #288de0;
+.c-startup-item--pending {
+  color: #288de0;
 }
 
-.loader__item-status--inProgress {
-  background: #e9e653;
+.c-startup-item--inProgress {
+  color: #e9e653;
 }
 
-.loader__item-status--complete {
-  background: #4ade80;
-  color: #000;
+.c-startup-item--complete {
+  color: #4ade80;
 }
 
-.loader__item-status--failed {
-  background: #f87171;
-}
-
-.loader__item--failed {
-  border-color: rgba(248, 113, 113, 0.45);
-}
-
-.auth-form {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.auth-form__label {
-  font-size: 0.95rem;
-  color: #d9d9d9;
-}
-
-.auth-form__error {
-  margin: 0;
-  color: #fecaca;
-  font-size: 0.95rem;
-}
-
-.loader__error {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  border: 1px solid rgba(248, 113, 113, 0.35);
-  border-radius: 0.75rem;
-  background: rgba(248, 113, 113, 0.08);
-  color: #ffdada;
-  text-align: left;
-}
-
-.loader__debug {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  color: #f3f3f3;
-  font-family: monospace;
-  font-size: 0.95rem;
-  white-space: pre-wrap;
-  overflow-x: auto;
+.c-startup-item--failed {
+  color: #f87171;
 }

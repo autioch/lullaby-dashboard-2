@@ -1,4 +1,5 @@
 import { authGateTranslations } from '@/components/AuthGate/translations';
+import { startupTranslations } from '@/components/Startup/translations';
 
 export const translations = {
   en: {
@@ -16,27 +17,9 @@ export const translations = {
       done: '{completed} of {total} tasks done',
       keepGoing: 'Keep going!',
     },
-    loader: {
-      heading: 'Starting dashboard',
-      message:
-        'Please wait while we load your configuration and restore saved progress.',
-      accessHeading: 'Access required',
-      accessMessage: 'Enter the password to open the dashboard on this TV.',
-      passwordLabel: 'Password',
-      openDashboard: 'Open dashboard',
-      checkingPassword: 'Checking...',
-      passwordRequired: 'Please enter the password.',
-      passwordIncorrect: 'Incorrect password.',
-      passwordUnavailable: 'Unable to verify the password right now.',
-      errorHeading: 'Unable to load the dashboard',
-      errorMessage:
-        'The application could not complete startup. Please refresh the page and try again.',
-      debugHeading: 'Debug details',
-      loadingConfiguration: 'Loading configuration',
-      restoringState: 'Restoring saved state',
-    },
     pageTitle: 'Lullaby dashboard',
     authGate: authGateTranslations.en,
+    startup: startupTranslations.en,
   },
   pl: {
     app: {
@@ -53,26 +36,8 @@ export const translations = {
       done: 'Ukończono {completed} z {total} zadań',
       keepGoing: 'Jeszcze tylko trochę!',
     },
-    loader: {
-      heading: 'Uruchamianie pulpitu',
-      message:
-        'Poczekaj, aż załadujemy konfigurację i przywrócimy zapisany stan.',
-      accessHeading: 'Wymagane hasło',
-      accessMessage: 'Wpisz hasło, aby otworzyć pulpit na tym telewizorze.',
-      passwordLabel: 'Hasło',
-      openDashboard: 'Otwórz pulpit',
-      checkingPassword: 'Sprawdzanie...',
-      passwordRequired: 'Wpisz hasło.',
-      passwordIncorrect: 'Nieprawidłowe hasło.',
-      passwordUnavailable: 'Nie można teraz zweryfikować hasła.',
-      errorHeading: 'Nie można załadować pulpitu',
-      errorMessage:
-        'Aplikacja nie mogła ukończyć uruchamiania. Odśwież stronę i spróbuj ponownie.',
-      debugHeading: 'Szczegóły debugowania',
-      loadingConfiguration: 'Ładowanie konfiguracji',
-      restoringState: 'Przywracanie zapisanych danych',
-    },
     pageTitle: 'Pulpit Lullaby',
     authGate: authGateTranslations.pl,
+    startup: startupTranslations.pl,
   },
 } as const;

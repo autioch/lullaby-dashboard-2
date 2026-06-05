@@ -1,3 +1,4 @@
+import { Overlay } from '../Overlay/Overlay';
 import './DebugInfo.css';
 
 type DebugItem = {
@@ -29,18 +30,18 @@ export function DebugInfo() {
   ];
 
   return (
-    <div className="debug-info">
+    <Overlay>
       <DebugSection items={debugItems} />
       <DebugSection items={debugItems} />
       <DebugSection items={debugItems} />
       <DebugSection items={debugItems} />
-    </div>
+    </Overlay>
   );
 }
 
 function DebugSection({ items }: { items: DebugItem[] }) {
   return (
-    <div className="debug-section">
+    <div className="c-debug-section">
       {items.map((item) => (
         <>
           <span>{item.label}:</span>

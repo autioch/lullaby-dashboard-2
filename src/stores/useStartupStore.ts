@@ -5,7 +5,7 @@ export type StartupStepId = 'loadConfiguration' | 'hydrateState';
 
 export type StartupStatus = 'pending' | 'inProgress' | 'complete' | 'failed';
 
-type StartupStep = {
+export type StartupStep = {
   id: StartupStepId;
   labelKey: string;
   status: StartupStatus;
@@ -30,13 +30,13 @@ type StartupState = {
 const initialSteps: StartupStep[] = [
   {
     id: 'loadConfiguration',
-    labelKey: 'loader.loadingConfiguration',
+    labelKey: 'startup.loadingConfiguration',
     status: 'pending',
     stepFn: () => useDashboardStore.getState().loadConfiguration(),
   },
   {
     id: 'hydrateState',
-    labelKey: 'loader.restoringState',
+    labelKey: 'startup.restoringState',
     status: 'inProgress',
     stepFn: async () => await useDashboardStore.getState().hydrateState(),
   },

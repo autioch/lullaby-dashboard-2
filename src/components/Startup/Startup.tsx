@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 import { StartupError } from './StartupError';
 import { Typography } from '@/components/Typography/Typography';
 import { useStartupStore } from '@/stores/useStartupStore';
+import { Overlay } from '../Overlay/Overlay';
+import { Layout } from '../Layout/Layout';
+import { StartupItem } from './StartupItem';
 
 const { loadData } = useStartupStore.getState();
 
@@ -19,37 +22,14 @@ export function Startup() {
   }
 
   return (
-    <div className="loader">
-      <div className="loader__panel">
-        <h1 className="loader__heading">
-          <Typography textKey="loader.heading" />
-        </h1>
-        <p className="loader__message">
-          <Typography textKey="loader.message" />
-        </p>
-        <ol className="loader__list">
-          {steps.map((step) => (
-            <li
-              key={step.id}
-              className={`loader__item loader__item--${step.status}`}
-            >
-              <span
-                className={`loader__item-status loader__item-status--${step.status}`}
-                aria-hidden="true"
-              >
-                {step.status === 'complete'
-                  ? '✓'
-                  : step.status === 'failed'
-                    ? '✕'
-                    : ''}
-              </span>
-              <span>
-                <Typography textKey={step.labelKey} />
-              </span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
+    <Overlay>
+      <Layout>
+        <Typography textKey="startup.header" as="div" className="is-center" />
+        <Typography textKey="startup.description" as="div" />
+        {steps.map((step) => (
+          <StartupItem key={step.id} step={step} />
+        ))}
+      </Layout>
+    </Overlay>
   );
 }
