@@ -23,15 +23,14 @@ export function Dashboard() {
         <div className="c-dashboard__aside">
           <VideoEmbed />
           <Clock />
+          <Button
+            onClick={openOptions}
+            textKey="appOptions.open"
+            variant="text"
+          />
         </div>
         <div className="c-dashboard__footer">
-          <ProgressBar>
-            <Button
-              onClick={openOptions}
-              textKey="appOptions.open"
-              variant="text"
-            />
-          </ProgressBar>
+          <ProgressBar />
         </div>
       </div>
       {isAppOptions || !missionId ? <AppOptions /> : null}

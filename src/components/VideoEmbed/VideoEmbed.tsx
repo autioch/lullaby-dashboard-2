@@ -14,6 +14,7 @@ export function VideoEmbed() {
         className="c-video__iframe"
         src={`${mission?.youtubeUrl}&autoplay=1`}
         title="YouTube video player"
+        frameBorder="0"
         allow="autoplay; fullscreen; encrypted-media; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen

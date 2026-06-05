@@ -1,10 +1,11 @@
 .c-objective-list {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 8rem;
+  gap: 4rem;
   font-size: 2rem;
   max-height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .c-objective-list__group {
