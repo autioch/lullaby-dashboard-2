@@ -1,9 +1,9 @@
 import './Dashboard.css';
 import { Clock } from '@/components/Clock/Clock';
-import { FocusTimerCard } from '@/components/FocusTimerCard/FocusTimerCard';
+// import { FocusTimerCard } from '@/components/FocusTimerCard/FocusTimerCard';
 import { AppOptions } from '@/components/AppOptions/AppOptions';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
-import { TodoList } from '@/components/TodoList/TodoList';
+import { ObjectiveList } from '@/components/ObjectiveList/ObjectiveList';
 import { VideoEmbed } from '@/components/VideoEmbed/VideoEmbed';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { Button } from '../Button/Button';
@@ -23,7 +23,7 @@ export function Dashboard() {
 
   return (
     <article className="app" style={backgroundStyle}>
-      <TodoList />
+      <ObjectiveList />
       <div className="app__sidebar">
         <VideoEmbed />
 
@@ -33,10 +33,10 @@ export function Dashboard() {
 
         <ProgressBar />
 
-        <FocusTimerCard />
+        {/* <FocusTimerCard /> */}
       </div>
       <Button onClick={openOptions} textKey="appOptions.open" />
-      {isAppOptions ? <AppOptions /> : null}
+      {isAppOptions || selectedIndex === -1 ? <AppOptions /> : null}
     </article>
   );
 }

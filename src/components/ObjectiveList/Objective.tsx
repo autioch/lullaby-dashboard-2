@@ -1,7 +1,8 @@
+import './Objective.css';
 import { type ToDoItem } from '@/types';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 
-type TodoItemProps = {
+type ObjectiveProps = {
   item: ToDoItem;
   checked: boolean;
   hash: string;
@@ -9,16 +10,17 @@ type TodoItemProps = {
 
 const { toggleItem } = useDashboardStore.getState();
 
-export function TodoItem(props: TodoItemProps) {
+export function Objective(props: ObjectiveProps) {
   const { item, checked, hash } = props;
 
   return (
-    <li
-      className={`todo-list__item${checked ? ' todo-list__item--checked' : ''}`}
+    <div
+      className={`c-objective ${checked ? 'c-objective--checked' : ''}`}
       style={{ color: item.color }}
       onClick={() => toggleItem(hash)}
     >
-      <span className="todo-list__item-text">{item.name}</span>
-    </li>
+      <span className="c-objective__state">{checked ? '✓' : ''}</span>
+      <span className="c-objective__text">{item.name}</span>
+    </div>
   );
 }

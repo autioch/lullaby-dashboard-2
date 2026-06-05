@@ -39,7 +39,7 @@ export type DashboardState = {
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
   lists: [],
-  selectedIndex: 0,
+  selectedIndex: -1,
   checkedKeys: {},
   listExpiryTimestamps: {},
   timerRunsByList: {},
