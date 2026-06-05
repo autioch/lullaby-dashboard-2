@@ -1,6 +1,6 @@
 import './FocusTimerCard.css';
 import { useEffect, useRef, useState } from 'react';
-import { useMissionStore } from '@/stores/useMissionStore';
+import { useMission } from '@/stores/useMissionStore';
 import { useTimerStore } from '@/stores/useTimerStore';
 
 function formatDuration(durationMs: number) {
@@ -14,18 +14,12 @@ const { pauseTimer, resumeTimer } = useTimerStore.getState();
 
 export function FocusTimerCard() {
   const [tick, setTick] = useState(Date.now());
-  const selectedIndex = useMissionStore((state) => state.selectedIndex);
-  const lists = useMissionStore((state) => state.lists);
   const timerRunsByList = useTimerStore((state) => state.timerRunsByList);
   const fastestRunsByList = useTimerStore((state) => state.fastestRunsByList);
+  const mission = useMission();
 
-  const selectedList = lists[selectedIndex] ?? null;
-  const currentRun = selectedList
-    ? timerRunsByList[selectedList.id]
-    : undefined;
-  const fastestRun = selectedList
-    ? fastestRunsByList[selectedList.id]
-    : undefined;
+  const currentRun = mission ? timerRunsByList[mission.id] : undefined;
+  const fastestRun = mission ? fastestRunsByList[mission.id] : undefined;
   const currentElapsedMs =
     currentRun && currentRun.isRunning
       ? currentRun.elapsedMs +
@@ -37,40 +31,40 @@ export function FocusTimerCard() {
   const previousSelectedId = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!selectedList?.id) return;
+    if (!mission?.id) return;
 
     if (
       previousSelectedId.current &&
-      previousSelectedId.current !== selectedList.id
+      previousSelectedId.current !== mission.id
     ) {
       pauseTimer(previousSelectedId.current);
     }
 
-    const run = timerRunsByList[selectedList.id];
+    const run = timerRunsByList[mission.id];
     if (run && !run.isRunning && document.visibilityState === 'visible') {
-      resumeTimer(selectedList.id);
+      resumeTimer(mission.id);
     }
 
-    previousSelectedId.current = selectedList.id;
-  }, [pauseTimer, resumeTimer, selectedList, timerRunsByList]);
+    previousSelectedId.current = mission.id;
+  }, [pauseTimer, resumeTimer, mission, timerRunsByList]);
 
   useEffect(() => {
-    if (!selectedList) return;
+    if (!mission) return;
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
-        pauseTimer(selectedList.id);
+        pauseTimer(mission.id);
         return;
       }
 
-      const run = timerRunsByList[selectedList.id];
+      const run = timerRunsByList[mission.id];
       if (run && !run.isRunning && run.startedAtMs) {
-        resumeTimer(selectedList.id);
+        resumeTimer(mission.id);
       }
     };
 
     const handleBeforeUnload = () => {
-      pauseTimer(selectedList.id);
+      pauseTimer(mission.id);
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -80,16 +74,16 @@ export function FocusTimerCard() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [pauseTimer, resumeTimer, selectedList, timerRunsByList]);
+  }, [pauseTimer, resumeTimer, mission, timerRunsByList]);
 
   useEffect(() => {
-    if (!selectedList || !currentRun?.isRunning) return;
+    if (!mission || !currentRun?.isRunning) return;
 
     const intervalId = window.setInterval(() => setTick(Date.now()), 1000);
     return () => window.clearInterval(intervalId);
-  }, [currentRun?.isRunning, selectedList?.id]);
+  }, [currentRun?.isRunning, mission?.id]);
 
-  if (!selectedList) return null;
+  if (!mission) return null;
 
   return (
     <div className="app__timer-card">

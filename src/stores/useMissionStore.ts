@@ -4,14 +4,13 @@ import { lsWrapper } from '@/utils/ls';
 
 type MissionState = {
   lists: SavedList[];
-  selectedIndex: number;
+  missionId: string | null;
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
 };
 
 type MissionMethods = {
-  setLists(lists: SavedList[]): void;
-  setSelectedIndex(selectedIndex: number): void;
+  selectMission(missionId: string): void;
   toggleItem(key: string): void;
   loadConfiguration(): Promise<void>;
   hydrateState(): void;
@@ -20,31 +19,30 @@ type MissionMethods = {
 
 const ls = lsWrapper<Omit<MissionState, 'lists'>>('mission');
 
+export function useMission() {
+  return useMissionStore((state) =>
+    state.lists.find((list) => list.id === state.missionId)
+  );
+}
+
 export const useMissionStore = create<MissionState & MissionMethods>(
   (set, get) => ({
     lists: [],
-    selectedIndex: -1,
+    missionId: null,
     checkedKeys: {},
     listExpiryTimestamps: {},
 
-    setLists(lists: SavedList[]) {
-      set((state) => ({
-        ...state,
-        lists,
-      }));
-    },
-
-    setSelectedIndex(selectedIndex: number) {
+    selectMission(missionId) {
       return set((state) => {
         ls.save({
           checkedKeys: state.checkedKeys,
           listExpiryTimestamps: state.listExpiryTimestamps,
-          selectedIndex,
+          missionId: missionId,
         });
 
         return {
           ...state,
-          selectedIndex,
+          missionId: missionId,
         };
       });
     },
@@ -67,7 +65,7 @@ export const useMissionStore = create<MissionState & MissionMethods>(
         ls.save({
           checkedKeys: nextCheckedKeys,
           listExpiryTimestamps: nextListExpiryTimestamps,
-          selectedIndex: state.selectedIndex,
+          missionId: state.missionId,
         });
 
         return {
@@ -99,7 +97,7 @@ export const useMissionStore = create<MissionState & MissionMethods>(
       }
 
       set({
-        selectedIndex: persistedState.selectedIndex,
+        missionId: persistedState.missionId,
         checkedKeys,
         listExpiryTimestamps,
       });
@@ -108,7 +106,7 @@ export const useMissionStore = create<MissionState & MissionMethods>(
     resetState() {
       ls.clear();
       set({
-        selectedIndex: 0,
+        missionId: null,
         checkedKeys: {},
         listExpiryTimestamps: {},
       });

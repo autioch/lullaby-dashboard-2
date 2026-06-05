@@ -9,9 +9,8 @@ import { useLanguageStore } from '@/stores/useLanguageStore';
 import { useTimerStore } from '@/stores/useTimerStore';
 
 const { closeOptions } = useControlsStore.getState();
-const { resetState } = useMissionStore.getState();
+const { resetState, selectMission } = useMissionStore.getState();
 const { setLanguage } = useLanguageStore.getState();
-const { setSelectedIndex } = useMissionStore.getState();
 const { resetTimerState } = useTimerStore.getState();
 
 export function AppOptions() {
@@ -26,11 +25,11 @@ export function AppOptions() {
           className="c-app-options__header"
         />
         <div className="c-app-options__box">
-          {lists.map((list, index) => (
+          {lists.map((list) => (
             <div
               className="c-app-options__mission"
               onClick={() => {
-                setSelectedIndex(Number(index));
+                selectMission(list.id);
                 closeOptions();
               }}
             >

@@ -1,30 +1,27 @@
 import './ProgressBar.css';
 import { Typography } from '@/components/Typography/Typography';
-import { useMissionStore } from '@/stores/useMissionStore';
+import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { useMemo, type PropsWithChildren } from 'react';
 
 export function ProgressBar(props: PropsWithChildren) {
   const checkedKeys = useMissionStore((state) => state.checkedKeys);
-
-  const selectedList = useMissionStore(
-    (state) => state.lists[state.selectedIndex] ?? null
-  );
+  const mission = useMission();
 
   const total = useMemo(
     () =>
-      selectedList?.groups.reduce(
+      mission?.groups.reduce(
         (sum, group) => sum + (group.items?.length ?? 0),
         0
       ) ?? 0,
-    [selectedList]
+    [mission]
   );
 
-  const completed = selectedList
-    ? selectedList.groups.reduce((sum, group) => {
+  const completed = mission
+    ? mission.groups.reduce((sum, group) => {
         return (
           sum +
           group.items.reduce((groupSum, item) => {
-            const key = `${selectedList.id}-${group.id}-${item.id}`;
+            const key = `${mission.id}-${group.id}-${item.id}`;
             return groupSum + (checkedKeys[key] ? 1 : 0);
           }, 0)
         );

@@ -11,7 +11,7 @@ import { useControlsStore } from '@/stores/useControlsStore';
 const { openOptions } = useControlsStore.getState();
 
 export function Dashboard() {
-  const selectedIndex = useMissionStore((state) => state.selectedIndex);
+  const missionId = useMissionStore((state) => state.missionId);
   const isAppOptions = useControlsStore((state) => state.isAppOptions);
 
   return (
@@ -34,7 +34,7 @@ export function Dashboard() {
           </ProgressBar>
         </div>
       </div>
-      {isAppOptions || selectedIndex === -1 ? <AppOptions /> : null}
+      {isAppOptions || !missionId ? <AppOptions /> : null}
     </div>
   );
 }
