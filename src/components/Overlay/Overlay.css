@@ -12,6 +12,6 @@
 .c-overlay__content {
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 90dvh;
-  max-width: 90dvw;
+  max-height: 90%;
+  max-width: 90%;
 }

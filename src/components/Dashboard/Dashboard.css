@@ -1,6 +1,11 @@
+.c-dashboard {
+  height: 100%;
+  width: 100%;
+}
+
 .c-dashboard__content {
-  height: 100dvh;
-  width: 100dvw;
+  height: 100%;
+  width: 100%;
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) 33%;
