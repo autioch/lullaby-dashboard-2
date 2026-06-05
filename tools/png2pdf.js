@@ -6,9 +6,9 @@
 // Uruchomienie:
 // node merge-png-to-pdf.js output.pdf image1.png image2.png image3.png
 
-const fs = require('fs');
-const path = require('path');
-const { PDFDocument } = require('pdf-lib');
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { extname } from 'path';
+import { PDFDocument } from 'pdf-lib';
 
 async function mergePngToPdf(outputFile, inputFiles) {
   if (!inputFiles.length) {
@@ -18,17 +18,17 @@ async function mergePngToPdf(outputFile, inputFiles) {
   const pdfDoc = await PDFDocument.create();
 
   for (const file of inputFiles) {
-    if (!fs.existsSync(file)) {
+    if (!existsSync(file)) {
       throw new Error(`Plik nie istnieje: ${file}`);
     }
 
-    const ext = path.extname(file).toLowerCase();
+    const ext = extname(file).toLowerCase();
 
     if (ext !== '.png') {
       throw new Error(`Nieobsługiwany format: ${file}`);
     }
 
-    const imageBytes = fs.readFileSync(file);
+    const imageBytes = readFileSync(file);
 
     const pngImage = await pdfDoc.embedPng(imageBytes);
 
@@ -49,7 +49,7 @@ async function mergePngToPdf(outputFile, inputFiles) {
 
   const pdfBytes = await pdfDoc.save();
 
-  fs.writeFileSync(outputFile, pdfBytes);
+  writeFileSync(outputFile, pdfBytes);
 
   console.log(`\nPDF zapisany: ${outputFile}`);
 }

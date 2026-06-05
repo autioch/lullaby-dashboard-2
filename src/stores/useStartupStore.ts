@@ -38,7 +38,7 @@ const initialSteps: StartupStep[] = [
     id: 'hydrateState',
     labelKey: 'startup.restoringState',
     status: 'inProgress',
-    stepFn: async () => await useDashboardStore.getState().hydrateState(),
+    stepFn: () => useDashboardStore.getState().hydrateState(),
   },
 ];
 

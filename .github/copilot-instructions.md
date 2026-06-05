@@ -131,7 +131,8 @@ When making changes:
 2. Run `npm run ci:ts` to verify TypeScript.
 3. Run `npm run ci:lint` to verify Eslint.
 4. Run `npm run ci:format` to verify Prettier.
-5. Run `npm run build` to verify the site compiles.
-6. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
+5. Run `npm run ci:check` to verify Astro.
+6. Run `npm run build` to verify the site compiles.
+7. If the change is UI-related, optionally run `npm run dev` and inspect locally using Chrome dev tools with the TV user agent.
 
 If anything in these instructions appears incorrect or incomplete, perform a narrow search only for the missing part. Otherwise, trust these instructions and minimize additional repo exploration.
