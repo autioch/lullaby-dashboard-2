@@ -48,3 +48,7 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 - themes.md
 - user-scenarios.md
 - vision.md
+
+## TODO
+
+- extract API communication layer at some point

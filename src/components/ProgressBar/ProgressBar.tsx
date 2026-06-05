@@ -1,15 +1,14 @@
 import './ProgressBar.css';
-import Typography from '@/components/Typography/Typography';
+import { Typography } from '@/components/Typography/Typography';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useMemo } from 'react';
 
-export default function ProgressBar() {
+export function ProgressBar() {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);
 
-  const selectedList = useDashboardStore((state) => {
-    const list = state.lists[state.selectedIndex];
-    return list ?? null;
-  });
+  const selectedList = useDashboardStore(
+    (state) => state.lists[state.selectedIndex] ?? null
+  );
 
   const total = useMemo(
     () =>
@@ -39,18 +38,18 @@ export default function ProgressBar() {
   const fillWidth = `${Math.min(Math.max((completed / safeTotal) * 100, 0), 100)}%`;
 
   return (
-    <section className="progress-bar" aria-label="Task progress">
-      <header className="progress-bar__header">
+    <div className="progress-bar" aria-label="Task progress">
+      <div className="progress-bar__header">
         <div>
-          <p className="progress-bar__eyebrow">
-            <Typography textKey="progress.eyebrow" size="small" />
-          </p>
-          <h2 className="progress-bar__title">
-            <Typography textKey="progress.title" size="large" />
-          </h2>
+          <div className="progress-bar__eyebrow">
+            <Typography textKey="progress.eyebrow" />
+          </div>
+          <div className="progress-bar__title">
+            <Typography textKey="progress.title" />
+          </div>
         </div>
-        <strong className="progress-bar__percent">{percent}%</strong>
-      </header>
+        <div className="progress-bar__percent">{percent}%</div>
+      </div>
 
       <div
         className="progress-bar__track"
@@ -59,17 +58,17 @@ export default function ProgressBar() {
         aria-valuemax={100}
         aria-valuenow={percent}
       >
-        <span className="progress-bar__fill" style={{ width: fillWidth }} />
+        <div className="progress-bar__fill" style={{ width: fillWidth }} />
       </div>
 
-      <footer className="progress-bar__footer">
-        <span>
+      <div className="progress-bar__footer">
+        <div>
           <Typography textKey="progress.done" values={{ completed, total }} />
-        </span>
-        <span>
+        </div>
+        <div>
           <Typography textKey="progress.keepGoing" />
-        </span>
-      </footer>
-    </section>
+        </div>
+      </div>
+    </div>
   );
 }

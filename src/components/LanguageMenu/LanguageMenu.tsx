@@ -1,5 +1,5 @@
 import './LanguageMenu.css';
-import Typography from '@/components/Typography/Typography';
+import { Typography } from '@/components/Typography/Typography';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useState } from 'react';
 
@@ -7,7 +7,7 @@ type LanguageMenuProps = {
   onClose?: () => void;
 };
 
-export default function LanguageMenu({ onClose }: LanguageMenuProps) {
+export function LanguageMenu({ onClose }: LanguageMenuProps) {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const setLanguage = useDashboardStore((state) => state.setLanguage);
 

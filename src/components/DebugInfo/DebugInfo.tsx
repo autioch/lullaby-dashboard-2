@@ -5,7 +5,7 @@ type DebugItem = {
   value: string;
 };
 
-export default function DebugInfo() {
+export function DebugInfo() {
   const debugItems: { label: string; value: string }[] = [
     { label: 'Origin', value: window.location.origin },
     { label: 'Pathname', value: window.location.pathname },

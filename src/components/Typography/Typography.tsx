@@ -10,7 +10,7 @@ type TypographyProps = {
   size?: 'small' | 'medium' | 'large';
 };
 
-export default function Typography({
+export function Typography({
   textKey,
   values,
   size = 'medium',
@@ -18,8 +18,8 @@ export default function Typography({
   const language = useDashboardStore((state) => state.language);
 
   return (
-    <div className={`c-typography c-typography--${size}`}>
+    <span className={`c-typography c-typography--${size}`}>
       {t(textKey, language, values)}
-    </div>
+    </span>
   );
 }

@@ -1,7 +1,7 @@
-import Typography from '@/components/Typography/Typography';
+import { Typography } from '@/components/Typography/Typography';
 import { useStartupStore } from '@/stores/useStartupStore';
 
-export default function AppLoaderError() {
+export function StartupError() {
   const failureInfo = useStartupStore((state) => state.failureInfo);
 
   if (!failureInfo) {
@@ -12,7 +12,7 @@ export default function AppLoaderError() {
     <div className="loader loader--error">
       <div className="loader__panel">
         <h1 className="loader__heading">
-          <Typography textKey="loader.errorHeading" size="large" />
+          <Typography textKey="loader.errorHeading" />
         </h1>
         <p className="loader__message">
           <Typography textKey="loader.errorMessage" />

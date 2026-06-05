@@ -1,6 +1,6 @@
 ---
-import "../styles/main.css";
-import App from "../components/App/App.tsx";
+import '../styles/main.css';
+import { Shell } from '../components/Shell/Shell.tsx';
 ---
 
 <html lang="en">
@@ -9,7 +9,7 @@ import App from "../components/App/App.tsx";
     <link
       rel="icon"
       type="image/svg+xml"
-      href={import.meta.env.BASE_URL + "/favicon.svg"}
+      href={import.meta.env.BASE_URL + '/favicon.svg'}
     />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
@@ -24,6 +24,6 @@ import App from "../components/App/App.tsx";
     <title>Lullaby dashboard</title>
   </head>
   <body>
-    <App client:load />
+    <Shell client:only />
   </body>
 </html>

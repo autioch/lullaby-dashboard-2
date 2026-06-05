@@ -1,21 +1,20 @@
 import './TodoList.css';
 import type { SavedList } from '@/types';
-import Typography from '@/components/Typography/Typography';
+import { TodoItem } from './Item';
+import { Typography } from '@/components/Typography/Typography';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 
 type TodoListProps = {
   list: SavedList;
 };
 
-const { toggleItem } = useDashboardStore.getState();
-
-export default function TodoList() {
+export function TodoList() {
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);
   const selectedList = lists[selectedIndex] ?? null;
 
   return (
-    <section className="app__content">
+    <div className="app__content">
       {selectedList ? (
         <TodoListInner list={selectedList} />
       ) : (
@@ -23,7 +22,7 @@ export default function TodoList() {
           <Typography textKey="app.noLists" />
         </div>
       )}
-    </section>
+    </div>
   );
 }
 
@@ -43,14 +42,12 @@ function TodoListInner({ list }: TodoListProps) {
                 const checked = Boolean(checkedKeys[key]);
 
                 return (
-                  <li
+                  <TodoItem
                     key={key}
-                    className={`todo-list__item${checked ? ' todo-list__item--checked' : ''}`}
-                    style={{ color: item.color }}
-                    onClick={() => toggleItem(key)}
-                  >
-                    <span className="todo-list__item-text">{item.name}</span>
-                  </li>
+                    item={item}
+                    checked={checked}
+                    hash={key}
+                  />
                 );
               })}
             </ul>

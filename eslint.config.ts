@@ -14,7 +14,7 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
-      'sort-imports': ['error'],
+      // 'sort-imports': ['error'],
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     },
   },

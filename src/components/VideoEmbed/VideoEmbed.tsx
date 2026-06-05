@@ -1,7 +1,7 @@
 import './VideoEmbed.css';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 
-export default function VideoEmbed() {
+export function VideoEmbed() {
   const videoUrl = useDashboardStore(
     (state) => state.lists[state.selectedIndex]?.youtubeUrl ?? null
   );

@@ -9,7 +9,7 @@ function formatDuration(durationMs: number) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-export default function FocusTimerCard() {
+export function FocusTimerCard() {
   const [tick, setTick] = useState(Date.now());
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
   const lists = useDashboardStore((state) => state.lists);
@@ -93,14 +93,12 @@ export default function FocusTimerCard() {
   if (!selectedList) return null;
 
   return (
-    <section className="app__timer-card" aria-live="polite">
-      <p className="app__timer-label">Active focus</p>
-      <strong className="app__timer-value">
-        {formatDuration(currentElapsedMs)}
-      </strong>
-      <p className="app__timer-fastest">
+    <div className="app__timer-card" aria-live="polite">
+      <div className="app__timer-label">Active focus</div>
+      <div className="app__timer-value">{formatDuration(currentElapsedMs)}</div>
+      <div className="app__timer-fastest">
         Fastest: {fastestRun ? formatDuration(fastestRun.elapsedMs) : '—'}
-      </p>
-    </section>
+      </div>
+    </div>
   );
 }

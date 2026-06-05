@@ -9,13 +9,13 @@ function getCurrentTime() {
   return `${formatPart(date.getHours())}:${formatPart(date.getMinutes())}`;
 }
 
-export default function Clock() {
+export function Clock() {
   const [time, setTime] = useState<string>(getCurrentTime());
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTime(getCurrentTime());
-    }, 1000);
+    }, 10000);
 
     return () => clearInterval(intervalId);
   }, []);

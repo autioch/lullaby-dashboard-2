@@ -1,12 +1,13 @@
+import type { APIContext } from 'astro';
 import { jsonResponse } from './_utils';
+
 export const prerender = false;
 
-export async function POST({ request }: { request: Request }) {
+export async function POST(ctx: APIContext) {
+  const { request } = ctx;
   const { password } = (await request.json().catch(() => ({}))) as {
     password?: string;
   };
-
-  console.log('@@', password);
 
   const expectedPassword = import.meta.env.APP_PASSWORD?.trim() ?? '';
   const enteredPassword = typeof password === 'string' ? password.trim() : '';

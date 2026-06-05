@@ -4,7 +4,7 @@ import { useDashboardStore } from '@/stores/useDashboardStore';
 
 const { setSelectedIndex } = useDashboardStore.getState();
 
-export default function ListSelector() {
+export function ListSelector() {
   const lists = useDashboardStore((state) => state.lists);
   const selectedIndex = useDashboardStore((state) => state.selectedIndex);
 
