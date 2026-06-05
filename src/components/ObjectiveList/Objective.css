@@ -3,10 +3,11 @@
   gap: 0.5em;
   align-items: center;
   cursor: pointer;
+  padding: 0.5rem 0;
 }
 
 .c-objective:hover {
-  background: #ececec;
+  background: #999;
 }
 
 .c-objective--checked > .c-objective__text {
@@ -14,12 +15,12 @@
 }
 
 .c-objective__state {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-size: 1.5rem;
+  font-size: 2rem;
   flex: none;
 }
