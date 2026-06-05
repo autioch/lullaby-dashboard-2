@@ -1,3 +1,5 @@
+import { authGateTranslations } from '@/components/AuthGate/translations';
+
 export const translations = {
   en: {
     app: {
@@ -34,6 +36,7 @@ export const translations = {
       restoringState: 'Restoring saved state',
     },
     pageTitle: 'Lullaby dashboard',
+    authGate: authGateTranslations.en,
   },
   pl: {
     app: {
@@ -70,5 +73,6 @@ export const translations = {
       restoringState: 'Przywracanie zapisanych danych',
     },
     pageTitle: 'Pulpit Lullaby',
+    authGate: authGateTranslations.pl,
   },
 } as const;

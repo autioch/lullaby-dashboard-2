@@ -2,10 +2,17 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-primary: #288de0;
+  --color-secondary: #e9e653;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #000;
   color: #fff;
   position: relative;
@@ -15,4 +22,8 @@ body {
   body {
     overflow: hidden;
   }
+}
+
+.is-center {
+  text-align: center;
 }

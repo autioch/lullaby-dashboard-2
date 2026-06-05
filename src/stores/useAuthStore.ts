@@ -3,7 +3,7 @@ import { create } from 'zustand';
 type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
-  error: string | null;
+  errorTextKey: string | null;
   authenticate(password: string): Promise<void>;
 };
 
@@ -12,15 +12,15 @@ const AUTH_STORAGE_KEY = 'launchpad-auth';
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: window.localStorage.getItem(AUTH_STORAGE_KEY) === 'true',
   isLoading: false,
-  error: null,
+  errorTextKey: null,
 
   async authenticate(password) {
     if (!password.trim()) {
-      set({ error: 'Please enter the password.', isLoading: false });
+      set({ errorTextKey: 'authGate.errorEmptyPassword', isLoading: false });
       return;
     }
 
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, errorTextKey: null });
 
     try {
       const response = await fetch('/api/auth', {
@@ -32,13 +32,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       const data = (await response.json()) as { ok?: boolean; error?: string };
 
       if (!response.ok || !data.ok) {
-        set({ error: data.error ?? 'Incorrect password.' });
+        set({ errorTextKey: 'authGate.errorInvalidPassword' });
         return;
       }
       set({ isAuthenticated: true });
       window.localStorage.setItem(AUTH_STORAGE_KEY, 'true');
     } catch {
-      set({ error: 'Unable to verify the password right now.' });
+      set({ errorTextKey: 'authGate.errorUnknown' });
     } finally {
       set({ isLoading: false });
     }

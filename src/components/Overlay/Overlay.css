@@ -1,0 +1,16 @@
+.c-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.c-overlay__content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 90dvh;
+  max-width: 90dvw;
+}

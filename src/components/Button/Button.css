@@ -1,0 +1,15 @@
+.c-button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #288de0;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.c-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}

@@ -1,0 +1,13 @@
+.c-auth-gate__input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.c-auth-gate__error {
+  min-height: 2rem;
+}
