@@ -20,7 +20,7 @@ export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
       options: 'Options',
       resetData: 'Reset progress',
       close: 'Close menu',
-      open: '⚙',
+      open: 'Options',
     },
     pl: {
       languageMenu: 'Język',
@@ -30,6 +30,6 @@ export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
       options: 'Opcje',
       resetData: 'Zresetuj postęp',
       close: 'Zamknij menu',
-      open: '⚙',
+      open: 'Opcje',
     },
   };

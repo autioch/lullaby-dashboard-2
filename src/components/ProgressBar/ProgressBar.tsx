@@ -1,9 +1,9 @@
 import './ProgressBar.css';
 import { Typography } from '@/components/Typography/Typography';
 import { useDashboardStore } from '@/stores/useDashboardStore';
-import { useMemo } from 'react';
+import { useMemo, type PropsWithChildren } from 'react';
 
-export function ProgressBar() {
+export function ProgressBar(props: PropsWithChildren) {
   const checkedKeys = useDashboardStore((state) => state.checkedKeys);
 
   const selectedList = useDashboardStore(
@@ -48,6 +48,7 @@ export function ProgressBar() {
           textKey={`progressBar.${getProgressText(percent)}`}
           as="div"
         />
+        {props.children}
         <Typography
           textKey="progressBar.count"
           values={{ completed, total, percent }}

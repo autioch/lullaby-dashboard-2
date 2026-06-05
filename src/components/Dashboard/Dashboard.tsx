@@ -25,8 +25,13 @@ export function Dashboard() {
           <Clock />
         </div>
         <div className="c-dashboard__footer">
-          <ProgressBar />
-          <Button onClick={openOptions} textKey="appOptions.open" />
+          <ProgressBar>
+            <Button
+              onClick={openOptions}
+              textKey="appOptions.open"
+              variant="text"
+            />
+          </ProgressBar>
         </div>
       </div>
       {isAppOptions || selectedIndex === -1 ? <AppOptions /> : null}
