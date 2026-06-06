@@ -1,14 +1,14 @@
 .c-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .c-icon > svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .c-icon--button {
@@ -17,4 +17,5 @@
 
 .c-icon--button:hover {
   background: #999;
+  color: #212121;
 }
