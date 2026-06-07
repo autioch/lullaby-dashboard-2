@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  scroll-margin: 0.25rem;
 }
 
 body {
@@ -24,4 +25,20 @@ html {
 
 .is-pointer {
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: #777;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f0f0f0;
 }

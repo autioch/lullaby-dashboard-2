@@ -54,3 +54,4 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 - extract API communication layer at some point
 - dark/light mode
 - remove bgColor
+- animations

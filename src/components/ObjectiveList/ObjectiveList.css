@@ -13,4 +13,5 @@
   flex-direction: column;
   overflow: auto;
   max-height: 100%;
+  padding-right: 0.5rem;
 }

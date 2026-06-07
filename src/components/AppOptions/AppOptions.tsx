@@ -5,6 +5,7 @@ import { Layout } from '../Layout/Layout';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { Button } from '../Button/Button';
 import { useLanguageStore } from '@/stores/useLanguageStore';
+import { Panel } from '../Panel/Panel';
 
 const { closeOptions } = useControlsStore.getState();
 const { setLanguage } = useLanguageStore.getState();
@@ -12,23 +13,30 @@ const { setLanguage } = useLanguageStore.getState();
 export function AppOptions() {
   return (
     <Overlay>
-      <Layout className="c-app-options is-center">
-        <Typography textKey="appOptions.languageMenu" as="div" size="large" />
-        <Button
-          textKey="appOptions.polish"
-          onClick={() => {
-            setLanguage('pl');
-            closeOptions();
-          }}
-        />
-        <Button
-          textKey="appOptions.english"
-          onClick={() => {
-            setLanguage('en');
-            closeOptions();
-          }}
-        />
-      </Layout>
+      <Panel>
+        <Layout>
+          <Typography
+            textKey="appOptions.languageMenu"
+            as="div"
+            size="large"
+            className="is-center"
+          />
+          <Button
+            textKey="appOptions.polish"
+            onClick={() => {
+              setLanguage('pl');
+              closeOptions();
+            }}
+          />
+          <Button
+            textKey="appOptions.english"
+            onClick={() => {
+              setLanguage('en');
+              closeOptions();
+            }}
+          />
+        </Layout>
+      </Panel>
     </Overlay>
   );
 }

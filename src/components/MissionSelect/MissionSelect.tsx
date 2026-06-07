@@ -3,6 +3,7 @@ import { useMissionStore } from '@/stores/useMissionStore';
 import { Overlay } from '../Overlay/Overlay';
 import { Layout } from '../Layout/Layout';
 import { useControlsStore } from '@/stores/useControlsStore';
+import { Button } from '../Button/Button';
 
 const { closeMissionSelect } = useControlsStore.getState();
 const { selectMission } = useMissionStore.getState();
@@ -13,18 +14,22 @@ export function MissionSelect() {
   return (
     <Overlay>
       <Layout className="c-app-options">
-        <Typography textKey="missionSelect.missionMenu" as="div" size="large" />
+        <Typography
+          textKey="missionSelect.missionMenu"
+          as="div"
+          size="large"
+          className="is-center"
+        />
         {lists.map((list) => (
-          <div
+          <Button
             key={list.id}
-            className="c-app-options__mission"
             onClick={() => {
               selectMission(list.id);
               closeMissionSelect();
             }}
-          >
-            {list.label}
-          </div>
+            textKey={list.label}
+            raw
+          />
         ))}
       </Layout>
     </Overlay>
