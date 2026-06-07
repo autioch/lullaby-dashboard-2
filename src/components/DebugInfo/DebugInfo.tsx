@@ -1,40 +1,50 @@
 import { Overlay } from '../Overlay/Overlay';
+import { APIS, UNITS } from './consts';
+import { isUnitSupported, getFeatures } from './units';
 import './DebugInfo.css';
-
-type DebugItem = {
-  label: string;
-  value: string;
-};
+import type { DebugItem, SupportItem } from './types';
 
 export function DebugInfo() {
-  const debugItems: { label: string; value: string }[] = [
+  const debugItems: DebugItem[] = [
     { label: 'Origin', value: window.location.origin },
     { label: 'Pathname', value: window.location.pathname },
     { label: 'User Agent', value: window.navigator.userAgent },
-    ...Array.from(document.querySelectorAll('link[rel=stylesheet]')).map(
-      (link, index) => ({
-        label: `Link ${index + 1}`,
-        value:
-          link.getAttribute('href') ||
-          link.getAttribute('data-vite-dev-id') ||
-          '?',
-      })
-    ),
-    ...Array.from(document.querySelectorAll('style')).map((link, index) => ({
-      label: `Style ${index + 1}`,
-      value:
-        link.getAttribute('href') ||
-        link.getAttribute('data-vite-dev-id') ||
-        '?',
-    })),
+    { label: 'Window width', value: window.innerWidth },
+    { label: 'Window height', value: window.innerHeight },
   ];
+
+  const features = getFeatures();
 
   return (
     <Overlay>
       <DebugSection items={debugItems} />
-      <DebugSection items={debugItems} />
-      <DebugSection items={debugItems} />
-      <DebugSection items={debugItems} />
+      <div className="c-debug__items">
+        <ItemSupported
+          label="CSS.supports"
+          supported={typeof globalThis.CSS.supports === 'function'}
+        />
+        {APIS.map((api) => (
+          <ItemSupported key={api} label={api} supported={api in window} />
+        ))}
+      </div>
+      <div className="c-debug__items">
+        {UNITS.map((unit) => (
+          <ItemSupported
+            key={unit}
+            label={unit}
+            supported={isUnitSupported(unit)}
+          />
+        ))}
+      </div>
+      <div className="c-debug__items">
+        {features.map((item) => (
+          <ItemSupported
+            key={item.label}
+            label={item.label}
+            supported={item.supported}
+          />
+        ))}
+      </div>
     </Overlay>
   );
 }
@@ -49,5 +59,13 @@ function DebugSection({ items }: { items: DebugItem[] }) {
         </>
       ))}
     </div>
+  );
+}
+
+function ItemSupported(props: SupportItem) {
+  const { supported, label } = props;
+
+  return (
+    <div className={supported ? 'c-debug--yes' : 'c-debug--no'}>{label}</div>
   );
 }

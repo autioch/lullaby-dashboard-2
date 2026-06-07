@@ -4,7 +4,24 @@
   margin: 1em;
   width: 100%;
   display: grid;
-  row-gap: 2em;
-  column-gap: 2em;
+  row-gap: 1rem;
+  column-gap: 1rem;
   grid-template-columns: auto 1fr;
+  margin-bottom: 3em;
+}
+
+.c-debug__items {
+  margin: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3em;
+}
+
+.c-debug--yes {
+  color: rgb(109, 255, 109);
+}
+
+.c-debug--no {
+  color: rgb(255, 102, 102);
 }
