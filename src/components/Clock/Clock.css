@@ -3,4 +3,6 @@
   text-align: center;
   font-weight: bold;
   margin-bottom: auto;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
 }

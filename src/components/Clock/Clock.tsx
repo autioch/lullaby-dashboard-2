@@ -1,5 +1,5 @@
 import './Clock.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function formatPart(num: number) {
   return num.toString().padStart(2, '0');
@@ -12,6 +12,7 @@ function getCurrentTime() {
 
 export function Clock() {
   const [time, setTime] = useState<string>(getCurrentTime());
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => setTime(getCurrentTime()), 10000);
@@ -19,5 +20,25 @@ export function Clock() {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <div className="c-clock">{time}</div>;
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) {
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      element.style.fontSize = `${entries[0].contentRect.width * 0.38}px`;
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="c-clock" ref={ref}>
+      {time}
+    </div>
+  );
 }

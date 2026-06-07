@@ -12,7 +12,8 @@ This repository is a small static Astro dashboard app called **LaunchPad**. It u
 
 ## Supported browsers
 
-The app must support browser from TV with user agent: Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0 Colt/2.0
+The app must support browser from TV with user agent:
+Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0 Colt/2.0
 
 ## Project Type and Technology
 
