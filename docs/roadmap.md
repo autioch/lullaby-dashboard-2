@@ -11,7 +11,6 @@
 - Mission timer
 - Completion celebration
 - Best times
-- History tracking
 
 ## Excluded
 
@@ -23,6 +22,7 @@
 - Monetization
 - Multi-household support
 - in progress state of an objective
+- History tracking
 
 ## Analytics:
 

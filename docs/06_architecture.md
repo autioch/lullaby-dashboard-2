@@ -8,7 +8,6 @@
 - Progress Tracking
 - Timing
 - Records
-- History
 
 ## Primary Platform
 
