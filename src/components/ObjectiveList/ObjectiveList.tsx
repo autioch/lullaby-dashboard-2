@@ -1,5 +1,5 @@
 import './ObjectiveList.css';
-import { Objective } from './Objective';
+import { ObjectiveRow } from './Objective';
 import { useMissionStore, useMission } from '@/stores/useMissionStore';
 
 export function ObjectiveList() {
@@ -21,7 +21,7 @@ export function ObjectiveList() {
               const key = `${mission.id}-${group.id}-${item.id}`;
 
               return (
-                <Objective
+                <ObjectiveRow
                   key={key}
                   item={item}
                   hash={key}

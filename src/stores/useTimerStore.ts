@@ -1,4 +1,4 @@
-import type { SavedList, TimerRunState } from '@/types';
+import type { Mission } from '@/types';
 import { create } from 'zustand';
 import { lsWrapper } from '@/utils/ls';
 
@@ -12,8 +12,16 @@ type TimerMethods = {
   pauseTimer(listId: string): void;
   resumeTimer(listId: string): void;
   completeRun(listId: string): void;
-  checkFinished(list: SavedList, checkedKeys: Record<string, boolean>): void;
+  checkFinished(list: Mission, checkedKeys: Record<string, boolean>): void;
   resetTimerState(): void;
+};
+
+type TimerRunState = {
+  listId: string;
+  startedAtMs: number;
+  elapsedMs: number;
+  isRunning: boolean;
+  lastResumedAtMs: number | null;
 };
 
 const ls = lsWrapper<TimerState>('timer');

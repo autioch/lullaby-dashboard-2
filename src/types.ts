@@ -1,39 +1,18 @@
-export type ToDoItem = {
+export type Objective = {
   id: string;
   name: string;
   color: string;
 };
 
-export type ToDoGroup = {
+export type ObjectiveGroup = {
   id: string;
-  items: ToDoItem[];
+  items: Objective[];
 };
 
-export type SavedList = {
+export type Mission = {
   label: string;
   id: string;
   youtubeUrl: string;
-  groups: ToDoGroup[];
+  groups: ObjectiveGroup[];
   retentionHours?: number;
-};
-
-export type TimerRunState = {
-  listId: string;
-  startedAtMs: number;
-  elapsedMs: number;
-  isRunning: boolean;
-  lastResumedAtMs: number | null;
-};
-
-export type FastestRunRecord = {
-  elapsedMs: number;
-};
-
-export type Configuration = {
-  savedLists: SavedList[];
-};
-
-export type ApiResponseAuth = {
-  ok: boolean;
-  error?: string;
 };

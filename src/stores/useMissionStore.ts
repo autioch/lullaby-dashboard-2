@@ -1,9 +1,9 @@
-import type { SavedList } from '@/types';
+import type { Mission } from '@/types';
 import { create } from 'zustand';
 import { lsWrapper } from '@/utils/ls';
 
 type MissionState = {
-  lists: SavedList[];
+  lists: Mission[];
   missionId: string | null;
   checkedKeys: Record<string, boolean>;
   listExpiryTimestamps: Record<string, number>;
@@ -125,7 +125,7 @@ export const useMissionStore = create<MissionState & MissionMethods>(
       }
 
       const data = (await response.json()) as {
-        savedLists?: SavedList[];
+        savedLists?: Mission[];
       };
 
       if (!data || !Array.isArray(data.savedLists)) {

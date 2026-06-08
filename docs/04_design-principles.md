@@ -15,6 +15,22 @@ Requirements:
 - Minimal clutter
 - Large touch targets
 
+Shared-screen experience:
+
+- TV
+- Tablet
+- Wall display
+- Desktop
+
+Mobile support is secondary.
+
+## Accessibility
+
+- High contrast mode
+- Keyboard navigation
+- Large touch targets
+- Color-independent indicators
+
 ## Progress Over Completion
 
 Prioritize:
