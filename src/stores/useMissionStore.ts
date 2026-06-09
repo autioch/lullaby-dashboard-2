@@ -1,33 +1,58 @@
-import type { Mission } from '@/types';
 import { create } from 'zustand';
 import { lsWrapper } from '@/utils/ls';
+import {
+  missionRepository,
+  type MissionRec,
+} from '@/database/missionRepository';
+import {
+  objectiveGroupRepository,
+  type ObjectiveGroupRec,
+} from '@/database/objectiveGroupRepository';
+import {
+  objectiveRepository,
+  type ObjectiveRec,
+} from '@/database/objectiveRepository';
+import { filterObject } from '@/utils/object';
 
-type MissionState = {
-  lists: Mission[];
+export type MissionLSState = {
   missionId: string | null;
-  checkedKeys: Record<string, boolean>;
+  checkedKeys: Record<string, Record<string, boolean>>;
   listExpiryTimestamps: Record<string, number>;
+};
+
+type MissionState = MissionLSState & {
+  missions: Record<string, MissionRec>;
+  missionList: MissionRec[];
+  objectiveGroups: Record<string, ObjectiveGroupRec>;
+  objectives: Record<string, ObjectiveRec>;
+
+  setMissions: (missions: MissionRec[]) => void;
+  setObjectiveGroups: (groups: ObjectiveGroupRec[]) => void;
+  setObjectives: (objectives: ObjectiveRec[]) => void;
 };
 
 type MissionMethods = {
   selectMission(missionId: string): void;
-  toggleItem(key: string): void;
+  toggleObjective(key: string): void;
   loadConfiguration(): Promise<void>;
   hydrateState(): void;
   resetState(): void;
 };
 
-const ls = lsWrapper<Omit<MissionState, 'lists'>>('mission');
+const ls = lsWrapper<MissionLSState>('mission');
 
 export function useMission() {
   return useMissionStore((state) =>
-    state.lists.find((list) => list.id === state.missionId)
+    state.missionId ? state.missions[state.missionId] : null
   );
 }
 
 export const useMissionStore = create<MissionState & MissionMethods>(
   (set, get) => ({
-    lists: [],
+    missions: {},
+    missionList: [],
+    objectiveGroups: {},
+    objectives: {},
     missionId: null,
     checkedKeys: {},
     listExpiryTimestamps: {},
@@ -47,54 +72,63 @@ export const useMissionStore = create<MissionState & MissionMethods>(
       });
     },
 
-    toggleItem(key: string) {
-      return set((state) => {
-        const [listId] = key.split('-', 2);
-        const list = state.lists.find((entry) => entry.id === listId);
-        const isNowChecked = !state.checkedKeys[key];
-        const nextCheckedKeys = {
-          ...state.checkedKeys,
-          [key]: isNowChecked,
-        };
+    toggleObjective(key: string) {
+      const { missionId, checkedKeys, listExpiryTimestamps, missions } = get();
 
-        const nextListExpiryTimestamps = {
-          ...state.listExpiryTimestamps,
-          [listId]: Date.now() + (list?.retentionHours ?? 0) * 60 * 60 * 1000,
-        };
+      if (!missionId) {
+        return;
+      }
 
-        ls.save({
-          checkedKeys: nextCheckedKeys,
-          listExpiryTimestamps: nextListExpiryTimestamps,
-          missionId: state.missionId,
-        });
+      const nextCheckedKeys = {
+        ...checkedKeys,
+        [missionId]: {
+          ...checkedKeys[missionId],
+          [key]: !checkedKeys[missionId]?.[key],
+        },
+      };
 
-        return {
-          checkedKeys: nextCheckedKeys,
-          listExpiryTimestamps: nextListExpiryTimestamps,
-        };
+      const nextListExpiryTimestamps = {
+        ...listExpiryTimestamps,
+        [missionId]:
+          Date.now() +
+          (missions[missionId]?.retentionHours ?? 0) * 60 * 60 * 1000,
+      };
+
+      ls.save({
+        checkedKeys: nextCheckedKeys,
+        listExpiryTimestamps: nextListExpiryTimestamps,
+        missionId,
+      });
+
+      set({
+        checkedKeys: nextCheckedKeys,
+        listExpiryTimestamps: nextListExpiryTimestamps,
       });
     },
 
     hydrateState() {
       const persistedState = ls.load();
-      if (!persistedState) return;
-      const { lists } = get();
+
+      if (!persistedState) {
+        return;
+      }
+
+      const { missions } = get();
 
       const now = Date.now();
-      const checkedKeys: Record<string, boolean> = {};
-      const listExpiryTimestamps: Record<string, number> = {};
 
-      for (const [key, value] of Object.entries(persistedState.checkedKeys)) {
-        const [listId] = key.split('-', 2);
-        const list = lists.find((item) => item.id === listId);
-        const expiry = persistedState.listExpiryTimestamps[listId];
+      const listExpiryTimestamps = filterObject(
+        persistedState.listExpiryTimestamps,
+        ([missionId, expiry]) =>
+          !!missions[missionId]?.retentionHours &&
+          typeof expiry === 'number' &&
+          now < expiry
+      );
 
-        if (!list?.retentionHours || typeof expiry !== 'number') continue;
-        if (now >= expiry) continue;
-
-        checkedKeys[key] = value;
-        listExpiryTimestamps[listId] = expiry;
-      }
+      const checkedKeys = filterObject(
+        persistedState.checkedKeys,
+        ([missionId]) => !!listExpiryTimestamps[missionId]
+      );
 
       set({
         missionId: persistedState.missionId,
@@ -116,26 +150,36 @@ export const useMissionStore = create<MissionState & MissionMethods>(
     },
 
     async loadConfiguration() {
-      const response = await fetch('/api/configuration');
+      const { setMissions, setObjectiveGroups, setObjectives } = get();
 
-      if (!response.ok) {
-        throw new Error(
-          `Failed to load configuration from proxy endpoint: ${response.status}`
-        );
-      }
+      // This is require for the `hydrateState` to work properly
+      await missionRepository.fetchOnce(setMissions);
 
-      const data = (await response.json()) as {
-        savedLists?: Mission[];
-      };
-
-      if (!data || !Array.isArray(data.savedLists)) {
-        throw new Error('Proxy configuration is missing savedLists');
-      }
-
-      set((state) => ({
-        ...state,
-        lists: data.savedLists,
-      }));
+      missionRepository.subscribe(setMissions);
+      objectiveGroupRepository.subscribe(setObjectiveGroups);
+      objectiveRepository.subscribe(setObjectives);
     },
+
+    setMissions: (missions) =>
+      set({
+        missionList: missions,
+        missions: Object.fromEntries(
+          missions.map((mission) => [mission.id, mission])
+        ),
+      }),
+
+    setObjectiveGroups: (groups) =>
+      set({
+        objectiveGroups: Object.fromEntries(
+          groups.map((group) => [group.id, group])
+        ),
+      }),
+
+    setObjectives: (objectives) =>
+      set({
+        objectives: Object.fromEntries(
+          objectives.map((objective) => [objective.id, objective])
+        ),
+      }),
   })
 );

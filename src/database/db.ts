@@ -1,5 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, type QueryDocumentSnapshot } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
@@ -27,8 +27,15 @@ if (!isFirebaseConfigComplete()) {
   );
 }
 
-const db = getApps().length
+export const db = getApps().length
   ? getFirestore()
   : getFirestore(initializeApp(firebaseConfig));
 
-export { db };
+export function withId<T>(document: QueryDocumentSnapshot): WithId<T> {
+  return {
+    id: document.id,
+    ...(document.data() as T),
+  };
+}
+
+export type WithId<T> = T & { id: string };

@@ -55,3 +55,4 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 - dark/light mode
 - remove bgColor
 - animations
+- check supabase + postgres

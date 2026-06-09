@@ -172,19 +172,19 @@ export const useTimerStore = create<TimerState & TimerMethods>((set, get) => ({
     ls.clear();
   },
 
-  checkFinished(list, checkedKeys) {
-    const listId = list.id;
+  checkFinished(mission, checkedKeys) {
+    const listId = mission.id;
     const totalItems =
-      list?.groups.reduce(
+      mission?.groups.reduce(
         (sum, group) => sum + (group.items?.length ?? 0),
         0
       ) ?? 0;
     const completedItems =
-      list?.groups.reduce((sum, group) => {
+      mission?.groups.reduce((sum, group) => {
         return (
           sum +
           group.items.reduce((groupSum, item) => {
-            const itemKey = `${list.id}-${group.id}-${item.id}`;
+            const itemKey = `${mission.id}-${group.id}-${item.id}`;
             return groupSum + (checkedKeys[itemKey] ? 1 : 0);
           }, 0)
         );

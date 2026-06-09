@@ -1,6 +1,6 @@
 const isBrowser = typeof window !== 'undefined';
 const NAMESPACE = 'launchpad';
-const VERSION = 1;
+const VERSION = 2;
 
 export function lsWrapper<T = string>(key: string) {
   const hash = `${NAMESPACE}_${VERSION}_${key}`;

@@ -9,7 +9,7 @@ const { closeMissionSelect } = useControlsStore.getState();
 const { selectMission } = useMissionStore.getState();
 
 export function MissionSelect() {
-  const lists = useMissionStore((state) => state.lists);
+  const missionList = useMissionStore((state) => state.missionList);
 
   return (
     <Overlay>
@@ -20,7 +20,7 @@ export function MissionSelect() {
           size="large"
           className="is-center"
         />
-        {lists.map((list) => (
+        {missionList.map((list) => (
           <Button
             key={list.id}
             onClick={() => {

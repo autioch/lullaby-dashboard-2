@@ -1,11 +1,12 @@
 export type Objective = {
   id: string;
-  name: string;
+  label: string;
   color: string;
 };
 
 export type ObjectiveGroup = {
   id: string;
+  label: string;
   items: Objective[];
 };
 
