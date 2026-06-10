@@ -4,6 +4,8 @@ import { Overlay } from '../Overlay/Overlay';
 import { Layout } from '../Layout/Layout';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { Button } from '../Button/Button';
+import { Panel } from '@/components/Panel/Panel';
+import './MissionSelect.css';
 
 const { closeMissionSelect } = useControlsStore.getState();
 const { selectMission } = useMissionStore.getState();
@@ -13,25 +15,28 @@ export function MissionSelect() {
 
   return (
     <Overlay>
-      <Layout className="c-app-options">
-        <Typography
-          textKey="missionSelect.missionMenu"
-          as="div"
-          size="large"
-          className="is-center"
-        />
-        {missionList.map((list) => (
-          <Button
-            key={list.id}
-            onClick={() => {
-              selectMission(list.id);
-              closeMissionSelect();
-            }}
-            textKey={list.label}
-            raw
+      <Panel>
+        <Layout>
+          <Typography
+            textKey="missionSelect.missionMenu"
+            as="div"
+            size="large"
+            className="is-center"
           />
-        ))}
-      </Layout>
+          {missionList.map((list) => (
+            <Button
+              key={list.id}
+              onClick={() => {
+                selectMission(list.id);
+                closeMissionSelect();
+              }}
+              textKey={list.label}
+              raw
+            />
+          ))}
+          <div />
+        </Layout>
+      </Panel>
     </Overlay>
   );
 }
