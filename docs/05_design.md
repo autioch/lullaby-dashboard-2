@@ -1,5 +1,3 @@
-TODO review this
-
 # Dashboard Specification
 
 ## Layout
