@@ -35,6 +35,7 @@ The feature idea (may be empty): `$ARGUMENTS`
    written spec).
 
 Rules:
+
 - Match the house style: short and direct. The spec is a contract, so be precise.
 - Respect TV-first + Chrome 87 constraints and the Firestore → repository → store →
   component layering when describing impact.

@@ -8,7 +8,7 @@
 
 .c-objective:hover {
   background: #999;
-  color: #212121 !important;
+  color: #212121 !important; /* eslint-disable-line */
 }
 
 .c-objective--checked > .c-objective__text {

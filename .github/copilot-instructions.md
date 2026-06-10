@@ -19,16 +19,16 @@ Don't let the tree ship with docs that contradict the code.
 This file is the **single source of truth** for agent guidance — edit it here, never
 duplicate into `CLAUDE.md`. Use this map of "if you touch X, review Y":
 
-| You changed… | Review / update… |
-| --- | --- |
-| `package.json` scripts | [Build & Validation Commands](#build--validation-commands) table |
-| `.env` / env vars, auth gate | [Environment](#environment) |
-| `.mcp.json` | [MCP Servers](#mcp-servers-agent-tooling) |
+| You changed…                                   | Review / update…                                                                                      |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `package.json` scripts                         | [Build & Validation Commands](#build--validation-commands) table                                      |
+| `.env` / env vars, auth gate                   | [Environment](#environment)                                                                           |
+| `.mcp.json`                                    | [MCP Servers](#mcp-servers-agent-tooling)                                                             |
 | `src/` structure, new store/component patterns | [Repository Layout](#repository-layout), [Source layout](#source-layout), [Conventions](#conventions) |
-| Data flow, layering, Firestore access | [Architecture](#architecture) **and** `docs/07_data-architecture.md` |
-| Dependencies / stack | [Summary](#summary), [Project Type and Technology](#project-type-and-technology) |
-| User-facing product behavior | `README.md`, relevant `docs/` (vision, design, roadmap) |
-| A feature's behavior vs. its spec | the matching `docs/features/NN-*.md` (keep status/behavior current) |
+| Data flow, layering, Firestore access          | [Architecture](#architecture) **and** `docs/07_data-architecture.md`                                  |
+| Dependencies / stack                           | [Summary](#summary), [Project Type and Technology](#project-type-and-technology)                      |
+| User-facing product behavior                   | `README.md`, relevant `docs/` (vision, design, roadmap)                                               |
+| A feature's behavior vs. its spec              | the matching `docs/features/NN-*.md` (keep status/behavior current)                                   |
 
 When unsure whether a doc is affected, grep it for the symbol/script/path you changed. If a
 doc is now wrong but out of scope to fix, say so explicitly rather than leaving it silently
@@ -68,21 +68,21 @@ Avoid JS/CSS features unsupported by Chrome 87; prefer widely supported syntax.
 
 Use **npm** with `package-lock.json` (don't switch package managers).
 
-| Command | Purpose |
-| --- | --- |
-| `npm install` | Bootstrap; run first on a clean checkout. |
-| `npm run dev` | Dev server at http://localhost:4321/ |
-| `npm run build` | Production build (Netlify adapter). |
-| `npm run preview` | Preview the built app. |
-| `npm run ci:ts` | `tsc --noEmit` — type check. |
-| `npm run ci:check` | `astro check`. |
-| `npm run ci:lint` | ESLint over `./src` — **check only**, no `--fix`. |
-| `npm run ci:format` | Prettier `--check` over the repo — **check only**, no writes. |
-| `npm run ci` | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate. |
-| `npm run fix:lint` | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`. |
-| `npm run fix:format` | Prettier `--write` over the repo — dev counterpart to `ci:format`. |
-| `npm run fix` | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development. |
-| `npm run firebase:push-config` | Push config to Firestore via `tools/push-config.mjs`. |
+| Command                        | Purpose                                                                                        |
+| ------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `npm install`                  | Bootstrap; run first on a clean checkout.                                                      |
+| `npm run dev`                  | Dev server at http://localhost:4321/                                                           |
+| `npm run build`                | Production build (Netlify adapter).                                                            |
+| `npm run preview`              | Preview the built app.                                                                         |
+| `npm run ci:ts`                | `tsc --noEmit` — type check.                                                                   |
+| `npm run ci:check`             | `astro check`.                                                                                 |
+| `npm run ci:lint`              | ESLint over `./src` — **check only**, no `--fix`.                                              |
+| `npm run ci:format`            | Prettier `--check` over the repo — **check only**, no writes.                                  |
+| `npm run ci`                   | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate. |
+| `npm run fix:lint`             | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                    |
+| `npm run fix:format`           | Prettier `--write` over the repo — dev counterpart to `ci:format`.                             |
+| `npm run fix`                  | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                     |
+| `npm run firebase:push-config` | Push config to Firestore via `tools/push-config.mjs`.                                          |
 
 `ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
 masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply

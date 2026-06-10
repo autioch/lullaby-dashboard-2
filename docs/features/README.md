@@ -1,7 +1,7 @@
 # Feature specs
 
 Durable specs for features built from scratch via Q&A. Each spec is the agreed contract
-before any code is written, and stays in the repo as the record of *what* and *why*.
+before any code is written, and stays in the repo as the record of _what_ and _why_.
 
 ## Convention
 

@@ -46,7 +46,7 @@ export function FocusTimerCard() {
     }
 
     previousSelectedId.current = mission.id;
-  }, [pauseTimer, resumeTimer, mission, timerRunsByList]);
+  }, [mission, timerRunsByList]);
 
   useEffect(() => {
     if (!mission) return;
@@ -74,7 +74,7 @@ export function FocusTimerCard() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [pauseTimer, resumeTimer, mission, timerRunsByList]);
+  }, [mission, timerRunsByList]);
 
   useEffect(() => {
     if (!mission || !currentRun?.isRunning) return;
