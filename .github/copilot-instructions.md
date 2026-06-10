@@ -4,6 +4,12 @@ Shared guidance for AI coding agents working in this repository. This file is th
 source of truth**: GitHub Copilot reads it directly, and Claude Code imports it from the
 root `CLAUDE.md` (`@.github/copilot-instructions.md`). Edit guidance here, not in two places.
 
+## Working Style
+
+Be short, concise, and direct. Cut unnecessary words; don't pad or sugar-coat. After git
+actions (commit/push), report the result in one line — no summaries, file lists, or
+next-step suggestions unless asked.
+
 ## Summary
 
 This repository is **LaunchPad**, a cooperative family dashboard that turns recurring
