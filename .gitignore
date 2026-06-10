@@ -25,7 +25,6 @@ pnpm-debug.log*
 # Claude Code local (personal) settings
 .claude/settings.local.json
 
-service-account.json
 # Local Netlify folder
 .netlify/
 .playwright-mcp/

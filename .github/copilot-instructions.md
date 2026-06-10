@@ -68,22 +68,23 @@ Avoid JS/CSS features unsupported by Chrome 87; prefer widely supported syntax.
 
 Use **npm** with `package-lock.json` (don't switch package managers).
 
-| Command                       | Purpose                                                                                        |
-| ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| `npm install`                 | Bootstrap; run first on a clean checkout.                                                      |
-| `npm run dev`                 | Dev server at http://localhost:4321/                                                           |
-| `npm run build`               | Production build (Netlify adapter).                                                            |
-| `npm run preview`             | Preview the built app.                                                                         |
-| `npm run ci:ts`               | `tsc --noEmit` — type check.                                                                   |
-| `npm run ci:check`            | `astro check`.                                                                                 |
-| `npm run ci:lint`             | ESLint over `./src` — **check only**, no `--fix`.                                              |
-| `npm run ci:format`           | Prettier `--check` over the repo — **check only**, no writes.                                  |
-| `npm run ci`                  | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate. |
-| `npm run fix:lint`            | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                    |
-| `npm run fix:format`          | Prettier `--write` over the repo — dev counterpart to `ci:format`.                             |
-| `npm run fix`                 | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                     |
-| `npm run verify`              | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.              |
-| `npm run firebase:push-rules` | Deploy `firestore.rules` to Firebase (`firebase deploy --only firestore:rules`).               |
+| Command                       | Purpose                                                                                            |
+| ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| `npm install`                 | Bootstrap; run first on a clean checkout.                                                          |
+| `npm run dev`                 | Dev server at http://localhost:4321/                                                               |
+| `npm run build`               | Production build (Netlify adapter).                                                                |
+| `npm run preview`             | Preview the built app.                                                                             |
+| `npm run ci:ts`               | `tsc --noEmit` — type check.                                                                       |
+| `npm run ci:check`            | `astro check`.                                                                                     |
+| `npm run ci:lint`             | ESLint over `./src` — **check only**, no `--fix`.                                                  |
+| `npm run ci:format`           | Prettier `--check` over the repo — **check only**, no writes.                                      |
+| `npm run ci`                  | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate.     |
+| `npm run fix:lint`            | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                        |
+| `npm run fix:format`          | Prettier `--write` over the repo — dev counterpart to `ci:format`.                                 |
+| `npm run fix`                 | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                         |
+| `npm run verify`              | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.                  |
+| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` to Firebase (`firebase deploy --only firestore:rules`).             |
+| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.mjs`); reads `tools/configuration.json` (or a path arg). |
 
 `ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
 masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply
@@ -161,11 +162,9 @@ check`, lints, and checks formatting — no build (that needs `PUBLIC_FIREBASE_*
 - `tsconfig.json` — TypeScript config (strict; `@/*` path alias)
 - `.mcp.json` — project-scoped MCP servers for AI agents (see [MCP Servers](#mcp-servers-agent-tooling))
 - `.firebaserc` — Firebase default project (`lullaby-dashboard`)
-- `firebase.json` — Firebase CLI config; points at `firestore.rules` (Firestore rules only — the
-  app deploys via Netlify, not Firebase Hosting)
-- `firestore.rules` — Firestore security rules, version-controlled here and deployed with
-  `npm run firebase:push-rules`. **Source of truth** — edit here, then push; don't edit rules in
-  the console (console edits drift from the repo)
+- `firebase.json` — Firebase CLI config; points at `tools/firestore.rules` (Firestore rules
+  only — the app deploys via Netlify, not Firebase Hosting). Stays at the repo root so the
+  Firebase CLI and the `firebase` MCP server auto-discover it.
 - `.github/workflows/ci.yml` — GitHub Actions CI: runs `npm run ci` on push/PR/dispatch
 - `.husky/pre-commit` — git pre-commit hook (husky): runs `npx lint-staged` on staged files
 - `.husky/pre-push` — git pre-push hook (husky): runs `npm run ci`, blocks the push on failure
@@ -173,7 +172,10 @@ check`, lints, and checks formatting — no build (that needs `PUBLIC_FIREBASE_*
 - `README.md` — project description
 - `public/` — static assets
 - `src/` — app source code
-- `tools/` — standalone Node scripts (own `node_modules`); env checks, DB seed
+- `tools/` — standalone Node scripts run against the repo's root `node_modules`:
+  `check-firebase-env.mjs` (env guard), `db-seed.mjs` (idempotent Firestore seed), and
+  `firestore.rules` (security rules — **source of truth**; deployed via
+  `npm run firebase:push-rules`, edit here, don't edit in the console as that drifts from the repo)
 - `docs/` — product and architecture docs; `docs/features/` holds per-feature specs (see
   [Planning a Feature](#planning-a-feature))
 
@@ -222,10 +224,10 @@ Firestore → Repository (src/database/) → Zustand store (src/stores/) → Rea
 - **Two Firebase paths:** the client SDK (`src/database/db.ts`, `PUBLIC_FIREBASE_*`) for the
   main realtime data flow, and `firebase-admin` in `src/pages/api/` for server-only work.
   API routes set `export const prerender = false`.
-- **Security rules** live in `firestore.rules` (version-controlled) and are deployed with
+- **Security rules** live in `tools/firestore.rules` (version-controlled) and are deployed with
   `npm run firebase:push-rules`. The client SDK is subject to these rules; `firebase-admin`
   bypasses them. When you add a collection read client-side via a repository, add a matching
-  `match` block in `firestore.rules` or the read is denied by default. Keep the rules in sync
+  `match` block in `tools/firestore.rules` or the read is denied by default. Keep the rules in sync
   with the collections in `src/database/`.
 
 ## Conventions
@@ -278,7 +280,8 @@ Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 - **Firestore `in` queries are capped at 30 IDs** — batch objective hydration (see the
   hydration strategy in `docs/07_data-architecture.md`).
 - **TV browser support** — don't rely on features unsupported by Chrome 87.
-- **`tools/` has its own `node_modules`** — it's a separate script workspace.
+- **`tools/` scripts use the repo's root `node_modules`** — there's no separate workspace or
+  lockfile in `tools/`; run them from the repo root (e.g. `npm run db:seed`).
 
 ## Validation Guidance
 
