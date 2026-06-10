@@ -39,15 +39,18 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 
 ## Documentation
 
-- architecture.md
-- design-principles.md
-- design.md
-- marketing.md
-- non-functional-requirements.md
-- roadmap.md
-- themes.md
-- user-scenarios.md
-- vision.md
+See the [`docs/`](docs/) folder:
+
+- [01_vision.md](docs/01_vision.md)
+- [02_marketing.md](docs/02_marketing.md)
+- [03_user-scenarios.md](docs/03_user-scenarios.md)
+- [04_design-principles.md](docs/04_design-principles.md)
+- [05_design.md](docs/05_design.md)
+- [06_roadmap.md](docs/06_roadmap.md)
+- [07_data-architecture.md](docs/07_data-architecture.md)
+
+For contributor/agent guidance, see [CLAUDE.md](CLAUDE.md) and
+[.github/copilot-instructions.md](.github/copilot-instructions.md).
 
 ## TODO
 

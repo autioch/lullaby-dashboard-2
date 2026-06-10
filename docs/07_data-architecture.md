@@ -171,21 +171,26 @@ Examples of application state:
 
 ```text
 src/
-├─ repositories/
+├─ database/                 # repositories + db.ts (Firestore client access)
+│  ├─ db.ts
 │  ├─ missionRepository.ts
-│  ├─ rewardRepository.ts
-│  └─ familyRepository.ts
+│  ├─ objectiveGroupRepository.ts
+│  └─ objectiveRepository.ts
 │
-├─ stores/
-│  ├─ missionStore.ts
-│  ├─ rewardStore.ts
-│  └─ familyStore.ts
+├─ stores/                   # Zustand stores (use<Name>Store.ts)
+│  ├─ useMissionStore.ts
+│  ├─ useControlsStore.ts
+│  └─ ...
 │
 ├─ components/
 │  └─ ...
 │
 └─ pages/
+   └─ api/                   # server routes (firebase-admin)
 ```
+
+> The repository layer lives in `src/database/` and stores are named `use<Name>Store.ts`.
+> Some entity names above (rewards, family) are illustrative of the model, not all present yet.
 
 ---
 
