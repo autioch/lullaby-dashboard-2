@@ -13,6 +13,6 @@ before any code is written, and stays in the repo as the record of _what_ and _w
 
 ## Workflow
 
-See **"Planning a Feature"** in
-[`.github/copilot-instructions.md`](../../.github/copilot-instructions.md), or run the
-`/spec` command to drive the elicitation loop.
+See **"Adding a feature"** in
+[`.github/instructions/development.instructions.md`](../../.github/instructions/development.instructions.md),
+or run the `/spec` command to drive the elicitation loop.

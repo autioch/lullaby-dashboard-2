@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Reminder: if code/config changed this turn, verify docs are in sync (agent file table in .github/copilot-instructions.md, README, docs/).'"
+            "command": "echo 'Reminder: if code/config changed this turn, verify docs are in sync (doc-sync table in .github/instructions/development.instructions.md, README, docs/).'"
           }
         ]
       }

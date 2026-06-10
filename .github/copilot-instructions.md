@@ -1,313 +1,86 @@
 # Agent Instructions for lullaby-dashboard-2
 
-Shared guidance for AI coding agents working in this repository. This file is the **single
-source of truth**: GitHub Copilot reads it directly, and Claude Code imports it from the
-root `CLAUDE.md` (`@.github/copilot-instructions.md`). Edit guidance here, not in two places.
+Single source of truth for AI coding agents. GitHub Copilot reads this directly; Claude Code
+imports it from the root `CLAUDE.md`. Edit here, not in two places.
 
-## Working Style
+**Before writing or changing code under `src/` or `tools/`, read
+[`.github/instructions/development.instructions.md`](instructions/development.instructions.md)** —
+architecture, source layout, conventions, the full command reference, and the doc-sync map
+live there so they don't load on every chat.
 
-Be short, concise, and direct. Cut unnecessary words; don't pad or sugar-coat. After git
-actions (commit/push), report the result in one line — no summaries, file lists, or
-next-step suggestions unless asked.
+## Working style
 
-## Keeping Docs in Sync
+- Short, concise, direct. Cut filler; don't sugar-coat.
+- Trust these instructions: when a detail is missing, search **narrowly** for just that one
+  thing — don't re-explore the whole repo. Saves tokens and time.
+- After git actions (commit/push), report the result in **one line** — no summaries, file
+  lists, or next-step suggestions unless asked.
+- Docs are part of the change: when code or config changes, update affected prose in the
+  **same commit**. Never ship a tree where docs contradict the code. (Map of which docs to
+  check is in the development guide.)
 
-Docs are part of the change, not an afterthought. Whenever you change code or config, check
-whether any prose needs to follow — and update it **in the same change**, before committing.
-Don't let the tree ship with docs that contradict the code.
+## What this is
 
-This file is the **single source of truth** for agent guidance — edit it here, never
-duplicate into `CLAUDE.md`. Use this map of "if you touch X, review Y":
+**LaunchPad** — a cooperative family dashboard that turns recurring household routines
+("missions") into shared, TV-friendly checklists. Stack: **Astro 6** (`output: 'server'`,
+Netlify adapter) · **React 19** (mounted `client:only`) · **Zustand 5** (state + business
+logic) · **Firebase/Firestore** (client SDK + `firebase-admin`) · **BEM CSS** (`c-` prefix).
+Product/architecture context: [README.md](../README.md) and [`docs/`](../docs/).
 
-| You changed…                                   | Review / update…                                                                                      |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `package.json` scripts                         | [Build & Validation Commands](#build--validation-commands) table                                      |
-| `.env` / env vars, auth gate                   | [Environment](#environment)                                                                           |
-| `.mcp.json`                                    | [MCP Servers](#mcp-servers-agent-tooling)                                                             |
-| `src/` structure, new store/component patterns | [Repository Layout](#repository-layout), [Source layout](#source-layout), [Conventions](#conventions) |
-| Data flow, layering, Firestore access          | [Architecture](#architecture) **and** `docs/07_data-architecture.md`                                  |
-| Dependencies / stack                           | [Summary](#summary), [Project Type and Technology](#project-type-and-technology)                      |
-| User-facing product behavior                   | `README.md`, relevant `docs/` (vision, design, roadmap)                                               |
-| A feature's behavior vs. its spec              | the matching `docs/features/NN-*.md` (keep status/behavior current)                                   |
+## TV browser floor — Chrome 87 (enforced)
 
-When unsure whether a doc is affected, grep it for the symbol/script/path you changed. If a
-doc is now wrong but out of scope to fix, say so explicitly rather than leaving it silently
-stale.
+The app runs on a SmartTV browser
+(`...Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0...`). **Don't use JS/CSS features newer
+than Chrome 87.** Enforced, not just documented:
 
-## Summary
+- `browserslist` (`["chrome 87"]` in `package.json`) is the source of truth for the target.
+- Vite `build.target: ['chrome87']` down-levels client JS/CSS **syntax** at build time.
+- `eslint-plugin-compat` (`compat/compat`, via `npm run ci:lint`) flags unsupported runtime
+  **APIs** in client code. A `compat/compat` error = not TV-safe → replace it or guard with a
+  fallback.
 
-This repository is **LaunchPad**, a cooperative family dashboard that turns recurring
-household routines ("missions") into shared, TV-friendly checklists. It uses:
+## Commands
 
-- Astro 6 for the app shell, server-rendered (`output: 'server'`)
-- React 19 for client-side components
-- Zustand 5 for state management and business logic
-- Firebase / Firestore for data (client SDK + `firebase-admin` on the server)
-- BEM-style CSS for styling
-- Netlify adapter for deployment at the site root
+npm only. The gate is `npm run ci` (tsc + lint + format; the hooks and CI run it);
+`npm run verify` auto-fixes then runs it. Dev server is `npm run dev`
+(http://localhost:4321/). `dev`/`build`/`preview` fail fast if `.env` is missing required
+vars. **Full command table is in the development guide.**
 
-## Supported browsers
+## Git & workflow
 
-The app must support the browser from a TV with user agent:
-`Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0 Colt/2.0`
-
-Avoid JS/CSS features unsupported by Chrome 87; prefer widely supported syntax.
-
-This floor is **enforced**, not just documented:
-
-- **`browserslist`** in `package.json` (`["chrome 87"]`) is the single source of truth for
-  the target — keep it in sync with the Vite build target below.
-- **Vite build target** (`astro.config.mjs` → `vite.build.target: ['chrome87']`) down-levels
-  client JS/CSS _syntax_ to Chrome 87 at build time.
-- **`eslint-plugin-compat`** (`compat/compat`, wired in `eslint.config.ts`, runs via
-  `npm run ci:lint`) flags JS/Web _APIs_ unsupported by the `browserslist` target. It's
-  scoped to client code only — the Node API routes under `src/pages/api` are excluded.
-
-Syntax is handled by the build target; runtime APIs by the lint rule. If `ci:lint` reports a
-`compat/compat` error, the API isn't safe on the TV — replace it or guard with a fallback.
-
-## Project Type and Technology
-
-- Project type: server-rendered web app (Astro `output: 'server'` + Netlify adapter)
-- Languages: TypeScript, JavaScript, Astro, CSS
-- Frameworks: Astro, React
-- Runtime/build: Node.js, npm
-- Key configs:
-  - `package.json` for scripts and dependencies
-  - `astro.config.mjs` for Astro settings (Netlify adapter, React, `vite-plugin-svgr`)
-  - `tsconfig.json` for TypeScript (`astro/tsconfigs/strict`, `@/*` → `./src/*` alias)
-
-## Build & Validation Commands
-
-Use **npm** with `package-lock.json` (don't switch package managers).
-
-| Command                       | Purpose                                                                                      |
-| ----------------------------- | -------------------------------------------------------------------------------------------- |
-| `npm install`                 | Bootstrap; run first on a clean checkout.                                                    |
-| `npm run dev`                 | Dev server at http://localhost:4321/                                                         |
-| `npm run build`               | Production build (Netlify adapter).                                                          |
-| `npm run preview`             | Preview the built app.                                                                       |
-| `npm run ci:ts`               | `tsc --noEmit` — type check.                                                                 |
-| `npm run ci:lint`             | ESLint over `./src` — **check only**, no `--fix`.                                            |
-| `npm run ci:format`           | Prettier `--check` over the repo — **check only**, no writes.                                |
-| `npm run ci`                  | Runs `ci:ts` → `ci:lint` → `ci:format` in one shot. Read-only; the gate pre-push and CI run. |
-| `npm run fix:lint`            | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                  |
-| `npm run fix:format`          | Prettier `--write` over the repo — dev counterpart to `ci:format`.                           |
-| `npm run fix`                 | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                   |
-| `npm run verify`              | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.            |
-| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` to Firebase (`firebase deploy --only firestore:rules`).       |
-| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.js`); reads `tools/configuration.json`.            |
-
-`ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
-masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply
-auto-fixes, then run `ci` to confirm the tree is clean.
-
-`dev`, `build`, and `preview` run a `check-firebase-env` pre-step that fails fast if any
-required env var is missing (the `PUBLIC_FIREBASE_*` client keys plus the
-`FIREBASE_SERVICE_ACCOUNT_KEY` / `APP_PASSWORD` server vars) or if the service-account key
-isn't valid JSON — configure `.env` first (see [Environment](#environment)).
+- Private, single-developer project: **commit directly to `main`** — no branches or PRs.
+- **Lean on the git hooks; commit and push often.** pre-commit auto-fixes staged files;
+  pre-push runs `npm run ci` and blocks on failure; CI re-runs `ci` as a backstop. Bypass in
+  an emergency with `--no-verify`.
+- Commit when a unit of work is done, message saying what & why; don't leave the tree broken.
 
 ## Environment
 
-`.env` (loaded via `dotenv`):
+`.env` (via `dotenv`):
 
-- **Client (required for dev/build):** `PUBLIC_FIREBASE_API_KEY`,
-  `PUBLIC_FIREBASE_AUTH_DOMAIN`, `PUBLIC_FIREBASE_PROJECT_ID`,
-  `PUBLIC_FIREBASE_STORAGE_BUCKET`, `PUBLIC_FIREBASE_MESSAGING_SENDER_ID`,
-  `PUBLIC_FIREBASE_APP_ID`.
-- **Server:** `FIREBASE_SERVICE_ACCOUNT_KEY` (JSON for `firebase-admin`),
-  `APP_PASSWORD` (gate password checked by `src/pages/api/auth.ts`).
-- **Optional (local dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the `AuthGate` password
-  prompt (read in `src/stores/useAuthStore.ts`). Off/absent by default — keep it out of
-  production. Note the gate is a soft, client-side barrier, not real access control.
+- **Client (required for dev/build):** `PUBLIC_FIREBASE_API_KEY`, `_AUTH_DOMAIN`,
+  `_PROJECT_ID`, `_STORAGE_BUCKET`, `_MESSAGING_SENDER_ID`, `_APP_ID`.
+- **Server:** `FIREBASE_SERVICE_ACCOUNT_KEY` (JSON for `firebase-admin`), `APP_PASSWORD`
+  (auth-gate password, checked by `src/pages/api/auth.ts`).
+- **Optional (dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the auth gate — keep out of prod.
+  The gate is a soft client-side barrier, not real access control.
 
-Node/npm are pinned: `.nvmrc` (`24.11.1`), `engines` in `package.json` (floor `>=24.11.1` /
-`>=11.6.2`), and `netlify.toml` `NODE_VERSION`/`NPM_VERSION` for builds. Verified working with
-Node.js `v24.11.1` and npm `11.6.2`.
-
-## MCP Servers (agent tooling)
-
-`.mcp.json` defines **project-scoped** MCP servers for AI agents — it's local to this repo,
-not global config. Currently: `github`, `firebase`, `context7`, `chrome-devtools`. No
-secrets live in the file; after editing it, fully restart the client to reconnect.
-Prerequisites:
-
-- **firebase** — install the Firebase CLI globally (`npm i -g firebase-tools`) and run
-  `firebase login`. The default project is pinned in `.firebaserc` (`lullaby-dashboard`).
-  Don't pass `--project` to `experimental:mcp` (that subcommand rejects the flag).
-- **github** — set a `GITHUB_PAT` env var (a GitHub personal access token); `.mcp.json`
-  references it via `${GITHUB_PAT}`, so no token is committed.
-- **context7 / chrome-devtools** — auto-installed via `npx`; `chrome-devtools` needs a
-  Chrome/Chromium available.
-
-## Git & Workflow
-
-- This is a **private, single-developer project** for now. **Commit directly to `main`** —
-  feature branches and pull requests are **not** required.
-- Commit when a unit of work is complete, with a message describing what changed and why.
-  Group related changes; don't leave the tree in a broken state.
-- **The git hooks enforce validation automatically — lean on them.** Commit and push often;
-  you don't need to run `fix`/`ci` by hand. Installed by the `prepare` script on `npm install`:
-  - **pre-commit** (`.husky/pre-commit`) → `npx lint-staged`: on the **staged files only**, runs
-    `eslint --fix` + `prettier --write` and re-stages, so every commit lands auto-fixed. It does
-    **not** type-check (too slow per commit) — that runs at push.
-  - **pre-push** (`.husky/pre-push`) → `npm run ci`: the full read-only gate (tsc, lint, format).
-    A failure **blocks the push**, so a broken tree can't reach `main`.
-  - **CI backstop** (`.github/workflows/ci.yml`) re-runs `npm run ci` on push/PR/dispatch — a
-    clean-checkout safety net that also catches a `--no-verify` bypass. No build (needs
-    `PUBLIC_FIREBASE_*`), no secrets.
-  - Bypass a hook in an emergency with `git commit --no-verify` / `git push --no-verify`.
-- `npm run verify` (auto-fix, then `ci`) is the optional manual pre-flight — it's exactly what
-  pre-push enforces, useful when you want to see failures before committing.
-
-## Repository Layout
-
-### Root files
-
-- `package.json` — scripts and dependencies
-- `package-lock.json` — npm lockfile
-- `astro.config.mjs` — Astro config (server output, Netlify adapter, React, svgr)
-- `netlify.toml` — Netlify build config (build command, publish dir, pinned `NODE_VERSION`/`NPM_VERSION`)
-- `.nvmrc` — pinned Node version for local dev / `nvm use`
-- `tsconfig.json` — TypeScript config (strict; `@/*` path alias)
-- `.mcp.json` — project-scoped MCP servers for AI agents (see [MCP Servers](#mcp-servers-agent-tooling))
-- `.firebaserc` — Firebase default project (`lullaby-dashboard`)
-- `firebase.json` — Firebase CLI config; points at `tools/firestore.rules` (Firestore rules
-  only — the app deploys via Netlify, not Firebase Hosting). Stays at the repo root so the
-  Firebase CLI and the `firebase` MCP server auto-discover it.
-- `.github/workflows/ci.yml` — GitHub Actions CI: runs `npm run ci` on push/PR/dispatch
-- `.husky/pre-commit` — git pre-commit hook (husky): runs `npx lint-staged` on staged files
-- `.husky/pre-push` — git pre-push hook (husky): runs `npm run ci`, blocks the push on failure
-- `CLAUDE.md` — thin entry point that imports this file for Claude Code
-- `README.md` — project description
-- `public/` — static assets
-- `src/` — app source code
-- `tools/` — standalone Node scripts run against the repo's root `node_modules`:
-  `check-firebase-env.mjs` (env guard), `db-seed.js` (idempotent Firestore seed), and
-  `firestore.rules` (security rules — **source of truth**; deployed via
-  `npm run firebase:push-rules`, edit here, don't edit in the console as that drifts from the repo)
-- `docs/` — product and architecture docs; `docs/features/` holds per-feature specs (see
-  [Planning a Feature](#planning-a-feature))
-
-### Source layout
-
-```text
-src/
-├─ pages/
-│  ├─ index.astro            # HTML shell; mounts <Shell client:only />
-│  ├─ debug.astro
-│  └─ api/                   # server routes (firebase-admin); auth.ts, _utils.ts
-├─ components/<Name>/        # one folder per component (see Conventions)
-├─ database/                 # repositories + db.ts (client Firestore access)
-├─ stores/                   # Zustand: useAuthStore, useStartupStore, useMissionStore,
-│                            #          useControlsStore, useLanguageStore, useTimerStore
-├─ i18n/translations.ts      # shared translation strings
-├─ styles/main.css           # global styles
-├─ utils/                    # ls.ts (localStorage wrapper), object.ts
-├─ icons/                    # SVGs (imported as React components via vite-plugin-svgr)
-└─ types.ts                  # shared data types
-```
-
-**Entry flow:** `index.astro` → `Shell` → `AuthGate` (if unauthenticated) → `Startup`
-(until ready) → `Dashboard`. `Dashboard` conditionally renders panels (`AppOptions`,
-`MissionSelect`) based on `useControlsStore` flags.
-
-## Architecture
-
-Strict layering (see `docs/07_data-architecture.md`):
-
-```text
-Firestore → Repository (src/database/) → Zustand store (src/stores/) → React component
-```
-
-- Astro renders the page shell in `src/pages/index.astro`; React handles all interactivity,
-  mounted `client:only`.
-- **React components are presentation-only** — read Zustand state, call Zustand actions, and
-  hold only local UI state (modal open, hover, focus). No business logic, no app state, no
-  Firestore calls.
-- **Zustand stores** hold application state and business logic and orchestrate repositories.
-  They must not import the Firestore SDK or know collection names.
-- **Repositories** (`src/database/`) are the only place that touches the Firestore SDK. They
-  read, subscribe (`onSnapshot`), run CRUD, and map docs to models. Realtime snapshots are
-  the source of truth — writes go to Firestore and flow back into Zustand via subscriptions;
-  avoid manually mutating Zustand after a write.
-- **Two Firebase paths:** the client SDK (`src/database/db.ts`, `PUBLIC_FIREBASE_*`) for the
-  main realtime data flow, and `firebase-admin` in `src/pages/api/` for server-only work.
-  API routes set `export const prerender = false`.
-- **Security rules** live in `tools/firestore.rules` (version-controlled) and are deployed with
-  `npm run firebase:push-rules`. The client SDK is subject to these rules; `firebase-admin`
-  bypasses them. When you add a collection read client-side via a repository, add a matching
-  `match` block in `tools/firestore.rules` or the read is denied by default. Keep the rules in sync
-  with the collections in `src/database/`.
-
-## Conventions
-
-- **Component folder:** `src/components/<Name>/` with `<Name>.tsx`, `<Name>.css`, and
-  `translations.ts` when the component has user-facing text.
-- **CSS:** BEM with a `c-` block prefix (e.g. `c-dashboard__aside`); import the component's
-  CSS at the top of its `.tsx`.
-- **Path alias:** use `@/*` (→ `./src/*`) instead of long relative imports.
-- **State naming:** Zustand stores are `use<Name>Store`; some expose a small selector hook
-  (e.g. `useMission()`). Shared UI flags belong in a controls store, not in components.
-- **Persistence:** use the `lsWrapper` helper in `src/utils/ls.ts` for localStorage.
-- **i18n:** add strings to the component's `translations.ts` (or `src/i18n/translations.ts`)
-  and read the active language via `useLanguageStore`.
-
-## Planning a Feature
-
-New features start with no design — derive the spec through Q&A, then build. Run the `/spec`
-command, or follow this loop manually:
-
-1. **Ground first.** Read `docs/01_vision.md`, `docs/04_design-principles.md`,
-   `docs/05_design.md`, `docs/07_data-architecture.md`, and the Architecture section above.
-   Read the actual code (`src/types.ts`, relevant stores/repos/components) before assuming.
-2. **Ask, don't guess.** Use focused, multiple-choice questions (recommended option first)
-   to pin down problem, behavior, scope, data model, UI placement, TV constraints, i18n, and
-   acceptance criteria. Propose grounded defaults; let the user confirm or redirect.
-3. **Write the spec.** Copy `docs/features/_TEMPLATE.md` to `docs/features/NN-kebab-name.md`
-   and fill it. Status `agreed` only when no open questions remain.
-4. **Plan, then implement.** Use plan mode for non-trivial work, get approval, then build per
-   "Adding a Feature" below. Keep the spec in sync if the build deviates.
-
-Specs live in `docs/features/` — see its [README](../docs/features/README.md).
-
-## Adding a Feature
-
-1. Create a component folder under `src/components/` (`.tsx` + `.css`, plus `translations.ts`
-   if it has text). Keep components small and representational.
-2. If it needs shared/persisted state, add or extend a Zustand store; put logic in actions,
-   not components.
-3. If it needs data, add/extend a repository in `src/database/` (client) or an API route in
-   `src/pages/api/` (server, admin SDK) — never call Firestore from a component or store.
-4. Mount the component where it belongs (often `src/components/Dashboard/Dashboard.tsx`).
-5. Avoid adding new dependencies; prefer the existing stack. Don't pile complex logic into
-   existing files.
-6. Run the validation set and commit to `main`.
+Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.6.2).
 
 ## Gotchas
 
-- **Windows / PowerShell** is the default shell — use PowerShell syntax (`$env:VAR`, `$null`).
-- **Firestore `in` queries are capped at 30 IDs** — batch objective hydration (see the
-  hydration strategy in `docs/07_data-architecture.md`).
-- **TV browser support** — don't rely on features unsupported by Chrome 87; the floor is
-  enforced via `browserslist` + the Vite build target + `eslint-plugin-compat` (see
-  [Supported browsers](#supported-browsers)).
-- **`tools/` scripts use the repo's root `node_modules`** — there's no separate workspace or
-  lockfile in `tools/`; run them from the repo root (e.g. `npm run db:seed`).
+- **PowerShell** is the default shell — use `$env:VAR`, `$null`.
+- **Firestore `in` queries cap at 30 IDs** — batch objective hydration (see
+  `docs/07_data-architecture.md`).
+- **Chrome 87 floor** — see above.
+- **`tools/` scripts use the root `node_modules`** — run them from the repo root.
 
-## Validation Guidance
+## Features
 
-The git hooks are the gate (see [Git & Workflow](#git--workflow)): commit auto-fixes staged
-files, push runs `npm run ci` and blocks on failure. So the normal loop is just **make changes,
-commit, push** — no manual `fix`/`ci` needed. Beyond that:
+New features start with no design — derive a spec through Q&A first. Run `/spec`, write it to
+`docs/features/NN-name.md`, then plan and implement. Details in the development guide.
 
-- Run `npm install` if dependencies changed or the workspace was cleaned.
-- `npm run ci` only **checks** — it can't repair type errors or non-auto-fixable lint. Resolve
-  those by hand, then re-run until clean. `npm run verify` (fix, then ci) is the one-shot
-  pre-flight if you want to clear failures before committing.
-- `npm run build` and `npm run dev` are **not** part of the gate (build needs `PUBLIC_FIREBASE_*`,
-  and isn't in CI). Run `build` to confirm the app compiles after non-trivial changes; for UI
-  work, run `dev` and inspect locally — ideally with the TV user agent in Chrome dev tools.
+## MCP servers
 
-If anything here appears incorrect or incomplete, perform a narrow search only for the
-missing part. Otherwise, trust these instructions and minimize additional repo exploration.
+`.mcp.json` defines project-scoped MCP servers for agents; the list, setup, and prerequisites
+live in the development guide. No secrets in the file — restart the client after editing it.

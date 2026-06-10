@@ -12,8 +12,8 @@ The feature idea (may be empty): `$ARGUMENTS`
 
 1. **Ground yourself first.** Read the relevant context so your questions are sharp and few:
    `docs/01_vision.md`, `docs/04_design-principles.md`, `docs/05_design.md`,
-   `docs/07_data-architecture.md`, and the "Architecture" + "Adding a Feature" sections of
-   `.github/copilot-instructions.md`. Skim existing specs in `docs/features/` to avoid
+   `docs/07_data-architecture.md`, and the "Architecture" + "Adding a feature" sections of
+   `.github/instructions/development.instructions.md`. Skim existing specs in `docs/features/` to avoid
    duplication and to pick the next `NN`. Read the actual code (`src/types.ts`, relevant
    stores/repos/components) before assuming how something works.
 
