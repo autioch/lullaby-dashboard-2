@@ -82,6 +82,7 @@ Use **npm** with `package-lock.json` (don't switch package managers).
 | `npm run fix:lint`             | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                    |
 | `npm run fix:format`           | Prettier `--write` over the repo — dev counterpart to `ci:format`.                             |
 | `npm run fix`                  | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                     |
+| `npm run verify`               | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.              |
 | `npm run firebase:push-config` | Push config to Firestore via `tools/push-config.mjs`.                                          |
 
 `ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
@@ -132,6 +133,21 @@ Prerequisites:
 - Commit when a unit of work is complete, with a message describing what changed and why.
   Group related changes; don't leave the tree in a broken state.
 - Run the validation set (below) before committing.
+- **CI:** `.github/workflows/ci.yml` runs `npm run ci` (the read-only `ci:*` suite) on every
+  push to `main`, on pull requests, and on manual dispatch. It type-checks, runs `astro
+check`, lints, and checks formatting — no build (that needs `PUBLIC_FIREBASE_*`) and no
+  secrets. Keep it green: run `npm run verify` (auto-fix, then verify) before pushing.
+- **Git hooks (husky):** installed automatically by the `prepare` script on `npm install`.
+  Two stages, each scoped to what's cheap at that moment:
+  - **pre-commit** (`.husky/pre-commit`) → `npx lint-staged`: on the **staged files only**, runs
+    `eslint --fix` + `prettier --write` (JS/TS) and `prettier --write` (css/json/md/yaml), then
+    re-stages. Fast and mechanical, so every commit lands already linted/formatted. It does
+    **not** type-check or run `astro check` (too slow per commit) — those run at push.
+  - **pre-push** (`.husky/pre-push`) → `npm run ci`: the full read-only gate (tsc, astro check,
+    lint, format). A failure **blocks the push**.
+  - Bypass either in an emergency with `git commit --no-verify` / `git push --no-verify`.
+  - The hooks mean you rarely need to think about `fix`/`ci` manually, but `npm run verify` is
+    still the explicit one-shot pre-flight (and matches what pre-push enforces).
 
 ## Repository Layout
 
@@ -145,6 +161,9 @@ Prerequisites:
 - `tsconfig.json` — TypeScript config (strict; `@/*` path alias)
 - `.mcp.json` — project-scoped MCP servers for AI agents (see [MCP Servers](#mcp-servers-agent-tooling))
 - `.firebaserc` — Firebase default project (`lullaby-dashboard`)
+- `.github/workflows/ci.yml` — GitHub Actions CI: runs `npm run ci` on push/PR/dispatch
+- `.husky/pre-commit` — git pre-commit hook (husky): runs `npx lint-staged` on staged files
+- `.husky/pre-push` — git pre-push hook (husky): runs `npm run ci`, blocks the push on failure
 - `CLAUDE.md` — thin entry point that imports this file for Claude Code
 - `README.md` — project description
 - `public/` — static assets
@@ -256,13 +275,21 @@ Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 When making changes:
 
 1. Run `npm install` if dependencies changed or the workspace was cleaned.
-2. Run `npm run fix` to apply ESLint/Prettier auto-fixes while iterating.
+2. **Always run `npm run fix` first** to auto-fix what ESLint/Prettier can (`fix:lint` →
+   `fix:format`). Do this before `ci` so the read-only gate isn't tripped by mechanical
+   lint/format issues.
 3. Run `npm run ci` to verify everything read-only (`ci:ts` → `ci:check` → `ci:lint` →
-   `ci:format`). It must pass without first needing `fix` — if `ci:lint`/`ci:format` fail, run
-   `fix` and re-run `ci`.
+   `ci:format`). `fix` can't repair type errors, `astro check` failures, or non-auto-fixable
+   lint — resolve those by hand, then re-run `ci` until clean.
+   Steps 2–3 together are `npm run verify` — prefer it as the one-shot local gate.
 4. Run `npm run build` to verify the app compiles.
 5. If the change is UI-related, run `npm run dev` and inspect locally — ideally with the TV
    user agent in Chrome dev tools.
+
+Husky hooks back this up automatically: **pre-commit** auto-fixes staged files (lint-staged),
+and **pre-push** runs `npm run ci` and blocks the push if it fails — so an unverified tree can't
+reach `main`. Run `verify` before pushing so the hook passes first try. See
+[Git & Workflow](#git--workflow) for details.
 
 If anything here appears incorrect or incomplete, perform a narrow search only for the
 missing part. Otherwise, trust these instructions and minimize additional repo exploration.
