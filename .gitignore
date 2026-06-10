@@ -28,3 +28,4 @@ pnpm-debug.log*
 service-account.json
 # Local Netlify folder
 .netlify/
+.playwright-mcp/
