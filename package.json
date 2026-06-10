@@ -13,6 +13,7 @@
     "ci:format": "prettier --write .",
     "ci:lint": "eslint ./src --fix",
     "ci:check": "astro check",
+    "ci": "npm run ci:ts && npm run ci:check && npm run ci:lint && npm run ci:format",
     "firebase:push-config": "node -r dotenv/config tools/push-config.mjs",
     "astro": "astro"
   },

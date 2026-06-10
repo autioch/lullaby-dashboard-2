@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run ci)",
+      "Bash(npm run ci:*)",
+      "Bash(npm run build)",
+      "Bash(npm install)",
+      "Bash(git --no-pager diff:*)",
+      "Bash(git --no-pager log:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Reminder: if code/config changed this turn, verify docs are in sync (agent file table in .github/copilot-instructions.md, README, docs/).'"
+          }
+        ]
+      }
+    ]
+  }
+}

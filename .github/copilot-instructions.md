@@ -10,6 +10,30 @@ Be short, concise, and direct. Cut unnecessary words; don't pad or sugar-coat. A
 actions (commit/push), report the result in one line — no summaries, file lists, or
 next-step suggestions unless asked.
 
+## Keeping Docs in Sync
+
+Docs are part of the change, not an afterthought. Whenever you change code or config, check
+whether any prose needs to follow — and update it **in the same change**, before committing.
+Don't let the tree ship with docs that contradict the code.
+
+This file is the **single source of truth** for agent guidance — edit it here, never
+duplicate into `CLAUDE.md`. Use this map of "if you touch X, review Y":
+
+| You changed… | Review / update… |
+| --- | --- |
+| `package.json` scripts | [Build & Validation Commands](#build--validation-commands) table |
+| `.env` / env vars, auth gate | [Environment](#environment) |
+| `.mcp.json` | [MCP Servers](#mcp-servers-agent-tooling) |
+| `src/` structure, new store/component patterns | [Repository Layout](#repository-layout), [Source layout](#source-layout), [Conventions](#conventions) |
+| Data flow, layering, Firestore access | [Architecture](#architecture) **and** `docs/07_data-architecture.md` |
+| Dependencies / stack | [Summary](#summary), [Project Type and Technology](#project-type-and-technology) |
+| User-facing product behavior | `README.md`, relevant `docs/` (vision, design, roadmap) |
+| A feature's behavior vs. its spec | the matching `docs/features/NN-*.md` (keep status/behavior current) |
+
+When unsure whether a doc is affected, grep it for the symbol/script/path you changed. If a
+doc is now wrong but out of scope to fix, say so explicitly rather than leaving it silently
+stale.
+
 ## Summary
 
 This repository is **LaunchPad**, a cooperative family dashboard that turns recurring
@@ -54,6 +78,7 @@ Use **npm** with `package-lock.json` (don't switch package managers).
 | `npm run ci:check` | `astro check`. |
 | `npm run ci:lint` | ESLint with `--fix` over `./src`. |
 | `npm run ci:format` | Prettier `--write` over the repo. |
+| `npm run ci` | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. |
 | `npm run firebase:push-config` | Push config to Firestore via `tools/push-config.mjs`. |
 
 `dev`, `build`, and `preview` run a `check-firebase-env` pre-step that fails fast if the
@@ -79,17 +104,17 @@ Verified working with Node.js `v24.11.1` and npm `11.6.2`.
 ## MCP Servers (agent tooling)
 
 `.mcp.json` defines **project-scoped** MCP servers for AI agents — it's local to this repo,
-not global config. Currently: `github`, `firebase`, `context7`, `chrome-devtools`,
-`playwright`. No secrets live in the file; after editing it, fully restart the client to
-reconnect. Prerequisites:
+not global config. Currently: `github`, `firebase`, `context7`, `chrome-devtools`. No
+secrets live in the file; after editing it, fully restart the client to reconnect.
+Prerequisites:
 
 - **firebase** — install the Firebase CLI globally (`npm i -g firebase-tools`) and run
   `firebase login`. The default project is pinned in `.firebaserc` (`lullaby-dashboard`).
   Don't pass `--project` to `experimental:mcp` (that subcommand rejects the flag).
 - **github** — set a `GITHUB_PAT` env var (a GitHub personal access token); `.mcp.json`
   references it via `${GITHUB_PAT}`, so no token is committed.
-- **context7 / chrome-devtools / playwright** — auto-installed via `npx`; the two browser
-  servers need a Chrome/Chromium available.
+- **context7 / chrome-devtools** — auto-installed via `npx`; `chrome-devtools` needs a
+  Chrome/Chromium available.
 
 ## Git & Workflow
 
@@ -114,7 +139,8 @@ reconnect. Prerequisites:
 - `public/` — static assets
 - `src/` — app source code
 - `tools/` — standalone Node scripts (own `node_modules`); env checks, config push
-- `docs/` — product and architecture docs
+- `docs/` — product and architecture docs; `docs/features/` holds per-feature specs (see
+  [Planning a Feature](#planning-a-feature))
 
 ### Source layout
 
@@ -174,6 +200,24 @@ Firestore → Repository (src/database/) → Zustand store (src/stores/) → Rea
 - **Persistence:** use the `lsWrapper` helper in `src/utils/ls.ts` for localStorage.
 - **i18n:** add strings to the component's `translations.ts` (or `src/i18n/translations.ts`)
   and read the active language via `useLanguageStore`.
+
+## Planning a Feature
+
+New features start with no design — derive the spec through Q&A, then build. Run the `/spec`
+command, or follow this loop manually:
+
+1. **Ground first.** Read `docs/01_vision.md`, `docs/04_design-principles.md`,
+   `docs/05_design.md`, `docs/07_data-architecture.md`, and the Architecture section above.
+   Read the actual code (`src/types.ts`, relevant stores/repos/components) before assuming.
+2. **Ask, don't guess.** Use focused, multiple-choice questions (recommended option first)
+   to pin down problem, behavior, scope, data model, UI placement, TV constraints, i18n, and
+   acceptance criteria. Propose grounded defaults; let the user confirm or redirect.
+3. **Write the spec.** Copy `docs/features/_TEMPLATE.md` to `docs/features/NN-kebab-name.md`
+   and fill it. Status `agreed` only when no open questions remain.
+4. **Plan, then implement.** Use plan mode for non-trivial work, get approval, then build per
+   "Adding a Feature" below. Keep the spec in sync if the build deviates.
+
+Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 
 ## Adding a Feature
 
