@@ -26,7 +26,7 @@ if (missingKeys.length > 0) {
 }
 
 // The service account is consumed as JSON by firebase-admin (src/pages/api,
-// tools/db-seed.mjs). Catch a malformed value here instead of at runtime.
+// tools/db-seed.js). Catch a malformed value here instead of at runtime.
 try {
   JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 } catch {

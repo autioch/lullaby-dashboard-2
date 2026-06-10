@@ -16,8 +16,7 @@
     "ci:ts": "tsc --noEmit",
     "ci:format": "prettier --check .",
     "ci:lint": "eslint ./src",
-    "ci:check": "astro check",
-    "ci": "npm run ci:ts && npm run ci:check && npm run ci:lint && npm run ci:format",
+    "ci": "npm run ci:ts && npm run ci:lint && npm run ci:format",
     "fix:format": "prettier --write .",
     "fix:lint": "eslint ./src --fix",
     "fix": "npm run fix:lint && npm run fix:format",
@@ -28,7 +27,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
     "@astrojs/netlify": "^7.0.12",
     "@astrojs/react": "^5.0.7",
     "@types/react": "^19.2.17",

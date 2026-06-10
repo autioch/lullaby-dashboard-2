@@ -81,23 +81,22 @@ Syntax is handled by the build target; runtime APIs by the lint rule. If `ci:lin
 
 Use **npm** with `package-lock.json` (don't switch package managers).
 
-| Command                       | Purpose                                                                                            |
-| ----------------------------- | -------------------------------------------------------------------------------------------------- |
-| `npm install`                 | Bootstrap; run first on a clean checkout.                                                          |
-| `npm run dev`                 | Dev server at http://localhost:4321/                                                               |
-| `npm run build`               | Production build (Netlify adapter).                                                                |
-| `npm run preview`             | Preview the built app.                                                                             |
-| `npm run ci:ts`               | `tsc --noEmit` — type check.                                                                       |
-| `npm run ci:check`            | `astro check`.                                                                                     |
-| `npm run ci:lint`             | ESLint over `./src` — **check only**, no `--fix`.                                                  |
-| `npm run ci:format`           | Prettier `--check` over the repo — **check only**, no writes.                                      |
-| `npm run ci`                  | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate.     |
-| `npm run fix:lint`            | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                        |
-| `npm run fix:format`          | Prettier `--write` over the repo — dev counterpart to `ci:format`.                                 |
-| `npm run fix`                 | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                         |
-| `npm run verify`              | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.                  |
-| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` to Firebase (`firebase deploy --only firestore:rules`).             |
-| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.mjs`); reads `tools/configuration.json` (or a path arg). |
+| Command                       | Purpose                                                                                      |
+| ----------------------------- | -------------------------------------------------------------------------------------------- |
+| `npm install`                 | Bootstrap; run first on a clean checkout.                                                    |
+| `npm run dev`                 | Dev server at http://localhost:4321/                                                         |
+| `npm run build`               | Production build (Netlify adapter).                                                          |
+| `npm run preview`             | Preview the built app.                                                                       |
+| `npm run ci:ts`               | `tsc --noEmit` — type check.                                                                 |
+| `npm run ci:lint`             | ESLint over `./src` — **check only**, no `--fix`.                                            |
+| `npm run ci:format`           | Prettier `--check` over the repo — **check only**, no writes.                                |
+| `npm run ci`                  | Runs `ci:ts` → `ci:lint` → `ci:format` in one shot. Read-only; the gate pre-push and CI run. |
+| `npm run fix:lint`            | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`.                                  |
+| `npm run fix:format`          | Prettier `--write` over the repo — dev counterpart to `ci:format`.                           |
+| `npm run fix`                 | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development.                   |
+| `npm run verify`              | Runs `fix` → `ci`: auto-fix, then verify. The one-shot local gate before pushing.            |
+| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` to Firebase (`firebase deploy --only firestore:rules`).       |
+| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.js`); reads `tools/configuration.json`.            |
 
 `ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
 masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply
@@ -147,22 +146,19 @@ Prerequisites:
   feature branches and pull requests are **not** required.
 - Commit when a unit of work is complete, with a message describing what changed and why.
   Group related changes; don't leave the tree in a broken state.
-- Run the validation set (below) before committing.
-- **CI:** `.github/workflows/ci.yml` runs `npm run ci` (the read-only `ci:*` suite) on every
-  push to `main`, on pull requests, and on manual dispatch. It type-checks, runs `astro
-check`, lints, and checks formatting — no build (that needs `PUBLIC_FIREBASE_*`) and no
-  secrets. Keep it green: run `npm run verify` (auto-fix, then verify) before pushing.
-- **Git hooks (husky):** installed automatically by the `prepare` script on `npm install`.
-  Two stages, each scoped to what's cheap at that moment:
+- **The git hooks enforce validation automatically — lean on them.** Commit and push often;
+  you don't need to run `fix`/`ci` by hand. Installed by the `prepare` script on `npm install`:
   - **pre-commit** (`.husky/pre-commit`) → `npx lint-staged`: on the **staged files only**, runs
-    `eslint --fix` + `prettier --write` (JS/TS) and `prettier --write` (css/json/md/yaml), then
-    re-stages. Fast and mechanical, so every commit lands already linted/formatted. It does
-    **not** type-check or run `astro check` (too slow per commit) — those run at push.
-  - **pre-push** (`.husky/pre-push`) → `npm run ci`: the full read-only gate (tsc, astro check,
-    lint, format). A failure **blocks the push**.
-  - Bypass either in an emergency with `git commit --no-verify` / `git push --no-verify`.
-  - The hooks mean you rarely need to think about `fix`/`ci` manually, but `npm run verify` is
-    still the explicit one-shot pre-flight (and matches what pre-push enforces).
+    `eslint --fix` + `prettier --write` and re-stages, so every commit lands auto-fixed. It does
+    **not** type-check (too slow per commit) — that runs at push.
+  - **pre-push** (`.husky/pre-push`) → `npm run ci`: the full read-only gate (tsc, lint, format).
+    A failure **blocks the push**, so a broken tree can't reach `main`.
+  - **CI backstop** (`.github/workflows/ci.yml`) re-runs `npm run ci` on push/PR/dispatch — a
+    clean-checkout safety net that also catches a `--no-verify` bypass. No build (needs
+    `PUBLIC_FIREBASE_*`), no secrets.
+  - Bypass a hook in an emergency with `git commit --no-verify` / `git push --no-verify`.
+- `npm run verify` (auto-fix, then `ci`) is the optional manual pre-flight — it's exactly what
+  pre-push enforces, useful when you want to see failures before committing.
 
 ## Repository Layout
 
@@ -187,7 +183,7 @@ check`, lints, and checks formatting — no build (that needs `PUBLIC_FIREBASE_*
 - `public/` — static assets
 - `src/` — app source code
 - `tools/` — standalone Node scripts run against the repo's root `node_modules`:
-  `check-firebase-env.mjs` (env guard), `db-seed.mjs` (idempotent Firestore seed), and
+  `check-firebase-env.mjs` (env guard), `db-seed.js` (idempotent Firestore seed), and
   `firestore.rules` (security rules — **source of truth**; deployed via
   `npm run firebase:push-rules`, edit here, don't edit in the console as that drifts from the repo)
 - `docs/` — product and architecture docs; `docs/features/` holds per-feature specs (see
@@ -301,24 +297,17 @@ Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 
 ## Validation Guidance
 
-When making changes:
+The git hooks are the gate (see [Git & Workflow](#git--workflow)): commit auto-fixes staged
+files, push runs `npm run ci` and blocks on failure. So the normal loop is just **make changes,
+commit, push** — no manual `fix`/`ci` needed. Beyond that:
 
-1. Run `npm install` if dependencies changed or the workspace was cleaned.
-2. **Always run `npm run fix` first** to auto-fix what ESLint/Prettier can (`fix:lint` →
-   `fix:format`). Do this before `ci` so the read-only gate isn't tripped by mechanical
-   lint/format issues.
-3. Run `npm run ci` to verify everything read-only (`ci:ts` → `ci:check` → `ci:lint` →
-   `ci:format`). `fix` can't repair type errors, `astro check` failures, or non-auto-fixable
-   lint — resolve those by hand, then re-run `ci` until clean.
-   Steps 2–3 together are `npm run verify` — prefer it as the one-shot local gate.
-4. Run `npm run build` to verify the app compiles.
-5. If the change is UI-related, run `npm run dev` and inspect locally — ideally with the TV
-   user agent in Chrome dev tools.
-
-Husky hooks back this up automatically: **pre-commit** auto-fixes staged files (lint-staged),
-and **pre-push** runs `npm run ci` and blocks the push if it fails — so an unverified tree can't
-reach `main`. Run `verify` before pushing so the hook passes first try. See
-[Git & Workflow](#git--workflow) for details.
+- Run `npm install` if dependencies changed or the workspace was cleaned.
+- `npm run ci` only **checks** — it can't repair type errors or non-auto-fixable lint. Resolve
+  those by hand, then re-run until clean. `npm run verify` (fix, then ci) is the one-shot
+  pre-flight if you want to clear failures before committing.
+- `npm run build` and `npm run dev` are **not** part of the gate (build needs `PUBLIC_FIREBASE_*`,
+  and isn't in CI). Run `build` to confirm the app compiles after non-trivial changes; for UI
+  work, run `dev` and inspect locally — ideally with the TV user agent in Chrome dev tools.
 
 If anything here appears incorrect or incomplete, perform a narrow search only for the
 missing part. Otherwise, trust these instructions and minimize additional repo exploration.

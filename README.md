@@ -51,11 +51,3 @@ See the [`docs/`](docs/) folder:
 
 For contributor/agent guidance, see [CLAUDE.md](CLAUDE.md) and
 [.github/copilot-instructions.md](.github/copilot-instructions.md).
-
-## TODO
-
-- extract API communication layer at some point
-- dark/light mode
-- remove bgColor
-- animations
-- check supabase + postgres
