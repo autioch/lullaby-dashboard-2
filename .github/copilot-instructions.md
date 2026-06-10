@@ -76,10 +76,17 @@ Use **npm** with `package-lock.json` (don't switch package managers).
 | `npm run preview` | Preview the built app. |
 | `npm run ci:ts` | `tsc --noEmit` — type check. |
 | `npm run ci:check` | `astro check`. |
-| `npm run ci:lint` | ESLint with `--fix` over `./src`. |
-| `npm run ci:format` | Prettier `--write` over the repo. |
-| `npm run ci` | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. |
+| `npm run ci:lint` | ESLint over `./src` — **check only**, no `--fix`. |
+| `npm run ci:format` | Prettier `--check` over the repo — **check only**, no writes. |
+| `npm run ci` | Runs `ci:ts` → `ci:check` → `ci:lint` → `ci:format` in one shot. Read-only; safe as a CI gate. |
+| `npm run fix:lint` | ESLint `--fix` over `./src` — dev counterpart to `ci:lint`. |
+| `npm run fix:format` | Prettier `--write` over the repo — dev counterpart to `ci:format`. |
+| `npm run fix` | Runs `fix:lint` → `fix:format`; auto-fixes what it can during development. |
 | `npm run firebase:push-config` | Push config to Firestore via `tools/push-config.mjs`. |
+
+`ci:*` and `ci` only **verify** — they never modify files, so they can gate commits/CI without
+masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply
+auto-fixes, then run `ci` to confirm the tree is clean.
 
 `dev`, `build`, and `preview` run a `check-firebase-env` pre-step that fails fast if the
 required `PUBLIC_FIREBASE_*` variables are missing — configure `.env` first (see
@@ -99,7 +106,9 @@ required `PUBLIC_FIREBASE_*` variables are missing — configure `.env` first (s
   prompt (read in `src/stores/useAuthStore.ts`). Off/absent by default — keep it out of
   production. Note the gate is a soft, client-side barrier, not real access control.
 
-Verified working with Node.js `v24.11.1` and npm `11.6.2`.
+Node/npm are pinned: `.nvmrc` (`24.11.1`), `engines` in `package.json` (floor `>=24.11.1` /
+`>=11.6.2`), and `netlify.toml` `NODE_VERSION`/`NPM_VERSION` for builds. Verified working with
+Node.js `v24.11.1` and npm `11.6.2`.
 
 ## MCP Servers (agent tooling)
 
@@ -131,6 +140,8 @@ Prerequisites:
 - `package.json` — scripts and dependencies
 - `package-lock.json` — npm lockfile
 - `astro.config.mjs` — Astro config (server output, Netlify adapter, React, svgr)
+- `netlify.toml` — Netlify build config (build command, publish dir, pinned `NODE_VERSION`/`NPM_VERSION`)
+- `.nvmrc` — pinned Node version for local dev / `nvm use`
 - `tsconfig.json` — TypeScript config (strict; `@/*` path alias)
 - `.mcp.json` — project-scoped MCP servers for AI agents (see [MCP Servers](#mcp-servers-agent-tooling))
 - `.firebaserc` — Firebase default project (`lullaby-dashboard`)
@@ -245,12 +256,12 @@ Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 When making changes:
 
 1. Run `npm install` if dependencies changed or the workspace was cleaned.
-2. Run `npm run ci:ts` to verify TypeScript.
-3. Run `npm run ci:check` to verify Astro.
-4. Run `npm run ci:lint` to verify ESLint.
-5. Run `npm run ci:format` to verify Prettier.
-6. Run `npm run build` to verify the app compiles.
-7. If the change is UI-related, run `npm run dev` and inspect locally — ideally with the TV
+2. Run `npm run fix` to apply ESLint/Prettier auto-fixes while iterating.
+3. Run `npm run ci` to verify everything read-only (`ci:ts` → `ci:check` → `ci:lint` →
+   `ci:format`). It must pass without first needing `fix` — if `ci:lint`/`ci:format` fail, run
+   `fix` and re-run `ci`.
+4. Run `npm run build` to verify the app compiles.
+5. If the change is UI-related, run `npm run dev` and inspect locally — ideally with the TV
    user agent in Chrome dev tools.
 
 If anything here appears incorrect or incomplete, perform a narrow search only for the

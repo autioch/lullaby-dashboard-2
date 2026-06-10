@@ -2,6 +2,10 @@
   "name": "launchpad",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=24.11.1",
+    "npm": ">=11.6.2"
+  },
   "scripts": {
     "predev": "node -r dotenv/config tools/check-firebase-env.mjs",
     "prebuild": "node -r dotenv/config tools/check-firebase-env.mjs",
@@ -10,10 +14,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "ci:ts": "tsc --noEmit",
-    "ci:format": "prettier --write .",
-    "ci:lint": "eslint ./src --fix",
+    "ci:format": "prettier --check .",
+    "ci:lint": "eslint ./src",
     "ci:check": "astro check",
     "ci": "npm run ci:ts && npm run ci:check && npm run ci:lint && npm run ci:format",
+    "fix:format": "prettier --write .",
+    "fix:lint": "eslint ./src --fix",
+    "fix": "npm run fix:lint && npm run fix:format",
     "firebase:push-config": "node -r dotenv/config tools/push-config.mjs",
     "astro": "astro"
   },
@@ -37,6 +44,7 @@
     "@types/node": "^25.9.2",
     "dotenv": "^17.4.2",
     "eslint": "^10.4.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "firebase-admin": "^13.10.0",
     "globals": "^17.6.0",
     "prettier": "3.8.3",
