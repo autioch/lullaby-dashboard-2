@@ -70,6 +70,21 @@ required `PUBLIC_FIREBASE_*` variables are missing — configure `.env` first (s
 
 Verified working with Node.js `v24.11.1` and npm `11.6.2`.
 
+## MCP Servers (agent tooling)
+
+`.mcp.json` defines **project-scoped** MCP servers for AI agents — it's local to this repo,
+not global config. Currently: `github`, `firebase`, `context7`, `chrome-devtools`,
+`playwright`. No secrets live in the file; after editing it, fully restart the client to
+reconnect. Prerequisites:
+
+- **firebase** — install the Firebase CLI globally (`npm i -g firebase-tools`) and run
+  `firebase login`. The default project is pinned in `.firebaserc` (`lullaby-dashboard`).
+  Don't pass `--project` to `experimental:mcp` (that subcommand rejects the flag).
+- **github** — set a `GITHUB_PAT` env var (a GitHub personal access token); `.mcp.json`
+  references it via `${GITHUB_PAT}`, so no token is committed.
+- **context7 / chrome-devtools / playwright** — auto-installed via `npx`; the two browser
+  servers need a Chrome/Chromium available.
+
 ## Git & Workflow
 
 - This is a **private, single-developer project** for now. **Commit directly to `main`** —
@@ -86,6 +101,8 @@ Verified working with Node.js `v24.11.1` and npm `11.6.2`.
 - `package-lock.json` — npm lockfile
 - `astro.config.mjs` — Astro config (server output, Netlify adapter, React, svgr)
 - `tsconfig.json` — TypeScript config (strict; `@/*` path alias)
+- `.mcp.json` — project-scoped MCP servers for AI agents (see [MCP Servers](#mcp-servers-agent-tooling))
+- `.firebaserc` — Firebase default project (`lullaby-dashboard`)
 - `CLAUDE.md` — thin entry point that imports this file for Claude Code
 - `README.md` — project description
 - `public/` — static assets
