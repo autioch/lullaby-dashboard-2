@@ -13,8 +13,13 @@ type AuthMethods = {
 
 const ls = lsWrapper<boolean>('auth');
 
+// Dev-only escape hatch: set PUBLIC_SKIP_AUTH=true in .env to bypass the
+// password gate. Off by default, so production still gates and the gate
+// itself stays testable by toggling the flag off.
+const skipAuth = import.meta.env.PUBLIC_SKIP_AUTH === 'true';
+
 export const useAuthStore = create<AuthState & AuthMethods>((set) => ({
-  isAuthenticated: ls.load() ?? false,
+  isAuthenticated: skipAuth || (ls.load() ?? false),
   isLoading: false,
   errorTextKey: null,
 

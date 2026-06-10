@@ -64,6 +64,9 @@ required `PUBLIC_FIREBASE_*` variables are missing — configure `.env` first (s
   `PUBLIC_FIREBASE_APP_ID`.
 - **Server:** `FIREBASE_SERVICE_ACCOUNT_KEY` (JSON for `firebase-admin`),
   `APP_PASSWORD` (gate password checked by `src/pages/api/auth.ts`).
+- **Optional (local dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the `AuthGate` password
+  prompt (read in `src/stores/useAuthStore.ts`). Off/absent by default — keep it out of
+  production. Note the gate is a soft, client-side barrier, not real access control.
 
 Verified working with Node.js `v24.11.1` and npm `11.6.2`.
 

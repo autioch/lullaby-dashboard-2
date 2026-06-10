@@ -22,6 +22,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# Claude Code local (personal) settings
+.claude/settings.local.json
+
 service-account.json
 # Local Netlify folder
 .netlify/
