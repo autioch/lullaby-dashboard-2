@@ -6,6 +6,7 @@ import json from '@eslint/json';
 import markdown from '@eslint/markdown';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
+import compat from 'eslint-plugin-compat';
 import type { ESLint } from 'eslint';
 
 export default defineConfig([
@@ -34,6 +35,14 @@ export default defineConfig([
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
     },
+  },
+  // Browser-API compat: flag JS/Web APIs unsupported by the TV browser floor
+  // (Chrome 87, set via the `browserslist` field). Scoped to client code only —
+  // the server API routes under src/pages/api run on Node, not the browser.
+  {
+    ...compat.configs['flat/recommended'],
+    files: ['src/**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}'],
+    ignores: ['src/pages/api/**'],
   },
   {
     files: ['**/*.json'],

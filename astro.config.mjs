@@ -12,5 +12,10 @@ export default defineConfig({
   adapter: netlify(),
   vite: {
     plugins: [svgr()],
+    build: {
+      // Down-level client JS/CSS to the TV browser floor (Chrome 87). Keep this
+      // engine in sync with the `browserslist` field in package.json.
+      target: ['chrome87'],
+    },
   },
 });

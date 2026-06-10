@@ -53,6 +53,19 @@ The app must support the browser from a TV with user agent:
 
 Avoid JS/CSS features unsupported by Chrome 87; prefer widely supported syntax.
 
+This floor is **enforced**, not just documented:
+
+- **`browserslist`** in `package.json` (`["chrome 87"]`) is the single source of truth for
+  the target — keep it in sync with the Vite build target below.
+- **Vite build target** (`astro.config.mjs` → `vite.build.target: ['chrome87']`) down-levels
+  client JS/CSS _syntax_ to Chrome 87 at build time.
+- **`eslint-plugin-compat`** (`compat/compat`, wired in `eslint.config.ts`, runs via
+  `npm run ci:lint`) flags JS/Web _APIs_ unsupported by the `browserslist` target. It's
+  scoped to client code only — the Node API routes under `src/pages/api` are excluded.
+
+Syntax is handled by the build target; runtime APIs by the lint rule. If `ci:lint` reports a
+`compat/compat` error, the API isn't safe on the TV — replace it or guard with a fallback.
+
 ## Project Type and Technology
 
 - Project type: server-rendered web app (Astro `output: 'server'` + Netlify adapter)
@@ -90,9 +103,10 @@ Use **npm** with `package-lock.json` (don't switch package managers).
 masking failures. Use `fix` (or `fix:lint` / `fix:format`) while developing to apply
 auto-fixes, then run `ci` to confirm the tree is clean.
 
-`dev`, `build`, and `preview` run a `check-firebase-env` pre-step that fails fast if the
-required `PUBLIC_FIREBASE_*` variables are missing — configure `.env` first (see
-[Environment](#environment)).
+`dev`, `build`, and `preview` run a `check-firebase-env` pre-step that fails fast if any
+required env var is missing (the `PUBLIC_FIREBASE_*` client keys plus the
+`FIREBASE_SERVICE_ACCOUNT_KEY` / `APP_PASSWORD` server vars) or if the service-account key
+isn't valid JSON — configure `.env` first (see [Environment](#environment)).
 
 ## Environment
 
@@ -279,7 +293,9 @@ Specs live in `docs/features/` — see its [README](../docs/features/README.md).
 - **Windows / PowerShell** is the default shell — use PowerShell syntax (`$env:VAR`, `$null`).
 - **Firestore `in` queries are capped at 30 IDs** — batch objective hydration (see the
   hydration strategy in `docs/07_data-architecture.md`).
-- **TV browser support** — don't rely on features unsupported by Chrome 87.
+- **TV browser support** — don't rely on features unsupported by Chrome 87; the floor is
+  enforced via `browserslist` + the Vite build target + `eslint-plugin-compat` (see
+  [Supported browsers](#supported-browsers)).
 - **`tools/` scripts use the repo's root `node_modules`** — there's no separate workspace or
   lockfile in `tools/`; run them from the repo root (e.g. `npm run db:seed`).
 
