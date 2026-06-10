@@ -22,7 +22,7 @@
     "fix:lint": "eslint ./src --fix",
     "fix": "npm run fix:lint && npm run fix:format",
     "verify": "npm run fix && npm run ci",
-    "firebase:push-config": "node -r dotenv/config tools/push-config.mjs",
+    "firebase:push-rules": "firebase deploy --only firestore:rules",
     "astro": "astro",
     "prepare": "husky"
   },
