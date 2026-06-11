@@ -17,7 +17,7 @@ export function MissionsLevel() {
 
   return (
     <>
-      <Header titleKey="contentEditor.missionsTitle" isRoot />
+      <Header isRoot trail={[{ textKey: 'contentEditor.missionsTitle' }]} />
       <div className="c-content-editor__list">
         {missionList.length === 0 ? (
           <EmptyNote textKey="contentEditor.noMissions" />

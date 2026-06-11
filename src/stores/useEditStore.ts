@@ -44,6 +44,7 @@ type EditMethods = {
   reset(): void;
   openMission(id: string): void;
   openGroup(id: string): void;
+  goMissions(): void;
   back(): void;
   requestDelete(kind: DeleteKind, id: string): void;
   cancelDelete(): void;
@@ -172,6 +173,16 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
       set({
         level: 'group',
         selectedGroupId: id,
+        pendingDelete: null,
+        errorKey: null,
+      });
+    },
+
+    goMissions() {
+      set({
+        level: 'missions',
+        selectedMissionId: null,
+        selectedGroupId: null,
         pendingDelete: null,
         errorKey: null,
       });

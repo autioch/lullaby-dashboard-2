@@ -16,8 +16,12 @@ type ObjectiveDraft = { label: string; color: string; isHidden: boolean };
 // SaveBar is pinned to the bottom while the objectives list scrolls.
 export function GroupLevel() {
   const groupId = useEditStore((state) => state.selectedGroupId);
+  const missionId = useEditStore((state) => state.selectedMissionId);
   const group = useMissionStore((state) =>
     groupId ? state.objectiveGroups[groupId] : undefined
+  );
+  const mission = useMissionStore((state) =>
+    missionId ? state.missions[missionId] : undefined
   );
   const objectives = useMissionStore((state) => state.objectives);
   const saveId = `group-save-${groupId}`;
@@ -35,7 +39,7 @@ export function GroupLevel() {
   );
 
   if (!groupId || !group) {
-    return <Header titleKey="contentEditor.groupTitle" />;
+    return <Header trail={[{ textKey: 'contentEditor.groupTitle' }]} />;
   }
 
   function objValue(id: string): ObjectiveDraft {
@@ -93,7 +97,19 @@ export function GroupLevel() {
 
   return (
     <>
-      <Header rawTitle={group.label} />
+      <Header
+        trail={[
+          {
+            textKey: 'contentEditor.missionsTitle',
+            onClick: () => edit.goMissions(),
+          },
+          {
+            raw: mission?.label ?? '',
+            onClick: missionId ? () => edit.openMission(missionId) : undefined,
+          },
+          { raw: group.label },
+        ]}
+      />
       <TextField
         labelKey="contentEditor.fieldLabel"
         value={groupDraft.label}

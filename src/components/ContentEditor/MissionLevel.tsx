@@ -33,7 +33,7 @@ export function MissionLevel() {
   });
 
   if (!missionId || !mission) {
-    return <Header titleKey="contentEditor.missionTitle" />;
+    return <Header trail={[{ textKey: 'contentEditor.missionTitle' }]} />;
   }
 
   const dirty =
@@ -43,7 +43,15 @@ export function MissionLevel() {
 
   return (
     <>
-      <Header rawTitle={mission.label} />
+      <Header
+        trail={[
+          {
+            textKey: 'contentEditor.missionsTitle',
+            onClick: () => edit.goMissions(),
+          },
+          { raw: mission.label },
+        ]}
+      />
       <TextField
         labelKey="contentEditor.fieldLabel"
         value={draft.label}

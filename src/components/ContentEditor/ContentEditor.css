@@ -13,9 +13,37 @@
   gap: 1.5rem;
 }
 
-.c-content-editor__title {
-  font-size: 2rem;
+/* Breadcrumb trail (Missions › Mission › Group) — ancestors jump up. */
+.c-content-editor__breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 1.6rem;
+}
+
+.c-content-editor__crumb-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.c-content-editor__crumb {
+  border: 0;
+  background: transparent;
+  color: #2977b6;
+  font-size: 1.6rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.c-content-editor__crumb-current {
   font-weight: 700;
+}
+
+.c-content-editor__crumb-sep {
+  opacity: 0.6;
 }
 
 .c-content-editor__heading {

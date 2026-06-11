@@ -2,6 +2,7 @@ import { Typography } from '@/components/Typography/Typography';
 import { Button } from '@/components/Button/Button';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { useEditStore, type DeleteKind } from '@/stores/useEditStore';
+import { Breadcrumb, type Crumb } from './Breadcrumb';
 
 // Shared presentational controls for the content editor. Logic lives in
 // useEditStore; these only render and dispatch.
@@ -9,12 +10,8 @@ import { useEditStore, type DeleteKind } from '@/stores/useEditStore';
 const { closeContentEditor } = useControlsStore.getState();
 const edit = useEditStore.getState();
 
-export function Header(props: {
-  titleKey?: string;
-  rawTitle?: string;
-  isRoot?: boolean;
-}) {
-  const { titleKey, rawTitle, isRoot = false } = props;
+export function Header(props: { trail: Crumb[]; isRoot?: boolean }) {
+  const { trail, isRoot = false } = props;
 
   return (
     <div className="c-content-editor__header">
@@ -22,16 +19,7 @@ export function Header(props: {
         textKey="contentEditor.back"
         onClick={() => (isRoot ? closeContentEditor() : edit.back())}
       />
-      {rawTitle !== undefined ? (
-        <span className="c-content-editor__title">{rawTitle || '—'}</span>
-      ) : (
-        <Typography
-          as="span"
-          size="large"
-          className="c-content-editor__title"
-          textKey={titleKey ?? ''}
-        />
-      )}
+      <Breadcrumb trail={trail} />
     </div>
   );
 }
