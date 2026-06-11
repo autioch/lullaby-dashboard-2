@@ -1,6 +1,7 @@
 .c-button {
   padding: 0.9rem 1rem;
   border: 0;
+  border-radius: 0.5rem;
   background: #2977b6;
   color: #fff;
   font-size: 1rem;
@@ -11,6 +12,10 @@
 .c-button:disabled {
   cursor: wait;
   opacity: 0.75;
+}
+
+.c-button--danger {
+  background: #b71c1c;
 }
 
 .c-button--text {
