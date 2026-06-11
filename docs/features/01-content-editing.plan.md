@@ -94,7 +94,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
   referential cleanup, while rules stay `write: false`. Confirm `tools/firestore.rules` is
   **unchanged**.
 
-### Step 3 — Client edit repository (fetch transport) · phase: `build`
+### Step 3 — Client edit repository (fetch transport) · phase: `build` ✅
 
 - **Goal:** A single client module that wraps `fetch` to the Step 2 routes, keeping transport
   out of the store and surfacing a typed `401` (session expired).
