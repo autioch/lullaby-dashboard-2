@@ -9,6 +9,7 @@ import { useEditStore } from '@/stores/useEditStore';
 // the editor and its drafts stay mounted, so the user can retry the save.
 export function ReauthPrompt() {
   const isLoading = useAuthStore((state) => state.isLoading);
+  const errorTextKey = useAuthStore((state) => state.errorTextKey);
   const [password, setPassword] = useState('');
 
   async function submit() {
@@ -38,6 +39,13 @@ export function ReauthPrompt() {
         onClick={() => void submit()}
         isLoading={isLoading}
       />
+      {errorTextKey ? (
+        <Typography
+          as="div"
+          className="c-content-editor__reauth-error"
+          textKey={errorTextKey}
+        />
+      ) : null}
     </div>
   );
 }
