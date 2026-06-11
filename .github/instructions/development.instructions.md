@@ -110,8 +110,10 @@ and the actual code → ask focused multiple-choice questions → write the spec
 `docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) →
 `/plan`, then `/implement`. After review, `/adjust` applies post-review change requests as code
 (writing `NN-name.adjustments-N.md`) while leaving the spec/plan/summary frozen. Keep the spec in
-sync if the build deviates — or run `/reconcile` to re-sync it later. Shared rules for these
-commands: [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
+sync if the build deviates — or run `/reconcile` to re-sync it later. To close the cycle, `/retro`
+runs a product-owner review of the whole iteration (writing `NN-name.retro.md`) — the wrap-up you
+read before deciding what's next. Shared rules for these commands:
+[docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
 
 ## Full command reference
 

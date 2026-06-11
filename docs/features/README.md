@@ -22,6 +22,11 @@ did (_what shipped_). All three stay in the repo as the record.
     records the change requests raised after implementation (product owner / dev / design), how
     each was handled, and the result. `/adjust` changes code but leaves spec, plan, and summary
     frozen, so they drift until `/reconcile` re-syncs the spec. A terminal record — no `Status`.
+  - **Retro** — `NN-kebab-name.retro.md`, same `NN` and name, one per iteration. Written by
+    `/retro` from [`_RETRO_TEMPLATE.md`](_RETRO_TEMPLATE.md); a product-owner review of the whole
+    cycle — what worked, what to improve, the user's own feedback, and suggested next actions. It
+    reads every other artifact but edits none. The wrap-up the user reads to decide what's next. A
+    terminal record — no `Status`.
 - Keep spec and plan current: when the build deviates, update the spec; when the approach
   changes, update the plan. The summary is written once per implementation run; each adjustments
   file once per review round.
@@ -34,5 +39,8 @@ and [`WORKFLOW.md`](WORKFLOW.md) for the shared grounding reads and rules every 
 follows. The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan`
 turns an agreed spec into the implementation plan → `/implement` executes that plan step by step,
 committing and validating each (running `/verify`, `/code-review`, and `/security-review` before
-close-out) and writing the implementation **summary** at the end. Later,
-`/reconcile <feature>` re-syncs an `implemented` spec with the code if it drifts.
+close-out) and writing the implementation **summary** at the end. Post-review change requests go
+through `/adjust` (code changes, spec/plan/summary stay frozen). Later,
+`/reconcile <feature>` re-syncs an `implemented` spec with the code if it drifts. To close the
+cycle, `/retro <feature>` runs a product-owner review of the whole iteration and writes the
+**retro** — the wrap-up the user reads before deciding what's next.

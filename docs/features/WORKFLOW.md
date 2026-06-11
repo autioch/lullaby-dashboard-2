@@ -1,9 +1,9 @@
 # Feature pipeline — shared rules for agents
 
 Grounding and cross-cutting rules for every pipeline command — `/spec`, `/plan`, `/implement`,
-and `/reconcile`. Each command reads this first, then does its own job. The shared rules live
-**here** (not copied into each command file) so there's a single source of truth — edit this, not
-each command.
+`/adjust`, `/reconcile`, and `/retro`. Each command reads this first, then does its own job. The
+shared rules live **here** (not copied into each command file) so there's a single source of
+truth — edit this, not each command.
 
 ```text
 /spec  →  /plan  →  /implement          idea → contract → plan → code → summary
@@ -11,6 +11,7 @@ each command.
                         ├─ validate / review:  /verify · /code-review · /simplify · /security-review
                         └─ /adjust   …… apply post-review change requests as code (spec/plan/summary stay frozen)
 /reconcile  ……  re-sync an implemented spec with the code once it has drifted
+/retro      ……  product-owner review of the whole iteration — wrap up the cycle, decide what's next
 ```
 
 Each command emits one durable artifact in `docs/features/`: `/spec` writes `NN-name.md`, `/plan`
@@ -18,7 +19,10 @@ writes `NN-name.plan.md`, and `/implement` writes `NN-name.summary.md` at close-
 of what shipped (added / changed / skipped) that downstream skills read. After review, `/adjust`
 writes `NN-name.adjustments-N.md` per round — the record of post-review change requests and how
 each was handled. `/adjust` writes code but leaves the spec, plan, and summary **frozen**, so they
-drift until `/reconcile` re-syncs the spec.
+drift until `/reconcile` re-syncs the spec. To close the cycle, `/retro` writes `NN-name.retro.md`
+— a product-owner review of the whole iteration (what worked, what to improve, the user's own
+feedback, and suggested next moves); it reads every artifact but edits none, and is the wrap-up
+the user reads before deciding what's next.
 
 ## Grounding reads
 
