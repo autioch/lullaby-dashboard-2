@@ -7,7 +7,7 @@ Turn an agreed spec from `docs/features/` into a durable, ordered implementation
 can execute step by step. **Do not write app code in this command** — the output is the plan
 document only. Implementation is a separate step.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
@@ -59,7 +59,7 @@ Q&A and record them back into the spec — never silently assume.
 
 Rules:
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, ask-don't-invent. Call out `compat/compat` and doc-sync obligations on
   the specific steps where they apply.
 - The plan is an execution contract — unambiguous, no filler.

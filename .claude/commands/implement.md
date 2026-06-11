@@ -7,7 +7,7 @@ Execute a `ready` implementation plan from `docs/features/`, turning its ordered
 committed, validated code. **Unlike `/spec` and `/plan`, this command writes app code** — it
 follows the plan and its spec **exactly** and never invents a product decision.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The plan to implement (path, `NN`, feature name; optional trailing `step N` or `steps N-M`; may
@@ -31,7 +31,7 @@ step with the tree green, and stop and ask rather than invent a product decision
    (a completed step's heading carries a `✅`, and each lands its own commit — use both to find
    where to resume).
 
-2. **Ground yourself once, narrowly.** Read [docs/features/README.md](../../docs/features/README.md)
+2. **Ground yourself once, narrowly.** Read [docs/feature-workflow.md](../../docs/feature-workflow.md)
    (shared grounding reads + rules) and the plan's own **"Read before starting"** list, then read
    the actual source each targeted step will touch before editing it. Trust the plan — don't
    re-explore the whole repo.
@@ -99,7 +99,7 @@ step with the tree green, and stop and ask rather than invent a product decision
 
 ## Rules
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent. Follow the plan and spec
   **exactly**: don't add scope, skip steps, or reorder.
 - **Whole-plan autopilot:** with no `step` argument, execute every remaining step end-to-end,

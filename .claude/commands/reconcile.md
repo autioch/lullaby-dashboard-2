@@ -8,7 +8,7 @@ affected general docs**, and record the pass in a **reconciliation** artifact �
 the `/spec` → `/plan` → `/implement` (→ `/adjust`) pipeline otherwise leaves to memory. **Do not
 write app code in this command** — it maintains docs only.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The feature to reconcile (path, `NN`, or name; may be empty): `$ARGUMENTS`
@@ -58,7 +58,7 @@ each drift — stale spec vs. code regression. Never invent a decision only the 
 
 ## Rules
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state (not history).
 - Reconcile maintains the spec, the general docs, and its own artifact; it never edits `src/` or
   `tools/`, and it never rewrites the plan, implementation record, or adjustments (feature history

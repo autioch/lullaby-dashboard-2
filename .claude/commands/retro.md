@@ -11,7 +11,7 @@ This is the **wrap-up** of the lifecycle: the user reads it and decides the next
 **Do not write app code or edit the contract artifacts in this command** — the only file it
 writes is the retro.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The feature to retro (path, `NN`, or name; may be empty): `$ARGUMENTS`
@@ -79,7 +79,7 @@ them; leave the **Decision** to the user.
 
 ## Rules
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
 - **Read-only on contracts:** the retro never edits the spec, plan, implementation record,
   adjustments, or reconciliation — it reviews them. The only file it writes is

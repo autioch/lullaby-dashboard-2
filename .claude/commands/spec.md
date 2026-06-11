@@ -6,7 +6,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion
 Drive the elicitation loop that turns a feature idea into a durable, agreed spec under
 `docs/features/`. **Do not write app code in this command** — the output is the spec only.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The feature idea (may be empty): `$ARGUMENTS`
@@ -45,7 +45,7 @@ decision only the user can make — ask.
 
 ## Rules
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state (not history).
 - The spec is a contract — precise and unambiguous.
 - Never invent answers to questions only the user can decide — ask.

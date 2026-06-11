@@ -1,250 +1,86 @@
-# LaunchPad Data Architecture
+# Data Architecture
 
-## Overview
+The authority on layering. Entities live in separate Firestore collections and are composed in
+Zustand by reference ID (partial hydration). Realtime listeners are the **single source of truth**.
 
-Entities may be stored in separate Firestore collections and composed in Zustand. The system supports partial hydration of entities based on reference IDs.
-
-### Read operations flow:
-
-```text
-Firestore
-    ↓
-Repository Layer
-    ↓
-Zustand Store
-    ↓
-React Components
-```
-
-### Write operations flow:
+## Layering
 
 ```text
-React
-    ↓
-Zustand Action
-    ↓
-Repository
-    ↓
-Firestore
-    ↓
-Firestore Snapshot
-    ↓
-Repository
-    ↓
-Zustand State Update
-    ↓
-React Re-render
+Read:   Firestore → Repository → Zustand store → React
+Write:  React → Zustand action → Repository → Firestore → onSnapshot → Repository → Zustand → React
 ```
 
-## Architectural Principles
+| Layer                                | Does                                                                                                                          | Must not                                                         |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Firestore** (`src/database/db.ts`) | Persistence, realtime sync, security rules, offline cache                                                                     | Hold UI logic, state, or business rules                          |
+| **Repository** (`src/database/`)     | All Firestore access: reads, subscriptions, CRUD, mapping docs → models                                                       | Hold state; depend on React or Zustand                           |
+| **Zustand store** (`src/stores/`)    | State, business logic, derived state, user actions, orchestrating repositories; in-memory normalized cache across collections | Touch the Firestore SDK, know collection names, or build queries |
+| **React** (`src/components/`)        | Read store state, call actions, local UI state, render                                                                        | Call Firestore, hold business logic or app state, run queries    |
 
-1. React components are responsible only for rendering UI and forwarding user actions.
-2. All application state is stored in Zustand.
-3. All business logic is implemented in Zustand stores.
-4. All Firestore access is isolated inside repositories.
-5. React components must never directly call Firestore SDK methods.
-6. React components must never contain business logic.
-7. Firestore realtime listeners are the single source of truth.
-8. State changes should flow from Firestore → Repository → Zustand → React.
-9. Write operations should update Firestore and allow Firestore snapshots to update Zustand. Avoid manually mutating Zustand state after successful writes.
+Core rules:
 
-### Content writes (admin-SDK route path)
+- Components are presentation-only; **all** business logic lives in stores; **all** Firestore
+  access is isolated in repositories.
+- State flows Firestore → Repository → Zustand → React.
+- **Never manually mutate Zustand after a write** — let the `onSnapshot` subscription flow the
+  change back in.
+
+## Content writes (admin-SDK route path)
 
 Client SDK writes stay denied (`tools/firestore.rules` is `write: false`). Content edits
-(missions, objective groups, objectives) instead post to admin-SDK API routes under
-`src/pages/api/content/` — `client → edit repository → API route → firebase-admin → Firestore →
-onSnapshot → useMissionStore → re-render`. Each route is guarded by the session cookie
-(`requireSession`) and performs referential cleanup in a batched admin write (e.g. deleting a
-group strips its id from every mission; deleting an objective strips it from every group). The
-admin SDK bypasses rules, so no rules change is needed.
+(missions, objective groups, objectives) post to admin-SDK API routes under
+`src/pages/api/content/`:
 
-## Entity Resolution Model
+```text
+client → edit repository → API route → firebase-admin → Firestore → onSnapshot → useMissionStore → re-render
+```
 
-LaunchPad uses ID-based composition instead of embedding.
+Each route is guarded by the session cookie (`requireSession`) and performs referential cleanup in
+a batched admin write (deleting a group strips its id from every mission; deleting an objective
+strips it from every group). The admin SDK bypasses rules, so no rules change is needed.
 
-Firestore documents reference other entities using string IDs. The application layer is responsible for resolving references into hydrated objects.
+## Entity resolution
 
-Example:
+ID-based composition, not embedding. Documents reference each other by string ID; the application
+layer resolves references into hydrated objects.
 
+```text
 Mission.objectiveGroupIds → ObjectiveGroup.id
 ObjectiveGroup.objectiveIds → Objective.id
+```
 
-## Layer Responsibilities
+## State ownership
 
-### Firestore Layer
+| State                                                                   | Owner      |
+| ----------------------------------------------------------------------- | ---------- |
+| Persistent data, mission structure, objective library                   | Firestore  |
+| Application state + business logic (missions, normalized cache)         | Zustand    |
+| Data access & entity resolution                                         | Repository |
+| Rendering & temporary UI state (modal open, selected tab, hover, focus) | React      |
 
-Responsible for:
+## Hydration
 
-- Data persistence
-- Realtime synchronization
-- Security Rules enforcement
-- Offline cache
+1. **Primary (realtime)** — missions where `ownerId == currentUserId`.
+2. **Reference resolution** — extract `objectiveIds` from missions/groups, fetch in batches
+   (chunk by 30, see constraints), merge, store in Zustand.
+3. **Caching** — keep hydrated objectives in Zustand for reuse across missions and sessions.
 
-Must not contain:
+## Firestore query constraints
 
-- UI logic
-- Application state
-- Business rules
+- `in` queries are capped at **30 IDs** per request — objective hydration must always be batched.
+- No joins. Don't attempt client-side full objective loading at scale.
 
----
-
-### Repository Layer
-
-Repositories encapsulate all Firestore communication.
-
-Repositories:
-
-- Read collections/documents
-- Create realtime subscriptions
-- Execute CRUD operations
-- Map Firestore data to application models
-
-Repositories must not:
-
-- Store application state
-- Depend on React
-- Depend on Zustand
-
----
-
-### Zustand Layer
-
-Zustand is the application's state and business logic layer. Zustand acts as an in-memory normalized cache across multiple Firestore collections.
-
-Stores are responsible for:
-
-- Holding application state
-- Business rules
-- Derived state
-- User actions
-- Orchestrating repositories
-
-Stores must not:
-
-- Use Firestore SDK directly
-- Know Firestore collection names
-- Construct Firestore queries
-
----
-
-### React Layer
-
-React components are presentation-only.
-
-Components may:
-
-- Read Zustand state
-- Call Zustand actions
-- Handle local UI state
-- Render UI
-
-Components must not:
-
-- Call Firestore SDK
-- Contain business logic
-- Manage application state
-- Execute Firestore queries
-
-## State Ownership
-
-| Type                 | Owner             |
-| -------------------- | ----------------- |
-| Persistent data      | Firestore         |
-| Application state    | Zustand           |
-| Business logic       | Zustand           |
-| Data access          | Repository        |
-| Rendering            | React             |
-| Temporary UI state   | React             |
-| Mission structure    | Firestore         |
-| Objective library    | Firestore         |
-| Entity relationships | Mission documents |
-| Entity resolution    | Repository layer  |
-| Normalized cache     | Zustand           |
-
-Examples of temporary UI state:
-
-- Modal open/closed
-- Selected tab
-- Hover state
-- Input focus
-
-Examples of application state:
-
-- Missions
-- Rewards
-- Family members
-- User profile
-- Permissions
-
----
-
-## Folder Structure
+## Folder structure
 
 ```text
 src/
-├─ database/                 # repositories + db.ts (Firestore client access)
-│  ├─ db.ts
-│  ├─ missionRepository.ts
-│  ├─ objectiveGroupRepository.ts
-│  └─ objectiveRepository.ts
-│
-├─ stores/                   # Zustand stores (use<Name>Store.ts)
-│  ├─ useMissionStore.ts
-│  ├─ useControlsStore.ts
-│  ├─ useEditStore.ts        # content-editor state + mutation orchestration
-│  └─ ...
-│
+├─ database/   # repositories + db.ts: missionRepository, objectiveGroupRepository, objectiveRepository
+├─ stores/     # use<Name>Store.ts: useMissionStore, useControlsStore, useEditStore, …
 ├─ components/
-│  └─ ...
-│
-└─ pages/
-   └─ api/                   # server routes (firebase-admin)
+└─ pages/api/  # server routes (firebase-admin)
 ```
 
-> The repository layer lives in `src/database/` and stores are named `use<Name>Store.ts`.
-> Some entity names above (rewards, family) are illustrative of the model, not all present yet.
+## Design goals
 
----
-
-## Design Goals
-
-- Realtime by default
-- Single source of truth
-- Minimal React logic
-- Highly testable
-- Firestore isolated behind repositories
-- Clear separation of concerns
-- Easy future migration to another backend
-- Predictable state flow
-- Simple mental model for AI coding agents
-
-## Hydration Strategy
-
-Entities are loaded in two phases:
-
-### Phase 1 — Primary data
-
-Load user missions (realtime):
-
-missions where ownerId == currentUserId
-
-### Phase 2 — Reference resolution
-
-Extract all objectiveIds from missions and groups.
-
-Fetch objectives in batches:
-
-- chunk IDs (max 30 per Firestore "in" query)
-- merge results
-- store in Zustand
-
-### Phase 3 — Optional caching
-
-Keep hydrated objectives in Zustand for reuse across missions and sessions.
-
-## Firestore Query Constraints
-
-- "in" queries are limited to 30 IDs per request
-- No joins exist
-- Objective hydration must always be batched
-- Do not attempt client-side full objective loading at scale
+Realtime by default · single source of truth · minimal React logic · Firestore isolated behind
+repositories · predictable state flow · easy future migration to another backend.

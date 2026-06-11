@@ -9,7 +9,7 @@ then recording the round in an **adjustments** artifact. **This command writes a
 `/implement`) but it does **not** edit the contract docs: the spec, plan, and implementation
 record are **frozen** here. They will lag the code afterward; `/reconcile` re-syncs them later.
 
-First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
 
 The feature to adjust (path, `NN`, or name; may be empty): `$ARGUMENTS`
@@ -101,7 +101,7 @@ contract rather than bending it silently — ask.
 
 ## Rules
 
-- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
 - **Frozen contracts:** never edit the spec (`NN_spec_<short-name>.md`), plan
   (`NN_plan_<short-name>.md`), or implementation record (`NN_implement_<short-name>.md`) in this

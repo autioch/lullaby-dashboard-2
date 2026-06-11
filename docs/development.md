@@ -101,10 +101,9 @@ pointers, so they can't go stale the way prose would):
 
 New features start with no design — derive the spec through Q&A first, then run the pipeline:
 `/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests, `/reconcile` to
-re-sync a drifted spec, and `/retro` to close the iteration. Each command forces the role(s) that
-own its step and emits one artifact on the `NN_<command>_<short-name>.md` scheme (from a matching
-`_TEMPLATE_<command>.md`). The full pipeline guide — chain, roles, artifact convention, grounding
-reads, and shared rules — is [docs/features/README.md](features/README.md).
+re-sync a drifted spec, and `/retro` to close the iteration. The full pipeline guide — chain,
+roles, artifact convention, grounding reads, and shared rules — is
+[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`.
 
 ## Full command reference
 

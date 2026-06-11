@@ -46,15 +46,6 @@ explicitly with Save / Cancel.
 
 ## Documentation
 
-See the [`docs/`](docs/) folder:
-
-- [01_vision.md](docs/01_vision.md)
-- [02_marketing.md](docs/02_marketing.md)
-- [03_user-scenarios.md](docs/03_user-scenarios.md)
-- [04_design-principles.md](docs/04_design-principles.md)
-- [05_design.md](docs/05_design.md)
-- [06_roadmap.md](docs/06_roadmap.md)
-- [07_data-architecture.md](docs/07_data-architecture.md)
-
-For contributor/agent guidance, see [CLAUDE.md](CLAUDE.md) and
+Product, design, and architecture docs live in [`docs/`](docs/) — see its
+[index](docs/README.md). For contributor/agent guidance, see [CLAUDE.md](CLAUDE.md) and
 [docs/development.md](docs/development.md).

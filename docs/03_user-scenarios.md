@@ -2,11 +2,7 @@
 
 ## Evening Routine
 
-A family displays LaunchPad on a TV.
-
-Mission:
-
-Orbital Sleep Station
+A family displays LaunchPad on a TV. Mission: **Orbital Sleep Station**.
 
 Objectives:
 
@@ -16,17 +12,11 @@ Objectives:
 - Feed the dog
 - Turn off electronics
 
-Family members walk by the screen and immediately see:
+Walking past the screen, anyone immediately sees:
 
 - Remaining objectives
-- Current mission progress
-- Mission status
-- Remaining time until bedtime or time spent already
+- Current mission progress and status
+- Time remaining until bedtime (or time already spent)
 
-They naturally divide work without asking:
-
-> Did anyone do this already?
-
-The dashboard becomes the shared source of truth.
-
-Family members naturally coordinate work without asking for updates.
+The dashboard becomes the shared source of truth, so family members divide work and coordinate
+without asking "did anyone do this already?"
