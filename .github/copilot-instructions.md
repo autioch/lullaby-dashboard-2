@@ -63,8 +63,10 @@ vars. **Full command table is in the development guide.**
 - **Server:** `FIREBASE_SERVICE_ACCOUNT_KEY` (JSON for `firebase-admin`), `APP_PASSWORD`
   (auth-gate password, checked by `src/pages/api/auth.ts`), `SESSION_SECRET` (HMAC key signing
   the HttpOnly session cookie that gates the content-edit write API routes).
-- **Optional (dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the auth gate — keep out of prod.
-  The gate is a soft client-side barrier, not real access control.
+- **Optional (dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the client auth gate **and** makes
+  the content-write API routes skip the session check (so local writes work without logging in) —
+  keep out of prod, where it would leave writes unauthenticated. The gate is a soft client-side
+  barrier, not real access control.
 
 Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.6.2).
 
