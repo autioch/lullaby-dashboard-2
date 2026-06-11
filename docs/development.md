@@ -104,7 +104,10 @@ New features start with no design — derive the spec through Q&A first, then ru
 re-sync a drifted spec, and `/retro` to close the iteration. For a change too small to justify
 that, `/tweak` does the Q&A, plan, and code in one pass and records a single artifact. The full
 pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
-[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`.
+[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`. Every pipeline
+command delegates its commit+push to `/ship` — the single, canonical commit+push action (leans on
+the husky hooks for validation; writes no artifact) — which also serves as the ad-hoc "stage-all,
+commit, push" utility.
 
 ## Full command reference
 

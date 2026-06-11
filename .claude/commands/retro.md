@@ -71,8 +71,9 @@ them; leave the **Decision** to the user.
    [`docs/features/_TEMPLATE_retro.md`](../../docs/features/_TEMPLATE_retro.md) to
    `docs/features/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
    every section per the template, from steps 2–5 — leaving the **Decision** open for the user.
-   Keep it terse — every claim traces to an artifact or commit. Commit + push it (the pre-push hook
-   runs `npm run ci`; never `--no-verify`).
+   Keep it terse — every claim traces to an artifact or commit. Stage it (`git add <paths>`) and run
+   `/ship` — the canonical commit+push action — to commit and push (the husky pre-push hook runs
+   `npm run ci`; never `--no-verify`).
 
 7. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
    action(s) so they can decide. No report or summary.

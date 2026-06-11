@@ -64,10 +64,11 @@ only the user can make — ask.
    every section from this run's facts. Keep it terse — it's a terminal record; claims must trace
    to the actual change. Set today's date.
 
-8. **Commit + push.** Once the gate is green, commit the code change, any synced docs, and the
-   artifact together — Conventional Commits subject (the change's intent) + a body of what & why,
-   ending with the trailer `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>` — then push.
-   The pre-push hook re-runs `npm run ci`; if it blocks, fix and re-push. Never `--no-verify`.
+8. **Commit + push via `/ship`.** Once the gate is green, stage the code change, any synced docs,
+   and the artifact together (`git add <paths>`), then run `/ship` — the canonical commit+push
+   action — with a Conventional Commits subject (the change's intent). `/ship` commits the staged set
+   (what & why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci`;
+   never `--no-verify`), and pushes.
 
 9. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
    real-TV confirmation. No summary.

@@ -49,8 +49,9 @@ each drift — stale spec vs. code regression. Never invent a decision only the 
    [`docs/features/_TEMPLATE_reconcile.md`](../../docs/features/_TEMPLATE_reconcile.md) to
    `docs/features/NN_reconcile_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
    fill every section per the template, from this pass. Keep it terse — every claim traces to the
-   code or a prior artifact. Commit + push it together with the spec/doc edits (the pre-push hook
-   runs `npm run ci`; never `--no-verify`).
+   code or a prior artifact. Stage it with the spec/doc edits (`git add <paths>`) and run `/ship` —
+   the canonical commit+push action — to commit and push (the husky pre-push hook runs `npm run ci`;
+   never `--no-verify`).
 
 6. **Inform** the user of the reconciliation-artifact path, plus any suspected code regression to
    investigate (a separate `/verify` or `/implement` step) and anything still unbuilt. No report or

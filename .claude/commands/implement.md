@@ -64,10 +64,10 @@ step with the tree green, and stop and ask rather than invent a product decision
    4. **Sync docs in the same step.** Apply every doc update the step names (per the dev guide's
       **Keeping docs in sync** map) so code and prose never disagree. Append `✅` to the step's
       heading in the plan to mark it done.
-   5. **Commit and push.** Commit just this step's changes — Conventional Commits subject (the
-      step's intent) + a body of what & why, ending with the trailer
-      `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>` — then push. The pre-push hook
-      re-runs `npm run ci` as a backstop; if it blocks, fix and re-push. Never `--no-verify`. One
+   5. **Commit and push via `/ship`.** Stage just this step's files (`git add <paths>`), then run
+      `/ship` — the canonical commit+push action — with the step's Conventional Commits subject (its
+      intent). `/ship` commits the staged set (what & why body + the `Co-Authored-By` trailer), runs
+      the husky hooks (pre-push `npm run ci` is the gate; never `--no-verify`), and pushes. One
       commit per step.
 
    If a step can't proceed unambiguously — the plan/spec is silent, or reality has diverged from

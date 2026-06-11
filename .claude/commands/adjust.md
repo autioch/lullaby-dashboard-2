@@ -73,10 +73,10 @@ contract rather than bending it silently — ask.
       (`…Chrome/87…SmartTV…`) via chrome-devtools MCP / preview tooling: confirm the behavior,
       verify D-pad reachability + visible focus, capture proof. Use the **firebase** MCP for
       Firestore / `tools/firestore.rules` when data or rules change.
-   5. **Commit and push** — one commit per coherent change: Conventional Commits subject + a body
-      of what & why, ending with the trailer
-      `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`. The pre-push hook re-runs
-      `npm run ci`; if it blocks, fix and re-push. Never `--no-verify`.
+   5. **Commit and push via `/ship`** — one commit per coherent change: stage that change's files
+      (`git add <paths>`), then run `/ship` with a Conventional Commits subject. `/ship` commits the
+      staged set (what & why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push
+      `npm run ci`; never `--no-verify`), and pushes.
 
    If a request is **deferred** or **rejected**, don't force it — record that outcome (and why)
    for step 6 instead.

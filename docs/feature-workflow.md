@@ -92,3 +92,16 @@ re-checks; `npm run build` confirms compilation. Beyond the gate:
 - **`/code-review`** — correctness bugs + reuse / simplification / efficiency.
 - **`/simplify`** — quality-only cleanup; no bug hunting.
 - **`/security-review`** — when the change touches auth, an API route, or `tools/firestore.rules`.
+
+## Committing
+
+**`/ship`** is the single, canonical commit+push action — every pipeline command delegates its
+commit here instead of hand-rolling git, and it doubles as the ad-hoc "stage everything and push"
+utility. It commits the **already-staged** set when a step has staged just its files (otherwise
+`git add -A`), with a Conventional Commits subject + a what & why body + the `Co-Authored-By`
+trailer, then pushes. The husky hooks are the gate (pre-commit `lint-staged`, pre-push
+`npm run ci`) and run automatically; never `--no-verify`.
+
+So a pipeline step stages its own files (`git add <paths>`) for a per-step commit, then runs
+`/ship` to commit + push; `/ship` keeps the commit mechanics (message format, trailer, hooks) in
+one place. It's a general git utility, not a pipeline stage, so it writes no artifact.
