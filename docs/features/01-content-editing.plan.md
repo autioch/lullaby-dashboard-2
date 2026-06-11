@@ -169,7 +169,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
   `npm run build` succeeds. **Same commit doc-sync:** add `ContentEditor/` to the **Source
   layout** components note in the dev guide if components are enumerated there.
 
-### Step 6 — Menu entry + Dashboard mount · phase: `wire`
+### Step 6 — Menu entry + Dashboard mount · phase: `wire` ✅
 
 - **Goal:** Surface the editor: an **Edit** action in the menu opens it; the overlay renders
   from the controls flag.

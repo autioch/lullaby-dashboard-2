@@ -8,11 +8,13 @@ import { useMissionStore } from '@/stores/useMissionStore';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { Menu } from '../Menu/Menu';
 import { MissionSelect } from '@/components/MissionSelect/MissionSelect';
+import { ContentEditor } from '@/components/ContentEditor/ContentEditor';
 
 export function Dashboard() {
   const missionId = useMissionStore((state) => state.missionId);
   const isAppOptions = useControlsStore((state) => state.isAppOptions);
   const isMissionSelect = useControlsStore((state) => state.isMissionSelect);
+  const isContentEditor = useControlsStore((state) => state.isContentEditor);
 
   return (
     <div className="c-dashboard">
@@ -31,6 +33,7 @@ export function Dashboard() {
       </div>
       {isAppOptions ? <AppOptions /> : null}
       {isMissionSelect || !missionId ? <MissionSelect /> : null}
+      {isContentEditor ? <ContentEditor /> : null}
     </div>
   );
 }
