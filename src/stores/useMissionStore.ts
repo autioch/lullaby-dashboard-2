@@ -138,8 +138,15 @@ export const useMissionStore = create<MissionState & MissionMethods>(
         ([missionId]) => !!listExpiryTimestamps[missionId]
       );
 
+      // Drop a persisted selection that no longer exists (e.g. after a reseed
+      // regenerates ids), so the app falls back to the picker instead of
+      // showing an empty mission.
+      const missionId = missions[persistedState.missionId ?? '']
+        ? persistedState.missionId
+        : null;
+
       set({
-        missionId: persistedState.missionId,
+        missionId,
         checkedKeys,
         listExpiryTimestamps,
       });
