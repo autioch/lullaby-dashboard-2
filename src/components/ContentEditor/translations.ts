@@ -9,7 +9,6 @@ type ContentEditorTranslationKeys =
   | 'back'
   | 'edit'
   | 'delete'
-  | 'remove'
   | 'moveUp'
   | 'moveDown'
   | 'save'
@@ -19,10 +18,6 @@ type ContentEditorTranslationKeys =
   | 'addMission'
   | 'addGroup'
   | 'addObjective'
-  | 'createNew'
-  | 'attachExisting'
-  | 'attachLibraryEmpty'
-  | 'attach'
   | 'groupsHeading'
   | 'objectivesHeading'
   | 'fieldLabel'
@@ -50,7 +45,6 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       back: 'Back',
       edit: 'Edit',
       delete: 'Delete',
-      remove: 'Remove',
       moveUp: 'Move up',
       moveDown: 'Move down',
       save: 'Save',
@@ -60,10 +54,6 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       addMission: 'Add mission',
       addGroup: 'Add group',
       addObjective: 'Add objective',
-      createNew: 'Create new',
-      attachExisting: 'Attach existing',
-      attachLibraryEmpty: 'Nothing left to attach.',
-      attach: 'Attach',
       groupsHeading: 'Groups',
       objectivesHeading: 'Objectives',
       fieldLabel: 'Label',
@@ -89,7 +79,6 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       back: 'Wstecz',
       edit: 'Edytuj',
       delete: 'Usuń',
-      remove: 'Odłącz',
       moveUp: 'W górę',
       moveDown: 'W dół',
       save: 'Zapisz',
@@ -99,10 +88,6 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       addMission: 'Dodaj misję',
       addGroup: 'Dodaj grupę',
       addObjective: 'Dodaj zadanie',
-      createNew: 'Utwórz nową',
-      attachExisting: 'Dołącz istniejącą',
-      attachLibraryEmpty: 'Nie ma nic do dołączenia.',
-      attach: 'Dołącz',
       groupsHeading: 'Grupy',
       objectivesHeading: 'Zadania',
       fieldLabel: 'Etykieta',

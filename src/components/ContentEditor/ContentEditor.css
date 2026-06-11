@@ -32,18 +32,10 @@
   font-size: 1.1rem;
 }
 
-.c-content-editor__list,
-.c-content-editor__library {
+.c-content-editor__list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-}
-
-.c-content-editor__library {
-  margin-top: 0.75rem;
-  padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 0.5rem;
 }
 
 .c-content-editor__row {
@@ -86,8 +78,16 @@
 }
 
 /* Every actionable element is a real focusable control with a clear focus
-   ring — the editor is fully D-pad / keyboard operable. */
-.c-content-editor__btn {
+   ring — the editor is fully D-pad / keyboard operable. Text actions reuse the
+   shared Button, sized up here for TV legibility. */
+.c-content-editor .c-button {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.25rem;
+}
+
+/* Glyph buttons (stepper +/-) are not text Buttons, so they keep their own
+   style. */
+.c-content-editor__icon-btn {
   padding: 0.75rem 1.25rem;
   border: 2px solid transparent;
   border-radius: 0.5rem;
@@ -98,13 +98,14 @@
   flex-shrink: 0;
 }
 
-.c-content-editor__btn:disabled {
+.c-content-editor__icon-btn:disabled {
   cursor: wait;
   opacity: 0.55;
 }
 
-.c-content-editor__btn--danger {
-  background: #b71c1c;
+.c-content-editor__savebar {
+  display: flex;
+  gap: 0.75rem;
 }
 
 .c-content-editor__field {
@@ -116,12 +117,6 @@
 .c-content-editor__field-label {
   font-size: 1.2rem;
   font-weight: 600;
-}
-
-.c-content-editor__field-control {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
 }
 
 .c-content-editor__input {
