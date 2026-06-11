@@ -90,7 +90,6 @@
 .c-content-editor__icon-btn {
   padding: 0.75rem 1.25rem;
   border: 2px solid transparent;
-  border-radius: 0.5rem;
   background: #2977b6;
   color: #fff;
   font-size: 1.2rem;
@@ -146,7 +145,6 @@
   align-self: flex-start;
   padding: 0.75rem 1.5rem;
   border: 2px solid #2977b6;
-  border-radius: 2rem;
   background: #fff;
   color: #2977b6;
   font-size: 1.2rem;
