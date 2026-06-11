@@ -6,11 +6,15 @@ and `/reconcile`. Each command reads this first, then does its own job. The shar
 each command.
 
 ```text
-/spec  →  /plan  →  /implement          idea → contract → plan → code
+/spec  →  /plan  →  /implement          idea → contract → plan → code → summary
                         │
                         └─ validate / review:  /verify · /code-review · /simplify · /security-review
 /reconcile  ……  re-sync an implemented spec with the code once it has drifted
 ```
+
+Each command emits one durable artifact in `docs/features/`: `/spec` writes `NN-name.md`, `/plan`
+writes `NN-name.plan.md`, and `/implement` writes `NN-name.summary.md` at close-out — the record
+of what shipped (added / changed / skipped) that downstream skills read.
 
 ## Grounding reads
 

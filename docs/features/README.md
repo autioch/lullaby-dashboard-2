@@ -2,7 +2,8 @@
 
 Durable specs for features built from scratch via Q&A. Each **spec** is the agreed contract
 (_what_ and _why_) before any code is written; each **plan** is the step-by-step execution map
-(_how_) derived from a spec. Both stay in the repo as the record.
+(_how_) derived from a spec; each **summary** is the record of what an `/implement` run actually
+did (_what shipped_). All three stay in the repo as the record.
 
 ## Convention
 
@@ -13,8 +14,11 @@ Durable specs for features built from scratch via Q&A. Each **spec** is the agre
   - **Plan** — `NN-kebab-name.plan.md`, same `NN` and name. Copy
     [`_PLAN_TEMPLATE.md`](_PLAN_TEMPLATE.md). `Status` moves
     `draft` → `ready` → `in-progress` → `done`.
-- Keep both current: when the build deviates, update the spec; when the approach changes,
-  update the plan.
+  - **Summary** — `NN-kebab-name.summary.md`, same `NN` and name. Written by `/implement` at
+    close-out from [`_SUMMARY_TEMPLATE.md`](_SUMMARY_TEMPLATE.md); records what was added,
+    changed, and skipped. A terminal record — no `Status` lifecycle. Later skills read it.
+- Keep spec and plan current: when the build deviates, update the spec; when the approach
+  changes, update the plan. The summary is written once per implementation run.
 
 ## Workflow
 
@@ -24,5 +28,5 @@ and [`WORKFLOW.md`](WORKFLOW.md) for the shared grounding reads and rules every 
 follows. The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan`
 turns an agreed spec into the implementation plan → `/implement` executes that plan step by step,
 committing and validating each (running `/verify`, `/code-review`, and `/security-review` before
-close-out). Later, `/reconcile <feature>` re-syncs an `implemented` spec with the code if it
-drifts.
+close-out) and writing the implementation **summary** at the end. Later,
+`/reconcile <feature>` re-syncs an `implemented` spec with the code if it drifts.

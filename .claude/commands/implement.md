@@ -83,9 +83,21 @@ be empty): `$ARGUMENTS`
 6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented`, completing
    the remaining items in the plan's **Docs to update** list — in a final commit + push.
 
-7. **Report** in a few lines: the plan path, the steps completed with their commit subjects, the
-   gate result, and anything flagged for real-TV confirmation or any spec/plan edit you made. No
-   filler, no next-step suggestions unless asked.
+7. **Write the implementation summary.** Copy
+   [`docs/features/_SUMMARY_TEMPLATE.md`](../../docs/features/_SUMMARY_TEMPLATE.md) to
+   `docs/features/NN-kebab-name.summary.md` (**same `NN` and name as the spec & plan**) and fill
+   every section from this run: **Outcome** (what now works), **Added** / **Changed** (honest,
+   path-level — group by layer), **Skipped / deferred** (any plan/spec item not done and why —
+   deferred steps, descoped items, real-TV-only checks; `None` if fully complete), **Verification**
+   (gate + acceptance + which review skills ran), and **Commits** (one line per step,
+   `<sha> — <subject>`). Keep it terse and factual — every claim must trace to a commit or to the
+   plan's step state; this markdown is consumed by later skills (e.g. `/reconcile`, ship/PR
+   flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the
+   step-6 close-out commit).
+
+8. **Report** in a few lines: the plan path, the **summary path**, the steps completed with their
+   commit subjects, the gate result, and anything flagged for real-TV confirmation or any
+   spec/plan edit you made. No filler, no next-step suggestions unless asked.
 
 ## Rules
 
