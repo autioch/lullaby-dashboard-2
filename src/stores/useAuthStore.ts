@@ -8,7 +8,7 @@ type AuthState = {
 };
 
 type AuthMethods = {
-  authenticate(password: string): Promise<void>;
+  authenticate(password: string): Promise<boolean>;
   deauthenticate(): void;
 };
 
@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState & AuthMethods>((set) => ({
   async authenticate(password) {
     if (!password.trim()) {
       set({ errorTextKey: 'authGate.errorEmptyPassword', isLoading: false });
-      return;
+      return false;
     }
 
     set({ isLoading: true, errorTextKey: null });
@@ -43,12 +43,14 @@ export const useAuthStore = create<AuthState & AuthMethods>((set) => ({
 
       if (!response.ok || !data.ok) {
         set({ errorTextKey: 'authGate.errorInvalidPassword' });
-        return;
+        return false;
       }
       set({ isAuthenticated: true });
       ls.save(true);
+      return true;
     } catch {
       set({ errorTextKey: 'authGate.errorUnknown' });
+      return false;
     } finally {
       set({ isLoading: false });
     }

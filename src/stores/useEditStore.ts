@@ -3,7 +3,6 @@ import {
   contentEditRepository,
   SessionExpiredError,
 } from '@/database/contentEditRepository';
-import { useAuthStore } from './useAuthStore';
 
 // Transient state + business logic for the content editor overlay. Mutations
 // orchestrate contentEditRepository and never write useMissionStore — the
@@ -26,6 +25,10 @@ type EditState = {
   errorKey: string | null;
   // The entity awaiting an in-overlay delete confirmation, if any.
   pendingDelete: { kind: DeleteKind; id: string } | null;
+  // True after a write returned 401: the editor shows an in-place re-login
+  // prompt instead of dropping the whole app to the auth gate, so drafts and
+  // the user's position survive an expired session.
+  needsReauth: boolean;
 };
 
 type MissionPatch = {
@@ -46,6 +49,7 @@ type EditMethods = {
   back(): void;
   requestDelete(kind: DeleteKind, id: string): void;
   cancelDelete(): void;
+  clearReauth(): void;
 
   createMission(controlId: string): Promise<void>;
   updateMission(
@@ -108,6 +112,7 @@ const initialState: EditState = {
   pending: {},
   errorKey: null,
   pendingDelete: null,
+  needsReauth: false,
 };
 
 export const useEditStore = create<EditState & EditMethods>((set, get) => {
@@ -124,8 +129,12 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
       await action();
     } catch (error) {
       if (error instanceof SessionExpiredError) {
-        set({ errorKey: 'contentEditor.errorSessionExpired' });
-        useAuthStore.getState().deauthenticate();
+        // Keep the editor mounted; prompt for re-login in place (the cookie
+        // expired while the client auth flag was still set). No deauthenticate.
+        set({
+          errorKey: 'contentEditor.errorSessionExpired',
+          needsReauth: true,
+        });
       } else {
         set({ errorKey: 'contentEditor.errorGeneric' });
       }
@@ -194,6 +203,10 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
 
     cancelDelete() {
       set({ pendingDelete: null });
+    },
+
+    clearReauth() {
+      set({ needsReauth: false, errorKey: null });
     },
 
     // --- Mission mutations ---

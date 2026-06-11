@@ -72,6 +72,14 @@ export function clearSession(ctx: APIContext): void {
 }
 
 export function requireSession(ctx: APIContext): boolean {
+  // Dev-only escape hatch: PUBLIC_SKIP_AUTH bypasses the client auth gate but
+  // never mints a session cookie, so content writes would 401. Honor the same
+  // flag here so local testing can write. Must stay false in production — the
+  // gate is already open when it is true, so this grants nothing extra there.
+  if (import.meta.env.PUBLIC_SKIP_AUTH === 'true') {
+    return true;
+  }
+
   const token = ctx.cookies.get(SESSION_COOKIE)?.value;
   if (!token) {
     return false;

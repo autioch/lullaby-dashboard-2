@@ -31,6 +31,7 @@ type ContentEditorTranslationKeys =
   | 'noGroups'
   | 'noObjectives'
   | 'pending'
+  | 'reauthSubmit'
   | 'errorGeneric'
   | 'errorSessionExpired';
 
@@ -67,6 +68,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       noGroups: 'No groups yet.',
       noObjectives: 'No objectives yet.',
       pending: 'Saving…',
+      reauthSubmit: 'Log in',
       errorGeneric: 'Something went wrong. Try again.',
       errorSessionExpired: 'Session expired — re-enter the password.',
     },
@@ -101,6 +103,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       noGroups: 'Brak grup.',
       noObjectives: 'Brak zadań.',
       pending: 'Zapisywanie…',
+      reauthSubmit: 'Zaloguj',
       errorGeneric: 'Coś poszło nie tak. Spróbuj ponownie.',
       errorSessionExpired: 'Sesja wygasła — wpisz hasło ponownie.',
     },

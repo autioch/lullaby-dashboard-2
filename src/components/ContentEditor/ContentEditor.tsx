@@ -10,6 +10,7 @@ import { MissionsLevel } from './MissionsLevel';
 import { MissionLevel } from './MissionLevel';
 import { GroupLevel } from './GroupLevel';
 import { ObjectiveLevel } from './ObjectiveLevel';
+import { ReauthPrompt } from './ReauthPrompt';
 
 const { closeContentEditor } = useControlsStore.getState();
 
@@ -19,6 +20,7 @@ const { closeContentEditor } = useControlsStore.getState();
 export function ContentEditor() {
   const level = useEditStore((state) => state.level);
   const errorKey = useEditStore((state) => state.errorKey);
+  const needsReauth = useEditStore((state) => state.needsReauth);
   const selectedMissionId = useEditStore((state) => state.selectedMissionId);
   const selectedGroupId = useEditStore((state) => state.selectedGroupId);
   const selectedObjectiveId = useEditStore(
@@ -49,7 +51,9 @@ export function ContentEditor() {
     <Overlay className="c-content-editor">
       <Panel>
         <Layout className="c-content-editor__layout">
-          {errorKey ? (
+          {needsReauth ? (
+            <ReauthPrompt />
+          ) : errorKey ? (
             <Typography
               as="div"
               className="c-content-editor__error"
