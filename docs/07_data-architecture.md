@@ -56,7 +56,8 @@ Firestore documents reference other entities using string IDs. The application l
 
 Example:
 
-Mission.groups[].objectiveIds → Objective.id[]
+Mission.objectiveGroupIds → ObjectiveGroup.id
+ObjectiveGroup.objectiveIds → Objective.id
 
 ## Layer Responsibilities
 

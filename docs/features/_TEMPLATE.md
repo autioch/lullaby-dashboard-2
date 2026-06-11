@@ -33,7 +33,7 @@ enough that implementation is unambiguous — this is the contract.
 Map the change onto the layered architecture (Firestore → repository → store → component).
 Leave a layer blank if untouched.
 
-- **Data model / Firestore** (`src/types.ts`, collections):
+- **Data model / Firestore** (`src/database/*` record types, collections):
 - **Repository** (`src/database/`):
 - **Zustand store** (`src/stores/`):
 - **Components** (`src/components/<Name>/`):

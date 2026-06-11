@@ -45,9 +45,11 @@ src/
 ├─ i18n/translations.ts      # shared translation strings
 ├─ styles/main.css           # global styles
 ├─ utils/                    # ls.ts (localStorage wrapper), object.ts
-├─ icons/                    # SVGs (imported as React components via vite-plugin-svgr)
-└─ types.ts                  # shared data types
+└─ icons/                    # SVGs (imported as React components via vite-plugin-svgr)
 ```
+
+> Entity types are defined per-repository in `src/database/*` (`MissionRec`,
+> `ObjectiveGroupRec`, `ObjectiveRec`) — there is no central `types.ts`.
 
 **Entry flow:** `index.astro` → `Shell` → `AuthGate` (if unauthenticated) → `Startup`
 (until ready) → `Dashboard`, which conditionally renders panels (`AppOptions`,

@@ -14,8 +14,8 @@ The feature idea (may be empty): `$ARGUMENTS`
    `docs/01_vision.md`, `docs/04_design-principles.md`, `docs/05_design.md`,
    `docs/07_data-architecture.md`, and the "Architecture" + "Adding a feature" sections of
    `.github/instructions/development.instructions.md`. Skim existing specs in `docs/features/` to avoid
-   duplication and to pick the next `NN`. Read the actual code (`src/types.ts`, relevant
-   stores/repos/components) before assuming how something works.
+   duplication and to pick the next `NN`. Read the actual code (the `src/database/*` record
+   types, relevant stores/repos/components) before assuming how something works.
 
 2. **If `$ARGUMENTS` is empty**, ask the user what feature they want to spec, then continue.
 
@@ -37,6 +37,9 @@ The feature idea (may be empty): `$ARGUMENTS`
 Rules:
 
 - Match the house style: short and direct. The spec is a contract, so be precise.
+- A spec describes the **current and target state**, not change history. Don't narrate what
+  was added, removed, or fixed ("X has been deleted", "we used to…") — just state how things
+  are and how they should be. The git log carries the history.
 - Respect TV-first + Chrome 87 constraints and the Firestore → repository → store →
   component layering when describing impact.
 - Never invent answers to questions only the user can decide — ask.

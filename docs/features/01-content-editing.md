@@ -104,10 +104,10 @@ Write flow and feedback:
 Reads stay on the existing realtime client path; only writes are added (client → API →
 admin → Firestore → snapshot → store).
 
-- **Data model / Firestore** (`src/types.ts`, collections): No shape changes to `mission`,
-  `objectiveGroup`, `objective`. `src/types.ts` still describes the old **embedded** model
-  (`Mission.groups: ObjectiveGroup[]`) which does not match the id-based repository records;
-  flag it for cleanup/alignment in the same change (the live types are in `src/database/*`).
+- **Data model / Firestore** (`src/database/*` record types, collections): No shape changes to
+  `mission`, `objectiveGroup`, `objective`. The canonical id-based types live in
+  `src/database/*`: `MissionRec` (`objectiveGroupIds`), `ObjectiveGroupRec` (`objectiveIds`,
+  `isHidden`), `ObjectiveRec` (`color`, `isHidden`).
 - **Repository** (`src/database/`): Add a **client-side edit repository** (e.g.
   `contentEditRepository.ts`) that wraps `fetch` to the new API routes — keeps transport out
   of the store, consistent with "repositories encapsulate data access." Existing read repos
