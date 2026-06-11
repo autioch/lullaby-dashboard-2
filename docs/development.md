@@ -101,8 +101,9 @@ pointers, so they can't go stale the way prose would):
 
 New features start with no design — derive the spec through Q&A first, then run the pipeline:
 `/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests, `/reconcile` to
-re-sync a drifted spec, and `/retro` to close the iteration. The full pipeline guide — chain,
-roles, artifact convention, grounding reads, and shared rules — is
+re-sync a drifted spec, and `/retro` to close the iteration. For a change too small to justify
+that, `/tweak` does the Q&A, plan, and code in one pass and records a single artifact. The full
+pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
 [docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`.
 
 ## Full command reference

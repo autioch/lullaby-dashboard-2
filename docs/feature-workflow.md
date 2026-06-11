@@ -1,10 +1,10 @@
 # Feature Workflow
 
 The feature pipeline — the chain of slash commands that turns an idea into shipped, recorded
-code. Every pipeline command (`/spec`, `/plan`, `/implement`, `/adjust`, `/reconcile`, `/retro`)
-**reads this file first**, then does its own job. Shared rules and the artifact convention live
-here; command-specific behavior lives in each command file. For how this fits the wider dev
-workflow, see **"Adding a feature"** in [development.md](development.md).
+code. Every pipeline command (`/spec`, `/plan`, `/implement`, `/adjust`, `/reconcile`, `/retro`,
+and the lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and
+the artifact convention live here; command-specific behavior lives in each command file. For how
+this fits the wider dev workflow, see **"Adding a feature"** in [development.md](development.md).
 
 ## Pipeline
 
@@ -14,6 +14,9 @@ workflow, see **"Adding a feature"** in [development.md](development.md).
                        └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
 /reconcile   re-sync an implemented spec with drifted code
 /retro       product-owner review of the iteration; decide what's next
+
+/tweak       lightweight lane: spec + plan + implement in one pass, one artifact — for changes
+             too small for the full pipeline (escalates to /spec if they grow)
 ```
 
 - **`/spec`** — elicits and writes the spec (the contract).
@@ -24,6 +27,9 @@ workflow, see **"Adding a feature"** in [development.md](development.md).
   **frozen** and drift.
 - **`/reconcile`** — re-syncs a drifted `implemented` spec with the code.
 - **`/retro`** — reviews the whole iteration and writes the wrap-up.
+- **`/tweak`** — the lightweight lane: one command runs the Q&A, plan, and code for a small,
+  well-bounded change and records a single terminal artifact. Skips the spec/plan/implement
+  documents. Routes to `/spec` when a "tweak" turns out to be a real feature.
 
 ## Artifacts & roles
 
@@ -41,6 +47,7 @@ sections** — commands copy and fill it; they don't restate its structure.
 | `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N) | the full team                                  | terminal record (no lifecycle)             |
 | `/reconcile` | `NN_reconcile_<short-name>.md`      | Product Owner · Solution Architect / Tech Lead | terminal record (no lifecycle)             |
 | `/retro`     | `NN_retro_<short-name>.md`          | Product Owner (lead), all roles weigh in       | terminal record (no lifecycle)             |
+| `/tweak`     | `NN_tweak_<short-name>.md`          | Product Owner · Tech Lead · Senior Developer   | terminal record (no lifecycle)             |
 
 Keep the spec and plan current while live (update the spec when the build deviates, the plan when
 the approach changes). The implementation record, adjustments, reconciliation, and retro are
