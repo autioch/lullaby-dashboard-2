@@ -22,7 +22,7 @@
     "fix": "npm run fix:lint && npm run fix:format",
     "verify": "npm run fix && npm run ci",
     "firebase:push-rules": "firebase deploy --only firestore:rules",
-    "db:seed": "node -r dotenv/config tools/db-seed.js",
+    "db:seed": "node -r dotenv/config tools/db-seed.cjs",
     "astro": "astro",
     "prepare": "husky"
   },

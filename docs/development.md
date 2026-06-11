@@ -53,7 +53,7 @@ src/
 `MissionSelect`) from `useControlsStore` flags.
 
 **`tools/`** — standalone Node scripts run against the repo's root `node_modules` (no separate
-workspace/lockfile): `check-firebase-env.mjs` (env guard), `db-seed.js` (idempotent seed,
+workspace/lockfile): `check-firebase-env.mjs` (env guard), `db-seed.cjs` (idempotent seed,
 reads `tools/configuration.json`), `firestore.rules` (security rules). `firebase.json` and
 `.firebaserc` stay at the repo root so the Firebase CLI / MCP server auto-discover them.
 
@@ -125,7 +125,7 @@ npm only, with `package-lock.json` (don't switch package managers).
 | `npm run fix`                 | `fix:lint` → `fix:format`; auto-fix during development.                    |
 | `npm run verify`              | `fix` → `ci`: auto-fix then verify. One-shot local pre-flight.             |
 | `npm run firebase:push-rules` | Deploy `tools/firestore.rules` (`firebase deploy --only firestore:rules`). |
-| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.js`).                            |
+| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.cjs`).                           |
 
 `ci:*` only **check** — they can't repair type errors or non-auto-fixable lint; resolve those
 by hand. `dev`/`build`/`preview` aren't in the gate (build needs `PUBLIC_FIREBASE_*`); run

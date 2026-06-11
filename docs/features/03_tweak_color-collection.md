@@ -48,7 +48,7 @@ the existing layering (Firestore → repository → store → component → API 
   `src/components/ContentEditor/ObjectiveEditor.tsx`, `src/components/ContentEditor/GroupLevel.tsx`.
   Removed `src/components/ContentEditor/constants.ts` (orphaned `COLOR_PALETTE`).
 - **API:** `src/pages/api/content/objectives.ts` (`colorId`, lowest-order default).
-- **Tools:** `tools/configuration.json` (`colors` library), `tools/db-seed.js` (wipe + seed
+- **Tools:** `tools/configuration.json` (`colors` library), `tools/db-seed.cjs` (wipe + seed
   colours + map), `tools/firestore.rules` (`color` match).
 - **Docs:** `docs/07_data-architecture.md` (entity resolution + folder structure),
   `docs/development.md` (entity types list).
