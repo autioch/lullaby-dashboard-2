@@ -60,7 +60,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
   `SESSION_SECRET` to the **Server** required vars and note it gates content-edit writes.
   (`requireSession` is unused until Step 2 — exported, so no lint error.)
 
-### Step 2 — Admin-SDK content write API routes (with referential cleanup) · phase: `build`
+### Step 2 — Admin-SDK content write API routes (with referential cleanup) · phase: `build` ✅
 
 - **Goal:** Server endpoints for every mutation in the spec, each guarded by `requireSession`,
   performing referential cleanup in batched admin writes. No Firestore rules change.

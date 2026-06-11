@@ -48,6 +48,16 @@ React Re-render
 8. State changes should flow from Firestore → Repository → Zustand → React.
 9. Write operations should update Firestore and allow Firestore snapshots to update Zustand. Avoid manually mutating Zustand state after successful writes.
 
+### Content writes (admin-SDK route path)
+
+Client SDK writes stay denied (`tools/firestore.rules` is `write: false`). Content edits
+(missions, objective groups, objectives) instead post to admin-SDK API routes under
+`src/pages/api/content/` — `client → edit repository → API route → firebase-admin → Firestore →
+onSnapshot → useMissionStore → re-render`. Each route is guarded by the session cookie
+(`requireSession`) and performs referential cleanup in a batched admin write (e.g. deleting a
+group strips its id from every mission; deleting an objective strips it from every group). The
+admin SDK bypasses rules, so no rules change is needed.
+
 ## Entity Resolution Model
 
 LaunchPad uses ID-based composition instead of embedding.
