@@ -139,7 +139,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
   and to the stores list in [docs/07_data-architecture.md](../07_data-architecture.md) folder
   structure.
 
-### Step 5 — `ContentEditor` overlay, rows, swatch picker, i18n · phase: `build`
+### Step 5 — `ContentEditor` overlay, rows, swatch picker, i18n · phase: `build` ✅
 
 - **Goal:** The full presentation-only editor tree, every control focusable and remote/keyboard
   operable, reusing `Overlay` / `Panel` / `Layout`.

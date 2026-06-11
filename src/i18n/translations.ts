@@ -3,6 +3,7 @@ import { startupTranslations } from '@/components/Startup/translations';
 import { appOptionsTranslations } from '@/components/AppOptions/translations';
 import { progressBarTranslations } from '@/components/ProgressBar/translations';
 import { missionSelectTranslations } from '@/components/MissionSelect/translations';
+import { contentEditorTranslations } from '@/components/ContentEditor/translations';
 
 export type AppLanguage = 'en' | 'pl';
 
@@ -18,6 +19,7 @@ export const translations = {
     appOptions: appOptionsTranslations.en,
     progressBar: progressBarTranslations.en,
     missionSelect: missionSelectTranslations.en,
+    contentEditor: contentEditorTranslations.en,
   },
   pl: {
     authGate: authGateTranslations.pl,
@@ -25,6 +27,7 @@ export const translations = {
     appOptions: appOptionsTranslations.pl,
     progressBar: progressBarTranslations.pl,
     missionSelect: missionSelectTranslations.pl,
+    contentEditor: contentEditorTranslations.pl,
   },
 } as const;
 

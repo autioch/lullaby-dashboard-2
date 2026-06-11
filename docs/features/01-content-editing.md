@@ -1,7 +1,8 @@
 # Content editing (missions, groups, objectives)
 
 > Status: `agreed`
-> Owner: Jakub Szczepaniak · Created: 2026-06-11 · Last updated: 2026-06-11
+> Owner: Jakub Szczepaniak · Created: 2026-06-11 · Last updated: 2026-06-11 (impl: missions
+> list has no Move ↑/↓ — top-level collection is unordered)
 
 ## Problem / motivation
 
@@ -30,8 +31,10 @@ Entry point and shell:
 
 Navigation model (drill-down, one level visible at a time to stay TV-readable):
 
-1. **Missions list** — all missions. Each row: label + actions (Edit, Delete, Move ↑/↓).
-   A **＋ Add mission** action appends a new mission.
+1. **Missions list** — all missions. Each row: label + actions (Edit, Delete). Missions are
+   an unordered top-level collection (no `objectiveGroupIds`-style parent array orders them),
+   so there is no Move ↑/↓ here — reordering applies only to groups within a mission and
+   objectives within a group. A **＋ Add mission** action appends a new mission.
 2. **Mission detail** — the mission's editable fields plus its ordered list of **groups**
    (each: Edit, Remove-from-mission, Move ↑/↓), an **＋ Add group** action (create new group
    _or_ attach an existing group from the library), and a Back action.

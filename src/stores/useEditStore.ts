@@ -239,7 +239,8 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
     deleteGroup(controlId, id) {
       return run(controlId, async () => {
         await contentEditRepository.deleteGroup(id);
-        set({ pendingDelete: null });
+        // The group detail screen is gone — step back to the mission level.
+        set({ pendingDelete: null, level: 'mission', selectedGroupId: null });
       });
     },
     attachObjective(controlId, groupId, objectiveId) {
@@ -272,7 +273,8 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
     deleteObjective(controlId, id) {
       return run(controlId, async () => {
         await contentEditRepository.deleteObjective(id);
-        set({ pendingDelete: null });
+        // The objective edit screen is gone — step back to the group level.
+        set({ pendingDelete: null, level: 'group', selectedObjectiveId: null });
       });
     },
   };
