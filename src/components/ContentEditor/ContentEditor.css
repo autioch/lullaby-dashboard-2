@@ -113,6 +113,27 @@
   gap: 0.75rem;
 }
 
+/* One objective edited in place inside its group. */
+.c-content-editor__obj {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Save/Cancel pinned to the bottom while the group's content scrolls. */
+.c-content-editor__footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0;
+  background: #f2f2f2;
+  border-top: 2px solid rgba(0, 0, 0, 0.15);
+}
+
 .c-content-editor__field {
   display: flex;
   flex-direction: column;

@@ -9,7 +9,6 @@ import { Layout } from '../Layout/Layout';
 import { MissionsLevel } from './MissionsLevel';
 import { MissionLevel } from './MissionLevel';
 import { GroupLevel } from './GroupLevel';
-import { ObjectiveLevel } from './ObjectiveLevel';
 import { ReauthPrompt } from './ReauthPrompt';
 
 const { closeContentEditor } = useControlsStore.getState();
@@ -23,9 +22,6 @@ export function ContentEditor() {
   const needsReauth = useEditStore((state) => state.needsReauth);
   const selectedMissionId = useEditStore((state) => state.selectedMissionId);
   const selectedGroupId = useEditStore((state) => state.selectedGroupId);
-  const selectedObjectiveId = useEditStore(
-    (state) => state.selectedObjectiveId
-  );
 
   useEffect(() => {
     useEditStore.getState().reset();
@@ -65,9 +61,6 @@ export function ContentEditor() {
             <MissionLevel key={selectedMissionId} />
           ) : null}
           {level === 'group' ? <GroupLevel key={selectedGroupId} /> : null}
-          {level === 'objective' ? (
-            <ObjectiveLevel key={selectedObjectiveId} />
-          ) : null}
         </Layout>
       </Panel>
     </Overlay>

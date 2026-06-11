@@ -8,7 +8,7 @@ import {
 // orchestrate contentEditRepository and never write useMissionStore — the
 // realtime onSnapshot subscription flows changes back (docs/07 principle 9).
 
-export type EditLevel = 'missions' | 'mission' | 'group' | 'objective';
+export type EditLevel = 'missions' | 'mission' | 'group';
 
 export type DeleteKind = 'mission' | 'group' | 'objective';
 
@@ -18,7 +18,6 @@ type EditState = {
   level: EditLevel;
   selectedMissionId: string | null;
   selectedGroupId: string | null;
-  selectedObjectiveId: string | null;
   // Per-control in-flight flags, keyed by a control id the component owns.
   pending: Record<string, boolean>;
   // Translation key for the single inline error area (null = no error).
@@ -45,7 +44,6 @@ type EditMethods = {
   reset(): void;
   openMission(id: string): void;
   openGroup(id: string): void;
-  openObjective(id: string): void;
   back(): void;
   requestDelete(kind: DeleteKind, id: string): void;
   cancelDelete(): void;
@@ -78,6 +76,13 @@ type EditMethods = {
   createGroup(controlId: string, missionId: string): Promise<void>;
   updateGroup(controlId: string, id: string, patch: GroupPatch): Promise<void>;
   deleteGroup(controlId: string, id: string): Promise<void>;
+  // Save a group's own fields and any edited objectives in one action.
+  saveGroup(
+    controlId: string,
+    groupId: string,
+    groupPatch: GroupPatch | null,
+    objectivePatches: (ObjectivePatch & { id: string })[]
+  ): Promise<void>;
   attachObjective(
     controlId: string,
     groupId: string,
@@ -108,7 +113,6 @@ const initialState: EditState = {
   level: 'missions',
   selectedMissionId: null,
   selectedGroupId: null,
-  selectedObjectiveId: null,
   pending: {},
   errorKey: null,
   pendingDelete: null,
@@ -159,7 +163,6 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
         level: 'mission',
         selectedMissionId: id,
         selectedGroupId: null,
-        selectedObjectiveId: null,
         pendingDelete: null,
         errorKey: null,
       });
@@ -169,16 +172,6 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
       set({
         level: 'group',
         selectedGroupId: id,
-        selectedObjectiveId: null,
-        pendingDelete: null,
-        errorKey: null,
-      });
-    },
-
-    openObjective(id) {
-      set({
-        level: 'objective',
-        selectedObjectiveId: id,
         pendingDelete: null,
         errorKey: null,
       });
@@ -188,9 +181,7 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
       const { level } = get();
       set({ pendingDelete: null, errorKey: null });
 
-      if (level === 'objective') {
-        set({ level: 'group', selectedObjectiveId: null });
-      } else if (level === 'group') {
+      if (level === 'group') {
         set({ level: 'mission', selectedGroupId: null });
       } else if (level === 'mission') {
         set({ level: 'missions', selectedMissionId: null });
@@ -256,6 +247,23 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
         set({ pendingDelete: null, level: 'mission', selectedGroupId: null });
       });
     },
+    saveGroup(controlId, groupId, groupPatch, objectivePatches) {
+      // One Save commits the group's own fields plus every edited objective.
+      // Snapshot flows the changes back; no manual store mutation.
+      return run(controlId, async () => {
+        if (groupPatch) {
+          await contentEditRepository.updateGroup({
+            id: groupId,
+            ...groupPatch,
+          });
+        }
+        await Promise.all(
+          objectivePatches.map((patch) =>
+            contentEditRepository.updateObjective(patch)
+          )
+        );
+      });
+    },
     attachObjective(controlId, groupId, objectiveId) {
       return run(controlId, () =>
         contentEditRepository.attachObjective(groupId, objectiveId)
@@ -286,8 +294,8 @@ export const useEditStore = create<EditState & EditMethods>((set, get) => {
     deleteObjective(controlId, id) {
       return run(controlId, async () => {
         await contentEditRepository.deleteObjective(id);
-        // The objective edit screen is gone — step back to the group level.
-        set({ pendingDelete: null, level: 'group', selectedObjectiveId: null });
+        // Deleted in place from the group's inline list — stay on the group.
+        set({ pendingDelete: null });
       });
     },
   };
