@@ -8,13 +8,17 @@ each command.
 ```text
 /spec  →  /plan  →  /implement          idea → contract → plan → code → summary
                         │
-                        └─ validate / review:  /verify · /code-review · /simplify · /security-review
+                        ├─ validate / review:  /verify · /code-review · /simplify · /security-review
+                        └─ /adjust   …… apply post-review change requests as code (spec/plan/summary stay frozen)
 /reconcile  ……  re-sync an implemented spec with the code once it has drifted
 ```
 
 Each command emits one durable artifact in `docs/features/`: `/spec` writes `NN-name.md`, `/plan`
 writes `NN-name.plan.md`, and `/implement` writes `NN-name.summary.md` at close-out — the record
-of what shipped (added / changed / skipped) that downstream skills read.
+of what shipped (added / changed / skipped) that downstream skills read. After review, `/adjust`
+writes `NN-name.adjustments-N.md` per round — the record of post-review change requests and how
+each was handled. `/adjust` writes code but leaves the spec, plan, and summary **frozen**, so they
+drift until `/reconcile` re-syncs the spec.
 
 ## Grounding reads
 

@@ -102,9 +102,10 @@ in `docs/01_vision.md`, `04_design-principles.md`, `05_design.md`, `07_data-arch
 and the actual code → ask focused multiple-choice questions → write the spec from
 [`docs/features/_TEMPLATE.md`](../../docs/features/_TEMPLATE.md) to
 `docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) →
-`/plan`, then `/implement`. Keep the spec in sync if the build deviates — or run `/reconcile`
-to re-sync it later. Shared rules for these commands:
-[docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
+`/plan`, then `/implement`. After review, `/adjust` applies post-review change requests as code
+(writing `NN-name.adjustments-N.md`) while leaving the spec/plan/summary frozen. Keep the spec in
+sync if the build deviates — or run `/reconcile` to re-sync it later. Shared rules for these
+commands: [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
 
 ## Full command reference
 

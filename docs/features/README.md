@@ -17,8 +17,14 @@ did (_what shipped_). All three stay in the repo as the record.
   - **Summary** — `NN-kebab-name.summary.md`, same `NN` and name. Written by `/implement` at
     close-out from [`_SUMMARY_TEMPLATE.md`](_SUMMARY_TEMPLATE.md); records what was added,
     changed, and skipped. A terminal record — no `Status` lifecycle. Later skills read it.
+  - **Adjustments** — `NN-kebab-name.adjustments-N.md`, same `NN` and name, one per post-review
+    round. Written by `/adjust` from [`_ADJUSTMENTS_TEMPLATE.md`](_ADJUSTMENTS_TEMPLATE.md);
+    records the change requests raised after implementation (product owner / dev / design), how
+    each was handled, and the result. `/adjust` changes code but leaves spec, plan, and summary
+    frozen, so they drift until `/reconcile` re-syncs the spec. A terminal record — no `Status`.
 - Keep spec and plan current: when the build deviates, update the spec; when the approach
-  changes, update the plan. The summary is written once per implementation run.
+  changes, update the plan. The summary is written once per implementation run; each adjustments
+  file once per review round.
 
 ## Workflow
 
