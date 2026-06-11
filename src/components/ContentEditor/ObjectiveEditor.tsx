@@ -1,11 +1,12 @@
 import { ActionButton, DeleteControl } from './controls';
-import { SwatchPicker, TextField, Toggle } from './fields';
+import { ColorField, HiddenToggle } from './fields';
 
 type ObjectiveDraft = { label: string; color: string; isHidden: boolean };
 
-// One objective edited in place inside its group. Field edits go to the
-// group's batched draft (committed by the group SaveBar); Move and Delete are
-// immediate structural actions, like the rest of the editor.
+// One objective edited in place inside its group, kept to a single compact
+// row: label input, popup colour picker, hidden switch (state in the button),
+// then Move / Delete. Field edits go to the group's batched draft; Move and
+// Delete are immediate structural actions.
 export function ObjectiveEditor(props: {
   objectiveId: string;
   value: ObjectiveDraft;
@@ -33,43 +34,41 @@ export function ObjectiveEditor(props: {
 
   return (
     <div className="c-content-editor__obj">
-      <TextField
-        labelKey="contentEditor.fieldLabel"
+      <input
+        className="c-content-editor__obj-label"
+        type="text"
         value={value.label}
         disabled={disabled}
-        onChange={(label) => onChange({ label })}
+        onChange={(event) => onChange({ label: event.target.value })}
       />
-      <SwatchPicker
+      <ColorField
         value={value.color}
         disabled={disabled}
         onPick={(color) => onChange({ color })}
       />
-      <Toggle
-        labelKey="contentEditor.fieldHidden"
-        checked={value.isHidden}
+      <HiddenToggle
+        hidden={value.isHidden}
         disabled={disabled}
         onToggle={(isHidden) => onChange({ isHidden })}
       />
-      <div className="c-content-editor__row-actions">
-        <ActionButton
-          textKey="contentEditor.moveUp"
-          controlId={moveControlId}
-          disabled={!canMoveUp}
-          onClick={onMoveUp}
-        />
-        <ActionButton
-          textKey="contentEditor.moveDown"
-          controlId={moveControlId}
-          disabled={!canMoveDown}
-          onClick={onMoveDown}
-        />
-        <DeleteControl
-          kind="objective"
-          id={objectiveId}
-          controlId={`objective-delete-${objectiveId}`}
-          onDelete={onDelete}
-        />
-      </div>
+      <ActionButton
+        textKey="contentEditor.moveUp"
+        controlId={moveControlId}
+        disabled={!canMoveUp}
+        onClick={onMoveUp}
+      />
+      <ActionButton
+        textKey="contentEditor.moveDown"
+        controlId={moveControlId}
+        disabled={!canMoveDown}
+        onClick={onMoveDown}
+      />
+      <DeleteControl
+        kind="objective"
+        id={objectiveId}
+        controlId={`objective-delete-${objectiveId}`}
+        onDelete={onDelete}
+      />
     </div>
   );
 }

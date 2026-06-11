@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Typography } from '@/components/Typography/Typography';
 import { Button } from '@/components/Button/Button';
 import { useEditStore } from '@/stores/useEditStore';
@@ -103,37 +104,73 @@ export function Toggle(props: {
   );
 }
 
-export function SwatchPicker(props: {
+// Compact colour picker: a swatch button that opens a small popup of the
+// palette. Keeps the inline objective editor to a single row when closed.
+export function ColorField(props: {
   value: string;
   disabled?: boolean;
   onPick: (color: string) => void;
 }) {
   const { value, disabled = false, onPick } = props;
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="c-content-editor__field">
-      <Typography
-        as="span"
-        className="c-content-editor__field-label"
-        textKey="contentEditor.fieldColor"
+    <div className="c-content-editor__color">
+      <button
+        type="button"
+        className="c-content-editor__color-trigger"
+        style={{ backgroundColor: value }}
+        aria-label={value}
+        aria-expanded={open}
+        disabled={disabled}
+        onClick={() => setOpen((current) => !current)}
       />
-      <div className="c-content-editor__swatches" role="group">
-        {COLOR_PALETTE.map((color) => (
-          <button
-            key={color}
-            type="button"
-            className={`c-content-editor__swatch ${
-              color === value ? 'is-selected' : ''
-            }`}
-            style={{ backgroundColor: color }}
-            aria-label={color}
-            aria-pressed={color === value}
-            disabled={disabled}
-            onClick={() => onPick(color)}
-          />
-        ))}
-      </div>
+      {open ? (
+        <div className="c-content-editor__color-menu" role="group">
+          {COLOR_PALETTE.map((color) => (
+            <button
+              key={color}
+              type="button"
+              className={`c-content-editor__swatch ${
+                color === value ? 'is-selected' : ''
+              }`}
+              style={{ backgroundColor: color }}
+              aria-label={color}
+              aria-pressed={color === value}
+              onClick={() => {
+                onPick(color);
+                setOpen(false);
+              }}
+            />
+          ))}
+        </div>
+      ) : null}
     </div>
+  );
+}
+
+// Compact hidden switch: the button itself shows the current state
+// (Visible / Hidden), so no separate field label is needed.
+export function HiddenToggle(props: {
+  hidden: boolean;
+  disabled?: boolean;
+  onToggle: (hidden: boolean) => void;
+}) {
+  const { hidden, disabled = false, onToggle } = props;
+
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={hidden}
+      disabled={disabled}
+      className={`c-content-editor__toggle ${hidden ? 'is-on' : ''}`}
+      onClick={() => onToggle(!hidden)}
+    >
+      <Typography
+        textKey={hidden ? 'contentEditor.hidden' : 'contentEditor.visible'}
+      />
+    </button>
   );
 }
 

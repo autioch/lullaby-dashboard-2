@@ -23,10 +23,11 @@ type ContentEditorTranslationKeys =
   | 'fieldLabel'
   | 'fieldYoutubeUrl'
   | 'fieldRetentionHours'
-  | 'fieldColor'
   | 'fieldHidden'
   | 'toggleOn'
   | 'toggleOff'
+  | 'visible'
+  | 'hidden'
   | 'noMissions'
   | 'noGroups'
   | 'noObjectives'
@@ -60,10 +61,11 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       fieldLabel: 'Label',
       fieldYoutubeUrl: 'YouTube URL',
       fieldRetentionHours: 'Retention (hours)',
-      fieldColor: 'Color',
       fieldHidden: 'Hidden',
       toggleOn: 'On',
       toggleOff: 'Off',
+      visible: 'Visible',
+      hidden: 'Hidden',
       noMissions: 'No missions yet.',
       noGroups: 'No groups yet.',
       noObjectives: 'No objectives yet.',
@@ -95,10 +97,11 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       fieldLabel: 'Etykieta',
       fieldYoutubeUrl: 'Adres YouTube',
       fieldRetentionHours: 'Ważność (godziny)',
-      fieldColor: 'Kolor',
       fieldHidden: 'Ukryte',
       toggleOn: 'Tak',
       toggleOff: 'Nie',
+      visible: 'Widoczne',
+      hidden: 'Ukryte',
       noMissions: 'Brak misji.',
       noGroups: 'Brak grup.',
       noObjectives: 'Brak zadań.',
