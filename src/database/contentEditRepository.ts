@@ -138,14 +138,14 @@ export const contentEditRepository = {
   // --- Objectives ---
   createObjective(
     groupId: string,
-    payload?: { label?: string; color?: string }
+    payload?: { label?: string; colorId?: string }
   ): Promise<EditResult> {
     return post('objectives', { action: 'create', groupId, ...payload });
   },
   updateObjective(payload: {
     id: string;
     label?: string;
-    color?: string;
+    colorId?: string;
     isHidden?: boolean;
   }): Promise<EditResult> {
     return post('objectives', { action: 'update', ...payload });

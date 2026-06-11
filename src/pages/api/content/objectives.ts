@@ -6,7 +6,16 @@ export const prerender = false;
 
 const OBJECTIVES = 'objective';
 const GROUPS = 'objectiveGroup';
-const DEFAULT_COLOR = '#faa';
+const COLORS = 'color';
+
+// New objectives default to the lowest-order colour in the library, mirroring
+// the editor's first swatch. Empty string if no colours are seeded yet.
+async function defaultColorId(
+  db: Awaited<ReturnType<typeof getFirestoreDb>>
+): Promise<string> {
+  const snap = await db.collection(COLORS).orderBy('order').limit(1).get();
+  return snap.docs[0]?.id ?? '';
+}
 
 // Objective mutations, including referential cleanup on delete.
 export async function POST(ctx: APIContext) {
@@ -38,7 +47,7 @@ export async function POST(ctx: APIContext) {
       const batch = db.batch();
       batch.set(objectiveRef, {
         label: readString(body.label) ?? '',
-        color: readString(body.color) ?? DEFAULT_COLOR,
+        colorId: readString(body.colorId) ?? (await defaultColorId(db)),
         isHidden: false,
       });
       const current = readIdList(groupSnap.data(), 'objectiveIds');
@@ -56,8 +65,8 @@ export async function POST(ctx: APIContext) {
       const patch: Record<string, unknown> = {};
       const label = readString(body.label);
       if (label !== undefined) patch.label = label;
-      const color = readString(body.color);
-      if (color !== undefined) patch.color = color;
+      const colorId = readString(body.colorId);
+      if (colorId !== undefined) patch.colorId = colorId;
       const isHidden = readBoolean(body.isHidden);
       if (isHidden !== undefined) patch.isHidden = isHidden;
       if (Object.keys(patch).length === 0) {

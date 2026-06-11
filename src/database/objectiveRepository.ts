@@ -3,7 +3,7 @@ import { db, type WithId, withId } from './db';
 
 export type ObjectiveDoc = {
   label: string;
-  color: string;
+  colorId: string;
   isHidden: boolean;
 };
 

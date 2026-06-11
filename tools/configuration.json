@@ -1,4 +1,12 @@
 {
+  "colors": [
+    { "label": "Red", "value": "#faa", "order": 0 },
+    { "label": "Green", "value": "#afa", "order": 1 },
+    { "label": "Blue", "value": "#aaf", "order": 2 },
+    { "label": "Cream", "value": "#ffd", "order": 3 },
+    { "label": "Grey", "value": "#f1f1f1", "order": 4 },
+    { "label": "White", "value": "#ffffff", "order": 5 }
+  ],
   "missions": [
     {
       "id": "1",

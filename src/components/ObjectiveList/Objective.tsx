@@ -13,6 +13,9 @@ export function ObjectiveRow(props: ObjectiveProps) {
   const { objectiveId, missionId, checkedKeys } = props;
   const checked = !!checkedKeys[missionId]?.[objectiveId];
   const objective = useMissionStore((state) => state.objectives[objectiveId]);
+  const color = useMissionStore((state) =>
+    objective ? state.colors[objective.colorId]?.value : undefined
+  );
 
   if (!objective || objective.isHidden) {
     return null;
@@ -20,7 +23,7 @@ export function ObjectiveRow(props: ObjectiveProps) {
   return (
     <div
       className={`c-objective ${checked ? 'c-objective--checked' : ''}`}
-      style={{ color: objective.color }}
+      style={{ color }}
       onClick={() => {
         toggleObjective(objective.id);
       }}

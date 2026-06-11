@@ -1,7 +1,7 @@
 import { ActionButton, DeleteControl } from './controls';
 import { ColorField, HiddenToggle } from './fields';
 
-type ObjectiveDraft = { label: string; color: string; isHidden: boolean };
+type ObjectiveDraft = { label: string; colorId: string; isHidden: boolean };
 
 // One objective edited in place inside its group, kept to a single compact
 // row: label input, popup colour picker, hidden switch (state in the button),
@@ -42,9 +42,9 @@ export function ObjectiveEditor(props: {
         onChange={(event) => onChange({ label: event.target.value })}
       />
       <ColorField
-        value={value.color}
+        value={value.colorId}
         disabled={disabled}
-        onPick={(color) => onChange({ color })}
+        onPick={(colorId) => onChange({ colorId })}
       />
       <HiddenToggle
         hidden={value.isHidden}

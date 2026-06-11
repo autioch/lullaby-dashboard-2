@@ -12,6 +12,7 @@ import {
   objectiveRepository,
   type ObjectiveRec,
 } from '@/database/objectiveRepository';
+import { colorRepository, type ColorRec } from '@/database/colorRepository';
 import { filterObject } from '@/utils/object';
 
 export type MissionLSState = {
@@ -25,10 +26,15 @@ type MissionState = MissionLSState & {
   missionList: MissionRec[];
   objectiveGroups: Record<string, ObjectiveGroupRec>;
   objectives: Record<string, ObjectiveRec>;
+  // Colour library, keyed by id; colorList keeps them in display order for the
+  // editor's swatch picker. Objectives reference a colour by id.
+  colors: Record<string, ColorRec>;
+  colorList: ColorRec[];
 
   setMissions: (missions: MissionRec[]) => void;
   setObjectiveGroups: (groups: ObjectiveGroupRec[]) => void;
   setObjectives: (objectives: ObjectiveRec[]) => void;
+  setColors: (colors: ColorRec[]) => void;
 };
 
 type MissionMethods = {
@@ -53,6 +59,8 @@ export const useMissionStore = create<MissionState & MissionMethods>(
     missionList: [],
     objectiveGroups: {},
     objectives: {},
+    colors: {},
+    colorList: [],
     missionId: null,
     checkedKeys: {},
     listExpiryTimestamps: {},
@@ -158,6 +166,7 @@ export const useMissionStore = create<MissionState & MissionMethods>(
       missionRepository.subscribe(setMissions);
       objectiveGroupRepository.subscribe(setObjectiveGroups);
       objectiveRepository.subscribe(setObjectives);
+      colorRepository.subscribe(get().setColors);
     },
 
     setMissions: (missions) =>
@@ -180,6 +189,12 @@ export const useMissionStore = create<MissionState & MissionMethods>(
         objectives: Object.fromEntries(
           objectives.map((objective) => [objective.id, objective])
         ),
+      }),
+
+    setColors: (colors) =>
+      set({
+        colorList: [...colors].sort((a, b) => a.order - b.order),
+        colors: Object.fromEntries(colors.map((color) => [color.id, color])),
       }),
   })
 );

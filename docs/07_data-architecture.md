@@ -47,6 +47,7 @@ layer resolves references into hydrated objects.
 ```text
 Mission.objectiveGroupIds → ObjectiveGroup.id
 ObjectiveGroup.objectiveIds → Objective.id
+Objective.colorId          → Color.id
 ```
 
 ## State ownership
@@ -74,7 +75,7 @@ ObjectiveGroup.objectiveIds → Objective.id
 
 ```text
 src/
-├─ database/   # repositories + db.ts: missionRepository, objectiveGroupRepository, objectiveRepository
+├─ database/   # repositories + db.ts: missionRepository, objectiveGroupRepository, objectiveRepository, colorRepository
 ├─ stores/     # use<Name>Store.ts: useMissionStore, useControlsStore, useEditStore, …
 ├─ components/
 └─ pages/api/  # server routes (firebase-admin)

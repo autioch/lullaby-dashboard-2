@@ -46,7 +46,7 @@ src/
 ```
 
 > Entity types are defined per-repository in `src/database/*` (`MissionRec`,
-> `ObjectiveGroupRec`, `ObjectiveRec`) — there is no central `types.ts`.
+> `ObjectiveGroupRec`, `ObjectiveRec`, `ColorRec`) — there is no central `types.ts`.
 
 **Entry flow:** `index.astro` → `Shell` → `AuthGate` (if unauthenticated) → `Startup`
 (until ready) → `Dashboard`, which conditionally renders panels (`AppOptions`,

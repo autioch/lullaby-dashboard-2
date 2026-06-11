@@ -38,7 +38,7 @@ type MissionPatch = {
 
 type GroupPatch = { label?: string; isHidden?: boolean };
 
-type ObjectivePatch = { label?: string; color?: string; isHidden?: boolean };
+type ObjectivePatch = { label?: string; colorId?: string; isHidden?: boolean };
 
 type EditMethods = {
   reset(): void;

@@ -8,7 +8,7 @@ import { ObjectiveEditor } from './ObjectiveEditor';
 
 const edit = useEditStore.getState();
 
-type ObjectiveDraft = { label: string; color: string; isHidden: boolean };
+type ObjectiveDraft = { label: string; colorId: string; isHidden: boolean };
 
 // Group detail: the group's own fields plus its objectives edited in place
 // (no objective drill-down). One Save commits the group and every edited
@@ -50,7 +50,7 @@ export function GroupLevel() {
     const objective = objectives[id];
     return {
       label: objective?.label ?? '',
-      color: objective?.color ?? '',
+      colorId: objective?.colorId ?? '',
       isHidden: objective?.isHidden ?? false,
     };
   }
@@ -63,7 +63,7 @@ export function GroupLevel() {
     }
     return (
       draft.label !== objective.label ||
-      draft.color !== objective.color ||
+      draft.colorId !== objective.colorId ||
       draft.isHidden !== objective.isHidden
     );
   }

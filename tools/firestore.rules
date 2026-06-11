@@ -17,5 +17,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+
+    match /color/{documentId} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

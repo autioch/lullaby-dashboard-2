@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Typography } from '@/components/Typography/Typography';
 import { Button } from '@/components/Button/Button';
 import { useEditStore } from '@/stores/useEditStore';
-import { COLOR_PALETTE } from './constants';
+import { useMissionStore } from '@/stores/useMissionStore';
 
 // Controlled field inputs. They edit a local draft owned by the level above;
 // nothing persists until the SaveBar commits the whole form.
@@ -105,40 +105,45 @@ export function Toggle(props: {
 }
 
 // Compact colour picker: a swatch button that opens a small popup of the
-// palette. Keeps the inline objective editor to a single row when closed.
+// palette. Keeps the inline objective editor to a single row when closed. The
+// palette comes from the `color` collection; value and onPick are colour ids.
 export function ColorField(props: {
   value: string;
   disabled?: boolean;
-  onPick: (color: string) => void;
+  onPick: (colorId: string) => void;
 }) {
   const { value, disabled = false, onPick } = props;
+  const colorList = useMissionStore((state) => state.colorList);
+  const colors = useMissionStore((state) => state.colors);
   const [open, setOpen] = useState(false);
+
+  const selected = colors[value];
 
   return (
     <div className="c-content-editor__color">
       <button
         type="button"
         className="c-content-editor__color-trigger"
-        style={{ backgroundColor: value }}
-        aria-label={value}
+        style={{ backgroundColor: selected?.value }}
+        aria-label={selected?.label ?? value}
         aria-expanded={open}
         disabled={disabled}
         onClick={() => setOpen((current) => !current)}
       />
       {open ? (
         <div className="c-content-editor__color-menu" role="group">
-          {COLOR_PALETTE.map((color) => (
+          {colorList.map((color) => (
             <button
-              key={color}
+              key={color.id}
               type="button"
               className={`c-content-editor__swatch ${
-                color === value ? 'is-selected' : ''
+                color.id === value ? 'is-selected' : ''
               }`}
-              style={{ backgroundColor: color }}
-              aria-label={color}
-              aria-pressed={color === value}
+              style={{ backgroundColor: color.value }}
+              aria-label={color.label}
+              aria-pressed={color.id === value}
               onClick={() => {
-                onPick(color);
+                onPick(color.id);
                 setOpen(false);
               }}
             />
