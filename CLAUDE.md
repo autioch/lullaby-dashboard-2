@@ -9,6 +9,10 @@ full command reference, and the doc-sync map live there so they don't load on ev
 ## Working style
 
 - Short, concise, direct. Cut filler; don't sugar-coat.
+- **Vet every new feature or change request against industry standards and common sense.**
+  The owner has limited knowledge of development steps and relies on this check. If you
+  disagree or see a better approach, say so and **wait** for their response before acting.
+  Otherwise, proceed with the request.
 - Trust these instructions: when a detail is missing, search **narrowly** for just that one
   thing — don't re-explore the whole repo. Saves tokens and time.
 - After git actions (commit/push), report the result in **one line** — no summaries, file
