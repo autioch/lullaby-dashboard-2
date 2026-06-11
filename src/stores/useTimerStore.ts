@@ -1,4 +1,3 @@
-import type { Mission } from '@/types';
 import { create } from 'zustand';
 import { lsWrapper } from '@/utils/ls';
 
@@ -12,7 +11,7 @@ type TimerMethods = {
   pauseTimer(listId: string): void;
   resumeTimer(listId: string): void;
   completeRun(listId: string): void;
-  checkFinished(list: Mission, checkedKeys: Record<string, boolean>): void;
+  // checkFinished(list: MissionRec, checkedKeys: Record<string, boolean>): void;
   resetTimerState(): void;
 };
 
@@ -26,7 +25,7 @@ type TimerRunState = {
 
 const ls = lsWrapper<TimerState>('timer');
 
-export const useTimerStore = create<TimerState & TimerMethods>((set, get) => ({
+export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
   timerRunsByList: {},
   fastestRunsByList: {},
   ...ls.load(),
@@ -172,64 +171,64 @@ export const useTimerStore = create<TimerState & TimerMethods>((set, get) => ({
     ls.clear();
   },
 
-  checkFinished(mission, checkedKeys) {
-    const listId = mission.id;
-    const totalItems =
-      mission?.groups.reduce(
-        (sum, group) => sum + (group.items?.length ?? 0),
-        0
-      ) ?? 0;
-    const completedItems =
-      mission?.groups.reduce((sum, group) => {
-        return (
-          sum +
-          group.items.reduce((groupSum, item) => {
-            const itemKey = `${mission.id}-${group.id}-${item.id}`;
-            return groupSum + (checkedKeys[itemKey] ? 1 : 0);
-          }, 0)
-        );
-      }, 0) ?? 0;
+  // checkFinished(mission, checkedKeys) {
+  //   const listId = mission.id;
+  //   const totalItems =
+  //     mission?.groups.reduce(
+  //       (sum, group) => sum + (group.items?.length ?? 0),
+  //       0
+  //     ) ?? 0;
+  //   const completedItems =
+  //     mission?.groups.reduce((sum, group) => {
+  //       return (
+  //         sum +
+  //         group.items.reduce((groupSum, item) => {
+  //           const itemKey = `${mission.id}-${group.id}-${item.id}`;
+  //           return groupSum + (checkedKeys[itemKey] ? 1 : 0);
+  //         }, 0)
+  //       );
+  //     }, 0) ?? 0;
 
-    const nextTimerRunsByList = { ...get().timerRunsByList };
-    if (!get().timerRunsByList[listId]) {
-      nextTimerRunsByList[listId] = {
-        listId,
-        startedAtMs: Date.now(),
-        elapsedMs: 0,
-        isRunning: true,
-        lastResumedAtMs: Date.now(),
-      };
-    }
-    if (totalItems > 0 && completedItems >= totalItems) {
-      const run = nextTimerRunsByList[listId];
-      const now = Date.now();
-      const elapsedMs = run
-        ? Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs)) +
-          run.elapsedMs
-        : 0;
-      const previousBest = get().fastestRunsByList[listId];
-      const isNewBest = previousBest === undefined || elapsedMs < previousBest;
-      const nextFastestRunsByList = { ...get().fastestRunsByList };
+  //   const nextTimerRunsByList = { ...get().timerRunsByList };
+  //   if (!get().timerRunsByList[listId]) {
+  //     nextTimerRunsByList[listId] = {
+  //       listId,
+  //       startedAtMs: Date.now(),
+  //       elapsedMs: 0,
+  //       isRunning: true,
+  //       lastResumedAtMs: Date.now(),
+  //     };
+  //   }
+  //   if (totalItems > 0 && completedItems >= totalItems) {
+  //     const run = nextTimerRunsByList[listId];
+  //     const now = Date.now();
+  //     const elapsedMs = run
+  //       ? Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs)) +
+  //         run.elapsedMs
+  //       : 0;
+  //     const previousBest = get().fastestRunsByList[listId];
+  //     const isNewBest = previousBest === undefined || elapsedMs < previousBest;
+  //     const nextFastestRunsByList = { ...get().fastestRunsByList };
 
-      nextTimerRunsByList[listId] = {
-        ...run,
-        elapsedMs,
-        isRunning: false,
-      };
+  //     nextTimerRunsByList[listId] = {
+  //       ...run,
+  //       elapsedMs,
+  //       isRunning: false,
+  //     };
 
-      if (isNewBest) {
-        nextFastestRunsByList[listId] = elapsedMs;
-      }
+  //     if (isNewBest) {
+  //       nextFastestRunsByList[listId] = elapsedMs;
+  //     }
 
-      set({
-        timerRunsByList: nextTimerRunsByList,
-        fastestRunsByList: nextFastestRunsByList,
-      });
+  //     set({
+  //       timerRunsByList: nextTimerRunsByList,
+  //       fastestRunsByList: nextFastestRunsByList,
+  //     });
 
-      ls.save({
-        timerRunsByList: nextTimerRunsByList,
-        fastestRunsByList: nextFastestRunsByList,
-      });
-    }
-  },
+  //     ls.save({
+  //       timerRunsByList: nextTimerRunsByList,
+  //       fastestRunsByList: nextFastestRunsByList,
+  //     });
+  //   }
+  // },
 }));

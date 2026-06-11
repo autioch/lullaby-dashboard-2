@@ -77,7 +77,7 @@ export function FocusTimerCard() {
   }, [mission, timerRunsByList]);
 
   useEffect(() => {
-    if (!mission || !currentRun?.isRunning) return;
+    if (!mission?.id || !currentRun?.isRunning) return;
 
     const intervalId = window.setInterval(() => setTick(Date.now()), 1000);
     return () => window.clearInterval(intervalId);
