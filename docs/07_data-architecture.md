@@ -191,6 +191,7 @@ src/
 ├─ stores/                   # Zustand stores (use<Name>Store.ts)
 │  ├─ useMissionStore.ts
 │  ├─ useControlsStore.ts
+│  ├─ useEditStore.ts        # content-editor state + mutation orchestration
 │  └─ ...
 │
 ├─ components/

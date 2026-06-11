@@ -7,11 +7,15 @@ type ControlsState = {
   isMissionSelect: boolean;
   openMissionSelect(): void;
   closeMissionSelect(): void;
+  isContentEditor: boolean;
+  openContentEditor(): void;
+  closeContentEditor(): void;
 };
 
 export const useControlsStore = create<ControlsState>((set) => ({
   isAppOptions: false,
   isMissionSelect: false,
+  isContentEditor: false,
 
   openOptions() {
     set({ isAppOptions: true });
@@ -27,5 +31,13 @@ export const useControlsStore = create<ControlsState>((set) => ({
 
   closeMissionSelect() {
     set({ isMissionSelect: false });
+  },
+
+  openContentEditor() {
+    set({ isContentEditor: true });
+  },
+
+  closeContentEditor() {
+    set({ isContentEditor: false });
   },
 }));

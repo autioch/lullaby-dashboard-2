@@ -9,6 +9,7 @@ type AuthState = {
 
 type AuthMethods = {
   authenticate(password: string): Promise<void>;
+  deauthenticate(): void;
 };
 
 const ls = lsWrapper<boolean>('auth');
@@ -51,5 +52,13 @@ export const useAuthStore = create<AuthState & AuthMethods>((set) => ({
     } finally {
       set({ isLoading: false });
     }
+  },
+
+  // Drop back to the auth gate — used when a write returns 401 because the
+  // HttpOnly session cookie has expired while the client `auth` ls flag was
+  // still true. Re-login re-issues the cookie via /api/auth.
+  deauthenticate() {
+    ls.clear();
+    set({ isAuthenticated: false, errorTextKey: null });
   },
 }));

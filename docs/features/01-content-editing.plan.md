@@ -112,7 +112,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
   error. No Firestore SDK, no Zustand, no React imports. Keep APIs Chrome-87-safe.
 - **Done-check:** `npm run ci` green (incl. `compat/compat` — `fetch` is in-floor).
 
-### Step 4 — Controls flag + `useEditStore` orchestration · phase: `build`
+### Step 4 — Controls flag + `useEditStore` orchestration · phase: `build` ✅
 
 - **Goal:** Open/close the editor and hold all transient editor state + mutation actions, with
   no manual store mutation after writes and a `401` path that re-gates auth.

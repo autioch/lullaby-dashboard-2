@@ -41,7 +41,8 @@ src/
 ├─ components/<Name>/        # one folder per component (see Conventions)
 ├─ database/                 # repositories + db.ts (client Firestore access)
 ├─ stores/                   # Zustand: useAuthStore, useStartupStore, useMissionStore,
-│                            #          useControlsStore, useLanguageStore, useTimerStore
+│                            #          useControlsStore, useEditStore, useLanguageStore,
+│                            #          useTimerStore
 ├─ i18n/translations.ts      # shared translation strings
 ├─ styles/main.css           # global styles
 ├─ utils/                    # ls.ts (localStorage wrapper), object.ts
