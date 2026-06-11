@@ -9,8 +9,13 @@ const requiredClientKeys = [
   'PUBLIC_FIREBASE_APP_ID',
 ];
 
-// Server-only vars the API routes need (firebase-admin + the auth gate).
-const requiredServerKeys = ['FIREBASE_SERVICE_ACCOUNT_KEY', 'APP_PASSWORD'];
+// Server-only vars the API routes need (firebase-admin + the auth gate +
+// the HMAC key that signs the content-edit session cookie).
+const requiredServerKeys = [
+  'FIREBASE_SERVICE_ACCOUNT_KEY',
+  'APP_PASSWORD',
+  'SESSION_SECRET',
+];
 
 const missingKeys = [...requiredClientKeys, ...requiredServerKeys].filter(
   (key) => !process.env[key]?.trim()

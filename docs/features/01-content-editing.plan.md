@@ -1,6 +1,6 @@
 # Content editing (missions, groups, objectives) — Implementation Plan
 
-> Status: `ready`
+> Status: `in-progress`
 > Spec: [01-content-editing.md](01-content-editing.md) · Owner: Jakub Szczepaniak · Created: 2026-06-11 · Last updated: 2026-06-11
 
 ## Goal
@@ -37,7 +37,7 @@ Context every step assumes — keep open while implementing:
 Ordered and **self-contained** — each leaves the tree green (`npm run ci` passes) and is
 independently committable. Phases: **Prep/refactor → Build → Wire → Validate.**
 
-### Step 1 — Issue & verify an HttpOnly session cookie · phase: `build`
+### Step 1 — Issue & verify an HttpOnly session cookie · phase: `build` ✅
 
 - **Goal:** Stand up the auth primitive every write route depends on, before any route exists.
   Successful login sets a signed HttpOnly cookie; routes can later require it.

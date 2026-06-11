@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { jsonResponse } from './_utils';
+import { jsonResponse, setSession } from './_utils';
 
 export const prerender = false;
 
@@ -25,6 +25,8 @@ export async function POST(ctx: APIContext) {
   ) {
     return jsonResponse({ ok: false, error: 'Incorrect password.' }, 401);
   }
+
+  setSession(ctx);
 
   return jsonResponse({ ok: true });
 }

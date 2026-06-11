@@ -61,7 +61,8 @@ vars. **Full command table is in the development guide.**
 - **Client (required for dev/build):** `PUBLIC_FIREBASE_API_KEY`, `_AUTH_DOMAIN`,
   `_PROJECT_ID`, `_STORAGE_BUCKET`, `_MESSAGING_SENDER_ID`, `_APP_ID`.
 - **Server:** `FIREBASE_SERVICE_ACCOUNT_KEY` (JSON for `firebase-admin`), `APP_PASSWORD`
-  (auth-gate password, checked by `src/pages/api/auth.ts`).
+  (auth-gate password, checked by `src/pages/api/auth.ts`), `SESSION_SECRET` (HMAC key signing
+  the HttpOnly session cookie that gates the content-edit write API routes).
 - **Optional (dev only):** `PUBLIC_SKIP_AUTH=true` bypasses the auth gate — keep out of prod.
   The gate is a soft client-side barrier, not real access control.
 
