@@ -45,7 +45,9 @@ _(repeat per step)_
 - [ ] `npm run ci` green (tsc + lint incl. `compat/compat` + format)
 - [ ] `npm run build` succeeds
 - [ ] Behavior matches every item in the spec's **Acceptance criteria** (verify on the TV user
-      agent / preview, not just unit-level)
+      agent / preview, not just unit-level) — use `/verify`
+- [ ] Review gate clean: `/code-review` (+ `/security-review` if auth / API / `firestore.rules`
+      touched), findings addressed
 - [ ] Docs synced; tree internally consistent
 
 ## Docs to update

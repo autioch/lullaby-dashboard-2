@@ -19,6 +19,10 @@ Durable specs for features built from scratch via Q&A. Each **spec** is the agre
 ## Workflow
 
 See **"Adding a feature"** in
-[`.github/instructions/development.instructions.md`](../../.github/instructions/development.instructions.md).
-The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan` turns an
-agreed spec into the implementation plan → implementation is a separate step.
+[`.github/instructions/development.instructions.md`](../../.github/instructions/development.instructions.md),
+and [`WORKFLOW.md`](WORKFLOW.md) for the shared grounding reads and rules every pipeline command
+follows. The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan`
+turns an agreed spec into the implementation plan → `/implement` executes that plan step by step,
+committing and validating each (running `/verify`, `/code-review`, and `/security-review` before
+close-out). Later, `/reconcile <feature>` re-syncs an `implemented` spec with the code if it
+drifts.

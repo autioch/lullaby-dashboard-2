@@ -100,8 +100,10 @@ New features start with no design: derive the spec through Q&A first. Run `/spec
 in `docs/01_vision.md`, `04_design-principles.md`, `05_design.md`, `07_data-architecture.md`
 and the actual code → ask focused multiple-choice questions → write the spec from
 [`docs/features/_TEMPLATE.md`](../../docs/features/_TEMPLATE.md) to
-`docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) → plan,
-then implement. Keep the spec in sync if the build deviates.
+`docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) →
+`/plan`, then `/implement`. Keep the spec in sync if the build deviates — or run `/reconcile`
+to re-sync it later. Shared rules for these commands:
+[docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
 
 ## Full command reference
 

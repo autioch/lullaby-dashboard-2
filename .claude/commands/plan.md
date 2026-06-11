@@ -7,6 +7,9 @@ Turn an agreed spec from `docs/features/` into a durable, ordered implementation
 can execute step by step. **Do not write app code in this command** — the output is the plan
 document only. Implementation is a separate step.
 
+First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
+reads and rules for every pipeline command.
+
 The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
 
 ## Steps
@@ -16,12 +19,11 @@ The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
    not `agreed`, flag that and confirm before planning (planning a `draft` is allowed, but say
    so).
 
-2. **Ground yourself in the real code.** Read the layering and conventions the steps must
-   respect: `.github/instructions/development.instructions.md` (Architecture, Adding a feature,
-   Conventions, the command table, Keeping docs in sync) and `docs/07_data-architecture.md`.
-   Then read the actual source the spec's **"Impact on the codebase"** names — types, repos,
-   stores, components, API routes — so steps are based on what exists, not assumptions. Skim
-   neighbouring features/plans in `docs/features/` for patterns and the right `NN`.
+2. **Ground yourself in the real code.** Per WORKFLOW's grounding reads (esp. the dev guide's
+   **Conventions** + **Keeping docs in sync** and `docs/07`), then read the actual source the
+   spec's **"Impact on the codebase"** names — types, repos, stores, components, API routes — so
+   steps are based on what exists, not assumptions. Skim neighbouring features/plans in
+   `docs/features/` for patterns and the right `NN`.
 
 3. **Resolve blocking gaps via Q&A.** If anything blocks an unambiguous step — including the
    spec's own **"Open questions"** — ask focused multiple-choice questions (`AskUserQuestion`,
@@ -50,9 +52,9 @@ The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
 
 Rules:
 
-- House style: short, direct, precise. The plan is an execution contract — unambiguous, no filler.
-- Respect TV-first + Chrome 87 and the Firestore → repository → store → component layering in
-  every step; call out `compat/compat` and doc-sync obligations where they apply.
+- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
+  layering, TV / Chrome 87, doc-sync, ask-don't-invent. Call out `compat/compat` and doc-sync
+  obligations on the specific steps where they apply.
+- The plan is an execution contract — unambiguous, no filler.
 - Plan the work, don't do it: no edits under `src/` or `tools/` here. The only writes outside
   the plan file are recording spec resolutions from step 3.
-- Don't invent answers to decisions only the user can make — ask.

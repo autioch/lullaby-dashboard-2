@@ -6,40 +6,39 @@ allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion
 Drive the elicitation loop that turns a feature idea into a durable, agreed spec under
 `docs/features/`. **Do not write app code in this command** — the output is the spec only.
 
+First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
+reads and rules for every pipeline command.
+
 The feature idea (may be empty): `$ARGUMENTS`
 
 ## Steps
 
-1. **Ground yourself first.** Read the relevant context so your questions are sharp and few:
-   `docs/01_vision.md`, `docs/04_design-principles.md`, `docs/05_design.md`,
-   `docs/07_data-architecture.md`, and the "Architecture" + "Adding a feature" sections of
-   `.github/instructions/development.instructions.md`. Skim existing specs in `docs/features/` to avoid
-   duplication and to pick the next `NN`. Read the actual code (the `src/database/*` record
-   types, relevant stores/repos/components) before assuming how something works.
+1. **Ground yourself first.** From WORKFLOW's grounding reads, lean on the product / design docs
+   (`01_vision`, `04_design-principles`, `05_design`, `07_data-architecture`) and the
+   **Architecture** + **Adding a feature** sections of the dev guide. Skim existing specs in
+   `docs/features/` to avoid duplication and pick the next `NN`. Read the actual code (record
+   types in `src/database/*`, the relevant stores / repos / components) before assuming how
+   something works.
 
 2. **If `$ARGUMENTS` is empty**, ask the user what feature they want to spec, then continue.
 
-3. **Elicit via `AskUserQuestion`.** Ask focused, multiple-choice questions (with a
-   recommended option first) to fill the template. Cover, as needed: target user & problem,
-   exact behavior/flow, in/out of scope, data-model changes, UI placement, TV-first
-   constraints, i18n, and acceptance criteria. Batch related questions; don't interrogate —
-   propose sensible defaults grounded in the docs and let the user confirm or redirect.
-   Keep going until there are no blocking open questions.
+3. **Elicit via `AskUserQuestion`.** Focused multiple-choice questions (recommended option first)
+   to fill the template. Cover, as needed: target user & problem, exact behavior / flow, in / out
+   of scope, data-model changes, UI placement, TV-first constraints, i18n, acceptance criteria.
+   Batch related questions; propose sensible defaults grounded in the docs; keep going until no
+   blocking questions remain.
 
-4. **Write the spec.** Copy `docs/features/_TEMPLATE.md` to `docs/features/NN-kebab-name.md`,
-   fill every section from the answers, set `Status: agreed` only if no open questions
-   remain (otherwise `draft`), and set today's date.
+4. **Write the spec.** Copy [`docs/features/_TEMPLATE.md`](../../docs/features/_TEMPLATE.md) to
+   `docs/features/NN-kebab-name.md`, fill every section, set `Status: agreed` only if no open
+   questions remain (else `draft`), and set today's date.
 
-5. **Report** in two lines: the spec path, and a one-line summary of what was agreed. Then
-   ask whether to proceed to planning/implementation (a separate step — `/spec` stops at the
-   written spec).
+5. **Report** in two lines: the spec path and a one-line summary of what was agreed. Then ask
+   whether to proceed to `/plan` — a separate step; `/spec` stops at the written spec.
 
-Rules:
+## Rules
 
-- Match the house style: short and direct. The spec is a contract, so be precise.
-- A spec describes the **current and target state**, not change history. Don't narrate what
-  was added, removed, or fixed ("X has been deleted", "we used to…") — just state how things
-  are and how they should be. The git log carries the history.
-- Respect TV-first + Chrome 87 constraints and the Firestore → repository → store →
-  component layering when describing impact.
+- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
+  layering, TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state
+  (not history).
+- The spec is a contract — precise and unambiguous.
 - Never invent answers to questions only the user can decide — ask.
