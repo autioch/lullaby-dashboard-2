@@ -79,7 +79,9 @@ Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.
 ## Features
 
 New features start with no design — derive a spec through Q&A first. Run `/spec`, write it to
-`docs/features/NN-name.md`, then `/plan` and `/implement`. Details in the development guide.
+`docs/features/NN_spec_<short-name>.md`, then `/plan` and `/implement`. Each pipeline command forces
+the role(s) that own its step and emits one artifact on the `NN_<command>_<short-name>.md` scheme.
+Details in the development guide.
 
 ## MCP servers
 

@@ -1,11 +1,13 @@
-# Content editing (missions, groups, objectives) — Review Adjustments (Round 3)
+# Content editing (missions, groups, objectives) — Adjustments (Round 3)
 
-> Spec: [01-content-editing.md](01-content-editing.md) · Plan: [01-content-editing.plan.md](01-content-editing.plan.md) · Summary: [01-content-editing.summary.md](01-content-editing.summary.md)
-> Owner: Jakub Szczepaniak · Date: 2026-06-11 · Base ref: `7b5af7f` (pre-adjustment HEAD)
+> **Artifact:** `01_adjust_content-editing-r3.md` · **Roles:** Product Owner · Solution Architect / Tech Lead · Senior Fullstack Developer
+> **Status:** terminal record (no lifecycle)
+> **Owner:** Jakub Szczepaniak · **Date:** 2026-06-11 · **Base ref:** `7b5af7f` (pre-adjustment HEAD)
+> **Related:** [spec](01_spec_content-editing.md) · [plan](01_plan_content-editing.md) · [implement](01_implement_content-editing.md) · adjust [r1](01_adjust_content-editing-r1.md), [r2](01_adjust_content-editing-r2.md) · [retro](01_retro_content-editing.md)
 
-Record of the third post-review adjustment round. The spec, plan, and summary are **frozen** —
-this file plus rounds [1](01-content-editing.adjustments-1.md) and
-[2](01-content-editing.adjustments-2.md) are the only record of post-review changes until
+Record of the third post-review adjustment round. The spec, plan, and implementation record are
+**frozen** — this file plus rounds [1](01_adjust_content-editing-r1.md) and
+[2](01_adjust_content-editing-r2.md) are the only record of post-review changes until
 `/reconcile` re-syncs the spec. Every claim traces to a commit.
 
 ## Change requests
@@ -96,8 +98,8 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 
 ## Drift — spec/plan to re-sync
 
-The spec, plan, and summary stay frozen and now lag further (on top of rounds 1–2). Run
-`/reconcile 01-content-editing` to fold these into the spec. Requirement deltas the spec does not
+The spec, plan, and implementation record stay frozen and now lag further (on top of rounds 1–2). Run
+`/reconcile content-editing` to fold these into the spec. Requirement deltas the spec does not
 yet reflect:
 
 - **Objective editing (CR-2):** the spec's objective fields (`label` text, `color` preset swatch,

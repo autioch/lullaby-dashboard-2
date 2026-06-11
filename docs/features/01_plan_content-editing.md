@@ -1,7 +1,9 @@
-# Content editing (missions, groups, objectives) — Implementation Plan
+# Content editing (missions, groups, objectives) — Plan
 
-> Status: `in-progress`
-> Spec: [01-content-editing.md](01-content-editing.md) · Owner: Jakub Szczepaniak · Created: 2026-06-11 · Last updated: 2026-06-11
+> **Artifact:** `01_plan_content-editing.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
+> **Status:** `in-progress`
+> **Owner:** Jakub Szczepaniak · **Created:** 2026-06-11 · **Last updated:** 2026-06-11
+> **Related:** [spec](01_spec_content-editing.md) · [implement](01_implement_content-editing.md) · adjust [r1](01_adjust_content-editing-r1.md), [r2](01_adjust_content-editing-r2.md), [r3](01_adjust_content-editing-r3.md) · [retro](01_retro_content-editing.md)
 
 ## Goal
 
@@ -30,7 +32,7 @@ Context every step assumes — keep open while implementing:
 - [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, Environment
 - [docs/development.md](../development.md) — architecture, conventions, command table, doc-sync map
 - [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority (esp. principles 4, 5, 7, 9; write-flow)
-- [docs/features/01-content-editing.md](01-content-editing.md) — the spec (the contract)
+- [docs/features/01_spec_content-editing.md](01_spec_content-editing.md) — the spec (the contract)
 
 ## Steps
 
@@ -220,7 +222,7 @@ Per the dev guide's **"Keeping docs in sync"** map:
   route path + referential cleanup; add `useEditStore` to the stores list (Steps 2, 4).
 - [README.md](../../README.md) — mention in-app content editing as a product capability
   (Step 6/7).
-- Flip [docs/features/01-content-editing.md](01-content-editing.md) `Status` → `implemented` on
+- Flip [docs/features/01_spec_content-editing.md](01_spec_content-editing.md) `Status` → `implemented` on
   completion (Step 7).
 
 ## Risks & assumptions

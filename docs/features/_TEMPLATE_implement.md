@@ -1,11 +1,14 @@
-# <Feature name> — Implementation Summary
+# <Feature name> — Implementation
 
-> Spec: [NN-name.md](NN-name.md) · Plan: [NN-name.plan.md](NN-name.plan.md)
-> Owner: <name> · Completed: YYYY-MM-DD
+> **Artifact:** `NN_implement_<short-name>.md` · **Roles:** Senior Fullstack React/Node.js Developer
+> **Status:** terminal record (no lifecycle)
+> **Owner:** <name> · **Completed:** YYYY-MM-DD
+> **Related:** [spec](NN_spec_<short-name>.md) · [plan](NN_plan_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [reconcile](NN_reconcile_<short-name>.md) · [retro](NN_retro_<short-name>.md)
 
-A concise, durable record of what an `/implement` run actually did — written at close-out from
-this template. Other skills read it, so keep each section terse and factual: claims must trace to
-a commit or to the plan's step state. No filler, no history prose.
+A concise, durable record of what an `/implement` run actually did, written at close-out by the
+**Senior Fullstack Developer** who executed the plan. Other skills read it, so keep each section
+terse and factual: claims must trace to a commit or to the plan's step state. No filler, no
+history prose.
 
 ## Outcome
 

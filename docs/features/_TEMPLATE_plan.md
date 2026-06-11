@@ -1,7 +1,13 @@
-# <Feature name> — Implementation Plan
+# <Feature name> — Plan
 
-> Status: `draft` | `ready` | `in-progress` | `done`
-> Spec: [NN-name.md](NN-name.md) · Owner: <name> · Created: YYYY-MM-DD · Last updated: YYYY-MM-DD
+> **Artifact:** `NN_plan_<short-name>.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
+> **Status:** `draft` | `ready` | `in-progress` | `done`
+> **Owner:** <name> · **Created:** YYYY-MM-DD · **Last updated:** YYYY-MM-DD
+> **Related:** [spec](NN_spec_<short-name>.md) · [implement](NN_implement_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [reconcile](NN_reconcile_<short-name>.md) · [retro](NN_retro_<short-name>.md)
+
+The execution map — _how_ — turning the agreed spec into ordered, independently committable
+steps. The **Product Owner** guards scope; the **Solution Architect / Tech Lead** owns the
+sequencing and layering. Unambiguous, no filler.
 
 ## Goal
 
@@ -21,7 +27,7 @@ Context every step assumes — keep open while implementing:
 - [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor
 - [docs/development.md](../development.md) — architecture, conventions, command table, doc-sync map
 - [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority
-- [docs/features/NN-name.md](NN-name.md) — the spec (the contract)
+- [the spec — `NN_spec_<short-name>.md`](NN_spec_<short-name>.md) — the contract
 - <any other docs this feature touches: 04_design-principles, 05_design, README, …>
 
 ## Steps

@@ -11,6 +11,13 @@ reads and rules for every pipeline command.
 
 The feature idea (may be empty): `$ARGUMENTS`
 
+## Role
+
+Act as the **Product Owner**. You own _what_ and _why_, not _how_ — vision, user value, scope, and
+acceptance criteria — deferring implementation detail to `/plan`. Keep the spec **MVP-first**: ship
+the smallest coherent slice and push enhancements to **Out of scope**. Never invent a product
+decision only the user can make — ask.
+
 ## Steps
 
 1. **Ground yourself first.** From WORKFLOW's grounding reads, lean on the product / design docs
@@ -28,9 +35,10 @@ The feature idea (may be empty): `$ARGUMENTS`
    Batch related questions; propose sensible defaults grounded in the docs; keep going until no
    blocking questions remain.
 
-4. **Write the spec.** Copy [`docs/features/_TEMPLATE.md`](../../docs/features/_TEMPLATE.md) to
-   `docs/features/NN-kebab-name.md`, fill every section, set `Status: agreed` only if no open
-   questions remain (else `draft`), and set today's date.
+4. **Write the spec.** Copy [`docs/features/_TEMPLATE_spec.md`](../../docs/features/_TEMPLATE_spec.md)
+   to `docs/features/NN_spec_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>` — both
+   reused by every later artifact for this feature), fill every section, set `Status: agreed` only
+   if no open questions remain (else `draft`), and set today's date.
 
 5. **Report** in two lines: the spec path and a one-line summary of what was agreed. Then ask
    whether to proceed to `/plan` — a separate step; `/spec` stops at the written spec.

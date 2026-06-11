@@ -12,6 +12,14 @@ reads and rules for every pipeline command.
 
 The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
 
+## Role
+
+Act as both the **Product Owner** and the **Solution Architect / Tech Lead**. As Product Owner,
+guard scope and keep the plan true to the agreed spec; as Architect / Tech Lead, own the
+sequencing, the layering (Firestore → repository → store → component → API route), and a step
+order that keeps the tree green and each step independently committable. Resolve blocking gaps by
+Q&A and record them back into the spec — never silently assume.
+
 ## Steps
 
 1. **Locate the spec.** Resolve `$ARGUMENTS` to a file in `docs/features/`. If empty or
@@ -31,9 +39,9 @@ The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
    `Last updated`) so the contract stays the single source of truth. Never silently assume; but
    don't re-litigate decisions the spec already settled.
 
-4. **Write the plan.** Copy [`docs/features/_PLAN_TEMPLATE.md`](../../docs/features/_PLAN_TEMPLATE.md)
-   to `docs/features/NN-kebab-name.plan.md` (**same `NN` and name as the spec**) and fill every
-   section. Ordering rules:
+4. **Write the plan.** Copy [`docs/features/_TEMPLATE_plan.md`](../../docs/features/_TEMPLATE_plan.md)
+   to `docs/features/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
+   fill every section. Ordering rules:
    - Sequence so the **tree is never broken** and each step is independently committable:
      preparation/refactors first, then build **bottom-up**
      (Firestore/types → repository → store → component → API route), then wiring/mount, then

@@ -1,10 +1,12 @@
-# Content editing (missions, groups, objectives) — Review Adjustments (Round 1)
+# Content editing (missions, groups, objectives) — Adjustments (Round 1)
 
-> Spec: [01-content-editing.md](01-content-editing.md) · Plan: [01-content-editing.plan.md](01-content-editing.plan.md) · Summary: [01-content-editing.summary.md](01-content-editing.summary.md)
-> Owner: Jakub Szczepaniak · Date: 2026-06-11 · Base ref: `b3b0dfd` (pre-adjustment HEAD)
+> **Artifact:** `01_adjust_content-editing-r1.md` · **Roles:** Product Owner · Solution Architect / Tech Lead · Senior Fullstack Developer
+> **Status:** terminal record (no lifecycle)
+> **Owner:** Jakub Szczepaniak · **Date:** 2026-06-11 · **Base ref:** `b3b0dfd` (pre-adjustment HEAD)
+> **Related:** [spec](01_spec_content-editing.md) · [plan](01_plan_content-editing.md) · [implement](01_implement_content-editing.md) · adjust [r2](01_adjust_content-editing-r2.md), [r3](01_adjust_content-editing-r3.md) · [retro](01_retro_content-editing.md)
 
 Record of one post-review adjustment round: the change requests raised after the feature was
-implemented, how each was handled, and the result. The spec, plan, and summary are **frozen** —
+implemented, how each was handled, and the result. The spec, plan, and implementation record are **frozen** —
 this file is the only record of these changes until `/reconcile` re-syncs the spec. Every claim
 traces to a commit.
 
@@ -142,8 +144,8 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 
 ## Drift — spec/plan to re-sync
 
-The spec, plan, and summary were intentionally left unchanged and now lag the code. Run
-`/reconcile 01-content-editing` to fold these changes back into the spec. Requirement deltas the
+The spec, plan, and implementation record were intentionally left unchanged and now lag the code. Run
+`/reconcile content-editing` to fold these changes back into the spec. Requirement deltas the
 spec does not yet reflect:
 
 - **Attach/remove removed (CR-1):** spec §Behavior "Membership and ordering" and §Acceptance

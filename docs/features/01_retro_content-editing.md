@@ -1,7 +1,9 @@
-# Content editing (missions, groups, objectives) — Iteration Retrospective
+# Content editing (missions, groups, objectives) — Retrospective
 
-> Spec: [01-content-editing.md](01-content-editing.md) · Plan: [01-content-editing.plan.md](01-content-editing.plan.md) · Summary: [01-content-editing.summary.md](01-content-editing.summary.md) · Adjustments: [round 1](01-content-editing.adjustments-1.md), [round 2](01-content-editing.adjustments-2.md), [round 3](01-content-editing.adjustments-3.md)
-> Owner: Jakub Szczepaniak · Date: 2026-06-11
+> **Artifact:** `01_retro_content-editing.md` · **Roles:** Product Owner (lead) · all roles weigh in
+> **Status:** terminal record (no lifecycle)
+> **Owner:** Jakub Szczepaniak · **Date:** 2026-06-11
+> **Related:** [spec](01_spec_content-editing.md) · [plan](01_plan_content-editing.md) · [implement](01_implement_content-editing.md) · adjust [r1](01_adjust_content-editing-r1.md), [r2](01_adjust_content-editing-r2.md), [r3](01_adjust_content-editing-r3.md)
 
 Product-owner review of the whole iteration — spec → plan → implement → adjust. The wrap-up the
 owner reads before deciding the next move. Terse and blunt; every claim traces to an artifact or
@@ -11,7 +13,7 @@ commit.
 
 - **Plan fidelity:** Steps 1–6 executed cleanly — one green, independently committable commit each
   (`5923230` auth → `fce2687` menu wire). **Step 7 (end-to-end validation + close-out) never ran**
-  (summary _Skipped/deferred_): no acceptance walk on the TV UA, no security review, no status flip.
+  (implementation record _Skipped/deferred_): no acceptance walk on the TV UA, no security review, no status flip.
   The build followed the plan; the iteration never closed it.
 - **Churn:** 3 adjustment rounds, ~13 commits, **~1,949 insertions / 814 deletions across 32 files**
   — nearly a second full build on top of the original ~2,144 insertions. Mix of genuine TV-driven
@@ -33,7 +35,7 @@ commit.
 - Bottom-up plan held — each step left the tree green and independently committable; the build
   never broke (`5923230`…`fce2687`).
 - Layering respected end to end: writes go client → edit repo → admin route → snapshot, no manual
-  Zustand mutation, `tools/firestore.rules` stayed `write: false` (summary Verification).
+  Zustand mutation, `tools/firestore.rules` stayed `write: false` (implementation record Verification).
 - `/adjust` worked as a pressure valve — three rounds of real product feedback landed without
   corrupting the frozen contracts, each change traced to commits.
 - Adjustment testing caught two real bugs that the build missed: the auth-flag/cookie decoupling
@@ -80,7 +82,7 @@ Captured from the retro Q&A — the owner's own read, in substance:
   the development cycle. The separate artifacts should be kept for reference. The general
   documentation should be updated, not the history of feature implementation." → `/reconcile`
   should be its own cycle step that updates the **general docs** (spec/architecture/README) while
-  the per-feature artifacts (spec, plan, summary, adjustments) are preserved as historical
+  the per-feature artifacts (spec, plan, implementation record, adjustments) are preserved as historical
   reference, not rewritten.
 
 ## Suggested next actions
@@ -89,7 +91,7 @@ Concrete and prioritized — each tied to a problem above. Suggestions only; the
 
 1. **`/security-review` the auth/session/admin-write code** — the original Step-7 security pass on
    brand-new `setSession`/`requireSession` + admin write routes never ran. Highest risk, do first.
-2. **`/reconcile 01-content-editing`** — fold three rounds of drift into the spec/general docs so the
+2. **`/reconcile content-editing`** — fold three rounds of drift into the spec/general docs so the
    contract matches the code; keep the adjustments artifacts as reference (per owner). Flip
    spec `Status` → `implemented`, plan → done.
 3. **Real-TV / authenticated walk** — verify live authenticated persistence and exercise

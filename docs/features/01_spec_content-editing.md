@@ -1,8 +1,9 @@
-# Content editing (missions, groups, objectives)
+# Content editing (missions, groups, objectives) — Spec
 
-> Status: `agreed`
-> Owner: Jakub Szczepaniak · Created: 2026-06-11 · Last updated: 2026-06-11 (impl: missions
-> list has no Move ↑/↓ — top-level collection is unordered)
+> **Artifact:** `01_spec_content-editing.md` · **Roles:** Product Owner
+> **Status:** `agreed`
+> **Owner:** Jakub Szczepaniak · **Created:** 2026-06-11 · **Last updated:** 2026-06-11 (impl: missions list has no Move ↑/↓ — top-level collection is unordered)
+> **Related:** [plan](01_plan_content-editing.md) · [implement](01_implement_content-editing.md) · adjust [r1](01_adjust_content-editing-r1.md), [r2](01_adjust_content-editing-r2.md), [r3](01_adjust_content-editing-r3.md) · [retro](01_retro_content-editing.md)
 
 ## Problem / motivation
 

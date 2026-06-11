@@ -13,10 +13,18 @@ reads and rules for every pipeline command.
 The plan to implement (path, `NN`, feature name; optional trailing `step N` or `steps N-M`; may
 be empty): `$ARGUMENTS`
 
+## Role
+
+Act as a **Senior Fullstack React / Node.js Developer**. Execute the plan and its spec exactly —
+no new scope, no skipped steps, no reorders. Honor the conventions (layering, BEM `c-` CSS, the
+`@/*` alias, i18n registration), keep client code within the Chrome 87 floor, commit and push per
+step with the tree green, and stop and ask rather than invent a product decision.
+
 ## Steps
 
-1. **Locate the plan & spec.** Resolve `$ARGUMENTS` to a `*.plan.md` in `docs/features/` and its
-   sibling spec `NN-name.md`. If empty or ambiguous, list the available plans and ask which.
+1. **Locate the plan & spec.** Resolve `$ARGUMENTS` to a `NN_plan_<short-name>.md` in
+   `docs/features/` and its sibling spec `NN_spec_<short-name>.md`. If empty or ambiguous, list the
+   available plans and ask which.
    Read **both in full**. If the plan's `Status` is not `ready` or `in-progress`, flag it and
    confirm before proceeding (a `draft` may be planned-but-not-ready). Parse an optional
    `step N` / `steps N-M` from `$ARGUMENTS`; with none, target every step not yet marked done
@@ -83,9 +91,10 @@ be empty): `$ARGUMENTS`
 6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented`, completing
    the remaining items in the plan's **Docs to update** list — in a final commit + push.
 
-7. **Write the implementation summary.** Copy
-   [`docs/features/_SUMMARY_TEMPLATE.md`](../../docs/features/_SUMMARY_TEMPLATE.md) to
-   `docs/features/NN-kebab-name.summary.md` (**same `NN` and name as the spec & plan**) and fill
+7. **Write the implementation record.** Copy
+   [`docs/features/_TEMPLATE_implement.md`](../../docs/features/_TEMPLATE_implement.md) to
+   `docs/features/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
+   plan**) and fill
    every section from this run: **Outcome** (what now works), **Added** / **Changed** (honest,
    path-level — group by layer), **Skipped / deferred** (any plan/spec item not done and why —
    deferred steps, descoped items, real-TV-only checks; `None` if fully complete), **Verification**
@@ -95,7 +104,7 @@ be empty): `$ARGUMENTS`
    flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the
    step-6 close-out commit).
 
-8. **Report** in a few lines: the plan path, the **summary path**, the steps completed with their
+8. **Report** in a few lines: the plan path, the **implementation-record path**, the steps completed with their
    commit subjects, the gate result, and anything flagged for real-TV confirmation or any
    spec/plan edit you made. No filler, no next-step suggestions unless asked.
 

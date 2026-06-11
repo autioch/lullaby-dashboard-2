@@ -99,17 +99,23 @@ pointers, so they can't go stale the way prose would):
 | Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)             |
 | Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
 
-New features start with no design: derive the spec through Q&A first. Run `/spec`, or: ground
+New features start with no design: derive the spec through Q&A first. Each pipeline command forces
+the role(s) that own its step and emits one artifact on a single scheme,
+`NN_<command>_<short-name>.md`, from a matching `_TEMPLATE_<command>.md` (the templates share one
+header style). Run `/spec` (**Product Owner**), or: ground
 in `docs/01_vision.md`, `04_design-principles.md`, `05_design.md`, `07_data-architecture.md`
 and the actual code → ask focused multiple-choice questions → write the spec from
-[`docs/features/_TEMPLATE.md`](features/_TEMPLATE.md) to
-`docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) →
-`/plan`, then `/implement`. After review, `/adjust` applies post-review change requests as code
-(writing `NN-name.adjustments-N.md`) while leaving the spec/plan/summary frozen. Keep the spec in
-sync if the build deviates — or run `/reconcile` to re-sync it later. To close the cycle, `/retro`
-runs a product-owner review of the whole iteration (writing `NN-name.retro.md`) — the wrap-up you
-read before deciding what's next. Shared rules for these commands:
-[docs/features/WORKFLOW.md](features/WORKFLOW.md).
+[`docs/features/_TEMPLATE_spec.md`](features/_TEMPLATE_spec.md) to
+`docs/features/NN_spec_<short-name>.md` (`Status: agreed` only when no open questions remain) →
+`/plan` (**Product Owner · Architect / Tech Lead**), then `/implement` (**Senior Fullstack
+Developer**). After review, `/adjust` (**full team**) applies post-review change requests as code
+(writing `NN_adjust_<short-name>-rN.md`) while leaving the spec, plan, and implementation record
+frozen. Keep the spec in sync if the build deviates — or run `/reconcile` (**Product Owner ·
+Architect / Tech Lead**) to re-sync it and the general docs later (writing
+`NN_reconcile_<short-name>.md`; feature history is preserved). To close the cycle, `/retro`
+(**Product Owner-led, all roles weighing in**) reviews the whole iteration (writing
+`NN_retro_<short-name>.md`) — the wrap-up you read before deciding what's next. Shared rules for
+these commands: [docs/features/WORKFLOW.md](features/WORKFLOW.md).
 
 ## Full command reference
 
@@ -160,7 +166,7 @@ Docs are part of the change. When you touch X, review Y **in the same commit**:
 | Data flow, layering, Firestore access      | Architecture above **and** `docs/07_data-architecture.md` |
 | Dependencies / stack                       | "What this is" in CLAUDE.md                               |
 | User-facing product behavior               | `README.md`, relevant `docs/`                             |
-| A feature's behavior vs. its spec          | the matching `docs/features/NN-*.md`                      |
+| A feature's behavior vs. its spec          | the matching `docs/features/NN_spec_<short-name>.md`      |
 
 When unsure, grep the doc for the symbol/script/path you changed. If a doc is now wrong but
 out of scope to fix, say so explicitly rather than leaving it silently stale.

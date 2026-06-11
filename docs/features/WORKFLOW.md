@@ -6,23 +6,33 @@ shared rules live **here** (not copied into each command file) so there's a sing
 truth — edit this, not each command.
 
 ```text
-/spec  →  /plan  →  /implement          idea → contract → plan → code → summary
+/spec  →  /plan  →  /implement          idea → contract → plan → code → record
                         │
                         ├─ validate / review:  /verify · /code-review · /simplify · /security-review
-                        └─ /adjust   …… apply post-review change requests as code (spec/plan/summary stay frozen)
+                        └─ /adjust   …… apply post-review change requests as code (spec/plan/implement record stay frozen)
 /reconcile  ……  re-sync an implemented spec with the code once it has drifted
-/retro      ……  product-owner review of the whole iteration — wrap up the cycle, decide what's next
+/retro      ……  product-owner-led review of the whole iteration — wrap up the cycle, decide what's next
 ```
 
-Each command emits one durable artifact in `docs/features/`: `/spec` writes `NN-name.md`, `/plan`
-writes `NN-name.plan.md`, and `/implement` writes `NN-name.summary.md` at close-out — the record
-of what shipped (added / changed / skipped) that downstream skills read. After review, `/adjust`
-writes `NN-name.adjustments-N.md` per round — the record of post-review change requests and how
-each was handled. `/adjust` writes code but leaves the spec, plan, and summary **frozen**, so they
-drift until `/reconcile` re-syncs the spec. To close the cycle, `/retro` writes `NN-name.retro.md`
-— a product-owner review of the whole iteration (what worked, what to improve, the user's own
-feedback, and suggested next moves); it reads every artifact but edits none, and is the wrap-up
-the user reads before deciding what's next.
+**Artifacts & roles.** Each command forces the role(s) that own its step and emits exactly one
+durable artifact in `docs/features/`, all on the scheme **`NN_<command>_<short-name>.md`** from a
+matching `_TEMPLATE_<command>.md` (the templates share one header style):
+
+- `/spec` → `NN_spec_<short-name>.md` — **Product Owner**: the contract (_what_ / _why_).
+- `/plan` → `NN_plan_<short-name>.md` — **Product Owner · Solution Architect / Tech Lead**: the
+  ordered execution map.
+- `/implement` → `NN_implement_<short-name>.md` — **Senior Fullstack Developer**: the record of
+  what shipped (added / changed / skipped) that downstream skills read.
+- `/adjust` → `NN_adjust_<short-name>-rN.md` (one per round) — **the full team**: post-review
+  change requests and how each was handled. `/adjust` writes code but leaves the spec, plan, and
+  implementation record **frozen**, so they drift until `/reconcile` runs.
+- `/reconcile` → `NN_reconcile_<short-name>.md` — **Product Owner · Solution Architect / Tech
+  Lead**: the drift found and the re-sync applied to the spec + general docs (feature history is
+  preserved, not rewritten).
+- `/retro` → `NN_retro_<short-name>.md` — **Product Owner (lead), all roles weighing in**: a
+  review of the whole iteration (what worked, what to improve, the team's feedback, suggested next
+  moves); it reads every artifact but edits none, and is the wrap-up the user reads before
+  deciding what's next.
 
 ## Grounding reads
 

@@ -3,8 +3,9 @@ description: Run a product-owner retrospective over a finished feature iteration
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), Bash(git status:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), mcp__ccd_session_mgmt, Skill
 ---
 
-Close out a development iteration: take the **product owner's** seat and review the whole cycle —
-spec → plan → implement → adjust — from its artifacts, say bluntly what worked and what didn't,
+Close out a development iteration: review the whole cycle —
+spec → plan → implement → adjust → reconcile — from its artifacts with every role weighing in, say
+bluntly what worked and what didn't,
 take the user's own read, then propose what to do next and write it all to a **retro** artifact.
 This is the **wrap-up** of the lifecycle: the user reads it and decides the next move.
 **Do not write app code or edit the contract artifacts in this command** — the only file it
@@ -15,18 +16,27 @@ reads and rules for every pipeline command.
 
 The feature to retro (path, `NN`, or name; may be empty): `$ARGUMENTS`
 
+## Role
+
+The **Product Owner leads** — but every role weighs in so the verdict sees all perspectives: the
+**Solution Architect / Tech Lead** on plan fidelity, sequencing, and churn; the **Senior Fullstack
+Developer** on what bit during the build; **Design** on the UX calls. Form the owner's blunt
+verdict from those perspectives, gather the user's own read, then suggest next moves — never decide
+them; leave the **Decision** to the user.
+
 ## Steps
 
 1. **Locate the feature & read its whole paper trail.** Resolve `$ARGUMENTS` to a feature in
-   `docs/features/` and read, in full and **read-only**: the **spec** (`NN-name.md`), **plan**
-   (`NN-name.plan.md`), **summary** (`NN-name.summary.md`), and **every** adjustments round
-   (`NN-name.adjustments-*.md`). If `$ARGUMENTS` is empty or ambiguous, list the features that
-   have a summary and ask which. These artifacts are the iteration's record — the retro reads
-   them, never edits them.
+   `docs/features/` and read, in full and **read-only**: the **spec** (`NN_spec_<short-name>.md`),
+   **plan** (`NN_plan_<short-name>.md`), **implementation record**
+   (`NN_implement_<short-name>.md`), every adjustments round (`NN_adjust_<short-name>-r*.md`), and
+   the **reconciliation** record (`NN_reconcile_<short-name>.md`) if one exists. If `$ARGUMENTS` is
+   empty or ambiguous, list the features that have an implementation record and ask which. These
+   artifacts are the iteration's record — the retro reads them, never edits them.
 
 2. **Reconstruct the signals.** From the artifacts plus git, gather the few facts that make the
    verdict concrete, not vibes:
-   - **Plan fidelity** — did the build follow the plan, or did the summary's _Skipped / deferred_
+   - **Plan fidelity** — did the build follow the plan, or did the implementation record's _Skipped / deferred_
      and any in-flight spec/plan edits show it diverging?
    - **Churn** — how many adjustment rounds, and were they genuine new requirements or rework of
      things the spec/plan should have caught up front?
@@ -58,10 +68,11 @@ The feature to retro (path, `NN`, or name; may be empty): `$ARGUMENTS`
    the user decides. Don't start doing them.
 
 6. **Write the retro artifact.** Copy
-   [`docs/features/_RETRO_TEMPLATE.md`](../../docs/features/_RETRO_TEMPLATE.md) to
-   `docs/features/NN-name.retro.md` (**same `NN` and name as the spec**). Fill it from this run:
+   [`docs/features/_TEMPLATE_retro.md`](../../docs/features/_TEMPLATE_retro.md) to
+   `docs/features/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**). Fill it
+   from this run:
    the **signals** (step 2), **What went well** / **What to improve** (step 3, blunt), the
-   **Owner's feedback** captured verbatim-in-substance (step 4), the **Suggested next actions**
+   **Team feedback** captured verbatim-in-substance (step 4), the **Suggested next actions**
    (step 5), and a **Decision** section left open for the user to record what they'll actually do.
    Keep it terse — every claim traces to an artifact or commit. Commit + push it (the pre-push
    hook runs `npm run ci`; never `--no-verify`).
@@ -73,8 +84,9 @@ The feature to retro (path, `NN`, or name; may be empty): `$ARGUMENTS`
 
 - Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
   layering, TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
-- **Read-only on contracts:** the retro never edits the spec, plan, summary, or adjustments — it
-  reviews them. The only file it writes is `NN-name.retro.md`.
+- **Read-only on contracts:** the retro never edits the spec, plan, implementation record,
+  adjustments, or reconciliation — it reviews them. The only file it writes is
+  `NN_retro_<short-name>.md`.
 - **No code, no fixes.** The retro names problems and proposes moves; it does not implement them.
   Drift is cleared by `/reconcile`, requirement changes by `/adjust`, new scope by `/spec` — each
   a separate, user-chosen step.

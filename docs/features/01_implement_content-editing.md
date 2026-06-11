@@ -1,7 +1,9 @@
-# Content editing (missions, groups, objectives) — Implementation Summary
+# Content editing (missions, groups, objectives) — Implementation
 
-> Spec: [01-content-editing.md](01-content-editing.md) · Plan: [01-content-editing.plan.md](01-content-editing.plan.md)
-> Owner: Jakub Szczepaniak · Completed: 2026-06-11 (partial — Step 7 deferred, see Skipped)
+> **Artifact:** `01_implement_content-editing.md` · **Roles:** Senior Fullstack React/Node.js Developer
+> **Status:** terminal record (no lifecycle)
+> **Owner:** Jakub Szczepaniak · **Completed:** 2026-06-11 (partial — Step 7 deferred, see Skipped)
+> **Related:** [spec](01_spec_content-editing.md) · [plan](01_plan_content-editing.md) · adjust [r1](01_adjust_content-editing-r1.md), [r2](01_adjust_content-editing-r2.md), [r3](01_adjust_content-editing-r3.md) · [retro](01_retro_content-editing.md)
 
 ## Outcome
 
@@ -39,7 +41,7 @@ end-to-end validation/close-out step is not yet done.
   ContentEditor strings (`en`, `pl`).
 - **Docs (in-step sync)** — `CLAUDE.md` (Environment: `SESSION_SECRET`);
   `docs/development.md` and `docs/07_data-architecture.md`
-  (`useEditStore` + admin-SDK content-write route path); `01-content-editing.md` (missions list
+  (`useEditStore` + admin-SDK content-write route path); `01_spec_content-editing.md` (missions list
   has no Move ↑/↓ — top-level collection is unordered).
 
 ## Skipped / deferred
