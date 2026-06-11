@@ -37,6 +37,13 @@ LaunchPad focuses on teamwork, visibility, and shared goals rather than individu
 - **Theme** — visual and narrative presentation
 - **Dashboard** — shared mission control center
 
+## Managing Content
+
+Missions, objective groups, and objectives are edited in-app from the **Edit**
+menu — no Firebase console needed. The editor is a TV/keyboard-operable overlay
+where you add, edit, delete, and reorder content; field changes are saved
+explicitly with Save / Cancel.
+
 ## Documentation
 
 See the [`docs/`](docs/) folder:

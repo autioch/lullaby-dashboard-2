@@ -65,6 +65,12 @@ reads `tools/configuration.json`), `firestore.rules` (security rules). `firebase
 
 - **Component folder:** `src/components/<Name>/` with `<Name>.tsx`, `<Name>.css`, and
   `translations.ts` when it has user-facing text.
+- **Keep files small:** split a large component into focused files co-located in its folder —
+  a thin shell plus per-section/level sub-components and shared `controls`/`fields` — instead of
+  one oversized `.tsx`. `ContentEditor/` is the worked example.
+- **Reuse shared components:** prefer the existing shared UI (`Button`, `Typography`,
+  `Overlay`/`Panel`/`Layout`) over hand-rolling equivalents; extend the shared component (with
+  optional props) when it's close rather than duplicating it.
 - **CSS:** BEM with a `c-` block prefix (e.g. `c-dashboard__aside`); import the component's
   CSS at the top of its `.tsx`.
 - **Path alias:** use `@/*` (→ `./src/*`) instead of long relative imports.
