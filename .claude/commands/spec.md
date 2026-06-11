@@ -6,8 +6,8 @@ allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion
 Drive the elicitation loop that turns a feature idea into a durable, agreed spec under
 `docs/features/`. **Do not write app code in this command** — the output is the spec only.
 
-First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
-reads and rules for every pipeline command.
+First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+shared grounding reads and rules for every command.
 
 The feature idea (may be empty): `$ARGUMENTS`
 
@@ -20,7 +20,7 @@ decision only the user can make — ask.
 
 ## Steps
 
-1. **Ground yourself first.** From WORKFLOW's grounding reads, lean on the product / design docs
+1. **Ground yourself first.** From the pipeline guide's grounding reads, lean on the product / design docs
    (`01_vision`, `04_design-principles`, `05_design`, `07_data-architecture`) and the
    **Architecture** + **Adding a feature** sections of the dev guide. Skim existing specs in
    `docs/features/` to avoid duplication and pick the next `NN`. Read the actual code (record
@@ -37,16 +37,15 @@ decision only the user can make — ask.
 
 4. **Write the spec.** Copy [`docs/features/_TEMPLATE_spec.md`](../../docs/features/_TEMPLATE_spec.md)
    to `docs/features/NN_spec_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>` — both
-   reused by every later artifact for this feature), fill every section, set `Status: agreed` only
-   if no open questions remain (else `draft`), and set today's date.
+   reused by every later artifact for this feature) and fill every section per the template. Set
+   `Status: agreed` only if no open questions remain (else `draft`), and set today's date.
 
-5. **Report** in two lines: the spec path and a one-line summary of what was agreed. Then ask
-   whether to proceed to `/plan` — a separate step; `/spec` stops at the written spec.
+5. **Inform** the user of the spec's path and its `Status`. `/spec` stops here; `/plan` is a
+   separate step.
 
 ## Rules
 
-- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
-  layering, TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state
-  (not history).
+- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+  TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state (not history).
 - The spec is a contract — precise and unambiguous.
 - Never invent answers to questions only the user can decide — ask.

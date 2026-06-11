@@ -7,8 +7,8 @@ Turn an agreed spec from `docs/features/` into a durable, ordered implementation
 can execute step by step. **Do not write app code in this command** — the output is the plan
 document only. Implementation is a separate step.
 
-First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
-reads and rules for every pipeline command.
+First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+shared grounding reads and rules for every command.
 
 The spec to plan (path, `NN`, or feature name; may be empty): `$ARGUMENTS`
 
@@ -27,7 +27,7 @@ Q&A and record them back into the spec — never silently assume.
    not `agreed`, flag that and confirm before planning (planning a `draft` is allowed, but say
    so).
 
-2. **Ground yourself in the real code.** Per WORKFLOW's grounding reads (esp. the dev guide's
+2. **Ground yourself in the real code.** Per the pipeline guide's grounding reads (esp. the dev guide's
    **Conventions** + **Keeping docs in sync** and `docs/07`), then read the actual source the
    spec's **"Impact on the codebase"** names — types, repos, stores, components, API routes — so
    steps are based on what exists, not assumptions. Skim neighbouring features/plans in
@@ -54,15 +54,14 @@ Q&A and record them back into the spec — never silently assume.
    - Set the plan `Status: ready` only if no blocking questions remain (else `draft`); set
      today's date.
 
-5. **Report** in two lines: the plan path, and a one-line summary (step count + phases). Then
-   ask whether to start implementing **Step 1** — a separate step; `/plan` stops at the written
-   plan.
+5. **Inform** the user of the plan's path and its `Status`. `/plan` stops here; `/implement` is a
+   separate step.
 
 Rules:
 
-- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
-  layering, TV / Chrome 87, doc-sync, ask-don't-invent. Call out `compat/compat` and doc-sync
-  obligations on the specific steps where they apply.
+- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+  TV / Chrome 87, doc-sync, ask-don't-invent. Call out `compat/compat` and doc-sync obligations on
+  the specific steps where they apply.
 - The plan is an execution contract — unambiguous, no filler.
 - Plan the work, don't do it: no edits under `src/` or `tools/` here. The only writes outside
   the plan file are recording spec resolutions from step 3.

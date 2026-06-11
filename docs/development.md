@@ -99,23 +99,12 @@ pointers, so they can't go stale the way prose would):
 | Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)             |
 | Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
 
-New features start with no design: derive the spec through Q&A first. Each pipeline command forces
-the role(s) that own its step and emits one artifact on a single scheme,
-`NN_<command>_<short-name>.md`, from a matching `_TEMPLATE_<command>.md` (the templates share one
-header style). Run `/spec` (**Product Owner**), or: ground
-in `docs/01_vision.md`, `04_design-principles.md`, `05_design.md`, `07_data-architecture.md`
-and the actual code → ask focused multiple-choice questions → write the spec from
-[`docs/features/_TEMPLATE_spec.md`](features/_TEMPLATE_spec.md) to
-`docs/features/NN_spec_<short-name>.md` (`Status: agreed` only when no open questions remain) →
-`/plan` (**Product Owner · Architect / Tech Lead**), then `/implement` (**Senior Fullstack
-Developer**). After review, `/adjust` (**full team**) applies post-review change requests as code
-(writing `NN_adjust_<short-name>-rN.md`) while leaving the spec, plan, and implementation record
-frozen. Keep the spec in sync if the build deviates — or run `/reconcile` (**Product Owner ·
-Architect / Tech Lead**) to re-sync it and the general docs later (writing
-`NN_reconcile_<short-name>.md`; feature history is preserved). To close the cycle, `/retro`
-(**Product Owner-led, all roles weighing in**) reviews the whole iteration (writing
-`NN_retro_<short-name>.md`) — the wrap-up you read before deciding what's next. Shared rules for
-these commands: [docs/features/WORKFLOW.md](features/WORKFLOW.md).
+New features start with no design — derive the spec through Q&A first, then run the pipeline:
+`/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests, `/reconcile` to
+re-sync a drifted spec, and `/retro` to close the iteration. Each command forces the role(s) that
+own its step and emits one artifact on the `NN_<command>_<short-name>.md` scheme (from a matching
+`_TEMPLATE_<command>.md`). The full pipeline guide — chain, roles, artifact convention, grounding
+reads, and shared rules — is [docs/features/README.md](features/README.md).
 
 ## Full command reference
 

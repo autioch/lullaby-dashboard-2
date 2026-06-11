@@ -7,8 +7,8 @@ Execute a `ready` implementation plan from `docs/features/`, turning its ordered
 committed, validated code. **Unlike `/spec` and `/plan`, this command writes app code** — it
 follows the plan and its spec **exactly** and never invents a product decision.
 
-First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
-reads and rules for every pipeline command.
+First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+shared grounding reads and rules for every command.
 
 The plan to implement (path, `NN`, feature name; optional trailing `step N` or `steps N-M`; may
 be empty): `$ARGUMENTS`
@@ -31,7 +31,7 @@ step with the tree green, and stop and ask rather than invent a product decision
    (a completed step's heading carries a `✅`, and each lands its own commit — use both to find
    where to resume).
 
-2. **Ground yourself once, narrowly.** Read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md)
+2. **Ground yourself once, narrowly.** Read [docs/features/README.md](../../docs/features/README.md)
    (shared grounding reads + rules) and the plan's own **"Read before starting"** list, then read
    the actual source each targeted step will touch before editing it. Trust the plan — don't
    re-explore the whole repo.
@@ -49,13 +49,8 @@ step with the tree green, and stop and ask rather than invent a product decision
       React 19 / Zustand 5 / Firebase client SDK / `firebase-admin`. Match the current API, not
       memory.
    2. **Make the Change** exactly as the step specifies — the files and edits it names, nothing
-      extra. Apply the conventions from WORKFLOW / the dev guide; the concrete ones that bite
-      while coding: repositories are the only Firestore callers and **never mutate Zustand after a
-      write** (let `onSnapshot` flow it back); BEM `c-` CSS imported atop its `.tsx`; the `@/*`
-      alias; component `translations.ts` registered in `src/i18n/translations.ts`. Keep **client**
-      code within the **Chrome 87** floor — no `compat/compat` hits (clone arrays manually; no
-      `structuredClone` / `Array.prototype.at` / top-level await); server & API-route code is
-      off-floor.
+      extra. Apply the pipeline guide's **shared coding conventions and Chrome 87 floor** (layering,
+      BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
    3. **Satisfy the Done-check** — run exactly the gate the step names. Common gates: `npm run ci`
       (tsc + lint incl. `compat/compat` + format) and `npm run build`; `npm run verify` auto-fixes
       then re-checks. The `ci:*` scripts only **check** — fix type/lint failures by hand. Run any
@@ -94,24 +89,18 @@ step with the tree green, and stop and ask rather than invent a product decision
 7. **Write the implementation record.** Copy
    [`docs/features/_TEMPLATE_implement.md`](../../docs/features/_TEMPLATE_implement.md) to
    `docs/features/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
-   plan**) and fill
-   every section from this run: **Outcome** (what now works), **Added** / **Changed** (honest,
-   path-level — group by layer), **Skipped / deferred** (any plan/spec item not done and why —
-   deferred steps, descoped items, real-TV-only checks; `None` if fully complete), **Verification**
-   (gate + acceptance + which review skills ran), and **Commits** (one line per step,
-   `<sha> — <subject>`). Keep it terse and factual — every claim must trace to a commit or to the
-   plan's step state; this markdown is consumed by later skills (e.g. `/reconcile`, ship/PR
-   flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the
-   step-6 close-out commit).
+   plan**) and fill every section per the template, from this run's facts. Keep it terse — every
+   claim must trace to a commit or to the plan's step state; later skills consume it (`/reconcile`,
+   ship / PR flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold
+   into the step-6 close-out commit).
 
-8. **Report** in a few lines: the plan path, the **implementation-record path**, the steps completed with their
-   commit subjects, the gate result, and anything flagged for real-TV confirmation or any
-   spec/plan edit you made. No filler, no next-step suggestions unless asked.
+8. **Inform** the user of the implementation-record path, the gate result, and anything flagged for
+   real-TV confirmation. No report or summary.
 
 ## Rules
 
-- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
-  layering, TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent. Follow the plan and spec
+- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+  TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent. Follow the plan and spec
   **exactly**: don't add scope, skip steps, or reorder.
 - **Whole-plan autopilot:** with no `step` argument, execute every remaining step end-to-end,
   pausing only for a gate failure you can't fix or a genuinely blocking question. With

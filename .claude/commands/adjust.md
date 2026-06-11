@@ -9,8 +9,8 @@ then recording the round in an **adjustments** artifact. **This command writes a
 `/implement`) but it does **not** edit the contract docs: the spec, plan, and implementation
 record are **frozen** here. They will lag the code afterward; `/reconcile` re-syncs them later.
 
-First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
-reads and rules for every pipeline command.
+First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+shared grounding reads and rules for every command.
 
 The feature to adjust (path, `NN`, or name; may be empty): `$ARGUMENTS`
 
@@ -38,7 +38,7 @@ contract rather than bending it silently — ask.
    `search_session_transcripts` for the feature name / its commits) to find the `/implement` run
    and read the context you need. Artifacts are primary; the session is only a gap-filler.
 
-2. **Ground yourself in the real code, narrowly.** From WORKFLOW's grounding reads and the
+2. **Ground yourself in the real code, narrowly.** From the pipeline guide's grounding reads and the
    implementation record's **Added** / **Changed** + the spec's **Impact on the codebase**, open the actual
    current source the requests are likely to touch — types, repos, stores, components, API
    routes, `tools/firestore.rules` — before assuming how it works. Record the current `HEAD`
@@ -47,10 +47,7 @@ contract rather than bending it silently — ask.
    `NN_adjust_<short-name>-r*.md`.
 
 3. **Gather the change requests via Q&A, grouped by stakeholder.** Drive an `AskUserQuestion`
-   loop (recommended option first), grouped by source:
-   - **Product owner** — requirement added / removed / changed.
-   - **Development** — refactor / tech-debt / structural change.
-   - **Design** — visual or interaction change.
+   loop (recommended option first).
 
    For **each** request, capture: the request (what), the **why** / who raised it, a
    **classification** (requirement change · refactor · design change), and — because the spec is
@@ -65,11 +62,8 @@ contract rather than bending it silently — ask.
       certain of at this repo's version, pull the authoritative spec via **context7**
       (`resolve-library-id` → `query-docs`) for Astro 6 / React 19 / Zustand 5 / Firebase client
       SDK / `firebase-admin`. Match the current API, not memory.
-   2. **Make the change** respecting the conventions: repositories are the only Firestore callers
-      and **never mutate Zustand after a write** (let `onSnapshot` flow it back); BEM `c-` CSS
-      imported atop its `.tsx`; the `@/*` alias; component `translations.ts` registered in
-      `src/i18n/translations.ts`. Keep **client** code within the **Chrome 87** floor — no
-      `compat/compat` hits; server & API-route code is off-floor.
+   2. **Make the change** respecting the pipeline guide's **shared coding conventions and Chrome 87
+      floor** (layering, BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
    3. **Sync non-frozen docs in the same change** per the dev guide's **Keeping docs in sync**
       map (e.g. `docs/07`, README, the dev guide) — but **never** the spec, plan, or implementation record.
    4. **Satisfy the Done-check** — run the gate the change warrants: `npm run ci` (tsc + lint
@@ -98,23 +92,17 @@ contract rather than bending it silently — ask.
 6. **Write the adjustments artifact.** Copy
    [`docs/features/_TEMPLATE_adjust.md`](../../docs/features/_TEMPLATE_adjust.md) to
    `docs/features/NN_adjust_<short-name>-rN.md` (**same `NN` and `<short-name>` as the spec**,
-   `N` = this round). Fill it from this run: per request — **source/who**, the **request**, **why**
-   requested, **classification**, **how handled** (path-level), and **result**
-   (Implemented / Deferred / Rejected + its verification or reason); plus the overall
-   **Verification** (gate + acceptance + which review skills ran) and **Commits**
-   (`<sha> — <subject>`). End with the **Drift** note: the spec/plan/implementation record were intentionally
-   left unchanged and now lag the code — list which requirement deltas the spec doesn't yet
-   reflect and recommend **`/reconcile <feature>`** to fold them back in. Keep it terse and
-   factual — every claim traces to a commit. Commit + push it.
+   `N` = this round) and fill every section per the template, from this run's facts — including the
+   **Drift** note that lists which requirement deltas the spec doesn't yet reflect and recommends
+   `/reconcile`. Keep it terse and factual — every claim traces to a commit. Commit + push it.
 
-7. **Report** in a few lines: the feature, the **adjustments artifact path**, each request with
-   its result, the gate result, the **drift / `/reconcile` reminder**, and anything flagged for
-   real-TV confirmation. No filler, no next-step suggestions beyond the reconcile reminder.
+7. **Inform** the user of the adjustments-artifact path, the gate result, the `/reconcile` reminder,
+   and anything flagged for real-TV confirmation. No report or summary.
 
 ## Rules
 
-- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
-  layering, TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
+- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+  TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
 - **Frozen contracts:** never edit the spec (`NN_spec_<short-name>.md`), plan
   (`NN_plan_<short-name>.md`), or implementation record (`NN_implement_<short-name>.md`) in this
   command — they are read-only inputs. Resulting drift is expected and is resolved later by

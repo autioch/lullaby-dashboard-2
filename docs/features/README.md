@@ -1,57 +1,81 @@
-# Feature specs & plans
+# Feature pipeline — guide & shared rules for agents
 
-Durable specs for features built from scratch via Q&A. Each pipeline command emits exactly one
-markdown artifact, named on a single scheme: **`NN_<command>_<short-name>.md`**. Each **spec** is
-the agreed contract (_what_ and _why_) before any code; each **plan** is the step-by-step
-execution map (_how_); each **implementation** record captures what shipped — and so on through
-adjust, reconcile, and retro. All of them stay in the repo as the record, and every command forces
-the role(s) that own it (see each command's header and `WORKFLOW.md`).
+The single source of truth for the feature pipeline: the chain of slash commands that turns an
+idea into shipped, recorded code. Every pipeline command (`/spec`, `/plan`, `/implement`,
+`/adjust`, `/reconcile`, `/retro`) **reads this file first**, then does its own job. Shared
+grounding, rules, and the artifact convention live **here**; command-specific behavior lives in
+each command file. For how this fits the wider dev workflow, see **"Adding a feature"** in
+[development.md](../development.md).
 
-## Convention
+```text
+/spec  →  /plan  →  /implement          idea → contract → plan → code → record
+                        │
+                        ├─ validate / review:  /verify · /code-review · /simplify · /security-review
+                        └─ /adjust   …… apply post-review change requests as code (spec/plan/implement record stay frozen)
+/reconcile  ……  re-sync an implemented spec with the code once it has drifted
+/retro      ……  product-owner-led review of the whole iteration — wrap up the cycle, decide what's next
+```
 
-- One feature per `NN`, zero-padded sequence; one `<short-name>` (kebab-case) shared by every
-  artifact. Each command copies its template (`_TEMPLATE_<command>.md`) and all templates share
-  one header style (`Artifact` · `Roles` · `Status` · `Owner` · `Related`):
-  - **Spec** — `NN_spec_<short-name>.md` (e.g. `01_spec_mission-streaks.md`). Role: **Product
-    Owner**. Copy [`_TEMPLATE_spec.md`](_TEMPLATE_spec.md); fill it through the elicitation Q&A.
-    `Status` moves `draft` → `agreed` (all open questions resolved) → `implemented`.
-  - **Plan** — `NN_plan_<short-name>.md`. Roles: **Product Owner · Solution Architect / Tech
-    Lead**. Copy [`_TEMPLATE_plan.md`](_TEMPLATE_plan.md). `Status` moves
-    `draft` → `ready` → `in-progress` → `done`.
-  - **Implementation** — `NN_implement_<short-name>.md`. Role: **Senior Fullstack Developer**.
-    Written by `/implement` at close-out from [`_TEMPLATE_implement.md`](_TEMPLATE_implement.md);
-    records what was added, changed, and skipped. A terminal record — no `Status` lifecycle. Later
-    skills read it.
-  - **Adjustments** — `NN_adjust_<short-name>-rN.md`, one per post-review round (`-r1`, `-r2`, …).
-    Roles: **the full team** (Product Owner · Tech Lead · Developer). Written by `/adjust` from
-    [`_TEMPLATE_adjust.md`](_TEMPLATE_adjust.md); records the change requests raised after
-    implementation (product owner / dev / design), how each was handled, and the result.
-    `/adjust` changes code but leaves spec, plan, and implementation record frozen, so they drift
-    until `/reconcile` re-syncs the spec. A terminal record — no `Status`.
-  - **Reconciliation** — `NN_reconcile_<short-name>.md`. Roles: **Product Owner · Solution
-    Architect / Tech Lead**. Written by `/reconcile` from
-    [`_TEMPLATE_reconcile.md`](_TEMPLATE_reconcile.md); records the drift found between an
-    `implemented` spec and the code, and the re-sync applied to the spec + general docs (the
-    feature history is preserved, not rewritten). A terminal record — no `Status`.
-  - **Retro** — `NN_retro_<short-name>.md`, one per iteration. Roles: **Product Owner (lead) · all
-    roles weigh in**. Written by `/retro` from [`_TEMPLATE_retro.md`](_TEMPLATE_retro.md); a review
-    of the whole cycle — what worked, what to improve, the team's feedback, and suggested next
-    actions. It reads every other artifact but edits none. The wrap-up the user reads to decide
-    what's next. A terminal record — no `Status`.
-- Keep spec and plan current: when the build deviates, update the spec; when the approach
-  changes, update the plan. The implementation record is written once per implementation run; each
-  adjustments file once per review round.
+The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan` turns an
+agreed spec into the ordered, independently committable plan → `/implement` executes that plan step
+by step (committing and validating each, running the review gate before close-out) and writes the
+implementation record. Post-review change requests go through `/adjust` (code only; spec, plan, and
+implementation record stay frozen and drift). `/reconcile` later re-syncs a drifted `implemented`
+spec with the code. `/retro` reviews the whole iteration and writes the wrap-up the user reads
+before deciding what's next.
 
-## Workflow
+## Artifacts & roles
 
-See **"Adding a feature"** in [`development.md`](../development.md),
-and [`WORKFLOW.md`](WORKFLOW.md) for the shared grounding reads and rules every pipeline command
-follows. The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan`
-turns an agreed spec into the implementation plan → `/implement` executes that plan step by step,
-committing and validating each (running `/verify`, `/code-review`, and `/security-review` before
-close-out) and writing the **implementation record** at the end. Post-review change requests go
-through `/adjust` (code changes; spec, plan, and implementation record stay frozen). Later,
-`/reconcile <feature>` re-syncs an `implemented` spec with the code if it drifts and writes a
-**reconciliation** record. To close the cycle, `/retro <feature>` reviews the whole iteration and
-writes the **retro** — the wrap-up the user reads before deciding what's next. Every command
-forces the role(s) that own its step.
+Each command forces the role(s) that own its step and emits **exactly one** durable artifact in
+`docs/features/`, all on the scheme **`NN_<command>_<short-name>.md`** copied from a matching
+`_TEMPLATE_<command>.md`. The templates share one header style (`Artifact` · `Roles` · `Status` ·
+`Owner` · `Related`). One feature per zero-padded `NN`; one kebab-case `<short-name>` reused by
+every artifact for that feature. **Each template is the single source for its artifact's
+sections** — commands copy the template and fill it; they don't restate its structure.
+
+| Command      | Artifact                            | Role(s)                                        | Status                                     |
+| ------------ | ----------------------------------- | ---------------------------------------------- | ------------------------------------------ |
+| `/spec`      | `NN_spec_<short-name>.md`           | Product Owner                                  | `draft` → `agreed` → `implemented`         |
+| `/plan`      | `NN_plan_<short-name>.md`           | Product Owner · Solution Architect / Tech Lead | `draft` → `ready` → `in-progress` → `done` |
+| `/implement` | `NN_implement_<short-name>.md`      | Senior Fullstack Developer                     | terminal record (no lifecycle)             |
+| `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N) | the full team                                  | terminal record (no lifecycle)             |
+| `/reconcile` | `NN_reconcile_<short-name>.md`      | Product Owner · Solution Architect / Tech Lead | terminal record (no lifecycle)             |
+| `/retro`     | `NN_retro_<short-name>.md`          | Product Owner (lead), all roles weigh in       | terminal record (no lifecycle)             |
+
+Keep the spec and plan current while they're live: when the build deviates, update the spec; when
+the approach changes, update the plan. The implementation record, adjustments, reconciliation, and
+retro are written once and stand as history. `/adjust` deliberately leaves the spec, plan, and
+implementation record **frozen** — so they drift until `/reconcile` re-syncs the spec (the feature
+history is preserved, not rewritten).
+
+## Grounding reads
+
+Read what's relevant before acting; don't re-explore the whole repo.
+
+- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded; don't restate it).
+- [docs/development.md](../development.md) — architecture, source layout, conventions, command table, **Adding a feature**, **Keeping docs in sync**.
+- [docs/07_data-architecture.md](../07_data-architecture.md) — the layering authority.
+- Product / design context, mainly for `/spec`: [docs/01_vision.md](../01_vision.md), [docs/04_design-principles.md](../04_design-principles.md), [docs/05_design.md](../05_design.md).
+- The actual source the work touches — record types in `src/database/*`, the relevant stores / repos / components — before assuming how it works.
+
+## Shared rules for every command
+
+- **House style:** short, direct, precise (per CLAUDE.md "Working style"). Specs and plans are contracts — unambiguous, no filler.
+- **Respect the layering:** Firestore → repository → store → component. Repositories are the only Firestore callers; logic lives in stores, not components; **never mutate Zustand after a write** (let `onSnapshot` flow it back). See `docs/07`.
+- **Coding conventions** (the code-writing commands `/implement` and `/adjust`): BEM `c-` CSS imported atop its `.tsx`; the `@/*` alias; a component's `translations.ts` registered in `src/i18n/translations.ts`. Mirror the canonical example in the dev guide's **"Copy from"** table rather than hand-rolling.
+- **TV-first + Chrome 87 floor:** large, high-contrast, D-pad-operable UI; no client JS/CSS newer than Chrome 87 — no `compat/compat` hits (clone arrays manually; no `structuredClone` / `Array.prototype.at` / top-level await). Server / API-route code is off-floor. See CLAUDE.md.
+- **Docs are part of the change:** follow the dev guide's **Keeping docs in sync** map; never ship code and prose that disagree.
+- **Specs state current + target state, not history** — no "added / removed / used to". The git log carries the change history.
+- **Don't invent decisions only the user can make** — ask (multiple-choice, recommended option first), then record the resolution back into the spec / plan so the contract stays the single source of truth.
+- **Don't duplicate** code, docs, or spec content that already exists — extend the canonical example and reference it rather than restate.
+
+## Validation & review
+
+The gate is `npm run ci` (tsc + lint incl. `compat/compat` + format); `npm run verify` auto-fixes
+then re-checks; `npm run build` confirms compilation. Beyond the gate, use the built-in skills
+rather than re-inventing them:
+
+- **`/verify`** — run the app and confirm behavior against the spec's **Acceptance criteria** (TV user agent for UI).
+- **`/code-review`** — correctness bugs + reuse / simplification / efficiency over the change.
+- **`/simplify`** — quality-only cleanup (reuse, simplification, efficiency); no bug hunting.
+- **`/security-review`** — when the change touches auth, an API route, or `tools/firestore.rules`.

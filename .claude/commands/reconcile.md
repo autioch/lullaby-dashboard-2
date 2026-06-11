@@ -8,8 +8,8 @@ affected general docs**, and record the pass in a **reconciliation** artifact �
 the `/spec` → `/plan` → `/implement` (→ `/adjust`) pipeline otherwise leaves to memory. **Do not
 write app code in this command** — it maintains docs only.
 
-First read [docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md) — the shared grounding
-reads and rules for every pipeline command.
+First read [docs/features/README.md](../../docs/features/README.md) — the pipeline guide with the
+shared grounding reads and rules for every command.
 
 The feature to reconcile (path, `NN`, or name; may be empty): `$ARGUMENTS`
 
@@ -48,21 +48,18 @@ each drift — stale spec vs. code regression. Never invent a decision only the 
 5. **Write the reconciliation artifact.** Copy
    [`docs/features/_TEMPLATE_reconcile.md`](../../docs/features/_TEMPLATE_reconcile.md) to
    `docs/features/NN_reconcile_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
-   fill it: **Sources reconciled**, **Drift found** (both directions), **Re-sync applied** (spec
-   sections + general docs touched), **Still open** (suspected regressions / unbuilt promises), and
-   **Status** (spec/plan after the pass). Keep it terse — every claim traces to the code or a prior
-   artifact. Commit + push it together with the spec/doc edits (the pre-push hook runs `npm run ci`;
-   never `--no-verify`).
+   fill every section per the template, from this pass. Keep it terse — every claim traces to the
+   code or a prior artifact. Commit + push it together with the spec/doc edits (the pre-push hook
+   runs `npm run ci`; never `--no-verify`).
 
-6. **Report** the drift found and what you changed: spec/doc edits made, suspected code regressions
-   to investigate (suggest `/verify` or `/implement` to fix — separate steps), and anything still
-   unbuilt. This command does not touch app code.
+6. **Inform** the user of the reconciliation-artifact path, plus any suspected code regression to
+   investigate (a separate `/verify` or `/implement` step) and anything still unbuilt. No report or
+   summary; this command does not touch app code.
 
 ## Rules
 
-- Follow the shared rules in [WORKFLOW.md](../../docs/features/WORKFLOW.md) — house style,
-  layering, TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state
-  (not history).
+- Follow the shared rules in [README.md](../../docs/features/README.md) — house style, layering,
+  TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state (not history).
 - Reconcile maintains the spec, the general docs, and its own artifact; it never edits `src/` or
   `tools/`, and it never rewrites the plan, implementation record, or adjustments (feature history
   is preserved as reference).
