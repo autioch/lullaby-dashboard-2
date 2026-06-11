@@ -37,8 +37,8 @@ end-to-end validation/close-out step is not yet done.
 - **Wiring** — `src/components/Menu/Menu.tsx` adds the Edit entry; `src/components/Dashboard/Dashboard.tsx`
   mounts `<ContentEditor />` from the controls flag; `src/i18n/translations.ts` registers the
   ContentEditor strings (`en`, `pl`).
-- **Docs (in-step sync)** — `.github/copilot-instructions.md` (Environment: `SESSION_SECRET`);
-  `.github/instructions/development.instructions.md` and `docs/07_data-architecture.md`
+- **Docs (in-step sync)** — `CLAUDE.md` (Environment: `SESSION_SECRET`);
+  `docs/development.md` and `docs/07_data-architecture.md`
   (`useEditStore` + admin-SDK content-write route path); `01-content-editing.md` (missions list
   has no Move ↑/↓ — top-level collection is unordered).
 

@@ -28,17 +28,17 @@ the user reads before deciding what's next.
 
 Read what's relevant before acting; don't re-explore the whole repo.
 
-- [.github/copilot-instructions.md](../../.github/copilot-instructions.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded; don't restate it).
-- [.github/instructions/development.instructions.md](../../.github/instructions/development.instructions.md) — architecture, source layout, conventions, command table, **Adding a feature**, **Keeping docs in sync**.
+- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded; don't restate it).
+- [docs/development.md](../development.md) — architecture, source layout, conventions, command table, **Adding a feature**, **Keeping docs in sync**.
 - [docs/07_data-architecture.md](../07_data-architecture.md) — the layering authority.
 - Product / design context, mainly for `/spec`: [docs/01_vision.md](../01_vision.md), [docs/04_design-principles.md](../04_design-principles.md), [docs/05_design.md](../05_design.md).
 - The actual source the work touches — record types in `src/database/*`, the relevant stores / repos / components — before assuming how it works.
 
 ## Rules for every pipeline command
 
-- **House style:** short, direct, precise (per copilot-instructions "Working style"). The spec and plan are contracts — unambiguous, no filler.
+- **House style:** short, direct, precise (per CLAUDE.md "Working style"). The spec and plan are contracts — unambiguous, no filler.
 - **Respect the layering:** Firestore → repository → store → component. Repos are the only Firestore callers; logic lives in stores, not components; **never mutate Zustand after a write** (let `onSnapshot` flow it back). See `docs/07`.
-- **TV-first + Chrome 87 floor:** large, high-contrast, D-pad-operable UI; no client JS/CSS newer than Chrome 87 (`compat/compat`). Server / API-route code is off-floor. See copilot-instructions.
+- **TV-first + Chrome 87 floor:** large, high-contrast, D-pad-operable UI; no client JS/CSS newer than Chrome 87 (`compat/compat`). Server / API-route code is off-floor. See CLAUDE.md.
 - **Docs are part of the change:** follow the dev guide's **Keeping docs in sync** map; never ship code and prose that disagree.
 - **Specs state current + target state, not history** — no "added / removed / used to". The git log carries the change history.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended option first), then record the resolution back into the spec / plan so the contract stays the single source of truth.

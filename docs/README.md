@@ -1,9 +1,7 @@
 # Docs index
 
 Product and architecture context for LaunchPad. Agent coding rules live in
-[`.github/copilot-instructions.md`](../.github/copilot-instructions.md) and
-[`.github/instructions/development.instructions.md`](../.github/instructions/development.instructions.md),
-not here.
+[`CLAUDE.md`](../CLAUDE.md) and [`development.md`](development.md), not here.
 
 | File                                               | What it's for                                                                                         |
 | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |

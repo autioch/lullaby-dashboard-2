@@ -1,17 +1,13 @@
----
-applyTo: 'src/**,tools/**,astro.config.mjs,tsconfig.json,eslint.config.ts'
----
-
 # Development Guide
 
 Deep guidance for **writing or changing code** in lullaby-dashboard-2. The always-loaded
-[copilot-instructions.md](../copilot-instructions.md) holds the high-level rules; this file
-holds the detail you need only while implementing. Read it before touching `src/` or `tools/`.
+[CLAUDE.md](../CLAUDE.md) holds the high-level rules; this file holds the detail you need only
+while implementing. Read it before touching `src/` or `tools/`.
 
 ## Architecture
 
-[`docs/07_data-architecture.md`](../../docs/07_data-architecture.md) is the **authority** on
-the layering and each layer's responsibilities — read it before non-trivial data work. In short:
+[`docs/07_data-architecture.md`](07_data-architecture.md) is the **authority** on the layering
+and each layer's responsibilities — read it before non-trivial data work. In short:
 
 ```text
 Firestore → Repository (src/database/) → Zustand store (src/stores/) → React component
@@ -106,14 +102,14 @@ pointers, so they can't go stale the way prose would):
 New features start with no design: derive the spec through Q&A first. Run `/spec`, or: ground
 in `docs/01_vision.md`, `04_design-principles.md`, `05_design.md`, `07_data-architecture.md`
 and the actual code → ask focused multiple-choice questions → write the spec from
-[`docs/features/_TEMPLATE.md`](../../docs/features/_TEMPLATE.md) to
+[`docs/features/_TEMPLATE.md`](features/_TEMPLATE.md) to
 `docs/features/NN-kebab-name.md` (`Status: agreed` only when no open questions remain) →
 `/plan`, then `/implement`. After review, `/adjust` applies post-review change requests as code
 (writing `NN-name.adjustments-N.md`) while leaving the spec/plan/summary frozen. Keep the spec in
 sync if the build deviates — or run `/reconcile` to re-sync it later. To close the cycle, `/retro`
 runs a product-owner review of the whole iteration (writing `NN-name.retro.md`) — the wrap-up you
 read before deciding what's next. Shared rules for these commands:
-[docs/features/WORKFLOW.md](../../docs/features/WORKFLOW.md).
+[docs/features/WORKFLOW.md](features/WORKFLOW.md).
 
 ## Full command reference
 
@@ -158,11 +154,11 @@ Docs are part of the change. When you touch X, review Y **in the same commit**:
 | You changed…                               | Review / update…                                          |
 | ------------------------------------------ | --------------------------------------------------------- |
 | `package.json` scripts                     | Command reference above                                   |
-| `.env` / env vars, auth gate               | Environment (copilot-instructions.md)                     |
+| `.env` / env vars, auth gate               | Environment (CLAUDE.md)                                   |
 | `.mcp.json`                                | MCP servers above                                         |
 | `src/` structure, store/component patterns | Source layout + Conventions above                         |
 | Data flow, layering, Firestore access      | Architecture above **and** `docs/07_data-architecture.md` |
-| Dependencies / stack                       | "What this is" in copilot-instructions.md                 |
+| Dependencies / stack                       | "What this is" in CLAUDE.md                               |
 | User-facing product behavior               | `README.md`, relevant `docs/`                             |
 | A feature's behavior vs. its spec          | the matching `docs/features/NN-*.md`                      |
 

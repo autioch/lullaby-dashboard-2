@@ -110,7 +110,7 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 - **Classification:** refactor / docs.
 - **How handled:** `.env.example` — documented `SESSION_SECRET` (signs the content-edit session
   cookie) and removed stray blank lines. `README.md` — added a "Managing Content" section.
-  `development.instructions.md` — added the "keep files small" and "reuse shared components"
+  `docs/development.md` — added the "keep files small" and "reuse shared components"
   conventions (CR-3/CR-4). No data-architecture change, so `docs/07` untouched.
 - **Acceptance check:** `SESSION_SECRET` documented in `.env.example`; README mentions in-app
   editing.

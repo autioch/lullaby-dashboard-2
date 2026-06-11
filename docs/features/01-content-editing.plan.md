@@ -27,8 +27,8 @@ subject to that floor and uses Node `crypto` for cookie signing.
 
 Context every step assumes — keep open while implementing:
 
-- [.github/copilot-instructions.md](../../.github/copilot-instructions.md) — house rules, stack, TV / Chrome 87 floor, Environment
-- [.github/instructions/development.instructions.md](../../.github/instructions/development.instructions.md) — architecture, conventions, command table, doc-sync map
+- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, Environment
+- [docs/development.md](../development.md) — architecture, conventions, command table, doc-sync map
 - [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority (esp. principles 4, 5, 7, 9; write-flow)
 - [docs/features/01-content-editing.md](01-content-editing.md) — the spec (the contract)
 
@@ -56,7 +56,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
     `{ ok: true }` (handler already receives `ctx`).
   - `tools/check-firebase-env.mjs`: add `SESSION_SECRET` to `requiredServerKeys`.
 - **Done-check:** `npm run ci` green. **Same commit doc-sync:** update the **Environment**
-  section in [.github/copilot-instructions.md](../../.github/copilot-instructions.md) — add
+  section in [CLAUDE.md](../../CLAUDE.md) — add
   `SESSION_SECRET` to the **Server** required vars and note it gates content-edit writes.
   (`requireSession` is unused until Step 2 — exported, so no lint error.)
 
@@ -135,7 +135,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
     `objectives`). Clone arrays manually (Chrome 87).
 - **Done-check:** `npm run ci` green. **Same commit doc-sync:** add `useEditStore` to the
   **Source layout** stores list in
-  [.github/instructions/development.instructions.md](../../.github/instructions/development.instructions.md)
+  [docs/development.md](../development.md)
   and to the stores list in [docs/07_data-architecture.md](../07_data-architecture.md) folder
   structure.
 
@@ -212,9 +212,9 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
 
 Per the dev guide's **"Keeping docs in sync"** map:
 
-- [.github/copilot-instructions.md](../../.github/copilot-instructions.md) — **Environment**:
+- [CLAUDE.md](../../CLAUDE.md) — **Environment**:
   add `SESSION_SECRET` (Step 1).
-- [.github/instructions/development.instructions.md](../../.github/instructions/development.instructions.md)
+- [docs/development.md](../development.md)
   — **Source layout**: add `useEditStore` and `ContentEditor/` (Steps 4–5).
 - [docs/07_data-architecture.md](../07_data-architecture.md) — note the admin-SDK content-write
   route path + referential cleanup; add `useEditStore` to the stores list (Steps 2, 4).

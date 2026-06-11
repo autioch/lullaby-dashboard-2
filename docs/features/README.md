@@ -33,8 +33,7 @@ did (_what shipped_). All three stay in the repo as the record.
 
 ## Workflow
 
-See **"Adding a feature"** in
-[`.github/instructions/development.instructions.md`](../../.github/instructions/development.instructions.md),
+See **"Adding a feature"** in [`development.md`](../development.md),
 and [`WORKFLOW.md`](WORKFLOW.md) for the shared grounding reads and rules every pipeline command
 follows. The commands chain: `/spec` drives the elicitation loop and writes the spec → `/plan`
 turns an agreed spec into the implementation plan → `/implement` executes that plan step by step,

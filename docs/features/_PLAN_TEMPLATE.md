@@ -18,8 +18,8 @@ component → wiring → validation.
 
 Context every step assumes — keep open while implementing:
 
-- [.github/copilot-instructions.md](../../.github/copilot-instructions.md) — house rules, stack, TV / Chrome 87 floor
-- [.github/instructions/development.instructions.md](../../.github/instructions/development.instructions.md) — architecture, conventions, command table, doc-sync map
+- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor
+- [docs/development.md](../development.md) — architecture, conventions, command table, doc-sync map
 - [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority
 - [docs/features/NN-name.md](NN-name.md) — the spec (the contract)
 - <any other docs this feature touches: 04_design-principles, 05_design, README, …>

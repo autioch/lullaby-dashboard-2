@@ -57,4 +57,4 @@ See the [`docs/`](docs/) folder:
 - [07_data-architecture.md](docs/07_data-architecture.md)
 
 For contributor/agent guidance, see [CLAUDE.md](CLAUDE.md) and
-[.github/copilot-instructions.md](.github/copilot-instructions.md).
+[docs/development.md](docs/development.md).
