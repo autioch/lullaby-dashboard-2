@@ -115,7 +115,7 @@ npm only, with `package-lock.json` (don't switch package managers).
 | `npm run dev`                 | Dev server at http://localhost:4321/                                       |
 | `npm run build`               | Production build (Netlify adapter). Confirms the app compiles.             |
 | `npm run preview`             | Preview the built app.                                                     |
-| `npm run ci:ts`               | `tsc --noEmit` — type check.                                               |
+| `npm run ci:ts`               | `astro sync && tsc --noEmit` — sync generated types, then type check.      |
 | `npm run ci:lint`             | ESLint over `./src` — check only.                                          |
 | `npm run ci:format`           | Prettier `--check` over the repo — check only.                             |
 | `npm run ci`                  | `ci:ts` → `ci:lint` → `ci:format`. Read-only gate; pre-push and CI run it. |
