@@ -16,7 +16,7 @@ export function Header(props: { trail: Crumb[]; isRoot?: boolean }) {
   return (
     <div className="c-content-editor__header">
       <Button
-        textKey="contentEditor.back"
+        textKey={isRoot ? 'contentEditor.close' : 'contentEditor.back'}
         onClick={() => (isRoot ? closeContentEditor() : edit.back())}
       />
       <Breadcrumb trail={trail} />

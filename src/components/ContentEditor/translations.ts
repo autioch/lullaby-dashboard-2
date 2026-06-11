@@ -6,6 +6,7 @@ type ContentEditorTranslationKeys =
   | 'missionTitle'
   | 'groupTitle'
   | 'back'
+  | 'close'
   | 'edit'
   | 'delete'
   | 'moveUp'
@@ -42,6 +43,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       missionTitle: 'Mission',
       groupTitle: 'Group',
       back: 'Back',
+      close: 'Close',
       edit: 'Edit',
       delete: 'Delete',
       moveUp: 'Move up',
@@ -76,6 +78,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       missionTitle: 'Misja',
       groupTitle: 'Grupa',
       back: 'Wstecz',
+      close: 'Zamknij',
       edit: 'Edytuj',
       delete: 'Usuń',
       moveUp: 'W górę',
