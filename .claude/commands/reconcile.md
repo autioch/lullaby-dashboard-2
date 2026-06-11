@@ -1,6 +1,6 @@
 ---
 description: Reconcile an implemented feature spec against the code, re-sync it, and record the pass
-allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*)
+allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Skill
 ---
 
 Verify an `implemented` spec in `docs/features/` still matches the code, re-sync the spec **and the

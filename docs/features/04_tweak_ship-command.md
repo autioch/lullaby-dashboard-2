@@ -44,12 +44,8 @@ delegate its commit step to it. Doc-only / instruction-only change — no app co
 ## Verification
 
 `npm run ci` — green (tsc + lint + prettier `--check`). No `src/` change, so no build/preview/TV
-check needed.
-
-**Flagged:** `reconcile.md` lacks `Skill` in its `allowed-tools`, so it cannot invoke `/ship` via
-the Skill tool. Adding it was blocked by the harness self-modification guard and needs the owner's
-explicit approval (or a settings permission rule) — see the close-out note. The other four pipeline
-commands already list `Skill`.
+check needed. All five pipeline commands list `Skill` in their `allowed-tools` so they can invoke
+`/ship` (added it to `reconcile.md`; the other four already had it).
 
 ## Commit
 
