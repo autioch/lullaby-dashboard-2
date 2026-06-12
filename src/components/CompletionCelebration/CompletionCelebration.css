@@ -7,50 +7,62 @@
   pointer-events: none;
 }
 
-/* Persistent resting state: a warm glow that fades in once and gently pulses. */
+/* Persistent resting state: a warm glow that grows from a point to cover the
+   screen, then gently pulses. */
 .c-completion-celebration__glow {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    circle at 50% 45%,
-    rgba(255, 211, 77, 0.35) 0%,
-    rgba(125, 255, 176, 0.18) 35%,
-    rgba(124, 241, 255, 0.08) 60%,
-    transparent 78%
+    circle at 50% 48%,
+    rgba(255, 211, 77, 0.38) 0%,
+    rgba(125, 255, 176, 0.18) 32%,
+    rgba(124, 241, 255, 0.07) 55%,
+    transparent 70%
   );
   opacity: 0;
+  transform: scale(0.04);
+  transform-origin: 50% 48%;
   animation:
-    cc-glow-in 700ms ease-out forwards,
-    cc-glow-pulse 3.2s ease-in-out 700ms infinite;
+    cc-glow-in 900ms cubic-bezier(0.16, 0.8, 0.3, 1) forwards,
+    cc-glow-pulse 3.4s ease-in-out 900ms infinite;
 }
 
-/* Transient burst: radial firework of particles that fires once and clears,
-   leaving the glow as the resting state. */
-.c-completion-celebration__burst {
+/* Transient fireworks: several radial bursts fire across the screen, staggered,
+   each once, leaving the glow as the resting state. */
+.c-completion-celebration__bursts {
   position: absolute;
   inset: 0;
 }
 
-.c-completion-celebration__particle {
-  /* Defaults; overridden per-particle via inline custom properties. */
-  --cc-angle: 0deg;
-  --cc-delay: 0ms;
-  --cc-distance: 42vmin;
+/* A single firework — a zero-size origin point; particles radiate from it. */
+.c-completion-celebration__burst {
+  /* Defaults; position + scale/delay overridden inline per burst. */
+  --cc-burst-scale: 1;
+  --cc-burst-delay: 0ms;
 
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: -0.6rem 0 0 -0.6rem;
+}
+
+.c-completion-celebration__particle {
+  /* Defaults; angle/delay/distance overridden inline per particle. */
+  --cc-angle: 0deg;
+  --cc-delay: 0ms;
+  --cc-distance: 30vmin;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  margin: -0.5rem 0 0 -0.5rem;
   border-radius: 30%;
   opacity: 0;
   transform: rotate(var(--cc-angle)) translateY(0) scale(0.3);
-  animation: cc-burst 1300ms cubic-bezier(0.15, 0.7, 0.3, 1) var(--cc-delay)
-    forwards;
+  animation: cc-burst 1300ms cubic-bezier(0.15, 0.7, 0.3, 1)
+    calc(var(--cc-burst-delay) + var(--cc-delay)) forwards;
 }
 
-/* Festive high-contrast palette, cycled across particles. */
+/* Festive high-contrast palette, cycled across each burst's particles. */
 .c-completion-celebration__particle:nth-child(5n + 1) {
   background: #ffd34d;
 }
@@ -77,14 +89,19 @@
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--cc-angle)) translateY(calc(-1 * var(--cc-distance)))
-      scale(1);
+    transform: rotate(var(--cc-angle))
+      translateY(calc(-1 * var(--cc-distance) * var(--cc-burst-scale))) scale(1);
   }
 }
 
 @keyframes cc-glow-in {
+  from {
+    opacity: 0;
+    transform: scale(0.04);
+  }
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -94,18 +111,19 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.82;
+    opacity: 0.85;
   }
 }
 
-/* Reduced motion: no burst, no pulse — only the static glow. */
+/* Reduced motion: no fireworks, no grow, no pulse — only the static glow. */
 @media (prefers-reduced-motion: reduce) {
-  .c-completion-celebration__burst {
+  .c-completion-celebration__bursts {
     display: none;
   }
 
   .c-completion-celebration__glow {
     opacity: 1;
+    transform: none;
     animation: none;
   }
 }
