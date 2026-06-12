@@ -51,6 +51,9 @@ vars. **Full command table is in the development guide.**
 ## Git & workflow
 
 - Private, single-developer project: **commit directly to `main`** — no branches or PRs.
+- **Always commit via `/ship`** — the one canonical commit+push path: it batches stage→commit→push
+  into a single Bash call with a Conventional-Commits message + `Co-Authored-By` trailer and leans on
+  the hooks. Never hand-roll `git add`/`commit`/`push` for a real commit, pipeline or ad-hoc.
 - **Lean on the git hooks; commit and push often.** pre-commit auto-fixes staged files;
   pre-push runs `npm run ci` and blocks on failure; CI re-runs `ci` as a backstop. Bypass in
   an emergency with `--no-verify`.
@@ -74,7 +77,10 @@ Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.
 
 ## Gotchas
 
-- **PowerShell** is the default shell — use `$env:VAR`, `$null`.
+- **Shell:** run **git and npm/npx through the Bash tool**, not PowerShell — PowerShell 5.1 wraps
+  native-command stderr as error records and can report false failures (`tsc`/`eslint`/`astro`/`git`
+  all write to stderr). Read, search, and edit files with the dedicated tools, never `cat`/`Get-Content`.
+  Use PowerShell only for genuinely Windows-specific needs; there, `$env:VAR` and `$null`.
 - **Firestore `in` queries cap at 30 IDs** — batch objective hydration (see
   `docs/07_data-architecture.md`).
 - **Chrome 87 floor** — see above.

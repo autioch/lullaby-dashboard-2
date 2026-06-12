@@ -95,9 +95,9 @@ re-checks; `npm run build` confirms compilation. Beyond the gate:
 
 ## Committing
 
-**`/ship`** is the single, canonical commit+push action — every pipeline command delegates its
-commit here instead of hand-rolling git, and it doubles as the ad-hoc "stage everything and push"
-utility. It commits the **already-staged** set when a step has staged just its files (otherwise
+**`/ship`** is the single, canonical commit+push action and the **required** path for every commit —
+every pipeline command delegates its commit here instead of hand-rolling git, and so does any ad-hoc
+"stage everything and push". Never hand-roll `git add`/`commit`/`push` for a real commit. It commits the **already-staged** set when a step has staged just its files (otherwise
 `git add -A`), with a Conventional Commits subject + a what & why body + the `Co-Authored-By`
 trailer, then pushes. The husky hooks are the gate (pre-commit `lint-staged`, pre-push
 `npm run ci`) and run automatically; never `--no-verify`.

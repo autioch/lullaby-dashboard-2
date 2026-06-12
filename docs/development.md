@@ -106,8 +106,8 @@ that, `/tweak` does the Q&A, plan, and code in one pass and records a single art
 pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
 [docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`. Every pipeline
 command delegates its commit+push to `/ship` — the single, canonical commit+push action (leans on
-the husky hooks for validation; writes no artifact) — which also serves as the ad-hoc "stage-all,
-commit, push" utility.
+the husky hooks for validation; writes no artifact) — which is also the **required** path for ad-hoc
+commits ("stage-all, commit, push"); never hand-roll git for a real commit.
 
 ## Full command reference
 
