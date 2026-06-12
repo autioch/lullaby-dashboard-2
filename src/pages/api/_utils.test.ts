@@ -71,4 +71,32 @@ describe('session token (setSession / requireSession)', () => {
     const { ctx } = makeCtx();
     expect(requireSession(ctx)).toBe(true);
   });
+
+  it('accepts a token still within the 30-day window', () => {
+    vi.useFakeTimers();
+    try {
+      vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+      const { ctx } = makeCtx();
+      setSession(ctx);
+      // 14 days later — still inside the 30-day window.
+      vi.setSystemTime(new Date('2026-01-15T00:00:00Z'));
+      expect(requireSession(ctx)).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('rejects a token past the 30-day window even with a valid signature', () => {
+    vi.useFakeTimers();
+    try {
+      vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+      const { ctx } = makeCtx();
+      setSession(ctx);
+      // 31 days later — the signature still verifies, but the token has expired.
+      vi.setSystemTime(new Date('2026-02-01T00:00:00Z'));
+      expect(requireSession(ctx)).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

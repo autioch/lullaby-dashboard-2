@@ -13,8 +13,9 @@ export function jsonResponse(data: unknown, status: number = 200) {
 // --- Session cookie -------------------------------------------------------
 // A signed HttpOnly cookie issued on successful login and required by every
 // content-write API route. The token is `<issuedAt>.<HMAC-SHA256(issuedAt)>`
-// keyed by SESSION_SECRET, verified in constant time. Server-only code, so
-// Node `crypto` is fine (not subject to the Chrome 87 browser floor).
+// keyed by SESSION_SECRET, verified in constant time and expired server-side
+// against the same window as the cookie maxAge. Server-only code, so Node
+// `crypto` is fine (not subject to the Chrome 87 browser floor).
 const SESSION_COOKIE = 'lp_session';
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30; // 30 days
 
@@ -53,8 +54,18 @@ function isValidSessionToken(token: string): boolean {
   if (signatureBuffer.length !== expectedBuffer.length) {
     return false;
   }
+  if (!timingSafeEqual(signatureBuffer, expectedBuffer)) {
+    return false;
+  }
 
-  return timingSafeEqual(signatureBuffer, expectedBuffer);
+  // Signature is authentic, so the embedded issue time is trustworthy. Enforce
+  // expiry here: the cookie maxAge is only a client hint a replayed token can
+  // ignore, so the server must reject anything past the session window.
+  const issuedAt = Number(payload);
+  if (!Number.isFinite(issuedAt)) {
+    return false;
+  }
+  return Date.now() - issuedAt <= SESSION_MAX_AGE_SECONDS * 1000;
 }
 
 export function setSession(ctx: APIContext): void {
