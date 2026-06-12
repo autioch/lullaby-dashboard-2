@@ -1,20 +1,23 @@
 # Feature Workflow
 
 The feature pipeline — the chain of slash commands that turns an idea into shipped, recorded
-code. Every pipeline command (`/spike`, `/spec`, `/plan`, `/implement`, `/adjust`, `/retro`, and the
-lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and the
+code. Every pipeline command (`/steer`, `/spike`, `/spec`, `/plan`, `/implement`, `/adjust`,
+`/retro`, and the lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and the
 artifact convention live here; command-specific behavior lives in each command file. For how this
 fits the wider dev workflow, see **"Adding a feature"** in [development.md](development.md).
 
 ## Pipeline
 
 ```text
-(/spike) → /spec  →  /plan  →  /implement   idea → de-risk → contract → plan → code → record
-                        ├─ review:  /verify · /code-review · /simplify · /security-review
-                        └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
-/retro       product-owner review of the iteration; decide what's next
+/steer → (/spike) → /spec  →  /plan  →  /implement   pick → de-risk → contract → plan → code → record
+                                ├─ review:  /verify · /code-review · /simplify · /security-review
+                                └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
+/retro       product-owner review of the iteration; its next-actions feed back into /steer
 ```
 
+- **`/steer`** — _(top of loop)_ grooms the roadmap backlog and picks the single highest-value next
+  item; no code, **no journal artifact** (it updates `docs/06_roadmap.md`). Routes the pick to
+  `/spike`, `/spec`, or `/tweak`.
 - **`/spike`** — _(optional)_ investigates an idea and records a verdict; no code, no spec.
 - **`/spec`** — elicits and writes the spec (the contract); reads a prior spike if one exists.
 - **`/plan`** — turns an agreed spec into an ordered, independently committable plan.
@@ -22,7 +25,7 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
   gate, writes the implementation record.
 - **`/adjust`** — applies post-review change requests as code; spec, plan, and record stay
   **frozen** and drift.
-- **`/retro`** — reviews the whole iteration and writes the wrap-up.
+- **`/retro`** — reviews the whole iteration and writes the wrap-up; its next-actions feed `/steer`.
 - **`/tweak`** — the lightweight lane: one command runs the Q&A, plan, and code for a small,
   well-bounded change and records a single terminal artifact. Skips the spec/plan/implement
   documents. Routes to `/spec` when a "tweak" turns out to be a real feature.
@@ -36,15 +39,20 @@ by every artifact for that feature. **Each template is the single source for its
 sections and how to write them** (terse, factual, every claim tracing to a commit) — commands copy
 and fill it; they don't restate its structure or its writing guidance.
 
-| Command      | Artifact                               | Role(s)                                               | Status                                     |
-| ------------ | -------------------------------------- | ----------------------------------------------------- | ------------------------------------------ |
-| `/spike`     | `docs-spikes/NN_spike_<short-name>.md` | Solution Architect / Tech Lead (lead) · Product Owner | terminal record + **Verdict**              |
-| `/spec`      | `NN_spec_<short-name>.md`              | Product Owner                                         | `draft` → `agreed` → `implemented`         |
-| `/plan`      | `NN_plan_<short-name>.md`              | Product Owner · Solution Architect / Tech Lead        | `draft` → `ready` → `in-progress` → `done` |
-| `/implement` | `NN_implement_<short-name>.md`         | Senior Fullstack Developer                            | terminal record (no lifecycle)             |
-| `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N)    | the full team                                         | terminal record (no lifecycle)             |
-| `/retro`     | `NN_retro_<short-name>.md`             | Product Owner (lead), all roles weigh in              | terminal record (no lifecycle)             |
-| `/tweak`     | `NN_tweak_<short-name>.md`             | Product Owner · Tech Lead · Senior Developer          | terminal record (no lifecycle)             |
+**`/steer` is the exception** — it writes **no** journal artifact; its output is the durable backlog
+`docs/06_roadmap.md` (priority order + a Decision-log entry), since a per-run snapshot would only
+rot. It is the one pipeline command that maintains a durable doc instead of emitting a record.
+
+| Command      | Artifact                                                     | Role(s)                                               | Status                                     |
+| ------------ | ------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------ |
+| `/steer`     | `docs/06_roadmap.md` (durable doc — **no journal artifact**) | Product Owner (lead) · Solution Architect / Tech Lead | terminal record (no lifecycle)             |
+| `/spike`     | `docs-spikes/NN_spike_<short-name>.md`                       | Solution Architect / Tech Lead (lead) · Product Owner | terminal record + **Verdict**              |
+| `/spec`      | `NN_spec_<short-name>.md`                                    | Product Owner                                         | `draft` → `agreed` → `implemented`         |
+| `/plan`      | `NN_plan_<short-name>.md`                                    | Product Owner · Solution Architect / Tech Lead        | `draft` → `ready` → `in-progress` → `done` |
+| `/implement` | `NN_implement_<short-name>.md`                               | Senior Fullstack Developer                            | terminal record (no lifecycle)             |
+| `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N)                          | the full team                                         | terminal record (no lifecycle)             |
+| `/retro`     | `NN_retro_<short-name>.md`                                   | Product Owner (lead), all roles weigh in              | terminal record (no lifecycle)             |
+| `/tweak`     | `NN_tweak_<short-name>.md`                                   | Product Owner · Tech Lead · Senior Developer          | terminal record (no lifecycle)             |
 
 **Spikes are the one exception to the `NN` rule.** They live in the sibling `docs-spikes/` folder
 (not `docs-journal/`) with their **own local `NN` sequence**, kept separate because many never
@@ -82,9 +90,9 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - **Specs state current + target state, not history** — the git log carries the change history.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended first),
   then record the resolution back into the spec / plan.
-- **Converge before recording.** Commands that elicit then write an artifact (`/spike`, `/spec`,
-  `/plan`, `/retro`) play the shaped result back to the user and iterate until you both agree on the
-  final shape **before** writing — especially when it diverged from the opening idea. Record the
+- **Converge before recording.** Commands that elicit then write an artifact (`/steer`, `/spike`,
+  `/spec`, `/plan`, `/retro`) play the shaped result back to the user and iterate until you both
+  agree on the final shape **before** writing — especially when it diverged from the opening idea. Record the
   agreed shape, not a unilateral first draft.
 - **Don't guess a stack API** — before using an Astro 6 / React 19 / Zustand 5 / Firebase (client or
   admin) API you're unsure of at this repo's version, look it up via **context7**

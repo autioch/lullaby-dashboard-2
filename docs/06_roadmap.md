@@ -44,6 +44,10 @@ The timer and best-times features exist to:
 
 ## Future
 
+> **`/steer` maintains this backlog.** Within each group, items are ordered by priority (top = pick
+> next); `/steer` adds new items here, reprioritizes, and logs each grooming run in the
+> [Decision log](#decision-log) below. Ordering _is_ the priority signal — no per-item estimates.
+
 ### Dashboard design (specced, not yet built)
 
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
@@ -100,3 +104,12 @@ Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement
 
 - [ ] Add a distinct UI/UX design step before/within `/spec` — MVP-first, complexity driven by how the user operates the app (TV-readability lens), not derived from the data shape (today only the "MVP-first" wording exists, not a design pass)
 - [ ] Add a distinct, non-skippable security/maintenance step after `/implement` (today it's only a per-trigger `/security-review` reference inside the review step, which can be silently skipped)
+- [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
+
+## Decision log
+
+High-level record of `/steer` grooming runs — newest first. One line per run: what was picked, plus
+any notable additions or re-prioritizations. The detailed history lives in git; this is the
+JIRA-epic-level trail.
+
+- 2026-06-12 — Backlog reframed as a `/steer`-maintained prioritized list; Decision log established (bootstrap — no item picked).

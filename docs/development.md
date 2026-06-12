@@ -105,8 +105,9 @@ pointers, so they can't go stale the way prose would):
 | Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)             |
 | Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
 
-Features start with no design — derive the spec through Q&A first, then run the pipeline (`/spec` →
-`/plan` → `/implement`, plus optional `/spike`, lightweight `/tweak`, `/adjust`, `/retro`).
+Features start with no design — derive the spec through Q&A first. `/steer` picks what's next from
+the backlog, then run the pipeline (`/spec` → `/plan` → `/implement`, plus optional `/spike`,
+lightweight `/tweak`, `/adjust`, `/retro`).
 Artifacts land in `docs-journal/`. Full guide — chain, roles, artifacts, shared rules — in
 [feature-workflow.md](feature-workflow.md). Commit only via `/ship` (the canonical commit+push, runs
 the husky hooks, writes no artifact); never hand-roll git for a real commit.
