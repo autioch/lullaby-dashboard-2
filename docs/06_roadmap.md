@@ -25,6 +25,11 @@ The shipped MVP — the working dashboard.
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
 describes only the current UI.
 
+- [ ] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
+      message marks completion).
+- [ ] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
+      (today they're only de-emphasized in place).
+- [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
       status vocabulary. Initial themes:
   - Space — Mission Control · Crew Boarding · Launch Ready · Orbit Achieved
@@ -35,11 +40,6 @@ describes only the current UI.
 - [ ] **Best completion time / records** — surface the fastest run per mission (computed by the
       unwired `completeRun`, never displayed).
 - [ ] **Optional deadline countdown**.
-- [ ] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
-      (today they're only de-emphasized in place).
-- [ ] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
-      message marks completion).
-- [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
       system above).
 
