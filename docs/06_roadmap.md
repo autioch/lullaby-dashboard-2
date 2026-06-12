@@ -95,6 +95,14 @@ describes only the current UI.
 
 ### Reliability & tech debt
 
+- [ ] **Security-review the shipped auth/session/admin-write code** — the content-editing Step-7
+      security pass on brand-new `setSession` / `requireSession` + admin write routes never ran
+      (retro [01](../docs-journal/01_retro_content-editing.md), flagged the riskiest open gap).
+- [ ] **Real-TV / authenticated persistence walk** — verify live authenticated writes and exercise
+      `ReauthPrompt` on the deployed app; dev `PUBLIC_SKIP_AUTH` masks the 401 paths (retro 01).
+- [ ] **Remove dead attach/remove code** — strip the retained-but-unused attach/remove API actions +
+      repo/store methods (dead since content-editing R1) once confirmed they aren't returning
+      (retro 01).
 - [ ] Handle the case where the app is redeployed while a user still has an old version open
 - [ ] Hunt down logic living in components or hooks and move it into stores or testable utils
 
@@ -112,4 +120,8 @@ High-level record of `/steer` grooming runs — newest first. One line per run: 
 any notable additions or re-prioritizations. The detailed history lives in git; this is the
 JIRA-epic-level trail.
 
+- 2026-06-12 — Picked **security-review the shipped auth/session/admin-write code** (retro 01's #1,
+  riskiest open gap, never run) → routes to `/security-review`. Folded the three un-acted retro 01
+  next-actions into _Reliability & tech debt_ (security review, real-TV/auth walk, dead attach/remove
+  code removal); the two process next-actions were already tracked under _Process & pipeline_.
 - 2026-06-12 — Backlog reframed as a `/steer`-maintained prioritized list; Decision log established (bootstrap — no item picked).
