@@ -53,10 +53,4 @@
 - your guide dla nowych użytkowników
 - domyślne listy dla nowych użytkowników
 - check app after deploy and user opens old version - what should happen then?
-
-## AI tooling
-
-- design tests suite based on the tests done so far
-- no designs, how to adjust development cycle to that?
-- refactor skill to do more reusing later in the future
-- command spike/research, refactor, design.
+- hunt down logic in the components or hooks other than stores; move it all to stores or utils that can be tested
