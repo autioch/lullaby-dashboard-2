@@ -30,7 +30,7 @@ subject to that floor and uses Node `crypto` for cookie signing.
 Context every step assumes — keep open while implementing:
 
 - [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, Environment
-- [docs/development.md](../development.md) — architecture, conventions, command table, doc-sync map
+- [docs/development.md](../development.md) — architecture, conventions, command table
 - [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority (esp. principles 4, 5, 7, 9; write-flow)
 - [docs/features/01_spec_content-editing.md](01_spec_content-editing.md) — the spec (the contract)
 
@@ -57,10 +57,8 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
   - `src/pages/api/auth.ts`: on the success branch call `setSession(ctx)` **before** returning
     `{ ok: true }` (handler already receives `ctx`).
   - `tools/check-firebase-env.mjs`: add `SESSION_SECRET` to `requiredServerKeys`.
-- **Done-check:** `npm run ci` green. **Same commit doc-sync:** update the **Environment**
-  section in [CLAUDE.md](../../CLAUDE.md) — add
-  `SESSION_SECRET` to the **Server** required vars and note it gates content-edit writes.
-  (`requireSession` is unused until Step 2 — exported, so no lint error.)
+- **Done-check:** `npm run ci` green. (`requireSession` is unused until Step 2 — exported, so no
+  lint error.)
 
 ### Step 2 — Admin-SDK content write API routes (with referential cleanup) · phase: `build` ✅
 
@@ -90,10 +88,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
     **and** strip its id from **every** group's `objectiveIds` — batched).
   - Validate inputs server-side (known action, id exists where required, field whitelist);
     return `jsonResponse({ ok, ... }, status)` consistently. Reads stay unchanged.
-- **Done-check:** `npm run ci` green; `npm run build` succeeds. **Same commit doc-sync:** add a
-  short note to [docs/07_data-architecture.md](../07_data-architecture.md) that content writes
-  use the admin-SDK API route path (client → API → admin → Firestore → snapshot) with
-  referential cleanup, while rules stay `write: false`. Confirm `tools/firestore.rules` is
+- **Done-check:** `npm run ci` green; `npm run build` succeeds. Confirm `tools/firestore.rules` is
   **unchanged**.
 
 ### Step 3 — Client edit repository (fetch transport) · phase: `build` ✅
@@ -135,11 +130,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
     `useAuthStore` to unauthenticated (clear its `auth` ls flag) so `Shell` shows `AuthGate`.
     Read live entities from `useMissionStore.getState()` (`missions`, `objectiveGroups`,
     `objectives`). Clone arrays manually (Chrome 87).
-- **Done-check:** `npm run ci` green. **Same commit doc-sync:** add `useEditStore` to the
-  **Source layout** stores list in
-  [docs/development.md](../development.md)
-  and to the stores list in [docs/07_data-architecture.md](../07_data-architecture.md) folder
-  structure.
+- **Done-check:** `npm run ci` green.
 
 ### Step 5 — `ContentEditor` overlay, rows, swatch picker, i18n · phase: `build` ✅
 
@@ -168,8 +159,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
     §i18n; register it in `src/i18n/translations.ts` (both `en` and `pl` maps), mirroring
     `appOptionsTranslations`.
 - **Done-check:** `npm run ci` green (**`compat/compat` matters here — client code**);
-  `npm run build` succeeds. **Same commit doc-sync:** add `ContentEditor/` to the **Source
-  layout** components note in the dev guide if components are enumerated there.
+  `npm run build` succeeds.
 
 ### Step 6 — Menu entry + Dashboard mount · phase: `wire` ✅
 
@@ -188,10 +178,10 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
   user agent** (`Chrome/87 … SmartTV`) in Chrome dev tools — Edit opens the overlay, Esc/Back
   closes it, and every control is reachable and visibly focused with **keyboard/D-pad only**.
 
-### Step 7 — End-to-end validation & docs · phase: `validate`
+### Step 7 — End-to-end validation · phase: `validate`
 
-- **Goal:** Prove every acceptance criterion against the running app and sync remaining docs.
-- **Read:** spec §Acceptance criteria; `docs/07` write-flow; doc-sync map in the dev guide.
+- **Goal:** Prove every acceptance criterion against the running app.
+- **Read:** spec §Acceptance criteria; `docs/07` write-flow.
 - **Change:** none under `src/` beyond fixes surfaced by testing. Walk every acceptance
   criterion on the TV UA (create/rename/delete mission+group+objective and watch the dashboard
   update with no reload / no manual store mutation; reorder via Move ↑/↓; attach vs remove
@@ -208,22 +198,7 @@ credentials: 'same-origin', body }`. On `response.status === 401` throw/return a
       dashboard with no reload and no manual Zustand mutation
 - [ ] Client writes still denied: `tools/firestore.rules` unchanged (`write: false`); all
       mutations go through the admin-SDK routes
-- [ ] Docs synced; tree internally consistent
-
-## Docs to update
-
-Per the dev guide's **"Keeping docs in sync"** map:
-
-- [CLAUDE.md](../../CLAUDE.md) — **Environment**:
-  add `SESSION_SECRET` (Step 1).
-- [docs/development.md](../development.md)
-  — **Source layout**: add `useEditStore` and `ContentEditor/` (Steps 4–5).
-- [docs/07_data-architecture.md](../07_data-architecture.md) — note the admin-SDK content-write
-  route path + referential cleanup; add `useEditStore` to the stores list (Steps 2, 4).
-- [README.md](../../README.md) — mention in-app content editing as a product capability
-  (Step 6/7).
-- Flip [docs/features/01_spec_content-editing.md](01_spec_content-editing.md) `Status` → `implemented` on
-  completion (Step 7).
+- [ ] Tree internally consistent
 
 ## Risks & assumptions
 

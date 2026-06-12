@@ -3,9 +3,9 @@
 > **Artifact:** `NN_retro_<short-name>.md` · **Roles:** Product Owner (lead) · all roles weigh in
 > **Status:** terminal record (no lifecycle)
 > **Owner:** <name> · **Date:** YYYY-MM-DD
-> **Related:** [spec](NN_spec_<short-name>.md) · [plan](NN_plan_<short-name>.md) · [implement](NN_implement_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [reconcile](NN_reconcile_<short-name>.md)
+> **Related:** [spec](NN_spec_<short-name>.md) · [plan](NN_plan_<short-name>.md) · [implement](NN_implement_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md)
 
-Review of the **whole** development iteration — spec → plan → implement → adjust → reconcile —
+Review of the **whole** development iteration — spec → plan → implement → adjust —
 led by the **Product Owner** with every role weighing in (the **Tech Lead** on plan fidelity and
 churn, the **Developer** on what bit during the build, Design on the UX calls). The wrap-up of the
 lifecycle: read it, then decide the next move. Terse and blunt; every claim traces to an artifact
@@ -19,7 +19,6 @@ The few facts the verdict rests on. Fill what applies; cut the rest.
   _Skipped / deferred_, any in-flight spec/plan edits)
 - **Churn:** <N> adjustment round(s) — genuine new requirements vs. rework the spec/plan should
   have caught.
-- **Drift:** what the adjustments flagged for `/reconcile` that isn't folded back yet.
 - **Loose ends:** deferred items, real-TV-only checks, follow-ups carried forward.
 
 ## What went well
@@ -49,8 +48,8 @@ change about process or result. Their words, not paraphrased into agreement. Att
 ## Suggested next actions
 
 Concrete, prioritized — each tied to a problem above. Suggestions only; the owner decides.
-Candidates: `/reconcile` to clear drift · a follow-up `/spec` for descoped scope · a process /
-tooling tweak · tech-debt to schedule · nothing, ship as is.
+Candidates: a follow-up `/spec` for descoped scope · a process / tooling tweak · tech-debt to
+schedule · nothing, ship as is.
 
 - ...
 

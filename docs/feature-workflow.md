@@ -1,10 +1,10 @@
 # Feature Workflow
 
 The feature pipeline — the chain of slash commands that turns an idea into shipped, recorded
-code. Every pipeline command (`/spec`, `/plan`, `/implement`, `/adjust`, `/reconcile`, `/retro`,
-and the lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and
-the artifact convention live here; command-specific behavior lives in each command file. For how
-this fits the wider dev workflow, see **"Adding a feature"** in [development.md](development.md).
+code. Every pipeline command (`/spec`, `/plan`, `/implement`, `/adjust`, `/retro`, and the
+lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and the
+artifact convention live here; command-specific behavior lives in each command file. For how this
+fits the wider dev workflow, see **"Adding a feature"** in [development.md](development.md).
 
 ## Pipeline
 
@@ -12,7 +12,6 @@ this fits the wider dev workflow, see **"Adding a feature"** in [development.md]
 /spec  →  /plan  →  /implement        idea → contract → plan → code → record
                        ├─ review:  /verify · /code-review · /simplify · /security-review
                        └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
-/reconcile   re-sync an implemented spec with drifted code
 /retro       product-owner review of the iteration; decide what's next
 
 /tweak       lightweight lane: spec + plan + implement in one pass, one artifact — for changes
@@ -25,7 +24,6 @@ this fits the wider dev workflow, see **"Adding a feature"** in [development.md]
   gate, writes the implementation record.
 - **`/adjust`** — applies post-review change requests as code; spec, plan, and record stay
   **frozen** and drift.
-- **`/reconcile`** — re-syncs a drifted `implemented` spec with the code.
 - **`/retro`** — reviews the whole iteration and writes the wrap-up.
 - **`/tweak`** — the lightweight lane: one command runs the Q&A, plan, and code for a small,
   well-bounded change and records a single terminal artifact. Skips the spec/plan/implement
@@ -45,21 +43,20 @@ sections** — commands copy and fill it; they don't restate its structure.
 | `/plan`      | `NN_plan_<short-name>.md`           | Product Owner · Solution Architect / Tech Lead | `draft` → `ready` → `in-progress` → `done` |
 | `/implement` | `NN_implement_<short-name>.md`      | Senior Fullstack Developer                     | terminal record (no lifecycle)             |
 | `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N) | the full team                                  | terminal record (no lifecycle)             |
-| `/reconcile` | `NN_reconcile_<short-name>.md`      | Product Owner · Solution Architect / Tech Lead | terminal record (no lifecycle)             |
 | `/retro`     | `NN_retro_<short-name>.md`          | Product Owner (lead), all roles weigh in       | terminal record (no lifecycle)             |
 | `/tweak`     | `NN_tweak_<short-name>.md`          | Product Owner · Tech Lead · Senior Developer   | terminal record (no lifecycle)             |
 
 Keep the spec and plan current while live (update the spec when the build deviates, the plan when
-the approach changes). The implementation record, adjustments, reconciliation, and retro are
-written once and stand as history. `/adjust` leaves spec, plan, and record **frozen** until
-`/reconcile` re-syncs the spec — the feature history is preserved, not rewritten.
+the approach changes). The implementation record, adjustments, and retro are written once and
+stand as history. `/adjust` leaves spec, plan, and record **frozen** — the feature history is
+preserved, not rewritten.
 
 ## Grounding reads
 
 Read what's relevant before acting; don't re-explore the whole repo.
 
 - [CLAUDE.md](../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded).
-- [development.md](development.md) — architecture, source layout, conventions, command table, doc-sync map.
+- [development.md](development.md) — architecture, source layout, conventions, command table.
 - [07_data-architecture.md](07_data-architecture.md) — the layering authority.
 - `/spec` product/design context: [01_vision.md](01_vision.md), [04_design-principles.md](04_design-principles.md), [05_design.md](05_design.md).
 - The actual source the work touches — record types in `src/database/*`, the relevant stores / repos / components.
@@ -76,8 +73,6 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - **TV-first + Chrome 87 floor:** large, high-contrast, D-pad-operable UI; no client JS/CSS newer
   than Chrome 87 (no `structuredClone` / `Array.prototype.at` / top-level await). Server / API
   code is off-floor.
-- **Docs are part of the change:** follow the dev guide's doc-sync map; never ship code and prose
-  that disagree.
 - **Specs state current + target state, not history** — the git log carries the change history.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended first),
   then record the resolution back into the spec / plan.
@@ -97,7 +92,7 @@ re-checks; `npm run build` confirms compilation. Beyond the gate:
   exports, types, enum / namespace members, deps). `npm run knip:fix` auto-removes, then re-runs
   `verify`; review the diff before committing. Deliberately **not** in the pre-push gate — it's a
   per-feature cleanup, not a per-commit one, so the read-only commands (`/spec`, `/plan`,
-  `/reconcile`, `/retro`) skip it.
+  `/retro`) skip it.
 
 ## Committing
 

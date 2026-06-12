@@ -57,28 +57,25 @@ only the user can make — ask.
    `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
    diff; see the guide's **Validation & review**).
 
-6. **Sync docs.** Apply any doc update this change implies per the dev guide's **doc-sync map**, in
-   the same change — never ship code and prose that disagree.
-
-7. **Write the tweak artifact.** Copy
+6. **Write the tweak artifact.** Copy
    [`docs/features/_TEMPLATE_tweak.md`](../../docs/features/_TEMPLATE_tweak.md) to
    `docs/features/NN_tweak_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>`) and fill
    every section from this run's facts. Keep it terse — it's a terminal record; claims must trace
    to the actual change. Set today's date.
 
-8. **Commit + push via `/ship`.** Once the gate is green, stage the code change, any synced docs,
-   and the artifact together (`git add <paths>`), then run `/ship` — the canonical commit+push
-   action — with a Conventional Commits subject (the change's intent). `/ship` commits the staged set
-   (what & why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci`;
-   never `--no-verify`), and pushes.
+7. **Commit + push via `/ship`.** Once the gate is green, stage the code change and the artifact
+   together (`git add <paths>`), then run `/ship` — the canonical commit+push action — with a
+   Conventional Commits subject (the change's intent). `/ship` commits the staged set (what & why
+   body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci`; never
+   `--no-verify`), and pushes.
 
-9. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
+8. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
    real-TV confirmation. No summary.
 
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style,
-  layering, TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
+  layering, TV / Chrome 87, don't-duplicate, ask-don't-invent.
 - **One artifact only** (`NN_tweak_<short-name>.md`) — no spec/plan/implement documents. The
   tweak lane trades the three-artifact paper trail for speed; the git commit carries the history.
 - Stay in scope: if the change turns out to need the full pipeline, **stop and route to `/spec`**

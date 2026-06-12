@@ -3,7 +3,7 @@
 > **Artifact:** `NN_implement_<short-name>.md` · **Roles:** Senior Fullstack React/Node.js Developer
 > **Status:** terminal record (no lifecycle)
 > **Owner:** <name> · **Completed:** YYYY-MM-DD
-> **Related:** [spec](NN_spec_<short-name>.md) · [plan](NN_plan_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [reconcile](NN_reconcile_<short-name>.md) · [retro](NN_retro_<short-name>.md)
+> **Related:** [spec](NN_spec_<short-name>.md) · [plan](NN_plan_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [retro](NN_retro_<short-name>.md)
 
 A concise, durable record of what an `/implement` run actually did, written at close-out by the
 **Senior Fullstack Developer** who executed the plan. Other skills read it, so keep each section

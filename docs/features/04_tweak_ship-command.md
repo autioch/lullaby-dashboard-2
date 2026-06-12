@@ -27,14 +27,14 @@ delegate its commit step to it. Doc-only / instruction-only change — no app co
 - **Staging fix for per-step commits.** `/ship` now commits the **already-staged** set when changes
   are staged (a pipeline step stages just its files), falling back to `git add -A` only when nothing
   is staged. This lets the pipeline keep per-step granularity while still delegating commit+push.
-- **Pipeline delegates.** `implement`, `adjust`, `reconcile`, `retro`, `tweak` each stage their
+- **Pipeline delegates.** `implement`, `adjust`, `retro`, `tweak` each stage their
   step's files, then run `/ship` with a Conventional Commits subject instead of spelling out git.
 
 ## Changes
 
 - `.claude/commands/ship.md` — rewritten: canonical commit+push, husky-as-gate, staged-set-vs-`add -A`
   logic, no-validation / no-`--no-verify`, single-line output.
-- `.claude/commands/implement.md`, `adjust.md`, `reconcile.md`, `retro.md`, `tweak.md` — commit step
+- `.claude/commands/implement.md`, `adjust.md`, `retro.md`, `tweak.md` — commit step
   now delegates to `/ship`.
 - `docs/feature-workflow.md` — **Committing** section: `/ship` as the single commit+push action the
   pipeline delegates to.
@@ -44,8 +44,8 @@ delegate its commit step to it. Doc-only / instruction-only change — no app co
 ## Verification
 
 `npm run ci` — green (tsc + lint + prettier `--check`). No `src/` change, so no build/preview/TV
-check needed. All five pipeline commands list `Skill` in their `allowed-tools` so they can invoke
-`/ship` (added it to `reconcile.md`; the other four already had it).
+check needed. The pipeline commands list `Skill` in their `allowed-tools` so they can invoke
+`/ship`.
 
 ## Commit
 

@@ -28,7 +28,7 @@ Q&A and record them back into the spec — never silently assume.
    so).
 
 2. **Ground yourself in the real code.** Per the pipeline guide's grounding reads (esp. the dev guide's
-   **Conventions** + **Keeping docs in sync** and `docs/07`), then read the actual source the
+   **Conventions** and `docs/07`), then read the actual source the
    spec's **"Impact on the codebase"** names — types, repos, stores, components, API routes — so
    steps are based on what exists, not assumptions. Skim neighbouring features/plans in
    `docs/features/` for patterns and the right `NN`.
@@ -48,9 +48,8 @@ Q&A and record them back into the spec — never silently assume.
      validation.
    - Make each step **self-contained**: its own Goal, the **markdown + code to Read** for that
      step, the exact files to create/modify, and a **Done-check** — a real gate (`npm run ci`,
-     `npm run build`, or a preview/TV check) plus any doc to update in the **same commit** per
-     the sync map.
-   - End with a **Final verification** step and a **Docs to update** list.
+     `npm run build`, or a preview/TV check).
+   - End with a **Final verification** step.
    - Set the plan `Status: ready` only if no blocking questions remain (else `draft`); set
      today's date.
 
@@ -60,8 +59,7 @@ Q&A and record them back into the spec — never silently assume.
 Rules:
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, doc-sync, ask-don't-invent. Call out `compat/compat` and doc-sync obligations on
-  the specific steps where they apply.
+  TV / Chrome 87, ask-don't-invent. Call out `compat/compat` on the specific steps where it applies.
 - The plan is an execution contract — unambiguous, no filler.
 - Plan the work, don't do it: no edits under `src/` or `tools/` here. The only writes outside
   the plan file are recording spec resolutions from step 3.

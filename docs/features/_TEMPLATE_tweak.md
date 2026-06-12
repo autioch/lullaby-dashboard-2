@@ -23,7 +23,7 @@ The brief plan as built: the decision(s) taken and the layers touched
 
 ## Changes
 
-Files added or modified (paths), grouped by area. Include any docs synced in the same change.
+Files added or modified (paths), grouped by area.
 
 - ...
 

@@ -7,7 +7,7 @@
 
 Record of the second post-review adjustment round. The spec, plan, and implementation record are
 **frozen** — this file plus [round 1](01_adjust_content-editing-r1.md) are the only record of
-post-review changes until `/reconcile` re-syncs the spec. Every claim traces to a commit.
+post-review changes. Every claim traces to a commit.
 
 ## Change requests
 
@@ -122,26 +122,3 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 - `2cf6911` — feat(editor): add a navigable breadcrumb trail
 - `baf3bea` — docs(env): note PUBLIC_SKIP_AUTH now bypasses the server write gate
 - `61bf841` — fix(editor): show auth error on failed in-place re-login
-
-## Drift — spec/plan to re-sync
-
-The spec, plan, and implementation record were intentionally left unchanged and now lag the code (on top of the
-round-1 drift). Run `/reconcile content-editing` to fold these into the spec. Requirement deltas
-the spec does not yet reflect:
-
-- **Navigation model (CR-1, CR-2):** the spec's four-level drill-down (missions → mission → group →
-  objective) is now three levels with a breadcrumb; objectives are edited in place inside the group,
-  so spec §Behavior "Navigation model" step 4 (Objective edit) and "Group detail" no longer match.
-- **Save model (CR-2):** the group screen commits the group's fields plus all edited objectives in
-  one batched Save (new `saveGroup`); the spec/round-1 per-entity Save/Cancel no longer describes
-  the group level.
-- **Auth/401 behaviour (CR-4):** spec §Behavior "Write flow" and the acceptance criterion route a
-  401 back through the auth gate; the editor now re-logs-in **in place** (`needsReauth` +
-  `ReauthPrompt`) and `PUBLIC_SKIP_AUTH` now also bypasses the server session check. spec §Impact
-  "API routes" and §Open questions don't reflect this.
-- **Styling (CR-3):** buttons are square again (the shared `.c-button` lost its radius);
-  non-behavioral but worth noting if the design doc fixes a button style.
-- **Still open from round 1:** retained-but-unused attach/remove server endpoints; the deferred
-  Step-7 close-out (live authenticated persistence on real TV, original auth/API security review,
-  flip spec `Status` → `implemented`); plus the new `ReauthPrompt` not yet live-exercised (dev
-  skip-auth removes 401s).

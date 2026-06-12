@@ -35,8 +35,7 @@ the existing layering (Firestore → repository → store → component → API 
   seeds colours, and maps each objective's seed hash → its new `colorId` (throws on an unknown
   hash). Seed objectives still reference colours by hash for readability; the id mapping happens at
   seed time.
-- **Rules/docs:** `color` collection added to `firestore.rules` (read-all, admin-only write); data
-  docs synced.
+- **Rules:** `color` collection added to `firestore.rules` (read-all, admin-only write).
 
 ## Changes
 

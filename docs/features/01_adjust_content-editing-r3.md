@@ -7,8 +7,8 @@
 
 Record of the third post-review adjustment round. The spec, plan, and implementation record are
 **frozen** — this file plus rounds [1](01_adjust_content-editing-r1.md) and
-[2](01_adjust_content-editing-r2.md) are the only record of post-review changes until
-`/reconcile` re-syncs the spec. Every claim traces to a commit.
+[2](01_adjust_content-editing-r2.md) are the only record of post-review changes. Every claim
+traces to a commit.
 
 ## Change requests
 
@@ -95,20 +95,3 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 - `e3afa79` — fix(button): use not-allowed cursor on disabled buttons
 - `5df678c` — feat(editor): label the root action Close instead of Back
 - `c07b484` — feat(editor): compact single-row objective editor
-
-## Drift — spec/plan to re-sync
-
-The spec, plan, and implementation record stay frozen and now lag further (on top of rounds 1–2). Run
-`/reconcile content-editing` to fold these into the spec. Requirement deltas the spec does not
-yet reflect:
-
-- **Objective editing (CR-2):** the spec's objective fields (`label` text, `color` preset swatch,
-  `isHidden` toggle) are now a compact inline row — a labelless input, a **popup** colour picker,
-  and a state-labelled hidden switch — not the labelled stacked fields. (Layered on the round-2
-  "objectives edited in place" drift.)
-- **Styling (CR-1, CR-4):** the UI is fully square (no rounded corners); the editor's root action
-  reads "Close" rather than "Back". Non-behavioral but worth noting if the design doc fixes these.
-- **Still open from earlier rounds:** retained-but-unused attach/remove server endpoints (round 1);
-  the deferred Step-7 close-out (live authenticated persistence on real TV, original auth/API
-  security review, flip spec `Status` → `implemented`); the `ReauthPrompt` not yet live-exercised
-  (dev skip-auth removes 401s) (round 2).

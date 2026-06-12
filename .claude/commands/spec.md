@@ -46,6 +46,6 @@ decision only the user can make — ask.
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, doc-sync, ask-don't-invent, and specs stating current + target state (not history).
+  TV / Chrome 87, ask-don't-invent, and specs stating current + target state (not history).
 - The spec is a contract — precise and unambiguous.
 - Never invent answers to questions only the user can decide — ask.

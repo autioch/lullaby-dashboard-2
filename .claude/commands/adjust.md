@@ -7,7 +7,7 @@ Apply the change requests raised **after** a feature was implemented — product
 changes, developer refactors, and designer tweaks — turning them into committed, validated code,
 then recording the round in an **adjustments** artifact. **This command writes app code** (like
 `/implement`) but it does **not** edit the contract docs: the spec, plan, and implementation
-record are **frozen** here. They will lag the code afterward; `/reconcile` re-syncs them later.
+record are **frozen** here and will lag the code afterward.
 
 First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
@@ -64,16 +64,14 @@ contract rather than bending it silently — ask.
       SDK / `firebase-admin`. Match the current API, not memory.
    2. **Make the change** respecting the pipeline guide's **shared coding conventions and Chrome 87
       floor** (layering, BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
-   3. **Sync non-frozen docs in the same change** per the dev guide's **Keeping docs in sync**
-      map (e.g. `docs/07`, README, the dev guide) — but **never** the spec, plan, or implementation record.
-   4. **Satisfy the Done-check** — run the gate the change warrants: `npm run ci` (tsc + lint
+   3. **Satisfy the Done-check** — run the gate the change warrants: `npm run ci` (tsc + lint
       incl. `compat/compat` + format) and, where relevant, `npm run build`; `npm run verify`
       auto-fixes then re-checks. The `ci:*` scripts only **check** — fix failures by hand. For a
       UI/TV change, start `npm run dev` and drive it with the SmartTV user agent
       (`…Chrome/87…SmartTV…`) via chrome-devtools MCP / preview tooling: confirm the behavior,
       verify D-pad reachability + visible focus, capture proof. Use the **firebase** MCP for
       Firestore / `tools/firestore.rules` when data or rules change.
-   5. **Commit and push via `/ship`** — one commit per coherent change: stage that change's files
+   4. **Commit and push via `/ship`** — one commit per coherent change: stage that change's files
       (`git add <paths>`), then run `/ship` with a Conventional Commits subject. `/ship` commits the
       staged set (what & why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push
       `npm run ci`; never `--no-verify`), and pushes.
@@ -94,25 +92,23 @@ contract rather than bending it silently — ask.
 6. **Write the adjustments artifact.** Copy
    [`docs/features/_TEMPLATE_adjust.md`](../../docs/features/_TEMPLATE_adjust.md) to
    `docs/features/NN_adjust_<short-name>-rN.md` (**same `NN` and `<short-name>` as the spec**,
-   `N` = this round) and fill every section per the template, from this run's facts — including the
-   **Drift** note that lists which requirement deltas the spec doesn't yet reflect and recommends
-   `/reconcile`. Keep it terse and factual — every claim traces to a commit. Commit + push it.
+   `N` = this round) and fill every section per the template, from this run's facts. Keep it terse
+   and factual — every claim traces to a commit. Commit + push it.
 
-7. **Inform** the user of the adjustments-artifact path, the gate result, the `/reconcile` reminder,
-   and anything flagged for real-TV confirmation. No report or summary.
+7. **Inform** the user of the adjustments-artifact path, the gate result, and anything flagged for
+   real-TV confirmation. No report or summary.
 
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent.
+  TV / Chrome 87, don't-duplicate, ask-don't-invent.
 - **Frozen contracts:** never edit the spec (`NN_spec_<short-name>.md`), plan
   (`NN_plan_<short-name>.md`), or implementation record (`NN_implement_<short-name>.md`) in this
-  command — they are read-only inputs. Resulting drift is expected and is resolved later by
-  `/reconcile`, not here.
+  command — they are read-only inputs.
 - **Commit + push per change**, gate passing first. Never leave the tree broken or bypass the
   hooks (`--no-verify`) except a real emergency the user authorizes.
-- The adjustments artifact is the **only** record of these changes until reconcile runs — so it
-  must be complete: every request, its rationale, how it was handled, and its result.
+- The adjustments artifact is the **only** record of these changes — so it must be complete:
+  every request, its rationale, how it was handled, and its result.
 - Use MCP as needed: **context7** for current stack APIs, **firebase** for Firestore / rules,
   **chrome-devtools** / preview for TV verification, **ccd_session_mgmt** only to recover context
   the artifacts don't carry. Don't guess an API — look it up.

@@ -7,8 +7,7 @@
 
 Record of one post-review adjustment round: the change requests raised after the feature was
 implemented, how each was handled, and the result. The spec, plan, and implementation record are **frozen** —
-this file is the only record of these changes until `/reconcile` re-syncs the spec. Every claim
-traces to a commit.
+this file is the only record of these changes. Every claim traces to a commit.
 
 ## Change requests
 
@@ -141,24 +140,3 @@ Classification is one of: **requirement change** · **refactor** · **design cha
 - `941d926` — refactor(button): add disabled, danger variant, className props
 - `3483f3f` — refactor(editor): simplify content editor, explicit save, split files
 - `2b675a1` — docs: document SESSION_SECRET and in-app content editing
-
-## Drift — spec/plan to re-sync
-
-The spec, plan, and implementation record were intentionally left unchanged and now lag the code. Run
-`/reconcile content-editing` to fold these changes back into the spec. Requirement deltas the
-spec does not yet reflect:
-
-- **Attach/remove removed (CR-1):** spec §Behavior "Membership and ordering" and §Acceptance
-  ("Attaching/removing … updates only the parent's id array; removed items remain in the library")
-  no longer match — the UI exposes only add/edit/delete; "Remove (detach)" and "Attach existing"
-  are gone. Delete is now the on-row affordance for groups/objectives.
-- **Explicit Save/Cancel (CR-2):** spec §Behavior describes per-field saves and an immediate
-  retention stepper; the editor now commits each entity form atomically via Save/Cancel and never
-  auto-saves a field.
-- **Editor structure (CR-3/CR-4):** spec §Impact "Components" describes one `ContentEditor`
-  component; it is now a shell + level/controls/fields split, and text buttons reuse the shared
-  `Button`. (Non-behavioral, but the Impact section is stale.)
-- **Server dead code (CR-1):** the attach/remove API actions + repository/store methods are
-  retained but unused; reconcile should either re-justify or schedule their removal.
-- **Outstanding:** the deferred Step-7 close-out (live authenticated persistence walk on real TV;
-  original auth/API security review; flip spec `Status` → `implemented`) is still open.

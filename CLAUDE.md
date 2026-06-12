@@ -3,8 +3,8 @@
 Always-loaded guidance for AI coding agents working in this repo.
 
 **Before writing or changing code under `src/` or `tools/`, read
-[docs/development.md](docs/development.md)** — architecture, source layout, conventions, the
-full command reference, and the doc-sync map live there so they don't load on every chat.
+[docs/development.md](docs/development.md)** — architecture, source layout, conventions, and the
+full command reference live there so they don't load on every chat.
 
 ## Working style
 
@@ -17,9 +17,6 @@ full command reference, and the doc-sync map live there so they don't load on ev
   thing — don't re-explore the whole repo. Saves tokens and time.
 - After git actions (commit/push), report the result in **one line** — no summaries, file
   lists, or next-step suggestions unless asked.
-- Docs are part of the change: when code or config changes, update affected prose in the
-  **same commit**. Never ship a tree where docs contradict the code. (Map of which docs to
-  check is in the development guide.)
 
 ## What this is
 

@@ -35,9 +35,6 @@ branch or package version, no client-side date logic.
   `{time}` placeholders.
 - `src/components/AppOptions/AppOptions.css` — new; `.c-app-options__build` dimmed/spaced style.
 
-No doc-sync needed: the dev guide's doc-sync map describes `AppOptions` generically and no prose
-contradicts the change.
-
 ## Verification
 
 - `npm run ci` (astro sync + tsc + eslint incl. `compat/compat` + prettier) — green.

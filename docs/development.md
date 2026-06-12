@@ -100,8 +100,8 @@ pointers, so they can't go stale the way prose would):
 | Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
 
 New features start with no design — derive the spec through Q&A first, then run the pipeline:
-`/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests, `/reconcile` to
-re-sync a drifted spec, and `/retro` to close the iteration. For a change too small to justify
+`/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests and `/retro` to
+close the iteration. For a change too small to justify
 that, `/tweak` does the Q&A, plan, and code in one pass and records a single artifact. The full
 pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
 [docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`. Every pipeline
@@ -146,21 +146,3 @@ dev tools.
   `.firebaserc` (`lullaby-dashboard`). Don't pass `--project` to `experimental:mcp`.
 - **github** — set `GITHUB_PAT` (a personal access token); referenced as `${GITHUB_PAT}`.
 - **context7 / chrome-devtools** — auto-installed via `npx`; `chrome-devtools` needs Chrome.
-
-## Keeping docs in sync
-
-Docs are part of the change. When you touch X, review Y **in the same commit**:
-
-| You changed…                               | Review / update…                                          |
-| ------------------------------------------ | --------------------------------------------------------- |
-| `package.json` scripts                     | Command reference above                                   |
-| `.env` / env vars, auth gate               | Environment (CLAUDE.md)                                   |
-| `.mcp.json`                                | MCP servers above                                         |
-| `src/` structure, store/component patterns | Source layout + Conventions above                         |
-| Data flow, layering, Firestore access      | Architecture above **and** `docs/07_data-architecture.md` |
-| Dependencies / stack                       | "What this is" in CLAUDE.md                               |
-| User-facing product behavior               | `README.md`, relevant `docs/`                             |
-| A feature's behavior vs. its spec          | the matching `docs/features/NN_spec_<short-name>.md`      |
-
-When unsure, grep the doc for the symbol/script/path you changed. If a doc is now wrong but
-out of scope to fix, say so explicitly rather than leaving it silently stale.

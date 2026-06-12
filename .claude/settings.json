@@ -22,17 +22,5 @@
       "Bash(npx husky:*)",
       "Bash(npx lint-staged:*)"
     ]
-  },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo 'Reminder: if code/config changed this turn, verify docs are in sync (doc-sync table in docs/development.md, README, docs/).'"
-          }
-        ]
-      }
-    ]
   }
 }

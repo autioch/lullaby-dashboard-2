@@ -61,9 +61,7 @@ step with the tree green, and stop and ask rather than invent a product decision
       (snapshot/screenshot). Use the **firebase** MCP to inspect Firestore or validate
       `tools/firestore.rules` when a step touches data or rules. Flag explicitly anything that can
       only be confirmed on real TV hardware.
-   4. **Sync docs in the same step.** Apply every doc update the step names (per the dev guide's
-      **Keeping docs in sync** map) so code and prose never disagree. Append `✅` to the step's
-      heading in the plan to mark it done.
+   4. **Mark the step done.** Append `✅` to the step's heading in the plan.
    5. **Commit and push via `/ship`.** Stage just this step's files (`git add <paths>`), then run
       `/ship` — the canonical commit+push action — with the step's Conventional Commits subject (its
       intent). `/ship` commits the staged set (what & why body + the `Co-Authored-By` trailer), runs
@@ -85,16 +83,16 @@ step with the tree green, and stop and ask rather than invent a product decision
    `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
    diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
 
-6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented`, completing
-   the remaining items in the plan's **Docs to update** list — in a final commit + push.
+6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented` — in a final
+   commit + push.
 
 7. **Write the implementation record.** Copy
    [`docs/features/_TEMPLATE_implement.md`](../../docs/features/_TEMPLATE_implement.md) to
    `docs/features/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
    plan**) and fill every section per the template, from this run's facts. Keep it terse — every
-   claim must trace to a commit or to the plan's step state; later skills consume it (`/reconcile`,
-   ship / PR flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold
-   into the step-6 close-out commit).
+   claim must trace to a commit or to the plan's step state; later skills consume it (ship / PR
+   flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the
+   step-6 close-out commit).
 
 8. **Inform** the user of the implementation-record path, the gate result, and anything flagged for
    real-TV confirmation. No report or summary.
@@ -102,7 +100,7 @@ step with the tree green, and stop and ask rather than invent a product decision
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, doc-sync, don't-duplicate, ask-don't-invent. Follow the plan and spec
+  TV / Chrome 87, don't-duplicate, ask-don't-invent. Follow the plan and spec
   **exactly**: don't add scope, skip steps, or reorder.
 - **Whole-plan autopilot:** with no `step` argument, execute every remaining step end-to-end,
   pausing only for a gate failure you can't fix or a genuinely blocking question. With
@@ -111,4 +109,3 @@ step with the tree green, and stop and ask rather than invent a product decision
   (`--no-verify`) except a real emergency the user authorizes.
 - Use MCP as needed: **context7** for current stack APIs, **firebase** for Firestore / rules,
   **chrome-devtools** / preview for TV verification. Don't guess an API — look it up.
-- If a doc is wrong but out of scope to fix, say so rather than leaving it silently stale.

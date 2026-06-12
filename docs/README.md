@@ -11,7 +11,7 @@ One file per domain of the product lifecycle. Each is referred to when its domai
 | [05_design.md](05_design.md)                       | Dashboard / UI specification                                          |
 | [06_roadmap.md](06_roadmap.md)                     | MVP scope & what's next                                               |
 | [07_data-architecture.md](07_data-architecture.md) | Firestore → repository → store → component (layering authority)       |
-| [development.md](development.md)                   | Development rules — source layout, conventions, commands, doc-sync    |
+| [development.md](development.md)                   | Development rules — source layout, conventions, commands              |
 | [feature-workflow.md](feature-workflow.md)         | Feature pipeline — `/spec` → `/plan` → `/implement`, roles, artifacts |
 | [features/](features/)                             | Templates & per-feature artifacts only (no docs)                      |
 
@@ -20,4 +20,3 @@ One file per domain of the product lifecycle. Each is referred to when its domai
 - **Feature planning** — `01`, `04`, `05`, `07`, plus `03` and `06` for context; then `feature-workflow.md`.
 - **UI / UX / design** — `04`, `05`, then `01` and `03`.
 - **Coding / bugfixing** — `07` (data flow) and `development.md`.
-- **Maintenance** — the doc-sync map in `development.md` says which docs to update with a change.

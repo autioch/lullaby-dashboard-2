@@ -3,7 +3,7 @@
 > **Artifact:** `NN_spec_<short-name>.md` · **Roles:** Product Owner
 > **Status:** `draft` | `agreed` | `implemented`
 > **Owner:** <name> · **Created:** YYYY-MM-DD · **Last updated:** YYYY-MM-DD
-> **Related:** [plan](NN_plan_<short-name>.md) · [implement](NN_implement_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [reconcile](NN_reconcile_<short-name>.md) · [retro](NN_retro_<short-name>.md)
+> **Related:** [plan](NN_plan_<short-name>.md) · [implement](NN_implement_<short-name>.md) · [adjust](NN_adjust_<short-name>-r1.md) · [retro](NN_retro_<short-name>.md)
 
 The agreed contract for this feature — _what_ and _why_, owned by the **Product Owner** and
 settled before any code. Precise and unambiguous; this is the source of truth the rest of the
