@@ -65,6 +65,7 @@ describes only the current UI.
 - [ ] User accounts
 - [ ] Multi-household support
 - [ ] Social features
+- [ ] Editor code imported dynamically or moved to a separate page
 
 ## Product & onboarding
 
