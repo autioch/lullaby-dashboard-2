@@ -23,8 +23,10 @@ decision only the user can make — ask.
 1. **Ground yourself first.** From the pipeline guide's grounding reads, lean on the product / design docs
    (`01_vision`, `04_design-principles`, `05_design`, `07_data-architecture`) and the
    **Architecture** + **Adding a feature** sections of the dev guide. Skim existing specs in
-   `docs-journal/` to avoid duplication and pick the next `NN`. Read the actual code (record
-   types in `src/database/*`, the relevant stores / repos / components) before assuming how
+   `docs-journal/` to avoid duplication and pick the next `NN`. **If a spike exists for this idea
+   in `docs-spikes/`, read it first** — it carries the de-risked approach, verdict, and
+   suggested scope; reuse its `<short-name>` so the thread stays traceable. Read the actual code
+   (record types in `src/database/*`, the relevant stores / repos / components) before assuming how
    something works.
 
 2. **If `$ARGUMENTS` is empty**, ask the user what feature they want to spec, then continue.

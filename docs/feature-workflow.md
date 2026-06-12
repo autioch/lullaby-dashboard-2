@@ -1,7 +1,7 @@
 # Feature Workflow
 
 The feature pipeline — the chain of slash commands that turns an idea into shipped, recorded
-code. Every pipeline command (`/spec`, `/plan`, `/implement`, `/adjust`, `/retro`, and the
+code. Every pipeline command (`/spike`, `/spec`, `/plan`, `/implement`, `/adjust`, `/retro`, and the
 lightweight `/tweak`) **reads this file first**, then does its own job. Shared rules and the
 artifact convention live here; command-specific behavior lives in each command file. For how this
 fits the wider dev workflow, see **"Adding a feature"** in [development.md](development.md).
@@ -9,16 +9,20 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
 ## Pipeline
 
 ```text
-/spec  →  /plan  →  /implement        idea → contract → plan → code → record
-                       ├─ review:  /verify · /code-review · /simplify · /security-review
-                       └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
+(/spike) → /spec  →  /plan  →  /implement   idea → de-risk → contract → plan → code → record
+                        ├─ review:  /verify · /code-review · /simplify · /security-review
+                        └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
 /retro       product-owner review of the iteration; decide what's next
 
+/spike       optional pre-spec lane: an investigation-only feasibility & discovery pass that
+             de-risks an idea (tech viability on the TV/Chrome 87 floor, UX, product sense) and
+             ends in a verdict — before committing to a spec
 /tweak       lightweight lane: spec + plan + implement in one pass, one artifact — for changes
              too small for the full pipeline (escalates to /spec if they grow)
 ```
 
-- **`/spec`** — elicits and writes the spec (the contract).
+- **`/spike`** — _(optional)_ investigates an idea and records a verdict; no code, no spec.
+- **`/spec`** — elicits and writes the spec (the contract); reads a prior spike if one exists.
 - **`/plan`** — turns an agreed spec into an ordered, independently committable plan.
 - **`/implement`** — executes the plan step by step (commit + validate each), runs the review
   gate, writes the implementation record.
@@ -37,14 +41,20 @@ Each command forces the role(s) that own its step and emits **exactly one** arti
 by every artifact for that feature. **Each template is the single source for its artifact's
 sections** — commands copy and fill it; they don't restate its structure.
 
-| Command      | Artifact                            | Role(s)                                        | Status                                     |
-| ------------ | ----------------------------------- | ---------------------------------------------- | ------------------------------------------ |
-| `/spec`      | `NN_spec_<short-name>.md`           | Product Owner                                  | `draft` → `agreed` → `implemented`         |
-| `/plan`      | `NN_plan_<short-name>.md`           | Product Owner · Solution Architect / Tech Lead | `draft` → `ready` → `in-progress` → `done` |
-| `/implement` | `NN_implement_<short-name>.md`      | Senior Fullstack Developer                     | terminal record (no lifecycle)             |
-| `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N) | the full team                                  | terminal record (no lifecycle)             |
-| `/retro`     | `NN_retro_<short-name>.md`          | Product Owner (lead), all roles weigh in       | terminal record (no lifecycle)             |
-| `/tweak`     | `NN_tweak_<short-name>.md`          | Product Owner · Tech Lead · Senior Developer   | terminal record (no lifecycle)             |
+| Command      | Artifact                               | Role(s)                                               | Status                                     |
+| ------------ | -------------------------------------- | ----------------------------------------------------- | ------------------------------------------ |
+| `/spike`     | `docs-spikes/NN_spike_<short-name>.md` | Solution Architect / Tech Lead (lead) · Product Owner | terminal record + **Verdict**              |
+| `/spec`      | `NN_spec_<short-name>.md`              | Product Owner                                         | `draft` → `agreed` → `implemented`         |
+| `/plan`      | `NN_plan_<short-name>.md`              | Product Owner · Solution Architect / Tech Lead        | `draft` → `ready` → `in-progress` → `done` |
+| `/implement` | `NN_implement_<short-name>.md`         | Senior Fullstack Developer                            | terminal record (no lifecycle)             |
+| `/adjust`    | `NN_adjust_<short-name>-rN.md` (×N)    | the full team                                         | terminal record (no lifecycle)             |
+| `/retro`     | `NN_retro_<short-name>.md`             | Product Owner (lead), all roles weigh in              | terminal record (no lifecycle)             |
+| `/tweak`     | `NN_tweak_<short-name>.md`             | Product Owner · Tech Lead · Senior Developer          | terminal record (no lifecycle)             |
+
+**Spikes are the one exception to the `NN` rule.** They live in the sibling `docs-spikes/` folder
+(not `docs-journal/`) with their **own local `NN` sequence**, kept separate because many never
+become features and must not burn feature numbers. When a spike graduates, `/spec` allocates the
+next **feature** `NN` and **reuses the spike's `<short-name>`**, keeping the thread traceable.
 
 Keep the spec and plan current while live (update the spec when the build deviates, the plan when
 the approach changes). The implementation record, adjustments, and retro are written once and
@@ -58,7 +68,7 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - [CLAUDE.md](../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded).
 - [development.md](development.md) — architecture, source layout, conventions, command table.
 - [07_data-architecture.md](07_data-architecture.md) — the layering authority.
-- `/spec` product/design context: [01_vision.md](01_vision.md), [04_design-principles.md](04_design-principles.md), [05_design.md](05_design.md).
+- `/spec` product/design context: [01_vision.md](01_vision.md), [04_design-principles.md](04_design-principles.md), [05_design.md](05_design.md). Also read a prior spike for the idea, if one exists in `docs-spikes/` — it carries the de-risked approach and verdict.
 - The actual source the work touches — record types in `src/database/*`, the relevant stores / repos / components.
 
 ## Shared rules
