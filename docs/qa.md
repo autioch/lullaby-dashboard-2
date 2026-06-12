@@ -1,13 +1,12 @@
 # QA & Testing Guide
 
 The single source of truth for **how to test a change** in lullaby-dashboard-2. Read it before
-verifying any work; the pipeline commands (`/implement`, `/tweak`, `/adjust`, `/verify`) and the
-plan/spec templates point here instead of restating it.
+verifying; the pipeline commands (`/implement`, `/tweak`, `/adjust`, `/verify`) and the plan/spec
+templates point here instead of restating it.
 
-It answers three questions: **what** gets tested, **how** for this stack, and **how much** for a
-given change. Sits beside the [doc-sync map](development.md#keeping-docs-in-sync) in the dev guide —
-same change-type rows: that map says _which docs to update_, the [test-by-scope](#test-by-scope)
-table here says _what to test_.
+It answers **what** gets tested, **how** for this stack, and **how much** for a given change. It's
+the sibling of the [doc-sync map](development.md#keeping-docs-in-sync) — same change-type rows: the
+map says _which docs to update_, the [test-by-scope](#test-by-scope) table here says _what to test_.
 
 ## Reality of testing here
 

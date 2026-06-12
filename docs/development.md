@@ -1,21 +1,20 @@
 # Development Guide
 
-Deep guidance for **writing or changing code** in lullaby-dashboard-2. The always-loaded
-[CLAUDE.md](../CLAUDE.md) holds the high-level rules; this file holds the detail you need only
-while implementing. Read it before touching `src/` or `tools/`.
+Detail for **writing or changing code** in lullaby-dashboard-2. [CLAUDE.md](../CLAUDE.md) holds the
+high-level rules; this file holds the implementation detail. Read it before touching `src/` or
+`tools/`.
 
 ## Architecture
 
-[`docs/07_data-architecture.md`](07_data-architecture.md) is the **authority** on the layering
-and each layer's responsibilities — read it before non-trivial data work. In short:
+[`docs/07_data-architecture.md`](07_data-architecture.md) is the **authority** on the layering and
+each layer's responsibilities — read it before non-trivial data work.
 
 ```text
 Firestore → Repository (src/database/) → Zustand store (src/stores/) → React component
 ```
 
-Repositories are the only code that touches the Firestore SDK; stores hold state + business
-logic; components are presentation-only. Beyond that doc, the operational rules specific to
-this repo:
+Repositories are the only Firestore-SDK callers; stores hold state + business logic; components are
+presentation-only. Repo-specific operational rules on top of that doc:
 
 - **Two Firebase paths:** client SDK (`src/database/db.ts`, `PUBLIC_FIREBASE_*`) for realtime
   data; `firebase-admin` in `src/pages/api/` for server-only work — API routes set
@@ -106,17 +105,11 @@ pointers, so they can't go stale the way prose would):
 | Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)             |
 | Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
 
-New features start with no design — derive the spec through Q&A first, then run the pipeline:
-`/spec` → `/plan` → `/implement`, with `/adjust` for post-review change requests and `/retro` to
-close the iteration. An unproven idea can first go through the optional `/spike` — an
-investigation-only feasibility & discovery pass that records a verdict under `docs-spikes/`
-and feeds `/spec`. For a change too small to justify the full pipeline,
-`/tweak` does the Q&A, plan, and code in one pass and records a single artifact. The full
-pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
-[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs-journal/`. Every pipeline
-command delegates its commit+push to `/ship` — the single, canonical commit+push action (leans on
-the husky hooks for validation; writes no artifact) — which is also the **required** path for ad-hoc
-commits ("stage-all, commit, push"); never hand-roll git for a real commit.
+Features start with no design — derive the spec through Q&A first, then run the pipeline (`/spec` →
+`/plan` → `/implement`, plus optional `/spike`, lightweight `/tweak`, `/adjust`, `/retro`).
+Artifacts land in `docs-journal/`. Full guide — chain, roles, artifacts, shared rules — in
+[feature-workflow.md](feature-workflow.md). Commit only via `/ship` (the canonical commit+push, runs
+the husky hooks, writes no artifact); never hand-roll git for a real commit.
 
 ## Keeping docs in sync
 
@@ -128,12 +121,13 @@ Two doc classes, two rules:
   in their own sibling folder (kept out of `docs/`), capture the drift from the original spec,
   and are never rewritten to chase the code.
 
-Durable docs stay current two ways. **Per commit (scoped):** when a commit changes code or
-config, the _same commit_ updates the durable docs that change affects — use the map below to
-know which. This is cheap and local: update only what the change touches, not every doc.
-**Per iteration (full):** `/retro` runs one repo-wide **reconcile** that audits all durable
-docs against the actual code and fixes anything the per-commit passes missed. The per-commit
-sync is primary; the retro reconcile is the backstop.
+Durable docs stay current two ways:
+
+- **Per commit (scoped, primary):** a commit that changes code or config updates the durable docs
+  that change affects, in the _same commit_ — use the map below to find which. Local and cheap:
+  touch only what the change touches.
+- **Per iteration (full, backstop):** `/retro` runs one repo-wide **reconcile** auditing all durable
+  docs against the code, fixing whatever the per-commit passes missed.
 
 **Doc-sync map** — when you change… update these:
 

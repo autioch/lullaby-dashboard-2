@@ -21,7 +21,6 @@ Core rules:
 
 - Components are presentation-only; **all** business logic lives in stores; **all** Firestore
   access is isolated in repositories.
-- State flows Firestore → Repository → Zustand → React.
 - **Never manually mutate Zustand after a write** — let the `onSnapshot` subscription flow the
   change back in.
 

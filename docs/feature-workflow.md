@@ -13,12 +13,6 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
                         ├─ review:  /verify · /code-review · /simplify · /security-review
                         └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
 /retro       product-owner review of the iteration; decide what's next
-
-/spike       optional pre-spec lane: an investigation-only feasibility & discovery pass that
-             de-risks an idea (tech viability on the TV/Chrome 87 floor, UX, product sense) and
-             ends in a verdict — before committing to a spec
-/tweak       lightweight lane: spec + plan + implement in one pass, one artifact — for changes
-             too small for the full pipeline (escalates to /spec if they grow)
 ```
 
 - **`/spike`** — _(optional)_ investigates an idea and records a verdict; no code, no spec.
@@ -117,12 +111,11 @@ Pipeline-specific notes on top of qa.md:
 ## Committing
 
 **`/ship`** is the single, canonical commit+push action and the **required** path for every commit —
-every pipeline command delegates its commit here instead of hand-rolling git, and so does any ad-hoc
-"stage everything and push". Never hand-roll `git add`/`commit`/`push` for a real commit. It commits the **already-staged** set when a step has staged just its files (otherwise
-`git add -A`), with a Conventional Commits subject + a what & why body + the `Co-Authored-By`
-trailer, then pushes. The husky hooks are the gate (pre-commit `lint-staged`, pre-push
-`npm run ci`) and run automatically; never `--no-verify`.
+every pipeline command delegates here, as does any ad-hoc "stage everything and push." Never
+hand-roll `git add`/`commit`/`push` for a real commit.
 
-So a pipeline step stages its own files (`git add <paths>`) for a per-step commit, then runs
-`/ship` to commit + push; `/ship` keeps the commit mechanics (message format, trailer, hooks) in
-one place. It's a general git utility, not a pipeline stage, so it writes no artifact.
+A step stages its own files (`git add <paths>`) for a per-step commit, then runs `/ship`; `/ship`
+commits the **already-staged** set (else `git add -A`) with a Conventional Commits subject, a what &
+why body, and the `Co-Authored-By` trailer, then pushes. The husky hooks are the gate (pre-commit
+`lint-staged`, pre-push `npm run ci`) and run automatically — never `--no-verify`. `/ship` keeps the
+commit mechanics in one place; it's a git utility, not a pipeline stage, and writes no artifact.
