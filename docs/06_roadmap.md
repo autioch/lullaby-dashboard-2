@@ -1,10 +1,16 @@
 # Roadmap
 
-The shipped MVP scope, what it deliberately leaves out, and the ideas queued for later.
+The prioritized backlog: every candidate change, grouped by type of change.
 
-## MVP
+> **`/steer` maintains this doc** as its single writer. Within each group, items are ordered by
+> priority (top = pick next); `/steer` adds new items, reprioritizes, and at the top of each loop
+> marks shipped picks `[x]` (reconciled against `docs-journal/`). Ordering _is_ the priority
+> signal — no per-item estimates. The order things were actually built, and why, lives in
+> `docs-journal/`.
 
-### Included
+## Core dashboard
+
+The shipped MVP — the working dashboard.
 
 - [x] Mission selection
 - [x] Objective completion
@@ -14,41 +20,7 @@ The shipped MVP scope, what it deliberately leaves out, and the ideas queued for
 - [x] Per-objective colors
 - [x] Content editing (missions / groups / objectives)
 
-> Themes, mission timer, best times, and completion celebration were specced for the MVP but are
-> **not built** — moved to [Future → Dashboard design](#dashboard-design-specced-not-yet-built).
-> The `useTimerStore` exists but is wired only to Restart; nothing starts, completes, or displays a
-> run.
-
-### Excluded
-
-Deliberate non-goals for the MVP — decisions, not a to-do list.
-
-- Authentication
-- Accounts
-- Social features
-- User-created themes
-- AI-generated content
-- Monetization
-- Multi-household support
-- In-progress state of an objective
-- History tracking
-
-### Analytics intent
-
-The timer and best-times features exist to:
-
-- Measure improvement
-- Encourage routine optimization
-- Encourage gradual improvement
-- Support future analytics
-
-## Future
-
-> **`/steer` maintains this backlog.** Within each group, items are ordered by priority (top = pick
-> next); `/steer` adds new items here, reprioritizes, and logs each grooming run in the
-> [Decision log](#decision-log) below. Ordering _is_ the priority signal — no per-item estimates.
-
-### Dashboard design (specced, not yet built)
+## Dashboard design (specced, not yet built)
 
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
 describes only the current UI.
@@ -68,8 +40,10 @@ describes only the current UI.
 - [ ] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
       message marks completion).
 - [ ] **Mission-name header** — show the active mission's name on the dashboard.
+- [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
+      system above).
 
-### Tooling & infrastructure
+## Tooling & infrastructure
 
 - [ ] Add Dependabot
 - [ ] Add Sentry
@@ -78,7 +52,7 @@ describes only the current UI.
 - [x] Add Vitest + a few tests on stores/hydration logic
 - [ ] Component-test + end-to-end layers — see qa.md "deferred gaps"
 
-### Features & UX
+## Features & UX
 
 - [ ] Dark/light mode
 - [ ] Animations
@@ -86,14 +60,20 @@ describes only the current UI.
 - [ ] Display a task's completion time (e.g. when the cat got its medicine and can next be fed)
 - [ ] Complete the full Firebase authorization
 - [ ] AI: auto-suggest groups and objectives from the mission description
+- [ ] In-progress state of an objective
+- [ ] History tracking
+- [ ] User accounts
+- [ ] Multi-household support
+- [ ] Social features
 
-### Product & onboarding
+## Product & onboarding
 
 - [ ] Product landing/description page (free)
 - [ ] Getting-started guide for new users
 - [ ] Default lists for new users
+- [ ] Monetization
 
-### Reliability & tech debt
+## Reliability & tech debt
 
 - [ ] **Security-review the shipped auth/session/admin-write code** — the content-editing Step-7
       security pass on brand-new `setSession` / `requireSession` + admin write routes never ran
@@ -106,22 +86,10 @@ describes only the current UI.
 - [ ] Handle the case where the app is redeployed while a user still has an old version open
 - [ ] Hunt down logic living in components or hooks and move it into stores or testable utils
 
-### Process & pipeline
+## Process & pipeline
 
 Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement`→`/adjust`→`/retro` commands), surfaced in the feature 01 retro.
 
 - [ ] Add a distinct UI/UX design step before/within `/spec` — MVP-first, complexity driven by how the user operates the app (TV-readability lens), not derived from the data shape (today only the "MVP-first" wording exists, not a design pass)
 - [ ] Add a distinct, non-skippable security/maintenance step after `/implement` (today it's only a per-trigger `/security-review` reference inside the review step, which can be silently skipped)
 - [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
-
-## Decision log
-
-High-level record of `/steer` grooming runs — newest first. One line per run: what was picked, plus
-any notable additions or re-prioritizations. The detailed history lives in git; this is the
-JIRA-epic-level trail.
-
-- 2026-06-12 — Picked **security-review the shipped auth/session/admin-write code** (retro 01's #1,
-  riskiest open gap, never run) → routes to `/security-review`. Folded the three un-acted retro 01
-  next-actions into _Reliability & tech debt_ (security review, real-TV/auth walk, dead attach/remove
-  code removal); the two process next-actions were already tracked under _Process & pipeline_.
-- 2026-06-12 — Backlog reframed as a `/steer`-maintained prioritized list; Decision log established (bootstrap — no item picked).

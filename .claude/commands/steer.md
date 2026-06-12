@@ -26,8 +26,11 @@ just appeal. Keep it MVP-first. Never decide the pick alone — converge with th
 1. **Ground yourself.** Read [`docs/06_roadmap.md`](../../docs/06_roadmap.md) — the living backlog.
    Don't re-explore the whole repo.
 
-2. **Gather candidates,** then dedupe against what's already shipped:
-   - **Roadmap** — every open (`[ ]`) item across the Future buckets.
+2. **Reconcile done-state, then gather candidates.** First, mark `[x]` any open roadmap item whose
+   work has since shipped — reconcile against `docs-journal/` (a terminal artifact for the item
+   means it's done). `/steer` is the **single writer** of the roadmap, so this is where done-marking
+   happens; no other command checks the box. Then gather the open candidates:
+   - **Roadmap** — every open (`[ ]`) item across the buckets.
    - **Open `/retro` next-actions** — the _Suggested next actions_ / _Decision_ of any
      `docs-journal/NN_retro_*.md` not yet acted on.
    - **Un-graduated spikes** — `docs-spikes/NN_spike_*.md` with a proceed verdict
@@ -48,10 +51,11 @@ just appeal. Keep it MVP-first. Never decide the pick alone — converge with th
 5. **Converge on one.** Settle on the **single** highest-value next item. (The shared _Converge
    before recording_ rule — agree before writing.)
 
-6. **Update the roadmap (`docs/06_roadmap.md`).** Reorder items so each bucket is priority-ordered
-   (top = next), add any new candidates in priority position, and append one dated line to the
-   **Decision log** — what was picked, plus notable additions / re-prioritizations. Ordering is the
-   priority signal; keep it lightweight. Stage it (`git add`) and run `/ship` (own commit).
+6. **Update the roadmap (`docs/06_roadmap.md`).** Apply the done-marks from step 2, reorder items so
+   each bucket is priority-ordered (top = next), and add any new candidates in priority position.
+   Ordering is the priority signal; keep it lightweight — no Decision log, no estimates (the picked
+   item's history lands in `docs-journal/` once it ships). Stage it (`git add`) and run `/ship` (own
+   commit).
 
 7. **Hand off.** Recommend the next command for the pick: **`/spike`** if it's unproven, **`/spec`**
    if it's a real feature, **`/tweak`** if it's small and well-bounded. `/steer` stops here — it
@@ -62,9 +66,9 @@ just appeal. Keep it MVP-first. Never decide the pick alone — converge with th
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
-- **No journal artifact.** `/steer`'s output is the updated `docs/06_roadmap.md` (backlog order +
-  Decision-log entry) — it is the one pipeline command that maintains a durable doc instead of
-  emitting a `docs-journal/NN_*` record. Don't create one.
+- **No journal artifact.** `/steer`'s output is the updated `docs/06_roadmap.md` (done-marks +
+  backlog order) — it is the one pipeline command that maintains a durable doc instead of emitting a
+  `docs-journal/NN_*` record. Don't create one.
 - **No app code, no spec/plan content.** `/steer` selects and grooms; `/spike` · `/spec` · `/plan`
   own the rest.
 - **Pick one.** One run → one next item. No batches, no sprints, no time-boxes — single-developer

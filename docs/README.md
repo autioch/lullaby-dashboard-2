@@ -9,7 +9,7 @@ One file per domain of the product lifecycle. Each is referred to when its domai
 | [03_user-scenarios.md](03_user-scenarios.md)       | Concrete usage flows (`S1`–`S8`) — also the manual regression script  |
 | [04_design-principles.md](04_design-principles.md) | Guiding principles (Shared First, TV First, …)                        |
 | [05_design.md](05_design.md)                       | Dashboard / UI specification                                          |
-| [06_roadmap.md](06_roadmap.md)                     | MVP scope & what's next                                               |
+| [06_roadmap.md](06_roadmap.md)                     | Prioritized backlog (`/steer`-maintained)                             |
 | [07_data-architecture.md](07_data-architecture.md) | Firestore → repository → store → component (layering authority)       |
 | [development.md](development.md)                   | Development rules — source layout, conventions, commands              |
 | [feature-workflow.md](feature-workflow.md)         | Feature pipeline — `/spec` → `/plan` → `/implement`, roles, artifacts |

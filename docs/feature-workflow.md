@@ -40,8 +40,8 @@ sections and how to write them** (terse, factual, every claim tracing to a commi
 and fill it; they don't restate its structure or its writing guidance.
 
 **`/steer` is the exception** — it writes **no** journal artifact; its output is the durable backlog
-`docs/06_roadmap.md` (priority order + a Decision-log entry), since a per-run snapshot would only
-rot. It is the one pipeline command that maintains a durable doc instead of emitting a record.
+`docs/06_roadmap.md` (priority order, with shipped picks marked done), since a per-run snapshot would
+only rot. It is the one pipeline command that maintains a durable doc instead of emitting a record.
 
 | Command      | Artifact                                                     | Role(s)                                               | Status                                     |
 | ------------ | ------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------ |
