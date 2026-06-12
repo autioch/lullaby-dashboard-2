@@ -72,7 +72,10 @@ reads `tools/configuration.json`), `firestore.rules` (security rules). `firebase
 - **Path alias:** use `@/*` (→ `./src/*`) instead of long relative imports.
 - **State naming:** Zustand stores are `use<Name>Store`; some expose a selector hook (e.g.
   `useMission()`). Shared UI flags live in the controls store, not in components.
-- **Persistence:** use the `lsWrapper` helper in `src/utils/ls.ts` for localStorage.
+- **Persistence:** use the `lsWrapper(key, version)` helper in `src/utils/ls.ts` for localStorage.
+  `version` is a per-key storage-schema token, decoupled from the package version — bump it (in the
+  store's call) only when that key's persisted shape changes incompatibly; the bump discards the old
+  data (no migration). Rule lives in the helper's doc-comment.
 - **i18n:** add strings to the component's `translations.ts` (or `src/i18n/translations.ts`);
   read the active language via `useLanguageStore`.
 - **Tests:** co-locate Vitest unit tests as `*.test.ts` beside the code. They run in Node (off the

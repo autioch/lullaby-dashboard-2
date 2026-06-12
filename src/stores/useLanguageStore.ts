@@ -7,7 +7,7 @@ type DashboardState = {
   setLanguage(language: AppLanguage): void;
 };
 
-const ls = lsWrapper<AppLanguage>('language');
+const ls = lsWrapper<AppLanguage>('language', 2);
 
 export const useLanguageStore = create<DashboardState>((set) => ({
   language: ls.load() ?? DEFAULT_LANGUAGE,

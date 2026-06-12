@@ -45,7 +45,7 @@ type MissionMethods = {
   resetState(): void;
 };
 
-const ls = lsWrapper<MissionLSState>('mission');
+const ls = lsWrapper<MissionLSState>('mission', 2);
 
 export function useMission() {
   return useMissionStore((state) =>

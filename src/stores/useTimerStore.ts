@@ -23,7 +23,7 @@ type TimerRunState = {
   lastResumedAtMs: number | null;
 };
 
-const ls = lsWrapper<TimerState>('timer');
+const ls = lsWrapper<TimerState>('timer', 2);
 
 export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
   timerRunsByList: {},

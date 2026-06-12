@@ -12,7 +12,7 @@ type AuthMethods = {
   deauthenticate(): void;
 };
 
-const ls = lsWrapper<boolean>('auth');
+const ls = lsWrapper<boolean>('auth', 2);
 
 // Dev-only escape hatch: set PUBLIC_SKIP_AUTH=true in .env to bypass the
 // password gate. Off by default, so production still gates and the gate

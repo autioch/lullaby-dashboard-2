@@ -39,15 +39,11 @@
 - Add Vitest + a few tests on stores/hydration logic
 - Add license, codeowners
 
-- extract API communication layer at some point
 - dark/light mode
-- remove bgColor
 - animations
-- check supabase + postgres
 - checklist - dodać opcję resetowania pojedynczej opcji, uzyskując w ten sposób listę chores do powtarzania
 - dodać opcję wyświetlania czasu wykonania zadania (kiedy kot dostał lek i może dostać jedzenie)
 - let's implement the complete Firebase authorization
-- the local storage util tracks own version; should it be bound with the package version? When the package version should be updated then?
 - AI - autosugest groups and objectives based on mission descriptiob
 - strona z opisem produktu (darmowy)
 - your guide dla nowych użytkowników
