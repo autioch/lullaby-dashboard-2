@@ -9,12 +9,15 @@ The shipped MVP scope, what it deliberately leaves out, and the ideas queued for
 - [x] Mission selection
 - [x] Objective completion
 - [x] Progress tracking
-- [x] Remaining objectives
+- [x] Remaining objectives (completed are de-emphasized in place)
 - [x] Status messages
-- [x] Themes
-- [x] Mission timer
-- [x] Completion celebration
-- [x] Best times
+- [x] Per-objective colors
+- [x] Content editing (missions / groups / objectives)
+
+> Themes, mission timer, best times, and completion celebration were specced for the MVP but are
+> **not built** — moved to [Future → Dashboard design](#dashboard-design-specced-not-yet-built).
+> The `useTimerStore` exists but is wired only to Restart; nothing starts, completes, or displays a
+> run.
 
 ### Excluded
 
@@ -40,6 +43,27 @@ The timer and best-times features exist to:
 - Support future analytics
 
 ## Future
+
+### Dashboard design (specced, not yet built)
+
+Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
+describes only the current UI.
+
+- [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
+      status vocabulary. Initial themes:
+  - Space — Mission Control · Crew Boarding · Launch Ready · Orbit Achieved
+  - Minecraft Adventure — Village Preparation · Supplies Ready · Entering Cave · Expedition Complete
+  - Pirate Voyage — Crew Boarding · Raise the Sails · Leaving Port · Treasure Expedition Complete
+- [ ] **Mission timer display** — show mission duration (`useTimerStore` exists but isn't started or
+      shown).
+- [ ] **Best completion time / records** — surface the fastest run per mission (computed by the
+      unwired `completeRun`, never displayed).
+- [ ] **Optional deadline countdown**.
+- [ ] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
+      (today they're only de-emphasized in place).
+- [ ] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
+      message marks completion).
+- [ ] **Mission-name header** — show the active mission's name on the dashboard.
 
 ### Tooling & infrastructure
 

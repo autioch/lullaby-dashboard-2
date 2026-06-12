@@ -1,65 +1,43 @@
 # Dashboard Specification
 
+What the dashboard renders **today**. Design that was specced but isn't built yet — theme system,
+mission timer, deadline, records, completed-objective collapse — lives in the roadmap's Future
+section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-not-yet-built).
+
 ## Layout
 
-### Header
+`Dashboard.tsx` lays out three regions — main, aside, footer:
 
-Mission name.
+### Main — objective list
 
-### Progress Area
+- Objective groups in mission order; hidden groups and hidden objectives are skipped.
+- Each objective row toggles done on click/tap — shows a ✓ and a de-emphasis style
+  (`c-objective--checked`) when checked.
+- Per-objective color comes from the `colors` collection.
+- Completed objectives stay in place — de-emphasized only, **not** reordered or collapsed.
 
-Large visual progress indicator.
+### Aside
 
-Visible from distance.
+- **Video** — YouTube embed, shown only when the mission has a `youtubeUrl`.
+- **Clock** — wall-clock `HH:MM`, font auto-sized to its container.
+- **Menu** — icon row: Mission select · Restart (confirm → reset mission + timer state) · Edit
+  (content editor) · Settings.
 
-### Status Message
+### Footer — progress bar
 
-Generated from progress.
+- Visual track + fill; fill width = percent complete.
+- Generated status message keyed off percent: none → begin (<25) → middle (<50) → most (<90) →
+  almost (<100) → done (100).
+- A `completed / total / percent` count.
 
-### Remaining Objectives
+## Overlays
 
-Only remaining objectives are displayed by default.
+- **Mission select** — pick the active mission.
+- **Settings** (app options) — switch language (en / pl).
+- **Content editor** — create / rename / delete / reorder missions, objective groups, and
+  objectives (parent-only, via the write API).
 
-Completed objectives should:
+## Theming today
 
-- Move to bottom
-- Collapse
-- Fade visually
-
-### Timing
-
-- Mission duration
-- Optional deadline countdown
-
-### Records
-
-- Best completion time
-
-## Theme System
-
-Themes affect presentation only.
-
-Themes must never alter mission logic.
-
-### Initial Themes
-
-#### Space
-
-- Mission Control
-- Crew Boarding
-- Launch Ready
-- Orbit Achieved
-
-#### Minecraft Adventure
-
-- Village Preparation
-- Supplies Ready
-- Entering Cave
-- Expedition Complete
-
-#### Pirate Voyage
-
-- Crew Boarding
-- Raise the Sails
-- Leaving Port
-- Treasure Expedition Complete
+Presentation theming is limited to **per-objective colors** (the `colors` collection). The themed
+mission vocabularies and presentation skins once specced here are not built — see the roadmap.
