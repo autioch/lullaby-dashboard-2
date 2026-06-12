@@ -1,11 +1,14 @@
 .c-dashboard {
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .c-dashboard__content {
   height: 100%;
   width: 100%;
+  position: relative;
+  z-index: 1;
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) 25%;

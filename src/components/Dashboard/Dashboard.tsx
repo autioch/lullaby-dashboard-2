@@ -9,6 +9,7 @@ import { useControlsStore } from '@/stores/useControlsStore';
 import { Menu } from '../Menu/Menu';
 import { MissionSelect } from '@/components/MissionSelect/MissionSelect';
 import { ContentEditor } from '@/components/ContentEditor/ContentEditor';
+import { CompletionCelebration } from '@/components/CompletionCelebration/CompletionCelebration';
 
 export function Dashboard() {
   const missionId = useMissionStore((state) => state.missionId);
@@ -18,6 +19,7 @@ export function Dashboard() {
 
   return (
     <div className="c-dashboard">
+      <CompletionCelebration />
       <div className="c-dashboard__content">
         <div className="c-dashboard__main">
           <ObjectiveList />

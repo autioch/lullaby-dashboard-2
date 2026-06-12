@@ -79,7 +79,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
 - **Done-check:** `npm run ci` green (**`compat/compat` matters — client code**); `npm run build`
   succeeds. (Component renders nowhere yet — visual check is Step 2.)
 
-### Step 2 — Mount behind the dashboard content · phase: `wire`
+### Step 2 — Mount behind the dashboard content · phase: `wire` ✅
 
 - **Goal:** Render the celebration as a full-bleed layer **behind** `c-dashboard__content` so the
   list, Menu, Clock, Restart, and footer stay visible, clickable, and focusable.

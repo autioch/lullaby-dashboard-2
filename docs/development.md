@@ -96,14 +96,15 @@ reads `tools/configuration.json`), `firestore.rules` (security rules). `firebase
 **Copy from** — the canonical example for each layer (open the file, mirror the pattern;
 pointers, so they can't go stale the way prose would):
 
-| Building…                  | Copy the pattern from                                                                                     |
-| -------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Overlay panel / menu UI    | `src/components/AppOptions/` (`Overlay`+`Panel`+`Layout`, module-top `getState()`, `Button`/`Typography`) |
-| UI flag (open/close)       | `src/stores/useControlsStore.ts`                                                                          |
-| Orchestration / data store | `src/stores/useMissionStore.ts`                                                                           |
-| Client repository (read)   | `src/database/missionRepository.ts`                                                                       |
-| Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)             |
-| Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                           |
+| Building…                  | Copy the pattern from                                                                                                            |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Overlay panel / menu UI    | `src/components/AppOptions/` (`Overlay`+`Panel`+`Layout`, module-top `getState()`, `Button`/`Typography`)                        |
+| UI flag (open/close)       | `src/stores/useControlsStore.ts`                                                                                                 |
+| Orchestration / data store | `src/stores/useMissionStore.ts`                                                                                                  |
+| Client repository (read)   | `src/database/missionRepository.ts`                                                                                              |
+| Server write / API route   | `src/pages/api/auth.ts` + `_utils.ts` (`prerender = false`, `jsonResponse`, `getFirestoreDb`)                                    |
+| Component i18n             | a component's `translations.ts` → **register it in** `src/i18n/translations.ts`                                                  |
+| CSS animation / motion     | `src/components/CompletionCelebration/` (CSS-only `@keyframes`, `prefers-reduced-motion` fallback, `pointer-events: none` layer) |
 
 Features start with no design — derive the spec through Q&A first. `/steer` picks what's next from
 the backlog, then run the pipeline (`/spec` → `/plan` → `/implement`, plus optional `/spike`,

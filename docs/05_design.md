@@ -37,6 +37,15 @@ section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-no
 - **Content editor** — create / rename / delete / reorder missions, objective groups, and
   objectives (parent-only, via the write API).
 
+## Completion celebration
+
+When **visible progress reaches 100%**, a presentation-only celebration (`CompletionCelebration`)
+paints a CSS-only confetti/fireworks **burst that settles into a glow**, full-bleed **behind** the
+dashboard content (`pointer-events: none`, so the list/menu stay clickable). It renders only at
+100%, so dropping below removes it and re-completing replays the burst. `prefers-reduced-motion`
+viewers get the static glow only. Visual only — no sound, no added text (the footer status still
+reads "Success!").
+
 ## Theming today
 
 Presentation theming is limited to **per-objective colors** (the `colors` collection). The themed
