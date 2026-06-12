@@ -1,9 +1,9 @@
 ---
-description: Execute an agreed implementation plan from docs/features/ step by step
+description: Execute an agreed implementation plan from docs-journal/ step by step
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run knip), Bash(npm run knip:*), Bash(npm run firebase:push-rules:*), Bash(npm run db:seed:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, Skill
 ---
 
-Execute a `ready` implementation plan from `docs/features/`, turning its ordered steps into
+Execute a `ready` implementation plan from `docs-journal/`, turning its ordered steps into
 committed, validated code. **Unlike `/spec` and `/plan`, this command writes app code** — it
 follows the plan and its spec **exactly** and never invents a product decision.
 
@@ -23,7 +23,7 @@ step with the tree green, and stop and ask rather than invent a product decision
 ## Steps
 
 1. **Locate the plan & spec.** Resolve `$ARGUMENTS` to a `NN_plan_<short-name>.md` in
-   `docs/features/` and its sibling spec `NN_spec_<short-name>.md`. If empty or ambiguous, list the
+   `docs-journal/` and its sibling spec `NN_spec_<short-name>.md`. If empty or ambiguous, list the
    available plans and ask which.
    Read **both in full**. If the plan's `Status` is not `ready` or `in-progress`, flag it and
    confirm before proceeding (a `draft` may be planned-but-not-ready). Parse an optional
@@ -89,8 +89,8 @@ step with the tree green, and stop and ask rather than invent a product decision
    commit + push.
 
 7. **Write the implementation record.** Copy
-   [`docs/features/_TEMPLATE_implement.md`](../../docs/features/_TEMPLATE_implement.md) to
-   `docs/features/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
+   [`docs-journal/_TEMPLATE_implement.md`](../../docs-journal/_TEMPLATE_implement.md) to
+   `docs-journal/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
    plan**) and fill every section per the template, from this run's facts. Keep it terse — every
    claim must trace to a commit or to the plan's step state; later skills consume it (ship / PR
    flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the

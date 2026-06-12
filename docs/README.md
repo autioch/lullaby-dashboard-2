@@ -13,7 +13,9 @@ One file per domain of the product lifecycle. Each is referred to when its domai
 | [07_data-architecture.md](07_data-architecture.md) | Firestore → repository → store → component (layering authority)       |
 | [development.md](development.md)                   | Development rules — source layout, conventions, commands              |
 | [feature-workflow.md](feature-workflow.md)         | Feature pipeline — `/spec` → `/plan` → `/implement`, roles, artifacts |
-| [features/](features/)                             | Templates & per-feature artifacts only (no docs)                      |
+
+Frozen per-feature artifacts and their templates live in the sibling
+[`docs-journal/`](../docs-journal/) folder — not durable docs, so they're kept out of this index.
 
 ## Reading order by task
 

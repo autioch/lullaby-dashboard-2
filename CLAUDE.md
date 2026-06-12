@@ -91,7 +91,7 @@ Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.
 
 New features start with no design — derive a spec through Q&A first. Run `/spec`, then `/plan` and
 `/implement`. Each pipeline command forces the role(s) that own its step and emits one artifact in
-`docs/features/` on the `NN_<command>_<short-name>.md` scheme. For a change too small for that,
+`docs-journal/` on the `NN_<command>_<short-name>.md` scheme. For a change too small for that,
 `/tweak` runs the Q&A, plan, and code in one pass and records a single `NN_tweak_<short-name>.md`
 artifact (escalating to `/spec` if it grows). Full pipeline guide:
 [docs/feature-workflow.md](docs/feature-workflow.md).

@@ -104,7 +104,7 @@ New features start with no design — derive the spec through Q&A first, then ru
 close the iteration. For a change too small to justify
 that, `/tweak` does the Q&A, plan, and code in one pass and records a single artifact. The full
 pipeline guide — chain, roles, artifact convention, grounding reads, and shared rules — is
-[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs/features/`. Every pipeline
+[docs/feature-workflow.md](feature-workflow.md). Artifacts land in `docs-journal/`. Every pipeline
 command delegates its commit+push to `/ship` — the single, canonical commit+push action (leans on
 the husky hooks for validation; writes no artifact) — which is also the **required** path for ad-hoc
 commits ("stage-all, commit, push"); never hand-roll git for a real commit.
@@ -113,11 +113,11 @@ commits ("stage-all, commit, push"); never hand-roll git for a real commit.
 
 Two doc classes, two rules:
 
-- **Durable docs** — CLAUDE.md, README.md, every `docs/*.md` outside `features/`, and the
-  command files in `.claude/commands/` — describe the **current** state. They must never
-  contradict the code.
-- **Feature artifacts** — `docs/features/NN_*` — are **frozen** point-in-time records. They
-  capture the drift from the original spec and are never rewritten to chase the code.
+- **Durable docs** — CLAUDE.md, README.md, every `docs/*.md`, and the command files in
+  `.claude/commands/` — describe the **current** state. They must never contradict the code.
+- **Feature artifacts** — `docs-journal/NN_*` — are **frozen** point-in-time records. They live
+  in their own sibling folder (kept out of `docs/`), capture the drift from the original spec,
+  and are never rewritten to chase the code.
 
 Durable docs stay current two ways. **Per commit (scoped):** when a commit changes code or
 config, the _same commit_ updates the durable docs that change affects — use the map below to

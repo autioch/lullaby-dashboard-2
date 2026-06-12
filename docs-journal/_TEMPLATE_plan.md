@@ -24,9 +24,9 @@ component → wiring → validation.
 
 Context every step assumes — keep open while implementing:
 
-- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor
-- [docs/development.md](../development.md) — architecture, conventions, command table
-- [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority
+- [CLAUDE.md](../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor
+- [docs/development.md](../docs/development.md) — architecture, conventions, command table
+- [docs/07_data-architecture.md](../docs/07_data-architecture.md) — layering authority
 - [the spec — `NN_spec_<short-name>.md`](NN_spec_<short-name>.md) — the contract
 - <any other docs this feature touches: 04_design-principles, 05_design, README, …>
 

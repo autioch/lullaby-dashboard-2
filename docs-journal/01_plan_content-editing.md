@@ -29,10 +29,10 @@ subject to that floor and uses Node `crypto` for cookie signing.
 
 Context every step assumes — keep open while implementing:
 
-- [CLAUDE.md](../../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, Environment
-- [docs/development.md](../development.md) — architecture, conventions, command table
-- [docs/07_data-architecture.md](../07_data-architecture.md) — layering authority (esp. principles 4, 5, 7, 9; write-flow)
-- [docs/features/01_spec_content-editing.md](01_spec_content-editing.md) — the spec (the contract)
+- [CLAUDE.md](../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, Environment
+- [docs/development.md](../docs/development.md) — architecture, conventions, command table
+- [docs/07_data-architecture.md](../docs/07_data-architecture.md) — layering authority (esp. principles 4, 5, 7, 9; write-flow)
+- [docs-journal/01_spec_content-editing.md](01_spec_content-editing.md) — the spec (the contract)
 
 ## Steps
 

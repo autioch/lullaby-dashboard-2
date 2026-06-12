@@ -26,7 +26,7 @@ contract rather than bending it silently — ask.
 ## Steps
 
 1. **Locate the feature & read its frozen artifacts.** Resolve `$ARGUMENTS` to a feature in
-   `docs/features/` and read its **spec** (`NN_spec_<short-name>.md`), **plan**
+   `docs-journal/` and read its **spec** (`NN_spec_<short-name>.md`), **plan**
    (`NN_plan_<short-name>.md`), and **implementation record** (`NN_implement_<short-name>.md`)
    **in full** — these are the canonical record of what
    shipped and are **read-only for this command**. If `$ARGUMENTS` is empty or ambiguous, list
@@ -93,8 +93,8 @@ contract rather than bending it silently — ask.
    diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
 
 6. **Write the adjustments artifact.** Copy
-   [`docs/features/_TEMPLATE_adjust.md`](../../docs/features/_TEMPLATE_adjust.md) to
-   `docs/features/NN_adjust_<short-name>-rN.md` (**same `NN` and `<short-name>` as the spec**,
+   [`docs-journal/_TEMPLATE_adjust.md`](../../docs-journal/_TEMPLATE_adjust.md) to
+   `docs-journal/NN_adjust_<short-name>-rN.md` (**same `NN` and `<short-name>` as the spec**,
    `N` = this round) and fill every section per the template, from this run's facts. Keep it terse
    and factual — every claim traces to a commit. Commit + push it.
 

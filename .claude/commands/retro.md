@@ -28,7 +28,7 @@ them; leave the **Decision** to the user.
 ## Steps
 
 1. **Locate the feature & read its whole paper trail.** Resolve `$ARGUMENTS` to a feature in
-   `docs/features/` and read, in full and **read-only**: the **spec** (`NN_spec_<short-name>.md`),
+   `docs-journal/` and read, in full and **read-only**: the **spec** (`NN_spec_<short-name>.md`),
    **plan** (`NN_plan_<short-name>.md`), **implementation record**
    (`NN_implement_<short-name>.md`), and every adjustments round (`NN_adjust_<short-name>-r*.md`).
    If `$ARGUMENTS` is
@@ -70,7 +70,7 @@ them; leave the **Decision** to the user.
 6. **Reconcile the durable docs (full pass).** This is the iteration's backstop: the per-commit
    syncs should have kept the durable docs current, so this pass usually finds little — but run
    it repo-wide regardless. Walk the **doc-sync map** ([dev guide](../../docs/development.md#keeping-docs-in-sync))
-   and audit each durable doc — CLAUDE.md, README.md, `docs/*.md` outside `features/`, the command
+   and audit each durable doc — CLAUDE.md, README.md, every `docs/*.md`, the command
    files — against the **actual current code**, not against the artifacts (which may be optimistic).
    Fix every durable-doc statement the code now contradicts. **Code is the authority; the feature
    artifacts are only the checklist of where to look. Never edit the frozen feature artifacts.**
@@ -78,8 +78,8 @@ them; leave the **Decision** to the user.
    artifact's **Doc reconciliation** section. If nothing drifted, say so.
 
 7. **Write the retro artifact.** Copy
-   [`docs/features/_TEMPLATE_retro.md`](../../docs/features/_TEMPLATE_retro.md) to
-   `docs/features/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
+   [`docs-journal/_TEMPLATE_retro.md`](../../docs-journal/_TEMPLATE_retro.md) to
+   `docs-journal/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
    every section per the template, from steps 2–6 — leaving the **Decision** open for the user.
    Keep it terse — every claim traces to an artifact or commit. Stage it (`git add <paths>`) and run
    `/ship` — the canonical commit+push action — to commit and push (the husky pre-push hook runs

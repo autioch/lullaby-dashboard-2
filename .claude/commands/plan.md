@@ -1,9 +1,9 @@
 ---
-description: Turn an agreed feature spec into a step-by-step implementation plan under docs/features/
+description: Turn an agreed feature spec into a step-by-step implementation plan under docs-journal/
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion
 ---
 
-Turn an agreed spec from `docs/features/` into a durable, ordered implementation plan any agent
+Turn an agreed spec from `docs-journal/` into a durable, ordered implementation plan any agent
 can execute step by step. **Do not write app code in this command** — the output is the plan
 document only. Implementation is a separate step.
 
@@ -22,7 +22,7 @@ Q&A and record them back into the spec — never silently assume.
 
 ## Steps
 
-1. **Locate the spec.** Resolve `$ARGUMENTS` to a file in `docs/features/`. If empty or
+1. **Locate the spec.** Resolve `$ARGUMENTS` to a file in `docs-journal/`. If empty or
    ambiguous, list the available specs and ask which one. Read it in full. If its `Status` is
    not `agreed`, flag that and confirm before planning (planning a `draft` is allowed, but say
    so).
@@ -31,7 +31,7 @@ Q&A and record them back into the spec — never silently assume.
    **Conventions** and `docs/07`), then read the actual source the
    spec's **"Impact on the codebase"** names — types, repos, stores, components, API routes — so
    steps are based on what exists, not assumptions. Skim neighbouring features/plans in
-   `docs/features/` for patterns and the right `NN`.
+   `docs-journal/` for patterns and the right `NN`.
 
 3. **Resolve blocking gaps via Q&A.** If anything blocks an unambiguous step — including the
    spec's own **"Open questions"** — ask focused multiple-choice questions (`AskUserQuestion`,
@@ -39,8 +39,8 @@ Q&A and record them back into the spec — never silently assume.
    `Last updated`) so the contract stays the single source of truth. Never silently assume; but
    don't re-litigate decisions the spec already settled.
 
-4. **Write the plan.** Copy [`docs/features/_TEMPLATE_plan.md`](../../docs/features/_TEMPLATE_plan.md)
-   to `docs/features/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
+4. **Write the plan.** Copy [`docs-journal/_TEMPLATE_plan.md`](../../docs-journal/_TEMPLATE_plan.md)
+   to `docs-journal/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
    fill every section. Ordering rules:
    - Sequence so the **tree is never broken** and each step is independently committable:
      preparation/refactors first, then build **bottom-up**

@@ -32,7 +32,7 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
 ## Artifacts & roles
 
 Each command forces the role(s) that own its step and emits **exactly one** artifact in
-`docs/features/`, named **`NN_<command>_<short-name>.md`**, copied from a matching
+`docs-journal/`, named **`NN_<command>_<short-name>.md`**, copied from a matching
 `_TEMPLATE_<command>.md`. One feature per zero-padded `NN`; one kebab-case `<short-name>` reused
 by every artifact for that feature. **Each template is the single source for its artifact's
 sections** — commands copy and fill it; they don't restate its structure.
@@ -78,10 +78,10 @@ Read what's relevant before acting; don't re-explore the whole repo.
   then record the resolution back into the spec / plan.
 - **Don't duplicate** code, docs, or spec content that already exists — extend and reference.
 - **Durable docs sync; feature artifacts stay frozen.** Two doc classes, two rules. _Durable
-  docs_ (CLAUDE.md, README, `docs/*.md` outside `features/`, the command files) describe current
+  docs_ (CLAUDE.md, README, every `docs/*.md`, the command files) describe current
   state — the commit that changes code or config also updates the durable docs it affects, per
   the **doc-sync map** in the [dev guide](development.md#keeping-docs-in-sync). _Feature artifacts_
-  (`docs/features/NN_*`) are frozen point-in-time records — never rewritten to chase the code;
+  (`docs-journal/NN_*`) are frozen point-in-time records — never rewritten to chase the code;
   they preserve the drift. Any durable-doc drift the per-commit passes miss is reconciled
   repo-wide, once, in `/retro`.
 

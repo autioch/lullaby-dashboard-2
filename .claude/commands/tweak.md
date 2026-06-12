@@ -5,7 +5,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*
 
 The **lightweight lane** for a change too small to justify the full `/spec` → `/plan` →
 `/implement` pipeline. One command does it all — Q&A to pin down the change, a brief plan, the
-code, and **one** terminal artifact in `docs/features/`. **This command writes app code.**
+code, and **one** terminal artifact in `docs-journal/`. **This command writes app code.**
 
 First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules every command obeys.
@@ -31,7 +31,7 @@ only the user can make — ask.
 
 1. **Ground yourself narrowly.** From the pipeline guide's grounding reads, read only what this
    change touches — the relevant docs and the actual source (record types in `src/database/*`, the
-   store / repo / component / API route involved). Skim `docs/features/` to avoid duplication and
+   store / repo / component / API route involved). Skim `docs-journal/` to avoid duplication and
    pick the next zero-padded `NN`. Don't re-explore the whole repo.
 
 2. **If `$ARGUMENTS` is empty**, ask what to change, then continue.
@@ -58,8 +58,8 @@ only the user can make — ask.
    diff; see the guide's **Validation & review**).
 
 6. **Write the tweak artifact.** Copy
-   [`docs/features/_TEMPLATE_tweak.md`](../../docs/features/_TEMPLATE_tweak.md) to
-   `docs/features/NN_tweak_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>`) and fill
+   [`docs-journal/_TEMPLATE_tweak.md`](../../docs-journal/_TEMPLATE_tweak.md) to
+   `docs-journal/NN_tweak_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>`) and fill
    every section from this run's facts. Keep it terse — it's a terminal record; claims must trace
    to the actual change. Set today's date.
 
