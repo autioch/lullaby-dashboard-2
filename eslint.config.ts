@@ -42,7 +42,8 @@ export default defineConfig([
   {
     ...compat.configs['flat/recommended'],
     files: ['src/**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}'],
-    ignores: ['src/pages/api/**'],
+    // API routes and unit tests both run on Node, not the TV browser.
+    ignores: ['src/pages/api/**', 'src/**/*.test.ts'],
   },
   {
     files: ['**/*.json'],

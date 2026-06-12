@@ -16,7 +16,10 @@
     "ci:ts": "astro sync && tsc --noEmit",
     "ci:format": "prettier --check .",
     "ci:lint": "eslint ./src",
-    "ci": "npm run ci:ts && npm run ci:lint && npm run ci:format",
+    "ci:test": "vitest run",
+    "ci": "npm run ci:ts && npm run ci:lint && npm run ci:test && npm run ci:format",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "fix:format": "prettier --write .",
     "fix:lint": "eslint ./src --fix",
     "fix": "npm run fix:lint && npm run fix:format",
@@ -57,7 +60,8 @@
     "prettier": "3.8.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
-    "vite-plugin-svgr": "^5.2.0"
+    "vite-plugin-svgr": "^5.2.0",
+    "vitest": "^4.1.8"
   },
   "overrides": {
     "vite": "^7"

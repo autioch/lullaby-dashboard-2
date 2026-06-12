@@ -11,19 +11,21 @@ table here says _what to test_.
 
 ## Reality of testing here
 
-There is **no automated test suite** — no `tests/`, no `*.test.*`. Testing is the static gate plus a
-**manual behavior drive** under the TV browser, backed by the review skills. So the discipline below
-is not optional polish; it _is_ the safety net. Two consequences:
+Automated coverage is a **Vitest unit layer over logic only** — store actions, server helpers, and
+utils (runs inside the gate, see `L0`). There are **no component or end-to-end tests**, so all UI and
+behaviour is still confirmed by a **manual drive** under the TV browser, backed by the review skills.
+The discipline below is the safety net for everything the unit tests can't reach. Two consequences:
 
-- A green gate proves the code **compiles, lints (incl. Chrome 87), and is formatted** — nothing
-  about behavior. Behavior is only ever confirmed by driving the running app.
+- A green gate proves the code **compiles, lints (incl. Chrome 87), passes unit tests, and is
+  formatted** — but those tests cover **logic, not the rendered UI**. On-screen behaviour is only
+  ever confirmed by driving the running app.
 - Anything that can only be confirmed on **real TV hardware** or against **live authenticated
   Firestore** must be **explicitly flagged** in the artifact's `Verification` section, never assumed.
 
-> **Known gap (recommendation, not done):** the riskiest logic — Zustand store business logic and
-> repository entity-resolution — has no fast regression net. A minimal **Vitest** layer over stores
-> and repositories would catch logic regressions the manual drive misses. Out of scope until the
-> owner decides; named here so it isn't lost.
+> **Status & deferred gaps:** the Phase-1 Vitest unit layer (logic) is in place and runs in the gate.
+> Still open, if/when wanted: **component tests** (jsdom/RTL) and **end-to-end** coverage of the user
+> scenarios (`S1`–`S8`, which needs a Firestore emulator + auth). Both are deliberately deferred —
+> named here so they aren't lost.
 
 ## Testing levels
 
@@ -32,12 +34,23 @@ at L0). The pipeline's review gate (`/implement` step 5) is L2–L4.
 
 | Level                  | What                                                                                             | Tooling                                                  | When                                               |
 | ---------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------- |
-| **L0 Gate** _(always)_ | `tsc --noEmit`, ESLint incl. `compat/compat`, Prettier `--check`                                 | `npm run ci` (`verify` to auto-fix first)                | every commit (pre-push hook enforces)              |
+| **L0 Gate** _(always)_ | `tsc --noEmit`, ESLint incl. `compat/compat`, **Vitest unit tests**, Prettier `--check`          | `npm run ci` (`verify` to auto-fix first)                | every commit (pre-push hook enforces)              |
 | **L1 Build**           | App compiles for production (Netlify adapter)                                                    | `npm run build`                                          | any non-trivial code change                        |
 | **L2 Behavior drive**  | Acceptance criteria walked in the **running app, TV user agent**                                 | `npm run dev` + chrome-devtools MCP / preview; `/verify` | any change observable in the browser               |
 | **L3 Review**          | Correctness, simplification; security when auth / an API route / `tools/firestore.rules` changed | `/code-review`, `/simplify`, `/security-review`          | code-writing commands, over the feature diff       |
 | **L4 Dead code**       | No unused files/exports/types/deps left behind                                                   | `npm run knip` (`knip:fix` to remove)                    | final check in `/implement` · `/adjust` · `/tweak` |
 | **L5 Real-hardware**   | D-pad behavior, perf, live auth/Firestore — what dev can't prove                                 | manual, on the TV; **flag it, don't fake it**            | when the change touches those paths                |
+
+**`L0`, step by step.** The gate is one command, `npm run ci`, run in order — each step only checks,
+so fix failures by hand (`npm run verify` auto-fixes lint/format first):
+
+1. `ci:ts` — `astro sync && tsc --noEmit` (types)
+2. `ci:lint` — ESLint over `./src`, incl. `compat/compat` (lint + Chrome 87 API floor)
+3. `ci:test` — `vitest run` (unit tests: logic)
+4. `ci:format` — Prettier `--check` (formatting)
+
+During development, `npm run test` runs the unit tests once and `npm run test:watch` re-runs them on
+change. The pre-push hook runs the full `npm run ci`.
 
 **The TV user agent is mandatory for any UI drive.** Set Chrome dev tools / chrome-devtools MCP to
 `…Chrome/87.0.3945.79 Safari/537.36 SmartTV/10.0…` — the real client. Testing in a modern UA hides
@@ -48,6 +61,8 @@ both Chrome 87 breakage and TV layout problems.
 Independent of scope, every code change confirms:
 
 - **Gate green** — `npm run ci` (L0).
+- **Unit-test new logic** — store actions, server helpers, and utils get a co-located Vitest test
+  (`*.test.ts`, runs in Node). Test the **logic**, not React rendering. Run `npm run test`.
 - **Chrome 87 floor** — `compat/compat` clean **and**, for client code, the behavior driven once in
   the SmartTV UA (lint catches APIs, only a runtime drive catches layout/behavior). No
   `structuredClone` / `Array.prototype.at` / top-level await in client code.

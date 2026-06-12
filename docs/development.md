@@ -75,6 +75,10 @@ reads `tools/configuration.json`), `firestore.rules` (security rules). `firebase
 - **Persistence:** use the `lsWrapper` helper in `src/utils/ls.ts` for localStorage.
 - **i18n:** add strings to the component's `translations.ts` (or `src/i18n/translations.ts`);
   read the active language via `useLanguageStore`.
+- **Tests:** co-locate Vitest unit tests as `*.test.ts` beside the code. They run in Node (off the
+  Chrome 87 floor) and cover **logic only** — store actions, server helpers, utils. Pure helpers
+  beat component coupling: the `ProgressBar` progress math lives in `src/stores/missionProgress.ts`
+  so it can be tested without React. See [qa.md](qa.md).
 
 ## Adding a feature
 
@@ -161,8 +165,10 @@ npm only, with `package-lock.json` (don't switch package managers).
 | `npm run preview`             | Preview the built app.                                                                                                               |
 | `npm run ci:ts`               | `astro sync && tsc --noEmit` — sync generated types, then type check.                                                                |
 | `npm run ci:lint`             | ESLint over `./src` — check only.                                                                                                    |
+| `npm run ci:test`             | `vitest run` — unit tests (logic: stores, server helpers, utils). Check only.                                                        |
 | `npm run ci:format`           | Prettier `--check` over the repo — check only.                                                                                       |
-| `npm run ci`                  | `ci:ts` → `ci:lint` → `ci:format`. Read-only gate; pre-push and CI run it.                                                           |
+| `npm run ci`                  | `ci:ts` → `ci:lint` → `ci:test` → `ci:format`. Read-only gate; pre-push and CI run it.                                               |
+| `npm run test`                | Vitest unit tests, one-shot. `npm run test:watch` re-runs on change during development.                                              |
 | `npm run fix:lint`            | ESLint `--fix` over `./src`.                                                                                                         |
 | `npm run fix:format`          | Prettier `--write` over the repo.                                                                                                    |
 | `npm run fix`                 | `fix:lint` → `fix:format`; auto-fix during development.                                                                              |
