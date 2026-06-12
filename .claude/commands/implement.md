@@ -1,6 +1,6 @@
 ---
 description: Execute an agreed implementation plan from docs/features/ step by step
-allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run firebase:push-rules:*), Bash(npm run db:seed:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, Skill
+allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run knip), Bash(npm run knip:*), Bash(npm run firebase:push-rules:*), Bash(npm run db:seed:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, Skill
 ---
 
 Execute a `ready` implementation plan from `docs/features/`, turning its ordered steps into
@@ -81,7 +81,9 @@ step with the tree green, and stop and ask rather than invent a product decision
    rather than re-checking by hand. Then run the review skills over the feature diff (since the
    step-3 base ref): **`/code-review`** for correctness, **`/simplify`** for quality, and
    **`/security-review`** when any step touched auth, an API route, or `tools/firestore.rules`.
-   Address findings as follow-up commits (push each), then re-run the gate so it ends green.
+   Address findings as follow-up commits (push each). As the **final pre-ship check**, run
+   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
+   diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
 
 6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented`, completing
    the remaining items in the plan's **Docs to update** list — in a final commit + push.

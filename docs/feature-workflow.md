@@ -92,6 +92,12 @@ re-checks; `npm run build` confirms compilation. Beyond the gate:
 - **`/code-review`** — correctness bugs + reuse / simplification / efficiency.
 - **`/simplify`** — quality-only cleanup; no bug hunting.
 - **`/security-review`** — when the change touches auth, an API route, or `tools/firestore.rules`.
+- **`npm run knip`** (dead-code scan) — the **code-writing** commands (`/implement`, `/adjust`,
+  `/tweak`) run this as the **final check before shipping** and clear what it reports (unused files,
+  exports, types, enum / namespace members, deps). `npm run knip:fix` auto-removes, then re-runs
+  `verify`; review the diff before committing. Deliberately **not** in the pre-push gate — it's a
+  per-feature cleanup, not a per-commit one, so the read-only commands (`/spec`, `/plan`,
+  `/reconcile`, `/retro`) skip it.
 
 ## Committing
 

@@ -1,6 +1,6 @@
 ---
 description: Spec, plan, and implement a small change in one pass, recording a single tweak artifact
-allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, Skill
+allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run knip), Bash(npm run knip:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, Skill
 ---
 
 The **lightweight lane** for a change too small to justify the full `/spec` → `/plan` →
@@ -53,7 +53,9 @@ only the user can make — ask.
    compilation. If the change is user-visible, drive the app with the SmartTV user agent
    (`…Chrome/87…SmartTV…`) via chrome-devtools / preview and confirm the behavior + D-pad
    reachability; capture proof. Use the **firebase** MCP when the change touches Firestore or
-   rules. Flag anything that needs real-TV confirmation.
+   rules. Flag anything that needs real-TV confirmation. As the **final pre-ship check**, run
+   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
+   diff; see the guide's **Validation & review**).
 
 6. **Sync docs.** Apply any doc update this change implies per the dev guide's **doc-sync map**, in
    the same change — never ship code and prose that disagree.

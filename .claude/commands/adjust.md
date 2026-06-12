@@ -1,6 +1,6 @@
 ---
 description: Apply post-review change requests to an implemented feature, then record them in an adjustments artifact
-allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run firebase:push-rules:*), Bash(npm run db:seed:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, mcp__ccd_session_mgmt, Skill
+allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(npm run ci:*), Bash(npm run build:*), Bash(npm run verify:*), Bash(npm run fix:*), Bash(npm run dev:*), Bash(npm run knip), Bash(npm run knip:*), Bash(npm run firebase:push-rules:*), Bash(npm run db:seed:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*), Bash(git rev-parse:*), mcp__context7, mcp__firebase, mcp__chrome-devtools, mcp__ccd_session_mgmt, Skill
 ---
 
 Apply the change requests raised **after** a feature was implemented — product-owner requirement
@@ -87,7 +87,9 @@ contract rather than bending it silently — ask.
    acceptance check from step 3. Then run the review skills over the adjustment diff (since the
    step-2 base ref): **`/code-review`** (correctness), **`/simplify`** (quality), and
    **`/security-review`** when any change touched auth, an API route, or `tools/firestore.rules`.
-   Address findings as follow-up commits (push each), then re-run the gate so it ends green.
+   Address findings as follow-up commits (push each). As the **final pre-ship check**, run
+   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
+   diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
 
 6. **Write the adjustments artifact.** Copy
    [`docs/features/_TEMPLATE_adjust.md`](../../docs/features/_TEMPLATE_adjust.md) to

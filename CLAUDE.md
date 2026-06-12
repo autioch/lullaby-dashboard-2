@@ -43,7 +43,8 @@ than Chrome 87.** Enforced, not just documented:
 
 ## Commands
 
-npm only. The gate is `npm run ci` (tsc + lint + format; the hooks and CI run it);
+npm only. The gate is `npm run ci` (tsc + lint + format; the hooks and CI run it); dead-code
+(`npm run knip`) runs as the final check inside `/implement`·`/adjust`·`/tweak`, not the gate;
 `npm run verify` auto-fixes then runs it. Dev server is `npm run dev`
 (http://localhost:4321/). `dev`/`build`/`preview` fail fast if `.env` is missing required
 vars. **Full command table is in the development guide.**

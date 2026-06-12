@@ -113,24 +113,24 @@ commits ("stage-all, commit, push"); never hand-roll git for a real commit.
 
 npm only, with `package-lock.json` (don't switch package managers).
 
-| Command                       | Purpose                                                                    |
-| ----------------------------- | -------------------------------------------------------------------------- |
-| `npm install`                 | Bootstrap; run first on a clean checkout, or if deps changed.              |
-| `npm run dev`                 | Dev server at http://localhost:4321/                                       |
-| `npm run build`               | Production build (Netlify adapter). Confirms the app compiles.             |
-| `npm run preview`             | Preview the built app.                                                     |
-| `npm run ci:ts`               | `astro sync && tsc --noEmit` — sync generated types, then type check.      |
-| `npm run ci:lint`             | ESLint over `./src` — check only.                                          |
-| `npm run ci:format`           | Prettier `--check` over the repo — check only.                             |
-| `npm run ci`                  | `ci:ts` → `ci:lint` → `ci:format`. Read-only gate; pre-push and CI run it. |
-| `npm run fix:lint`            | ESLint `--fix` over `./src`.                                               |
-| `npm run fix:format`          | Prettier `--write` over the repo.                                          |
-| `npm run fix`                 | `fix:lint` → `fix:format`; auto-fix during development.                    |
-| `npm run verify`              | `fix` → `ci`: auto-fix then verify. One-shot local pre-flight.             |
-| `npm run knip`                | Report dead code — unused files, exports, types, deps. Not in the gate.    |
-| `npm run knip:fix`            | Auto-remove what knip finds — **run manually and review the diff.**        |
-| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` (`firebase deploy --only firestore:rules`). |
-| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.cjs`).                           |
+| Command                       | Purpose                                                                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm install`                 | Bootstrap; run first on a clean checkout, or if deps changed.                                                                        |
+| `npm run dev`                 | Dev server at http://localhost:4321/                                                                                                 |
+| `npm run build`               | Production build (Netlify adapter). Confirms the app compiles.                                                                       |
+| `npm run preview`             | Preview the built app.                                                                                                               |
+| `npm run ci:ts`               | `astro sync && tsc --noEmit` — sync generated types, then type check.                                                                |
+| `npm run ci:lint`             | ESLint over `./src` — check only.                                                                                                    |
+| `npm run ci:format`           | Prettier `--check` over the repo — check only.                                                                                       |
+| `npm run ci`                  | `ci:ts` → `ci:lint` → `ci:format`. Read-only gate; pre-push and CI run it.                                                           |
+| `npm run fix:lint`            | ESLint `--fix` over `./src`.                                                                                                         |
+| `npm run fix:format`          | Prettier `--write` over the repo.                                                                                                    |
+| `npm run fix`                 | `fix:lint` → `fix:format`; auto-fix during development.                                                                              |
+| `npm run verify`              | `fix` → `ci`: auto-fix then verify. One-shot local pre-flight.                                                                       |
+| `npm run knip`                | Dead-code scan: unused files, exports, types, enum/namespace members, deps. Run by the code-writing pipeline commands, not the gate. |
+| `npm run knip:fix`            | knip `--fix --allow-remove-files` then `verify`: auto-remove all dead code (incl. files), reformat, re-gate. Review the diff.        |
+| `npm run firebase:push-rules` | Deploy `tools/firestore.rules` (`firebase deploy --only firestore:rules`).                                                           |
+| `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.cjs`).                                                                                     |
 
 `ci:*` only **check** — they can't repair type errors or non-auto-fixable lint; resolve those
 by hand. `dev`/`build`/`preview` aren't in the gate (build needs `PUBLIC_FIREBASE_*`); run
