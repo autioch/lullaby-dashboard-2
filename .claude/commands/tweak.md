@@ -44,9 +44,8 @@ only the user can make — ask.
 
 4. **State the plan, then build.** Briefly tell the user the approach and the files you'll touch
    (a sentence or two — no separate plan document). Then make the change exactly as scoped,
-   applying the shared coding conventions and **Chrome 87 floor** (layering, BEM `c-` CSS, `@/*`
-   alias, i18n registration, no `compat/compat` hits). Before using a stack API you're unsure of
-   at this repo's version, confirm it via **context7**.
+   applying the shared coding conventions and Chrome 87 floor; look up any uncertain stack API via
+   **context7**.
 
 5. **Validate** per [qa.md](../../docs/qa.md): the `L0` gate (and `L1` build if compilation could be
    affected); for a user-visible change the `L2` TV-UA behavior drive (capture proof); and the `L4`
@@ -57,26 +56,21 @@ only the user can make — ask.
 6. **Write the tweak artifact.** Copy
    [`docs-journal/_TEMPLATE_tweak.md`](../../docs-journal/_TEMPLATE_tweak.md) to
    `docs-journal/NN_tweak_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>`) and fill
-   every section from this run's facts. Keep it terse — it's a terminal record; claims must trace
-   to the actual change. Set today's date.
+   every section per the template, from this run's facts. Set today's date.
 
 7. **Commit + push via `/ship`.** Once the gate is green, stage the code change, the tweak
    artifact, **and any durable doc the change affects** (per the doc-sync map —
    [dev guide](../../docs/development.md#keeping-docs-in-sync)) together (`git add <paths>`), then
-   run `/ship` — the canonical commit+push action — with a Conventional Commits subject (the
-   change's intent). `/ship` commits the staged set (what & why body + the `Co-Authored-By`
-   trailer), runs the husky hooks (pre-push `npm run ci`; never `--no-verify`), and pushes.
+   run `/ship` with a Conventional Commits subject (the change's intent).
 
 8. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
    real-TV confirmation. No summary.
 
 ## Rules
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style,
-  layering, TV / Chrome 87, don't-duplicate, ask-don't-invent.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
 - **One artifact only** (`NN_tweak_<short-name>.md`) — no spec/plan/implement documents. The
   tweak lane trades the three-artifact paper trail for speed; the git commit carries the history.
 - Stay in scope: if the change turns out to need the full pipeline, **stop and route to `/spec`**
   rather than ballooning the tweak.
-- Don't guess a stack API — look it up via context7. Use firebase / chrome-devtools MCP as the
-  change warrants.
+- Use firebase / chrome-devtools MCP as the change warrants.

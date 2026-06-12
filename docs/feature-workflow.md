@@ -33,7 +33,8 @@ Each command forces the role(s) that own its step and emits **exactly one** arti
 `docs-journal/`, named **`NN_<command>_<short-name>.md`**, copied from a matching
 `_TEMPLATE_<command>.md`. One feature per zero-padded `NN`; one kebab-case `<short-name>` reused
 by every artifact for that feature. **Each template is the single source for its artifact's
-sections** — commands copy and fill it; they don't restate its structure.
+sections and how to write them** (terse, factual, every claim tracing to a commit) — commands copy
+and fill it; they don't restate its structure or its writing guidance.
 
 | Command      | Artifact                               | Role(s)                                               | Status                                     |
 | ------------ | -------------------------------------- | ----------------------------------------------------- | ------------------------------------------ |
@@ -81,6 +82,9 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - **Specs state current + target state, not history** — the git log carries the change history.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended first),
   then record the resolution back into the spec / plan.
+- **Don't guess a stack API** — before using an Astro 6 / React 19 / Zustand 5 / Firebase (client or
+  admin) API you're unsure of at this repo's version, look it up via **context7**
+  (`resolve-library-id` → `query-docs`); match the current API, not memory.
 - **Don't duplicate** code, docs, or spec content that already exists — extend and reference.
 - **Durable docs sync; feature artifacts stay frozen.** Two doc classes, two rules. _Durable
   docs_ (CLAUDE.md, README, every `docs/*.md`, the command files) describe current

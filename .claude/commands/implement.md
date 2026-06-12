@@ -31,10 +31,9 @@ step with the tree green, and stop and ask rather than invent a product decision
    (a completed step's heading carries a `✅`, and each lands its own commit — use both to find
    where to resume).
 
-2. **Ground yourself once, narrowly.** Read [docs/feature-workflow.md](../../docs/feature-workflow.md)
-   (shared grounding reads + rules) and the plan's own **"Read before starting"** list, then read
-   the actual source each targeted step will touch before editing it. Trust the plan — don't
-   re-explore the whole repo.
+2. **Ground yourself once, narrowly.** Use the pipeline guide's grounding reads and the plan's own
+   **"Read before starting"** list, then read the actual source each targeted step will touch before
+   editing it. Trust the plan — don't re-explore the whole repo.
 
 3. **Mark start.** Set the plan `Status: in-progress` and bump `Last updated` to today (skip if
    already set); bundle this edit into the first step's commit — no standalone commit. Record the
@@ -43,14 +42,10 @@ step with the tree green, and stop and ask rather than invent a product decision
 
 4. **Execute each targeted step in order.** The plan is sequenced so the tree never breaks and
    every step is independently committable. For each step, in order:
-   1. **Read** the step's own **Read** list (spec sections, docs, the exact source files). Before
-      using any framework/library API you're not certain of at this repo's version, pull the
-      authoritative spec via **context7** (`resolve-library-id` → `query-docs`) for Astro 6 /
-      React 19 / Zustand 5 / Firebase client SDK / `firebase-admin`. Match the current API, not
-      memory.
+   1. **Read** the step's own **Read** list (spec sections, docs, the exact source files); look up
+      any uncertain stack API via **context7** (see the guide's shared rules).
    2. **Make the Change** exactly as the step specifies — the files and edits it names, nothing
-      extra. Apply the pipeline guide's **shared coding conventions and Chrome 87 floor** (layering,
-      BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
+      extra. Apply the pipeline guide's shared coding conventions and Chrome 87 floor.
    3. **Satisfy the Done-check** — run exactly the gate the step names, per
       [qa.md](../../docs/qa.md): the `L0` gate and `L1` build for a code step, the `L2` TV-UA
       behavior drive (capture proof) for a UI step, plus any command the step calls for
@@ -60,10 +55,8 @@ step with the tree green, and stop and ask rather than invent a product decision
    5. **Sync affected docs, then commit and push via `/ship`.** Before staging, check the doc-sync
       map ([dev guide](../../docs/development.md#keeping-docs-in-sync)): if this step's change
       touches anything the map lists, update those durable docs now and stage them **with** the
-      step's files (`git add <paths>`). Then run `/ship` — the canonical commit+push action — with
-      the step's Conventional Commits subject (its intent). `/ship` commits the staged set (what &
-      why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci` is the
-      gate; never `--no-verify`), and pushes. One commit per step, code + its doc updates together.
+      step's files (`git add <paths>`). Then run `/ship` with the step's Conventional Commits
+      subject. One commit per step, code + its doc updates together.
 
    If a step can't proceed unambiguously — the plan/spec is silent, or reality has diverged from
    what the plan assumed — **stop and ask** (`AskUserQuestion`, recommended option first). Record
@@ -84,23 +77,21 @@ step with the tree green, and stop and ask rather than invent a product decision
 7. **Write the implementation record.** Copy
    [`docs-journal/_TEMPLATE_implement.md`](../../docs-journal/_TEMPLATE_implement.md) to
    `docs-journal/NN_implement_<short-name>.md` (**same `NN` and `<short-name>` as the spec &
-   plan**) and fill every section per the template, from this run's facts. Keep it terse — every
-   claim must trace to a commit or to the plan's step state; later skills consume it (ship / PR
-   flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold into the
-   step-6 close-out commit).
+   plan**) and fill every section per the template, from this run's facts. Later skills consume it
+   (ship / PR flows), so don't assert work that wasn't done. Commit + push it (own commit, or fold
+   into the step-6 close-out commit).
 
 8. **Inform** the user of the implementation-record path, the gate result, and anything flagged for
    real-TV confirmation. No report or summary.
 
 ## Rules
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, don't-duplicate, ask-don't-invent. Follow the plan and spec
-  **exactly**: don't add scope, skip steps, or reorder.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md). Follow the plan
+  and spec **exactly**: don't add scope, skip steps, or reorder.
 - **Whole-plan autopilot:** with no `step` argument, execute every remaining step end-to-end,
   pausing only for a gate failure you can't fix or a genuinely blocking question. With
   `step N` / `steps N-M`, do only those.
 - **Commit + push per step**, gate passing first. Never leave the tree broken or bypass the hooks
   (`--no-verify`) except a real emergency the user authorizes.
 - Use MCP as needed: **context7** for current stack APIs, **firebase** for Firestore / rules,
-  **chrome-devtools** / preview for TV verification. Don't guess an API — look it up.
+  **chrome-devtools** / preview for TV verification.

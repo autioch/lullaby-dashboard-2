@@ -40,26 +40,18 @@ Q&A and record them back into the spec — never silently assume.
    don't re-litigate decisions the spec already settled.
 
 4. **Write the plan.** Copy [`docs-journal/_TEMPLATE_plan.md`](../../docs-journal/_TEMPLATE_plan.md)
-   to `docs-journal/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and
-   fill every section. Ordering rules:
-   - Sequence so the **tree is never broken** and each step is independently committable:
-     preparation/refactors first, then build **bottom-up**
-     (Firestore/types → repository → store → component → API route), then wiring/mount, then
-     validation.
-   - Make each step **self-contained**: its own Goal, the **markdown + code to Read** for that
-     step, the exact files to create/modify, and a **Done-check** — a real gate by [qa.md](../../docs/qa.md)
-     level (`L0` gate, `L1` build, or an `L2` TV-UA check).
-   - End with a **Final verification** step (the spec's acceptance criteria, walked per qa.md).
-   - Set the plan `Status: ready` only if no blocking questions remain (else `draft`); set
-     today's date.
+   to `docs-journal/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
+   every section per the template — it carries the ordering rules (**bottom-up**, tree never broken,
+   each step independently committable with its own Goal / Read / Change / Done-check by
+   [qa.md](../../docs/qa.md) level) and the **Final verification** step. Set the plan `Status: ready`
+   only if no blocking questions remain (else `draft`); set today's date.
 
 5. **Inform** the user of the plan's path and its `Status`. `/plan` stops here; `/implement` is a
    separate step.
 
 Rules:
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, ask-don't-invent. Call out `compat/compat` on the specific steps where it applies.
-- The plan is an execution contract — unambiguous, no filler.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md). Call out
+  `compat/compat` on the specific steps where it applies.
 - Plan the work, don't do it: no edits under `src/` or `tools/` here. The only writes outside
   the plan file are recording spec resolutions from step 3.

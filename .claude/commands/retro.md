@@ -81,17 +81,14 @@ them; leave the **Decision** to the user.
    [`docs-journal/_TEMPLATE_retro.md`](../../docs-journal/_TEMPLATE_retro.md) to
    `docs-journal/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
    every section per the template, from steps 2–6 — leaving the **Decision** open for the user.
-   Keep it terse — every claim traces to an artifact or commit. Stage it (`git add <paths>`) and run
-   `/ship` — the canonical commit+push action — to commit and push (the husky pre-push hook runs
-   `npm run ci`; never `--no-verify`).
+   Stage it (`git add <paths>`) and run `/ship` to commit and push.
 
 8. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
    action(s) so they can decide. No report or summary.
 
 ## Rules
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, don't-duplicate, ask-don't-invent.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
 - **Read-only on the frozen artifacts:** the retro never edits the spec, plan, implementation
   record, or adjustments — it reviews them. It _does_ write the retro and, in the reconcile phase,
   the durable docs.

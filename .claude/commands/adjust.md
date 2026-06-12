@@ -58,12 +58,10 @@ contract rather than bending it silently — ask.
    the request set is complete and unambiguous.
 
 4. **Implement each accepted request in order.** For each, like an `/implement` step:
-   1. **Read** the exact source it touches. Before using any framework/library API you're not
-      certain of at this repo's version, pull the authoritative spec via **context7**
-      (`resolve-library-id` → `query-docs`) for Astro 6 / React 19 / Zustand 5 / Firebase client
-      SDK / `firebase-admin`. Match the current API, not memory.
-   2. **Make the change** respecting the pipeline guide's **shared coding conventions and Chrome 87
-      floor** (layering, BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
+   1. **Read** the exact source it touches; look up any uncertain stack API via **context7** (see
+      the guide's shared rules).
+   2. **Make the change** respecting the pipeline guide's shared coding conventions and Chrome 87
+      floor.
    3. **Satisfy the Done-check** — run the gate the change warrants, per
       [qa.md](../../docs/qa.md): the `L0` gate (and `L1` build where relevant) for a code change, the
       `L2` TV-UA behavior drive (capture proof) for a UI change. Apply qa.md's **test-by-scope**
@@ -72,9 +70,7 @@ contract rather than bending it silently — ask.
       change. Per the doc-sync map ([dev guide](../../docs/development.md#keeping-docs-in-sync)),
       update any **durable** doc this change affects and stage it with the change's files
       (`git add <paths>`) — the **feature artifacts stay frozen**, only durable docs move here.
-      Then run `/ship` with a Conventional Commits subject. `/ship` commits the staged set (what &
-      why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci`; never
-      `--no-verify`), and pushes.
+      Then run `/ship` with a Conventional Commits subject.
 
    If a request is **deferred** or **rejected**, don't force it — record that outcome (and why)
    for step 6 instead.
@@ -89,16 +85,15 @@ contract rather than bending it silently — ask.
 6. **Write the adjustments artifact.** Copy
    [`docs-journal/_TEMPLATE_adjust.md`](../../docs-journal/_TEMPLATE_adjust.md) to
    `docs-journal/NN_adjust_<short-name>-rN.md` (**same `NN` and `<short-name>` as the spec**,
-   `N` = this round) and fill every section per the template, from this run's facts. Keep it terse
-   and factual — every claim traces to a commit. Commit + push it.
+   `N` = this round) and fill every section per the template, from this run's facts. Commit + push
+   it.
 
 7. **Inform** the user of the adjustments-artifact path, the gate result, and anything flagged for
    real-TV confirmation. No report or summary.
 
 ## Rules
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, don't-duplicate, ask-don't-invent.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
 - **Frozen contracts:** never edit the spec (`NN_spec_<short-name>.md`), plan
   (`NN_plan_<short-name>.md`), or implementation record (`NN_implement_<short-name>.md`) in this
   command — they are read-only inputs.
@@ -108,6 +103,6 @@ contract rather than bending it silently — ask.
   every request, its rationale, how it was handled, and its result.
 - Use MCP as needed: **context7** for current stack APIs, **firebase** for Firestore / rules,
   **chrome-devtools** / preview for TV verification, **ccd_session_mgmt** only to recover context
-  the artifacts don't carry. Don't guess an API — look it up.
+  the artifacts don't carry.
 - Never invent a product decision to keep moving — ask, then record the resolution in the
   adjustments artifact.

@@ -20,14 +20,13 @@ decision only the user can make — ask.
 
 ## Steps
 
-1. **Ground yourself first.** From the pipeline guide's grounding reads, lean on the product / design docs
-   (`01_vision`, `04_design-principles`, `05_design`, `07_data-architecture`) and the
-   **Architecture** + **Adding a feature** sections of the dev guide. Skim existing specs in
-   `docs-journal/` to avoid duplication and pick the next `NN`. **If a spike exists for this idea
-   in `docs-spikes/`, read it first** — it carries the de-risked approach, verdict, and
-   suggested scope; reuse its `<short-name>` so the thread stays traceable. Read the actual code
-   (record types in `src/database/*`, the relevant stores / repos / components) before assuming how
-   something works.
+1. **Ground yourself first.** Per the pipeline guide's
+   [grounding reads](../../docs/feature-workflow.md#grounding-reads) — lean on the product/design
+   docs and the dev guide. Skim existing specs in `docs-journal/` to avoid duplication and pick the
+   next `NN`. **If a spike exists for this idea in `docs-spikes/`, read it first** — it carries the
+   de-risked approach, verdict, and suggested scope; reuse its `<short-name>` so the thread stays
+   traceable. Read the actual code (record types in `src/database/*`, the relevant stores / repos /
+   components) before assuming how it works.
 
 2. **If `$ARGUMENTS` is empty**, ask the user what feature they want to spec, then continue.
 
@@ -47,7 +46,5 @@ decision only the user can make — ask.
 
 ## Rules
 
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
-  TV / Chrome 87, ask-don't-invent, and specs stating current + target state (not history).
-- The spec is a contract — precise and unambiguous.
-- Never invent answers to questions only the user can decide — ask.
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
+- The spec is the contract — precise, unambiguous, MVP-first. The template owns its sections.

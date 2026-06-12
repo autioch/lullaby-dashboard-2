@@ -23,11 +23,11 @@ verdict is a successful outcome, not a failure.
 
 ## Steps
 
-1. **Ground yourself first.** From the pipeline guide's grounding reads, lean on the product / design
-   docs (`01_vision`, `04_design-principles`, `05_design`, `07_data-architecture`), the **Architecture**
-   section of the dev guide, and the **TV browser floor — Chrome 87** rules in
-   [CLAUDE.md](../../CLAUDE.md). Skim existing spikes in `docs-spikes/` to avoid duplication and
-   pick the next spike-local `NN`. Read the actual code only where it bears on viability.
+1. **Ground yourself first.** Per the pipeline guide's
+   [grounding reads](../../docs/feature-workflow.md#grounding-reads) — the product/design docs and
+   the dev guide — plus the **Chrome 87 floor** in [CLAUDE.md](../../CLAUDE.md). Skim existing spikes
+   in `docs-spikes/` to avoid duplication and pick the next spike-local `NN`. Read the actual code
+   only where it bears on viability.
 
 2. **If `$ARGUMENTS` is empty**, ask the user which idea to spike, then continue.
 
@@ -62,8 +62,7 @@ verdict is a successful outcome, not a failure.
 - **Investigation-only.** No app code, no dev server, no spec/plan content — acceptance criteria,
   data-model contracts, and the build plan belong to `/spec` and `/plan`. The output is the spike
   artifact only.
-- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style,
-  TV / Chrome 87 floor, and ask-don't-invent (never invent a product decision only the owner can make).
+- Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md).
 - **Time-box.** De-risk the key uncertainty; don't exhaustively research everything. Surface residual
   risk in **Open questions & risks** for `/spec` to resolve.
 - Don't restate the template's structure — copy it and fill it.
