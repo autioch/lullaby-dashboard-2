@@ -35,6 +35,13 @@ export function AppOptions() {
               closeOptions();
             }}
           />
+          <Typography
+            textKey="appOptions.buildInfo"
+            values={{ commit: __BUILD_COMMIT__, time: __BUILD_TIME__ }}
+            as="div"
+            size="small"
+            className="is-center c-app-options__build"
+          />
         </Layout>
       </Panel>
     </Overlay>
