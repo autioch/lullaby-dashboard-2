@@ -61,8 +61,8 @@ both Chrome 87 breakage and TV layout problems.
 Independent of scope, every code change confirms:
 
 - **Gate green** — `npm run ci` (L0).
-- **Unit-test new logic** — store actions, server helpers, and utils get a co-located Vitest test
-  (`*.test.ts`, runs in Node). Test the **logic**, not React rendering. Run `npm run test`.
+- **Unit tests** — logic you added or changed has a co-located `*.test.ts` (see
+  [Tests are part of the change](#tests-are-part-of-the-change)).
 - **Chrome 87 floor** — `compat/compat` clean **and**, for client code, the behavior driven once in
   the SmartTV UA (lint catches APIs, only a runtime drive catches layout/behavior). No
   `structuredClone` / `Array.prototype.at` / top-level await in client code.
@@ -72,6 +72,23 @@ Independent of scope, every code change confirms:
 - **Layering intact** — components stay presentation-only, logic in stores, Firestore only in
   repositories/admin routes, and **no manual Zustand mutation after a write** (the `onSnapshot`
   round-trip must flow it back).
+
+## Tests are part of the change
+
+Treat a unit test like a doc update: **when a change adds or alters logic, add or extend its
+co-located `*.test.ts` in the same commit.** Coverage is **judgment, not a percentage** — cover the
+behaviour and the edge cases that would actually break, and skip the trivial. The aim is a fast
+regression net on the code that carries real logic, not a coverage number.
+
+- **Unit-test** (logic, pure, runs in Node): store actions & derived state, server / API helpers
+  (validation, session, referential helpers), `src/utils/*`, and pure functions pulled out of a
+  component to make them testable (e.g. `computeProgress`). If a component grows real logic, **extract
+  it** to a store/util and test that, rather than reaching for component tests.
+- **Don't** expect a unit test for: presentational React components, thin repositories (Firestore SDK
+  glue), config, CSS, or i18n strings — types, the gate, and the manual `L2` drive cover those.
+
+So on **every code change**, the check is one question: _did this touch logic that should be tested?_
+If yes, the test ships with it; if no (UI/glue/config/docs), say so and move on.
 
 ## Test-by-scope
 

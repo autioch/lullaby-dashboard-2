@@ -22,6 +22,10 @@ traps, regression checklist).
 - Docs are part of the change: when code or config changes, update affected prose in the
   **same commit**. Never ship a tree where docs contradict the code. (The doc-sync map — which
   docs to check for a given change — is in the development guide.)
+- Tests are part of the change: when a change adds or alters **logic** (a store action, a
+  server/API helper, a util, a pure derivation), add or update its co-located unit test in the
+  **same commit**. Not 100% coverage, and not presentational React, thin repositories, or config —
+  scope and exemptions in [docs/qa.md](docs/qa.md#tests-are-part-of-the-change).
 
 ## What this is
 

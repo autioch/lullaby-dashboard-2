@@ -95,6 +95,10 @@ Read what's relevant before acting; don't re-explore the whole repo.
   (`docs-journal/NN_*`) are frozen point-in-time records — never rewritten to chase the code;
   they preserve the drift. Any durable-doc drift the per-commit passes miss is reconciled
   repo-wide, once, in `/retro`.
+- **Tests are part of the change.** Like docs: when a step adds or alters **logic** (store action,
+  server/API helper, util, pure derivation), its co-located unit test ships in the **same commit** —
+  judgment, not a coverage percentage, and not presentational React / Firebase glue / config. Scope
+  and exemptions in [qa.md](qa.md#tests-are-part-of-the-change).
 
 ## Validation & review
 
