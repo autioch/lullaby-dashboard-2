@@ -47,9 +47,9 @@ Q&A and record them back into the spec — never silently assume.
      (Firestore/types → repository → store → component → API route), then wiring/mount, then
      validation.
    - Make each step **self-contained**: its own Goal, the **markdown + code to Read** for that
-     step, the exact files to create/modify, and a **Done-check** — a real gate (`npm run ci`,
-     `npm run build`, or a preview/TV check).
-   - End with a **Final verification** step.
+     step, the exact files to create/modify, and a **Done-check** — a real gate by [qa.md](../../docs/qa.md)
+     level (`L0` gate, `L1` build, or an `L2` TV-UA check).
+   - End with a **Final verification** step (the spec's acceptance criteria, walked per qa.md).
    - Set the plan `Status: ready` only if no blocking questions remain (else `draft`); set
      today's date.
 

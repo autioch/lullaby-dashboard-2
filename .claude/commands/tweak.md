@@ -48,14 +48,11 @@ only the user can make — ask.
    alias, i18n registration, no `compat/compat` hits). Before using a stack API you're unsure of
    at this repo's version, confirm it via **context7**.
 
-5. **Validate.** Run `npm run ci` (tsc + lint incl. `compat/compat` + format) and fix by hand
-   until green; `npm run verify` auto-fixes first. Run `npm run build` if the change could affect
-   compilation. If the change is user-visible, drive the app with the SmartTV user agent
-   (`…Chrome/87…SmartTV…`) via chrome-devtools / preview and confirm the behavior + D-pad
-   reachability; capture proof. Use the **firebase** MCP when the change touches Firestore or
-   rules. Flag anything that needs real-TV confirmation. As the **final pre-ship check**, run
-   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
-   diff; see the guide's **Validation & review**).
+5. **Validate** per [qa.md](../../docs/qa.md): the `L0` gate (and `L1` build if compilation could be
+   affected); for a user-visible change the `L2` TV-UA behavior drive (capture proof); and the `L4`
+   `npm run knip` dead-code pass as the final pre-ship check. Apply qa.md's **test-by-scope** checks
+   for the layer touched, and flag anything that needs real-TV confirmation (`L5`). (The lightweight
+   lane skips the `L3` review skills — escalate to the full pipeline if the change needs them.)
 
 6. **Write the tweak artifact.** Copy
    [`docs-journal/_TEMPLATE_tweak.md`](../../docs-journal/_TEMPLATE_tweak.md) to

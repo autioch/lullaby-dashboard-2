@@ -67,6 +67,7 @@ Read what's relevant before acting; don't re-explore the whole repo.
 
 - [CLAUDE.md](../CLAUDE.md) — house rules, stack, TV / Chrome 87 floor, environment (always loaded).
 - [development.md](development.md) — architecture, source layout, conventions, command table.
+- [qa.md](qa.md) — how to test a change: levels, test-by-scope, masking traps, regression list (for `/implement`, `/adjust`, `/tweak`, `/verify`).
 - [07_data-architecture.md](07_data-architecture.md) — the layering authority.
 - `/spec` product/design context: [01_vision.md](01_vision.md), [04_design-principles.md](04_design-principles.md), [05_design.md](05_design.md). Also read a prior spike for the idea, if one exists in `docs-spikes/` — it carries the de-risked approach and verdict.
 - The actual source the work touches — record types in `src/database/*`, the relevant stores / repos / components.
@@ -97,19 +98,17 @@ Read what's relevant before acting; don't re-explore the whole repo.
 
 ## Validation & review
 
-Gate: `npm run ci` (tsc + lint incl. `compat/compat` + format); `npm run verify` auto-fixes then
-re-checks; `npm run build` confirms compilation. Beyond the gate:
+**[qa.md](qa.md) is the testing source of truth** — the testing levels `L0`–`L5` (gate → build →
+TV-UA behavior drive → review → dead-code → real-hardware), the **test-by-scope** table, the masking
+traps, and the user-story regression checklist. Read it before verifying; commands and templates
+reference its levels rather than restate them.
 
-- **`/verify`** — run the app, confirm behavior against the spec's acceptance criteria (TV user agent for UI).
-- **`/code-review`** — correctness bugs + reuse / simplification / efficiency.
-- **`/simplify`** — quality-only cleanup; no bug hunting.
-- **`/security-review`** — when the change touches auth, an API route, or `tools/firestore.rules`.
-- **`npm run knip`** (dead-code scan) — the **code-writing** commands (`/implement`, `/adjust`,
-  `/tweak`) run this as the **final check before shipping** and clear what it reports (unused files,
-  exports, types, enum / namespace members, deps). `npm run knip:fix` auto-removes, then re-runs
-  `verify`; review the diff before committing. Deliberately **not** in the pre-push gate — it's a
-  per-feature cleanup, not a per-commit one, so the read-only commands (`/spec`, `/plan`,
-  `/retro`) skip it.
+Pipeline-specific notes on top of qa.md:
+
+- **Code-writing commands** (`/implement`, `/adjust`, `/tweak`) run the full chain through the `L4`
+  dead-code pass; **read-only commands** (`/spec`, `/plan`, `/retro`) only need the `L0` gate.
+- **`L4` (`npm run knip`) is deliberately not in the pre-push gate** — it's a per-feature cleanup,
+  not a per-commit one, so it lives in the code-writing commands' final check, not the hooks.
 
 ## Committing
 

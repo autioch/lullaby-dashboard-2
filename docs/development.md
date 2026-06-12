@@ -142,9 +142,12 @@ sync is primary; the retro reconcile is the backstop.
 | Auth / session / API route                        | CLAUDE.md (Environment); this guide (Architecture); `07_data-architecture.md`       |
 | Product behavior / UX / scope                     | the relevant `docs/01`–`06`; README.md if user-facing                               |
 | Workflow / command / pipeline change              | `.claude/commands/*`; `feature-workflow.md`; CLAUDE.md (Features, Git & workflow)   |
+| QA / testing process change                       | `qa.md` (levels, test-by-scope, regression list)                                    |
 
 The map is the single lookup both the per-commit sync and the retro reconcile use — keep it
-current when you add a new doc or code area.
+current when you add a new doc or code area. **Its sibling for testing is
+[qa.md](qa.md#test-by-scope)** — same change-type rows, answering _what to test_ instead of _what doc
+to update_. Use both for any code change.
 
 ## Full command reference
 
@@ -170,9 +173,9 @@ npm only, with `package-lock.json` (don't switch package managers).
 | `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.cjs`).                                                                                     |
 
 `ci:*` only **check** — they can't repair type errors or non-auto-fixable lint; resolve those
-by hand. `dev`/`build`/`preview` aren't in the gate (build needs `PUBLIC_FIREBASE_*`); run
-`build` after non-trivial changes, and for UI work run `dev` with the TV user agent in Chrome
-dev tools.
+by hand. `dev`/`build`/`preview` aren't in the gate (build needs `PUBLIC_FIREBASE_*`). For
+**when and how to test a change** — which of these to run for a given scope, the TV user agent, the
+review skills — see [qa.md](qa.md).
 
 ## MCP servers
 

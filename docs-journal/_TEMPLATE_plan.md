@@ -47,12 +47,12 @@ _(repeat per step)_
 
 ## Final verification
 
-- [ ] `npm run ci` green (tsc + lint incl. `compat/compat` + format)
-- [ ] `npm run build` succeeds
-- [ ] Behavior matches every item in the spec's **Acceptance criteria** (verify on the TV user
-      agent / preview, not just unit-level) — use `/verify`
-- [ ] Review gate clean: `/code-review` (+ `/security-review` if auth / API / `firestore.rules`
-      touched), findings addressed
+Run the [qa.md](../docs/qa.md) levels for this feature's scope and check off:
+
+- [ ] `L0` gate + `L1` build green
+- [ ] `L2`: every item in the spec's **Acceptance criteria** confirmed in the running app (TV UA) — `/verify`
+- [ ] `L3` review gate clean (`/code-review`, `/simplify`, `/security-review` per its trigger), findings addressed
+- [ ] `L4` `npm run knip` clean
 - [ ] Tree internally consistent; flip the spec's `Status` → `implemented` on completion
 
 ## Risks & assumptions

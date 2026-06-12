@@ -33,10 +33,10 @@ One block per request. Classification is one of: **requirement change** (add / r
 
 ## Verification
 
-Gate + acceptance: `npm run ci` / `npm run build` outcome; the original spec's **Acceptance
-criteria** re-confirmed (no regression); each new request's acceptance check confirmed; which
-review skills ran (`/code-review`, `/simplify`, `/security-review`). State plainly what passed and
-what is pending.
+Record per [qa.md § Recording QA](../docs/qa.md#recording-qa): which levels ran (`L0`–`L4`) and
+their result; the original spec's **Acceptance criteria** re-confirmed (no regression); each new
+request's acceptance check confirmed. State plainly what passed and what is pending or needs
+real-TV confirmation (`L5`).
 
 ## Commits
 

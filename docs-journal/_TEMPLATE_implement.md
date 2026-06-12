@@ -35,9 +35,9 @@ TV hardware, follow-ups carried forward. Write `None` if the build is fully comp
 
 ## Verification
 
-Gate + acceptance result: `npm run ci` / `npm run build` outcome, acceptance-criteria status, and
-which review skills ran (`/code-review`, `/security-review`). State plainly what passed, what is
-pending.
+Record per [qa.md § Recording QA](../docs/qa.md#recording-qa): which levels ran (`L0`–`L4`) and
+their result, the acceptance-criteria status, and what is pending or needs real-TV confirmation
+(`L5`). State plainly what passed.
 
 ## Commits
 

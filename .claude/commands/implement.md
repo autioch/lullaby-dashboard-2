@@ -51,16 +51,11 @@ step with the tree green, and stop and ask rather than invent a product decision
    2. **Make the Change** exactly as the step specifies — the files and edits it names, nothing
       extra. Apply the pipeline guide's **shared coding conventions and Chrome 87 floor** (layering,
       BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
-   3. **Satisfy the Done-check** — run exactly the gate the step names. Common gates: `npm run ci`
-      (tsc + lint incl. `compat/compat` + format) and `npm run build`; `npm run verify` auto-fixes
-      then re-checks. The `ci:*` scripts only **check** — fix type/lint failures by hand. Run any
-      other command the step calls for (e.g. `firebase:push-rules`, `db:seed`) only when it does.
-      Where the Done-check asks for a **preview / TV** check, start `npm run dev` and drive it with
-      the SmartTV user agent (`…Chrome/87…SmartTV…`) via chrome-devtools MCP / preview tooling:
-      confirm the behavior, verify keyboard/D-pad reachability + visible focus, and capture proof
-      (snapshot/screenshot). Use the **firebase** MCP to inspect Firestore or validate
-      `tools/firestore.rules` when a step touches data or rules. Flag explicitly anything that can
-      only be confirmed on real TV hardware.
+   3. **Satisfy the Done-check** — run exactly the gate the step names, per
+      [qa.md](../../docs/qa.md): the `L0` gate and `L1` build for a code step, the `L2` TV-UA
+      behavior drive (capture proof) for a UI step, plus any command the step calls for
+      (`firebase:push-rules`, `db:seed`). Apply qa.md's **test-by-scope** checks for the layer the
+      step touches, and flag anything only confirmable on real TV hardware (`L5`).
    4. **Mark the step done.** Append `✅` to the step's heading in the plan.
    5. **Sync affected docs, then commit and push via `/ship`.** Before staging, check the doc-sync
       map ([dev guide](../../docs/development.md#keeping-docs-in-sync)): if this step's change
@@ -75,15 +70,13 @@ step with the tree green, and stop and ask rather than invent a product decision
    the resolution **back into the spec or plan** (bump `Last updated`) so the contract stays the
    single source of truth, then continue. Never invent a product decision to keep moving.
 
-5. **Final verification & review gate.** Run the plan's **Final verification** block: `npm run ci`
-   green, `npm run build` succeeds, and **every Acceptance criterion in the spec** confirmed — use
-   **`/verify`** to drive the app (TV user agent for UI) and walk the acceptance list item by item
-   rather than re-checking by hand. Then run the review skills over the feature diff (since the
-   step-3 base ref): **`/code-review`** for correctness, **`/simplify`** for quality, and
-   **`/security-review`** when any step touched auth, an API route, or `tools/firestore.rules`.
-   Address findings as follow-up commits (push each). As the **final pre-ship check**, run
-   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
-   diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
+5. **Final verification & review gate.** Run the plan's **Final verification** block per
+   [qa.md](../../docs/qa.md): `L0` gate + `L1` build green, then **`L2`** — use **`/verify`** to walk
+   **every Acceptance criterion in the spec** in the running app (TV UA), item by item. Run the
+   **`L3`** review skills over the feature diff since the step-3 base ref (`/code-review`,
+   `/simplify`, `/security-review` per its trigger); address findings as follow-up commits (push
+   each). Finish with the **`L4`** `npm run knip` dead-code pass (`knip:fix` auto-removes — review
+   the diff), then re-run the gate so it ends green.
 
 6. **Close out.** Set the plan `Status: done` and flip the spec `Status: implemented` — in a final
    commit + push.

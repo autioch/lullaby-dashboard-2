@@ -64,13 +64,10 @@ contract rather than bending it silently — ask.
       SDK / `firebase-admin`. Match the current API, not memory.
    2. **Make the change** respecting the pipeline guide's **shared coding conventions and Chrome 87
       floor** (layering, BEM `c-` CSS, `@/*` alias, i18n registration, no `compat/compat` hits).
-   3. **Satisfy the Done-check** — run the gate the change warrants: `npm run ci` (tsc + lint
-      incl. `compat/compat` + format) and, where relevant, `npm run build`; `npm run verify`
-      auto-fixes then re-checks. The `ci:*` scripts only **check** — fix failures by hand. For a
-      UI/TV change, start `npm run dev` and drive it with the SmartTV user agent
-      (`…Chrome/87…SmartTV…`) via chrome-devtools MCP / preview tooling: confirm the behavior,
-      verify D-pad reachability + visible focus, capture proof. Use the **firebase** MCP for
-      Firestore / `tools/firestore.rules` when data or rules change.
+   3. **Satisfy the Done-check** — run the gate the change warrants, per
+      [qa.md](../../docs/qa.md): the `L0` gate (and `L1` build where relevant) for a code change, the
+      `L2` TV-UA behavior drive (capture proof) for a UI change. Apply qa.md's **test-by-scope**
+      checks for the layer touched.
    4. **Sync affected durable docs, then commit and push via `/ship`** — one commit per coherent
       change. Per the doc-sync map ([dev guide](../../docs/development.md#keeping-docs-in-sync)),
       update any **durable** doc this change affects and stage it with the change's files
@@ -82,15 +79,12 @@ contract rather than bending it silently — ask.
    If a request is **deferred** or **rejected**, don't force it — record that outcome (and why)
    for step 6 instead.
 
-5. **Final verification & review gate.** Run `npm run ci` green and `npm run build`, then use
-   **`/verify`** to drive the app (TV user agent for UI) and walk **both**: every **original
-   acceptance criterion in the spec** (must still hold — no regression) **and** each new request's
-   acceptance check from step 3. Then run the review skills over the adjustment diff (since the
-   step-2 base ref): **`/code-review`** (correctness), **`/simplify`** (quality), and
-   **`/security-review`** when any change touched auth, an API route, or `tools/firestore.rules`.
-   Address findings as follow-up commits (push each). As the **final pre-ship check**, run
-   `npm run knip` and clear any dead code it flags (`npm run knip:fix` auto-removes — review the
-   diff; see the guide's **Validation & review**). Then re-run the gate so it ends green.
+5. **Final verification & review gate** per [qa.md](../../docs/qa.md): `L0` gate + `L1` build green,
+   then **`L2`** — use **`/verify`** to walk **both** every **original acceptance criterion in the
+   spec** (must still hold — no regression) **and** each new request's acceptance check from step 3. Run the **`L3`** review skills over the adjustment diff since the step-2 base ref
+   (`/code-review`, `/simplify`, `/security-review` per its trigger); address findings as follow-up
+   commits (push each). Finish with the **`L4`** `npm run knip` dead-code pass, then re-run the gate
+   so it ends green.
 
 6. **Write the adjustments artifact.** Copy
    [`docs-journal/_TEMPLATE_adjust.md`](../../docs-journal/_TEMPLATE_adjust.md) to

@@ -29,8 +29,8 @@ Files added or modified (paths), grouped by area.
 
 ## Verification
 
-Gate + behavior result: `npm run ci` / `npm run build` outcome, and any preview / TV check (or
-what still needs real-TV confirmation). State plainly what passed.
+Record per [qa.md § Recording QA](../docs/qa.md#recording-qa): which levels ran (`L0`–`L2`, `L4`)
+and their result, plus what still needs real-TV confirmation (`L5`). State plainly what passed.
 
 ## Commit
 

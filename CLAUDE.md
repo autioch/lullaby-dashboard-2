@@ -4,7 +4,9 @@ Always-loaded guidance for AI coding agents working in this repo.
 
 **Before writing or changing code under `src/` or `tools/`, read
 [docs/development.md](docs/development.md)** — architecture, source layout, conventions, and the
-full command reference live there so they don't load on every chat.
+full command reference live there so they don't load on every chat. **Before verifying a change,
+read [docs/qa.md](docs/qa.md)** — the testing source of truth (levels, test-by-scope, masking
+traps, regression checklist).
 
 ## Working style
 
