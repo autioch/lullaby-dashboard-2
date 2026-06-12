@@ -26,12 +26,16 @@ export function CompletionCelebration() {
   const objectiveGroups = useMissionStore((state) => state.objectiveGroups);
   const objectives = useMissionStore((state) => state.objectives);
 
-  const { percent } = useMemo(
+  const { total, completed } = useMemo(
     () => computeProgress(objectiveGroups, objectives, checkedKeys, mission),
     [objectiveGroups, objectives, checkedKeys, mission]
   );
 
-  if (percent !== 100) {
+  // Celebrate only a real completion — every visible objective checked. Guard on
+  // counts, not the ceil-rounded percent (which hits 100 one objective early on
+  // very large missions), and require total > 0 so empty/all-hidden missions
+  // don't celebrate a vacuous 100%.
+  if (total === 0 || completed !== total) {
     return null;
   }
 

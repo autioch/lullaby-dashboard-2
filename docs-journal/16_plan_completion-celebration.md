@@ -127,14 +127,18 @@ Run the [qa.md](../docs/qa.md) levels for this feature's scope and check off:
 
 ## Risks & assumptions
 
-- **`isComplete` kept inline (owner plan-shape choice):** the celebration guards on
-  `percent === 100` inside the component rather than extracting an `isComplete` derivation to
-  `missionProgress.ts`. Consequence: no new util and **no new unit test** — it's a presentational
-  render guard, not business logic (per [qa.md](../docs/qa.md#tests-are-part-of-the-change)
-  exemptions). `computeProgress` and `missionProgress.test.ts` are **untouched**. If this is later
-  reused elsewhere, promote it to a tested `isComplete` flag then.
-- **Empty / all-hidden missions:** no special guard needed — `computeProgress` yields `percent: 0`
-  when `total` is 0 (`safeTotal` clamps the divisor), so `percent === 100` never fires for them.
+- **`isComplete` kept inline (owner plan-shape choice):** the celebration guards inside the
+  component rather than extracting an `isComplete` derivation to `missionProgress.ts`. Consequence:
+  no new util and **no new unit test** — it's a presentational render guard, not business logic (per
+  [qa.md](../docs/qa.md#tests-are-part-of-the-change) exemptions). `computeProgress` and
+  `missionProgress.test.ts` are **untouched**. If this is later reused elsewhere, promote it to a
+  tested `isComplete` flag then.
+  - **Guard on counts, not percent (L3 review fix):** the guard is `total > 0 && completed === total`,
+    **not** `percent === 100`. `computeProgress.percent` is `Math.ceil`-rounded, so it reaches 100 one
+    objective early on very large missions (199/200 → `ceil(99.5) = 100`). Guarding on the raw counts
+    fires only on a true completion and naturally excludes empty/all-hidden missions (`total === 0`).
+- **Empty / all-hidden missions:** no special guard needed beyond the `total === 0` check above —
+  `computeProgress` reports `total: 0` for them, so the celebration never fires.
 - **Burst-replay mechanism:** relies on the component returning `null` while incomplete, so React
   unmounts/remounts it across the 100% boundary and the CSS animation restarts naturally. No
   `useEffect`/`useRef`/key counter. If a future change keeps the layer mounted below 100%, the replay
