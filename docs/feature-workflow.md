@@ -77,6 +77,13 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended first),
   then record the resolution back into the spec / plan.
 - **Don't duplicate** code, docs, or spec content that already exists — extend and reference.
+- **Durable docs sync; feature artifacts stay frozen.** Two doc classes, two rules. _Durable
+  docs_ (CLAUDE.md, README, `docs/*.md` outside `features/`, the command files) describe current
+  state — the commit that changes code or config also updates the durable docs it affects, per
+  the **doc-sync map** in the [dev guide](development.md#keeping-docs-in-sync). _Feature artifacts_
+  (`docs/features/NN_*`) are frozen point-in-time records — never rewritten to chase the code;
+  they preserve the drift. Any durable-doc drift the per-commit passes miss is reconciled
+  repo-wide, once, in `/retro`.
 
 ## Validation & review
 

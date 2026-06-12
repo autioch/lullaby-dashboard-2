@@ -109,6 +109,41 @@ command delegates its commit+push to `/ship` — the single, canonical commit+pu
 the husky hooks for validation; writes no artifact) — which is also the **required** path for ad-hoc
 commits ("stage-all, commit, push"); never hand-roll git for a real commit.
 
+## Keeping docs in sync
+
+Two doc classes, two rules:
+
+- **Durable docs** — CLAUDE.md, README.md, every `docs/*.md` outside `features/`, and the
+  command files in `.claude/commands/` — describe the **current** state. They must never
+  contradict the code.
+- **Feature artifacts** — `docs/features/NN_*` — are **frozen** point-in-time records. They
+  capture the drift from the original spec and are never rewritten to chase the code.
+
+Durable docs stay current two ways. **Per commit (scoped):** when a commit changes code or
+config, the _same commit_ updates the durable docs that change affects — use the map below to
+know which. This is cheap and local: update only what the change touches, not every doc.
+**Per iteration (full):** `/retro` runs one repo-wide **reconcile** that audits all durable
+docs against the actual code and fixes anything the per-commit passes missed. The per-commit
+sync is primary; the retro reconcile is the backstop.
+
+**Doc-sync map** — when you change… update these:
+
+| Change                                            | Sync these durable docs                                                             |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Data layer / repository / store / Firestore shape | `07_data-architecture.md`; this guide (Architecture, Source layout, Copy-from)      |
+| New component folder or changed convention        | this guide (Source layout, Conventions, Copy-from)                                  |
+| New / renamed / removed npm script                | this guide (Full command reference); CLAUDE.md (Commands) if the gate story changes |
+| New / changed env var                             | CLAUDE.md (Environment); this guide if it gates `dev`/`build`                       |
+| New / changed MCP server                          | `.mcp.json`; this guide (MCP servers); CLAUDE.md (MCP servers)                      |
+| Firestore security rule                           | `tools/firestore.rules`; `07_data-architecture.md`; this guide (Architecture)       |
+| Browser-floor / Chrome 87 change                  | CLAUDE.md (TV browser floor); `package.json` `browserslist` + `build.target`        |
+| Auth / session / API route                        | CLAUDE.md (Environment); this guide (Architecture); `07_data-architecture.md`       |
+| Product behavior / UX / scope                     | the relevant `docs/01`–`06`; README.md if user-facing                               |
+| Workflow / command / pipeline change              | `.claude/commands/*`; `feature-workflow.md`; CLAUDE.md (Features, Git & workflow)   |
+
+The map is the single lookup both the per-commit sync and the retro reconcile use — keep it
+current when you add a new doc or code area.
+
 ## Full command reference
 
 npm only, with `package-lock.json` (don't switch package managers).

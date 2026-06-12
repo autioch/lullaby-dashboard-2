@@ -8,8 +8,9 @@ spec → plan → implement → adjust — from its artifacts with every role we
 bluntly what worked and what didn't,
 take the user's own read, then propose what to do next and write it all to a **retro** artifact.
 This is the **wrap-up** of the lifecycle: the user reads it and decides the next move.
-**Do not write app code or edit the contract artifacts in this command** — the only file it
-writes is the retro.
+**Do not write app code or edit the contract artifacts** (spec, plan, implementation record,
+adjustments) in this command. Besides the retro, it writes **only durable docs**, and only in
+the reconcile phase (step 6) — never the frozen feature artifacts.
 
 First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
@@ -66,26 +67,37 @@ them; leave the **Decision** to the user.
    schedule, or "nothing — ship as is." These are **suggestions**; the user decides. Don't start
    doing them.
 
-6. **Write the retro artifact.** Copy
+6. **Reconcile the durable docs (full pass).** This is the iteration's backstop: the per-commit
+   syncs should have kept the durable docs current, so this pass usually finds little — but run
+   it repo-wide regardless. Walk the **doc-sync map** ([dev guide](../../docs/development.md#keeping-docs-in-sync))
+   and audit each durable doc — CLAUDE.md, README.md, `docs/*.md` outside `features/`, the command
+   files — against the **actual current code**, not against the artifacts (which may be optimistic).
+   Fix every durable-doc statement the code now contradicts. **Code is the authority; the feature
+   artifacts are only the checklist of where to look. Never edit the frozen feature artifacts.**
+   Commit the durable-doc fixes via `/ship` (own commit), and note what was reconciled in the retro
+   artifact's **Doc reconciliation** section. If nothing drifted, say so.
+
+7. **Write the retro artifact.** Copy
    [`docs/features/_TEMPLATE_retro.md`](../../docs/features/_TEMPLATE_retro.md) to
    `docs/features/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
-   every section per the template, from steps 2–5 — leaving the **Decision** open for the user.
+   every section per the template, from steps 2–6 — leaving the **Decision** open for the user.
    Keep it terse — every claim traces to an artifact or commit. Stage it (`git add <paths>`) and run
    `/ship` — the canonical commit+push action — to commit and push (the husky pre-push hook runs
    `npm run ci`; never `--no-verify`).
 
-7. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
+8. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
    action(s) so they can decide. No report or summary.
 
 ## Rules
 
 - Follow the shared rules in [feature-workflow.md](../../docs/feature-workflow.md) — house style, layering,
   TV / Chrome 87, don't-duplicate, ask-don't-invent.
-- **Read-only on contracts:** the retro never edits the spec, plan, implementation record, or
-  adjustments — it reviews them. The only file it writes is `NN_retro_<short-name>.md`.
-- **No code, no fixes.** The retro names problems and proposes moves; it does not implement them.
-  Requirement changes are made by `/adjust`, new scope by `/spec` — each a separate, user-chosen
-  step.
+- **Read-only on the frozen artifacts:** the retro never edits the spec, plan, implementation
+  record, or adjustments — it reviews them. It _does_ write the retro and, in the reconcile phase,
+  the durable docs.
+- **No app code.** The retro names problems, proposes moves, and reconciles durable docs to match
+  the code — it does not change app code. Requirement changes are made by `/adjust`, new scope by
+  `/spec` — each a separate, user-chosen step.
 - **Blunt, not vague.** Every assessment bullet must point at evidence (an artifact line, a churn
   count, a deferred item). Cut praise and criticism that doesn't trace to something.
 - The retro is the iteration's closing record — capture the user's feedback faithfully and leave

@@ -17,6 +17,9 @@ full command reference live there so they don't load on every chat.
   thing — don't re-explore the whole repo. Saves tokens and time.
 - After git actions (commit/push), report the result in **one line** — no summaries, file
   lists, or next-step suggestions unless asked.
+- Docs are part of the change: when code or config changes, update affected prose in the
+  **same commit**. Never ship a tree where docs contradict the code. (The doc-sync map — which
+  docs to check for a given change — is in the development guide.)
 
 ## What this is
 

@@ -63,11 +63,12 @@ only the user can make — ask.
    every section from this run's facts. Keep it terse — it's a terminal record; claims must trace
    to the actual change. Set today's date.
 
-7. **Commit + push via `/ship`.** Once the gate is green, stage the code change and the artifact
-   together (`git add <paths>`), then run `/ship` — the canonical commit+push action — with a
-   Conventional Commits subject (the change's intent). `/ship` commits the staged set (what & why
-   body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci`; never
-   `--no-verify`), and pushes.
+7. **Commit + push via `/ship`.** Once the gate is green, stage the code change, the tweak
+   artifact, **and any durable doc the change affects** (per the doc-sync map —
+   [dev guide](../../docs/development.md#keeping-docs-in-sync)) together (`git add <paths>`), then
+   run `/ship` — the canonical commit+push action — with a Conventional Commits subject (the
+   change's intent). `/ship` commits the staged set (what & why body + the `Co-Authored-By`
+   trailer), runs the husky hooks (pre-push `npm run ci`; never `--no-verify`), and pushes.
 
 8. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
    real-TV confirmation. No summary.

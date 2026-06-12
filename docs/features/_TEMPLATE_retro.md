@@ -21,6 +21,13 @@ The few facts the verdict rests on. Fill what applies; cut the rest.
   have caught.
 - **Loose ends:** deferred items, real-TV-only checks, follow-ups carried forward.
 
+## Doc reconciliation
+
+The repo-wide durable-doc audit against the current code (per the doc-sync map). List the docs
+brought back in sync, or state "no drift — durable docs already current."
+
+- ...
+
 ## What went well
 
 Blunt. Each bullet points at evidence.

@@ -62,11 +62,13 @@ step with the tree green, and stop and ask rather than invent a product decision
       `tools/firestore.rules` when a step touches data or rules. Flag explicitly anything that can
       only be confirmed on real TV hardware.
    4. **Mark the step done.** Append `✅` to the step's heading in the plan.
-   5. **Commit and push via `/ship`.** Stage just this step's files (`git add <paths>`), then run
-      `/ship` — the canonical commit+push action — with the step's Conventional Commits subject (its
-      intent). `/ship` commits the staged set (what & why body + the `Co-Authored-By` trailer), runs
-      the husky hooks (pre-push `npm run ci` is the gate; never `--no-verify`), and pushes. One
-      commit per step.
+   5. **Sync affected docs, then commit and push via `/ship`.** Before staging, check the doc-sync
+      map ([dev guide](../../docs/development.md#keeping-docs-in-sync)): if this step's change
+      touches anything the map lists, update those durable docs now and stage them **with** the
+      step's files (`git add <paths>`). Then run `/ship` — the canonical commit+push action — with
+      the step's Conventional Commits subject (its intent). `/ship` commits the staged set (what &
+      why body + the `Co-Authored-By` trailer), runs the husky hooks (pre-push `npm run ci` is the
+      gate; never `--no-verify`), and pushes. One commit per step, code + its doc updates together.
 
    If a step can't proceed unambiguously — the plan/spec is silent, or reality has diverged from
    what the plan assumed — **stop and ask** (`AskUserQuestion`, recommended option first). Record
