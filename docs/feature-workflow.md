@@ -82,6 +82,10 @@ Read what's relevant before acting; don't re-explore the whole repo.
 - **Specs state current + target state, not history** — the git log carries the change history.
 - **Don't invent decisions only the user can make** — ask (multiple-choice, recommended first),
   then record the resolution back into the spec / plan.
+- **Converge before recording.** Commands that elicit then write an artifact (`/spike`, `/spec`,
+  `/plan`, `/retro`) play the shaped result back to the user and iterate until you both agree on the
+  final shape **before** writing — especially when it diverged from the opening idea. Record the
+  agreed shape, not a unilateral first draft.
 - **Don't guess a stack API** — before using an Astro 6 / React 19 / Zustand 5 / Firebase (client or
   admin) API you're unsure of at this repo's version, look it up via **context7**
   (`resolve-library-id` → `query-docs`); match the current API, not memory.

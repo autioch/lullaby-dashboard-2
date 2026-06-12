@@ -39,14 +39,18 @@ Q&A and record them back into the spec — never silently assume.
    `Last updated`) so the contract stays the single source of truth. Never silently assume; but
    don't re-litigate decisions the spec already settled.
 
-4. **Write the plan.** Copy [`docs-journal/_TEMPLATE_plan.md`](../../docs-journal/_TEMPLATE_plan.md)
+4. **Converge with the user on the approach.** Before writing, summarize the planned approach and
+   step sequence and confirm it — iterate if they'd sequence, split, or scope it differently. Don't
+   write a unilateral plan. (The shared _Converge before recording_ rule.)
+
+5. **Write the plan.** Copy [`docs-journal/_TEMPLATE_plan.md`](../../docs-journal/_TEMPLATE_plan.md)
    to `docs-journal/NN_plan_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
    every section per the template — it carries the ordering rules (**bottom-up**, tree never broken,
    each step independently committable with its own Goal / Read / Change / Done-check by
    [qa.md](../../docs/qa.md) level) and the **Final verification** step. Set the plan `Status: ready`
    only if no blocking questions remain (else `draft`); set today's date.
 
-5. **Inform** the user of the plan's path and its `Status`. `/plan` stops here; `/implement` is a
+6. **Inform** the user of the plan's path and its `Status`. `/plan` stops here; `/implement` is a
    separate step.
 
 Rules:

@@ -36,12 +36,17 @@ decision only the user can make — ask.
    Batch related questions; propose sensible defaults grounded in the docs; keep going until no
    blocking questions remain.
 
-4. **Write the spec.** Copy [`docs-journal/_TEMPLATE_spec.md`](../../docs-journal/_TEMPLATE_spec.md)
+4. **Converge with the user on the final shape.** Before writing, play the spec back as it now
+   stands — problem, behavior, in/out of scope, acceptance criteria — and iterate until you both
+   agree, especially where elicitation reshaped the original idea. Don't write a unilateral draft.
+   (The shared _Converge before recording_ rule.)
+
+5. **Write the spec.** Copy [`docs-journal/_TEMPLATE_spec.md`](../../docs-journal/_TEMPLATE_spec.md)
    to `docs-journal/NN_spec_<short-name>.md` (zero-padded `NN`, kebab-case `<short-name>` — both
    reused by every later artifact for this feature) and fill every section per the template. Set
    `Status: agreed` only if no open questions remain (else `draft`), and set today's date.
 
-5. **Inform** the user of the spec's path and its `Status`. `/spec` stops here; `/plan` is a
+6. **Inform** the user of the spec's path and its `Status`. `/spec` stops here; `/plan` is a
    separate step.
 
 ## Rules

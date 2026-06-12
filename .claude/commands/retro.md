@@ -77,13 +77,17 @@ them; leave the **Decision** to the user.
    Commit the durable-doc fixes via `/ship` (own commit), and note what was reconciled in the retro
    artifact's **Doc reconciliation** section. If nothing drifted, say so.
 
-7. **Write the retro artifact.** Copy
+7. **Converge with the user before recording.** Confirm the verdict and the suggested next actions
+   reflect the user's reads from steps 3–5 — adjust and play them back if not. You're agreeing on the
+   _assessment_; the **Decision** still stays theirs. (The shared _Converge before recording_ rule.)
+
+8. **Write the retro artifact.** Copy
    [`docs-journal/_TEMPLATE_retro.md`](../../docs-journal/_TEMPLATE_retro.md) to
    `docs-journal/NN_retro_<short-name>.md` (**same `NN` and `<short-name>` as the spec**) and fill
    every section per the template, from steps 2–6 — leaving the **Decision** open for the user.
    Stage it (`git add <paths>`) and run `/ship` to commit and push.
 
-8. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
+9. **Inform** the user of the retro-artifact path, the one-line verdict, and the top suggested next
    action(s) so they can decide. No report or summary.
 
 ## Rules
