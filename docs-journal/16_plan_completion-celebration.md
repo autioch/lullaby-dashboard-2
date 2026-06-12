@@ -1,7 +1,7 @@
 # Completion celebration — Plan
 
 > **Artifact:** `16_plan_completion-celebration.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
-> **Status:** `in-progress`
+> **Status:** `done`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-12 · **Last updated:** 2026-06-12
 > **Related:** [spec](16_spec_completion-celebration.md) · [implement](16_implement_completion-celebration.md) · [retro](16_retro_completion-celebration.md)
 
@@ -98,7 +98,7 @@ independently committable. Phases: **Prep/refactor → Build → Wire → Valida
   settles into a glow **behind** the list, the list/menu stay clickable, and unchecking then
   re-completing **replays** the burst.
 
-### Step 3 — TV-UA validation · phase: `validate`
+### Step 3 — TV-UA validation · phase: `validate` ✅
 
 - **Goal:** Prove every acceptance criterion against the running app on the TV UA.
 - **Read:** spec §Acceptance criteria; [docs/qa.md](../docs/qa.md) L2 (TV-UA drive) and the

@@ -1,7 +1,7 @@
 # Completion celebration — Spec
 
 > **Artifact:** `16_spec_completion-celebration.md` · **Roles:** Product Owner
-> **Status:** `agreed`
+> **Status:** `implemented`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-12 · **Last updated:** 2026-06-12
 > **Related:** [spike](../docs-spikes/06_spike_completion-celebration.md) · [plan](16_plan_completion-celebration.md) · [implement](16_implement_completion-celebration.md) · [retro](16_retro_completion-celebration.md)
 
