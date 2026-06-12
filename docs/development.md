@@ -127,6 +127,8 @@ npm only, with `package-lock.json` (don't switch package managers).
 | `npm run fix:format`          | Prettier `--write` over the repo.                                          |
 | `npm run fix`                 | `fix:lint` → `fix:format`; auto-fix during development.                    |
 | `npm run verify`              | `fix` → `ci`: auto-fix then verify. One-shot local pre-flight.             |
+| `npm run knip`                | Report dead code — unused files, exports, types, deps. Not in the gate.    |
+| `npm run knip:fix`            | Auto-remove what knip finds — **run manually and review the diff.**        |
 | `npm run firebase:push-rules` | Deploy `tools/firestore.rules` (`firebase deploy --only firestore:rules`). |
 | `npm run db:seed`             | Idempotent Firestore seed (`tools/db-seed.cjs`).                           |
 

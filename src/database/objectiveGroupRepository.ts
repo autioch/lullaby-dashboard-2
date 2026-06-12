@@ -1,7 +1,7 @@
 import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { db, type WithId, withId } from './db';
 
-export type ObjectiveGroupDoc = {
+type ObjectiveGroupDoc = {
   label: string;
   isHidden: boolean;
   objectiveIds: string[];

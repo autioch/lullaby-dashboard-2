@@ -67,10 +67,6 @@ export function setSession(ctx: APIContext): void {
   });
 }
 
-export function clearSession(ctx: APIContext): void {
-  ctx.cookies.delete(SESSION_COOKIE, { path: '/' });
-}
-
 export function requireSession(ctx: APIContext): boolean {
   // Dev-only escape hatch: PUBLIC_SKIP_AUTH bypasses the client auth gate but
   // never mints a session cookie, so content writes would 401. Honor the same

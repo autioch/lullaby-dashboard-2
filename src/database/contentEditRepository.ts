@@ -11,7 +11,7 @@ export class SessionExpiredError extends Error {
   }
 }
 
-export class ContentEditError extends Error {
+class ContentEditError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'ContentEditError';

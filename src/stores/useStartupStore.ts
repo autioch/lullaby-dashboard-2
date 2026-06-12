@@ -12,7 +12,7 @@ export type StartupStep = {
   stepFn: () => Promise<void> | void;
 };
 
-export type FailureInfo = {
+type FailureInfo = {
   step: StartupStepId;
   message: string;
   stack?: string;

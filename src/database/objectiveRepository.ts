@@ -1,7 +1,7 @@
 import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { db, type WithId, withId } from './db';
 
-export type ObjectiveDoc = {
+type ObjectiveDoc = {
   label: string;
   colorId: string;
   isHidden: boolean;

@@ -113,15 +113,6 @@ export function RowLabel(props: { label: string }) {
   );
 }
 
-export function RowSwatch(props: { color: string }) {
-  return (
-    <span
-      className="c-content-editor__row-swatch"
-      style={{ backgroundColor: props.color }}
-    />
-  );
-}
-
 export function EmptyNote(props: { textKey: string }) {
   return (
     <Typography

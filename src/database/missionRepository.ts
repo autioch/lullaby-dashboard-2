@@ -1,7 +1,7 @@
 import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { db, withId, type WithId } from './db';
 
-export type MissionDoc = {
+type MissionDoc = {
   label: string;
   youtubeUrl: string;
   retentionHours: number;

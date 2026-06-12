@@ -8,7 +8,7 @@ import {
 // orchestrate contentEditRepository and never write useMissionStore — the
 // realtime onSnapshot subscription flows changes back (docs/07 principle 9).
 
-export type EditLevel = 'missions' | 'mission' | 'group';
+type EditLevel = 'missions' | 'mission' | 'group';
 
 export type DeleteKind = 'mission' | 'group' | 'objective';
 

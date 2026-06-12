@@ -92,13 +92,6 @@
   overflow-wrap: break-word;
 }
 
-.c-content-editor__row-swatch {
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  flex-shrink: 0;
-}
-
 .c-content-editor__row-actions {
   display: flex;
   gap: 0.5rem;

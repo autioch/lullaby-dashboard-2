@@ -4,7 +4,7 @@ import { jsonResponse, requireSession } from '../_utils';
 
 // Shared helpers for the content-write API routes. Underscore-prefixed, so
 // Astro does not expose it as a route. Server-only (off the Chrome 87 floor).
-export type JsonBody = Record<string, unknown>;
+type JsonBody = Record<string, unknown>;
 
 type GuardResult =
   | { ok: true; body: JsonBody }

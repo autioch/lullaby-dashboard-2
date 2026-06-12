@@ -18,7 +18,7 @@ export function isUnitSupported(unit: string): boolean {
   }
 }
 
-export function cssSupports(property: string, value: string) {
+function cssSupports(property: string, value: string) {
   try {
     return CSS?.supports?.(property, value) ?? false;
   } catch {

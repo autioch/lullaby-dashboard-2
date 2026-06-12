@@ -12,7 +12,7 @@ export type TranslationMap<T extends string = string> = Record<
   Record<T, string>
 >;
 
-export const translations = {
+const translations = {
   en: {
     authGate: authGateTranslations.en,
     startup: startupTranslations.en,

@@ -3,8 +3,6 @@ import { t } from '@/i18n/translations';
 import { useLanguageStore } from '@/stores/useLanguageStore';
 import type { ElementType } from 'react';
 
-export type TypographyVariant = 'body' | 'eyebrow' | 'heading';
-
 type TypographyProps = {
   textKey: string;
   values?: Record<string, string | number>;
