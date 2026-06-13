@@ -98,7 +98,7 @@ export function MissionLevel() {
         }
       />
       {draft.timeMode === 'deadline' ? (
-        <>
+        <div className="c-content-editor__field-row">
           <Stepper
             labelKey="contentEditor.fieldDeadlineHour"
             value={deadline.hour}
@@ -130,7 +130,7 @@ export function MissionLevel() {
               }))
             }
           />
-        </>
+        </div>
       ) : null}
       <SaveBar
         controlId={saveId}

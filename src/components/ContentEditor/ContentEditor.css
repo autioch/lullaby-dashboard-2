@@ -206,6 +206,16 @@
   gap: 0.5rem;
 }
 
+/* Hour + minute steppers sit side by side rather than stacked. */
+.c-content-editor__field-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.c-content-editor__field-row .c-content-editor__field {
+  flex: 0 0 auto;
+}
+
 .c-content-editor__field-label {
   font-size: 1.2rem;
   font-weight: 600;
