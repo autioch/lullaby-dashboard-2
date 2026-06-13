@@ -1,8 +1,8 @@
 # Dashboard Specification
 
 What the dashboard renders **today**. Design that was specced but isn't built yet — theme system,
-mission timer, deadline, records, completed-objective collapse — lives in the roadmap's Future
-section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-not-yet-built).
+deadline, records — lives in the roadmap's Future section, not here. See
+[06_roadmap.md](06_roadmap.md#dashboard-design-specced-not-yet-built).
 
 ## Layout
 
