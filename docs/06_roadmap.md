@@ -115,3 +115,4 @@ Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement
       resolved and re-checked before close-out (mission-time-modes retro [24])
 - [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
 - [ ] Add `bugfix` command
+- [ ] Add command for adjusting the commands and general agent workflow
