@@ -1,7 +1,9 @@
-.c-clock {
-  font-size: 10rem;
+.c-timer {
+  font-size: 4rem;
   text-align: center;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
   width: 100%;
+  margin-bottom: auto;
+  opacity: 0.85;
 }

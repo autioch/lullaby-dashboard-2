@@ -23,6 +23,9 @@ section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-no
 
 - **Video** — YouTube embed, shown only when the mission has a `youtubeUrl`.
 - **Clock** — wall-clock `HH:MM`, font auto-sized to its container.
+- **Timer** — elapsed mission duration (`MM:SS`, rolling to `H:MM:SS` past an hour), shown under the
+  Clock. Starts on the first checked objective; auto-pauses when a modal covers the launchpad, the
+  page is hidden, or the mission is switched; freezes the final time at 100%; resets on Restart.
 - **Menu** — icon row: Mission select · Restart (confirm → reset mission + timer state) · Edit
   (content editor) · Settings.
 

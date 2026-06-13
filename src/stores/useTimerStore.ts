@@ -1,173 +1,127 @@
 import { create } from 'zustand';
 import { lsWrapper } from '@/utils/ls';
 
+// One run per mission. `accumulatedMs` banks time from finished active
+// segments; `segmentStartMs` is the wall-clock start of the live segment (null
+// when paused) and is runtime-only — never persisted, so a reload restores the
+// run *paused* and the reload gap is never counted. `isComplete` freezes the
+// final duration at 100% until a Restart.
+export type TimerRun = {
+  accumulatedMs: number;
+  segmentStartMs: number | null;
+  isComplete: boolean;
+};
+
+type PersistedRun = { accumulatedMs: number; isComplete: boolean };
+type PersistedState = { runsByMission: Record<string, PersistedRun> };
+
 type TimerState = {
-  timerRunsByList: Record<string, TimerRunState>;
-  fastestRunsByList: Record<string, number>;
+  runsByMission: Record<string, TimerRun>;
 };
 
 type TimerMethods = {
-  startTimer(listId: string): void;
-  pauseTimer(listId: string): void;
-  resumeTimer(listId: string): void;
-  completeRun(listId: string): void;
-  // checkFinished(list: MissionRec, checkedKeys: Record<string, boolean>): void;
+  // Single transition point. `running` = should be accumulating now; `complete`
+  // = mission is at 100%. Banks/pauses any *other* mission's open segment too,
+  // so switching missions pauses the previous run for free.
+  setRunState(missionId: string, running: boolean, complete: boolean): void;
   resetTimerState(): void;
 };
 
-type TimerRunState = {
-  listId: string;
-  startedAtMs: number;
-  elapsedMs: number;
-  isRunning: boolean;
-  lastResumedAtMs: number | null;
-};
+// Pure: elapsed time of a run at instant `now`. Exported for unit testing and
+// for the display to read each tick.
+export function getElapsedMs(run: TimerRun | undefined, now: number): number {
+  if (!run) {
+    return 0;
+  }
+  return (
+    run.accumulatedMs +
+    (run.segmentStartMs !== null ? Math.max(0, now - run.segmentStartMs) : 0)
+  );
+}
 
-const ls = lsWrapper<TimerState>('timer', 2);
+const ls = lsWrapper<PersistedState>('timer', 3);
+
+function loadRuns(): Record<string, TimerRun> {
+  const persisted = ls.load();
+  if (!persisted?.runsByMission) {
+    return {};
+  }
+
+  const runs: Record<string, TimerRun> = {};
+  for (const [missionId, run] of Object.entries(persisted.runsByMission)) {
+    runs[missionId] = {
+      accumulatedMs: run.accumulatedMs,
+      isComplete: run.isComplete,
+      segmentStartMs: null,
+    };
+  }
+  return runs;
+}
+
+function persist(runsByMission: Record<string, TimerRun>) {
+  const runsToPersist: Record<string, PersistedRun> = {};
+  for (const [missionId, run] of Object.entries(runsByMission)) {
+    runsToPersist[missionId] = {
+      accumulatedMs: run.accumulatedMs,
+      isComplete: run.isComplete,
+    };
+  }
+  ls.save({ runsByMission: runsToPersist });
+}
 
 export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
-  timerRunsByList: {},
-  fastestRunsByList: {},
-  ...ls.load(),
+  runsByMission: loadRuns(),
 
-  startTimer(listId: string) {
-    return set((state) => {
-      const run = state.timerRunsByList[listId];
+  setRunState(missionId, running, complete) {
+    set((state) => {
       const now = Date.now();
-      const nextRun = run
-        ? { ...run, isRunning: true, lastResumedAtMs: now }
-        : {
-            listId,
-            startedAtMs: now,
-            elapsedMs: 0,
-            isRunning: true,
-            lastResumedAtMs: now,
-          };
+      const nextRuns: Record<string, TimerRun> = {};
 
-      const nextState = {
-        ...state.timerRunsByList,
-        [listId]: nextRun,
-      };
-
-      ls.save({
-        timerRunsByList: nextState,
-        fastestRunsByList: state.fastestRunsByList,
-      });
-
-      return {
-        ...state,
-        timerRunsByList: nextState,
-      };
-    });
-  },
-
-  pauseTimer(listId: string) {
-    return set((state) => {
-      const run = state.timerRunsByList[listId];
-      if (!run || !run.isRunning) return state;
-
-      const now = Date.now();
-      const elapsedMs =
-        run.elapsedMs +
-        Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs));
-      const nextRun = {
-        ...run,
-        elapsedMs,
-        isRunning: false,
-        lastResumedAtMs: null,
-      };
-
-      const nextState = {
-        ...state.timerRunsByList,
-        [listId]: nextRun,
-      };
-
-      ls.save({
-        timerRunsByList: nextState,
-        fastestRunsByList: state.fastestRunsByList,
-      });
-
-      return {
-        ...state,
-        timerRunsByList: nextState,
-      };
-    });
-  },
-
-  resumeTimer(listId: string) {
-    return set((state) => {
-      const run = state.timerRunsByList[listId];
-      if (!run || run.isRunning) return state;
-
-      const nextRun = {
-        ...run,
-        isRunning: true,
-        lastResumedAtMs: Date.now(),
-      };
-
-      const nextTimerRunsByList = {
-        ...state.timerRunsByList,
-        [listId]: nextRun,
-      };
-
-      ls.save({
-        timerRunsByList: nextTimerRunsByList,
-        fastestRunsByList: state.fastestRunsByList,
-      });
-
-      return {
-        ...state,
-        timerRunsByList: nextTimerRunsByList,
-      };
-    });
-  },
-
-  completeRun(listId: string) {
-    return set((state) => {
-      const run = state.timerRunsByList[listId];
-      const now = Date.now();
-      const elapsedMs = run
-        ? run.elapsedMs +
-          Math.max(0, now - (run.lastResumedAtMs ?? run.startedAtMs))
-        : 0;
-      const previousBest = state.fastestRunsByList[listId];
-      const isNewBest = previousBest === undefined || elapsedMs < previousBest;
-      const nextFastestRunsByList = { ...state.fastestRunsByList };
-
-      if (isNewBest) {
-        nextFastestRunsByList[listId] = elapsedMs;
+      // Pause every other mission's live segment (covers mission-switch).
+      for (const [id, run] of Object.entries(state.runsByMission)) {
+        if (id === missionId) {
+          continue;
+        }
+        nextRuns[id] =
+          run.segmentStartMs !== null
+            ? {
+                ...run,
+                accumulatedMs:
+                  run.accumulatedMs + Math.max(0, now - run.segmentStartMs),
+                segmentStartMs: null,
+              }
+            : run;
       }
 
-      const nextRun = {
-        ...run,
-        listId,
-        elapsedMs,
-        isRunning: false,
-      } as TimerRunState;
-
-      const nextTimerRunsByList = {
-        ...state.timerRunsByList,
-        [listId]: nextRun,
+      const current: TimerRun = state.runsByMission[missionId] ?? {
+        accumulatedMs: 0,
+        segmentStartMs: null,
+        isComplete: false,
       };
 
-      ls.save({
-        timerRunsByList: nextTimerRunsByList,
-        fastestRunsByList: nextFastestRunsByList,
-      });
+      let { accumulatedMs, segmentStartMs } = current;
+      const isComplete = current.isComplete || complete;
+      const wantActive = running && !isComplete;
 
-      return {
-        ...state,
-        timerRunsByList: nextTimerRunsByList,
-        fastestRunsByList: nextFastestRunsByList,
-      };
+      // Stop a live segment (pause or complete): bank its elapsed.
+      if (segmentStartMs !== null && !wantActive) {
+        accumulatedMs += Math.max(0, now - segmentStartMs);
+        segmentStartMs = null;
+      }
+      // Start a live segment when it should run and isn't already.
+      if (segmentStartMs === null && wantActive) {
+        segmentStartMs = now;
+      }
+
+      nextRuns[missionId] = { accumulatedMs, segmentStartMs, isComplete };
+
+      persist(nextRuns);
+      return { runsByMission: nextRuns };
     });
   },
 
   resetTimerState() {
-    set({
-      timerRunsByList: {},
-      fastestRunsByList: {},
-    });
+    set({ runsByMission: {} });
     ls.clear();
   },
 }));

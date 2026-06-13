@@ -1,5 +1,6 @@
 import './Dashboard.css';
 import { Clock } from '@/components/Clock/Clock';
+import { Timer } from '@/components/Timer/Timer';
 import { AppOptions } from '@/components/AppOptions/AppOptions';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
 import { ObjectiveList } from '@/components/ObjectiveList/ObjectiveList';
@@ -27,6 +28,7 @@ export function Dashboard() {
         <div className="c-dashboard__aside">
           <VideoEmbed />
           <Clock />
+          <Timer />
           <Menu />
         </div>
         <div className="c-dashboard__footer">

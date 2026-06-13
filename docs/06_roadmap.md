@@ -35,8 +35,8 @@ describes only the current UI.
   - Space — Mission Control · Crew Boarding · Launch Ready · Orbit Achieved
   - Minecraft Adventure — Village Preparation · Supplies Ready · Entering Cave · Expedition Complete
   - Pirate Voyage — Crew Boarding · Raise the Sails · Leaving Port · Treasure Expedition Complete
-- [ ] **Mission timer display** — show mission duration (`useTimerStore` exists but isn't started or
-      shown).
+- [x] **Mission timer display** — show mission duration (always-visible readout under the Clock;
+      auto start/pause/freeze, per-mission `useTimerStore`).
 - [ ] **Best completion time / records** — surface the fastest run per mission (computed by the
       unwired `completeRun`, never displayed).
 - [ ] **Optional deadline countdown**.
