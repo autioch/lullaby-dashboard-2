@@ -15,7 +15,7 @@ function pad(num: number) {
   return num.toString().padStart(2, '0');
 }
 
-function formatElapsed(ms: number) {
+export function formatElapsed(ms: number) {
   const totalSeconds = Math.floor(ms / 1000);
   const seconds = totalSeconds % 60;
   const minutes = Math.floor(totalSeconds / 60) % 60;

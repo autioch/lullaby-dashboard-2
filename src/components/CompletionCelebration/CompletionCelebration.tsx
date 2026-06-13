@@ -3,6 +3,7 @@ import { useMemo, type CSSProperties } from 'react';
 import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { computeProgress } from '@/stores/missionProgress';
 import { useTimerStore } from '@/stores/useTimerStore';
+import { formatElapsed } from '@/components/Timer/Timer';
 import { Typography } from '@/components/Typography/Typography';
 
 // Each firework is a radial cluster of particles. Several fire across the
@@ -66,6 +67,18 @@ export function CompletionCelebration() {
       : false
   );
 
+  // Deadline mode: a positive frozen result means the family finished with time
+  // to spare — drives the "X to spare" beat. A late (≤ 0) finish shows nothing.
+  const deadlineResult = useTimerStore((state) =>
+    mission ? state.deadlineResultByMission[mission.id] : undefined
+  );
+  const toSpare =
+    mission?.timeMode === 'deadline' &&
+    deadlineResult !== undefined &&
+    deadlineResult > 0
+      ? deadlineResult
+      : null;
+
   // Celebrate only a real completion — every visible objective checked. Guard on
   // counts, not the ceil-rounded percent (which hits 100 one objective early on
   // very large missions), and require total > 0 so empty/all-hidden missions
@@ -101,6 +114,15 @@ export function CompletionCelebration() {
       {newBest ? (
         <div className="c-completion-celebration__new-best" aria-hidden="true">
           <Typography textKey="completionCelebration.newBest" as="span" />
+        </div>
+      ) : null}
+      {toSpare !== null ? (
+        <div className="c-completion-celebration__new-best" aria-hidden="true">
+          <Typography
+            textKey="completionCelebration.toSpare"
+            values={{ time: formatElapsed(toSpare) }}
+            as="span"
+          />
         </div>
       ) : null}
     </>

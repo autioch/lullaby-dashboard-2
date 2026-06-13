@@ -112,7 +112,7 @@ getDeadlineRemainingMs(deadlineTime, Date.now())`; show `MM:SS` / `H:MM:SS` of `
 - **Done-check:** `npm run ci` green; preview — a deadline mission set ~1–2 min ahead counts down,
   crosses into `over`, and on 100% freezes. `compat/compat`: confirm clean (only `Date`/`setInterval`).
 
-### Step 5 — Completion celebration "to spare" beat · phase: `build`
+### Step 5 — Completion celebration "to spare" beat · phase: `build` ✅
 
 - **Goal:** the early-finish reward; nothing extra when late.
 - **Read:** spec §Behavior (completion beat); [`src/components/CompletionCelebration/CompletionCelebration.tsx`](../src/components/CompletionCelebration/CompletionCelebration.tsx)
