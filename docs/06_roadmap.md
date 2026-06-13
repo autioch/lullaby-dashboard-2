@@ -25,12 +25,6 @@ The shipped MVP — the working dashboard.
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
 describes only the current UI.
 
-- [ ] **Mission time modes** — one per-mission `timeMode` (freestyle / challenge / deadline) that
-      gates the time readout under the always-on Clock: freestyle = clock only, challenge = the
-      shipped elapsed timer + best, deadline = a wall-clock countdown to an `HH:MM` with a gentle
-      overtime and a "time to spare" completion beat (`target − actual`). Absorbs the former
-      "Optional deadline countdown"; `timebox` (fixed-duration budget) is the fast-follow. Default
-      `freestyle`. (spike [09](../docs-spikes/09_spike_mission-time-modes.md), `viable-with-changes`)
 - [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
       status vocabulary. Initial themes:
@@ -49,6 +43,12 @@ describes only the current UI.
       beat in the completion celebration; mission-scoped reset in Settings.
 - [x] **Manual timer pause/resume** — click/Enter the Timer to pause-resume by hand (sticky override
       of auto-pause, persisted per mission); hover/focus action icon + paused watermark.
+- [x] **Mission time modes** — per-mission `timeMode` (freestyle / challenge / deadline, default
+      `freestyle`) gating the readout under the always-on Clock: freestyle = clock only, challenge =
+      the shipped elapsed timer + best, deadline = a wall-clock countdown to an `HH:MM` with a gentle
+      overtime (shown as a signed `-time`) and a "time to spare" completion beat. Absorbed the former
+      "Optional deadline countdown". `timebox` (fixed-duration budget) remains the fast-follow.
+      (spec [24](../docs-journal/24_spec_mission-time-modes.md))
 
 ## Tooling & infrastructure
 
@@ -58,6 +58,11 @@ describes only the current UI.
 - [ ] Evaluate head/meta management (is React Helmet still relevant under Astro?)
 - [x] Add Vitest + a few tests on stores/hydration logic
 - [ ] Component-test + end-to-end layers — see qa.md "deferred gaps"
+- [ ] **Safe QA fixtures for TV-flow drives** — a throwaway / seeded test dataset so `L2`
+      verification doesn't mutate the live dev Firestore (the mission-time-modes retro [24] flagged
+      that drives toggled mission modes directly in the owner's DB), and so runtime-only checks
+      deferred there (deadline freeze-on-completion, the "time to spare" banner, late-no-banner) can
+      be exercised end-to-end rather than left to unit tests + reviewed logic.
 
 ## Features & UX
 
@@ -102,5 +107,8 @@ Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement
 - [x] **Lighten the workflow for small / interim-UI changes** — add lane-selection guidance (`/tweak` vs the full `/spec`→`/plan`→`/implement` pipeline) and record the interim-UI default (UI is a PoC: minimize polish, skip non-mandatory animation) so small visual changes stop over-spending the pipeline (feature 17 retro; tweak [18](../docs-journal/18_tweak_lighten-workflow.md))
 - [ ] Add a distinct UI/UX design step before/within `/spec` — MVP-first, complexity driven by how the user operates the app (TV-readability lens), not derived from the data shape (today only the "MVP-first" wording exists, not a design pass)
 - [ ] Add a distinct, non-skippable security/maintenance step after `/implement` (today it's only a per-trigger `/security-review` reference inside the review step, which can be silently skipped)
+- [ ] **Iterate the review gate inside `/implement`** — make the `L3` review an explicit
+      review → fix → re-review loop within `/implement` rather than a single pass, so findings are
+      resolved and re-checked before close-out (mission-time-modes retro [24])
 - [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
 - [ ] Add `bugfix` command
