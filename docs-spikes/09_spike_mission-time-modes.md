@@ -3,7 +3,7 @@
 > **Artifact:** `docs-spikes/09_spike_mission-time-modes.md` · **Roles:** Solution Architect / Tech Lead (lead) · Product Owner
 > **Status:** terminal record (no lifecycle) · **Verdict:** `viable-with-changes`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13
-> **Graduated to:** _(fill once/if this idea proceeds to `/spec`)_
+> **Graduated to:** [spec](../docs-journal/24_spec_mission-time-modes.md)
 
 A time-boxed, investigation-only record that de-risks an idea **before** any spec — feasibility,
 UX, and product sense. No app code, no acceptance criteria or data contracts (those belong to
