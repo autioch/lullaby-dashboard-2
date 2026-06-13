@@ -26,6 +26,11 @@ traps, regression checklist).
   server/API helper, a util, a pure derivation), add or update its co-located unit test in the
   **same commit**. Not 100% coverage, and not presentational React, thin repositories, or config —
   scope and exemptions in [docs/qa.md](docs/qa.md#tests-are-part-of-the-change).
+- **Interim UI — minimize polish.** The UI is a proof-of-concept pending a ground-up rework (see
+  "What this is" below). Spend effort on API/feature correctness, not visual polish: keep styling
+  minimal and functional, default new visual work to **instant / no-motion**, and add animation only
+  when the owner explicitly asks. The functional **TV-first baseline** (large, high-contrast,
+  readable at 3–5 m, D-pad-operable) is **not** "polish" — it stays the floor.
 
 ## What this is
 
@@ -34,6 +39,11 @@ traps, regression checklist).
 Netlify adapter) · **React 19** (mounted `client:only`) · **Zustand 5** (state + business
 logic) · **Firebase/Firestore** (client SDK + `firebase-admin`) · **BEM CSS** (`c-` prefix).
 Product/architecture context: [README.md](README.md) and [`docs/`](docs/).
+
+**Status — interim UI (PoC).** The current UI is a **proof-of-concept**: it exists to exercise the
+API and feature set, and **once the feature set stabilizes it will be reworked from the ground up**
+(the roadmap's Theme system redoes presentation). Treat the present screens as a test harness, not
+the final product — hence the "minimize polish" working-style rule above.
 
 ## TV browser floor — Chrome 87 (enforced)
 

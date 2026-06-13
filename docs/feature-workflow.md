@@ -30,6 +30,22 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
   well-bounded change and records a single terminal artifact. Skips the spec/plan/implement
   documents. Routes to `/spec` when a "tweak" turns out to be a real feature.
 
+## Choosing the lane: `/tweak` vs the full pipeline
+
+Pick the lane up front by the change's **shape**, not its topic:
+
+- **`/tweak`** — a single, well-bounded change touching a layer or two: a copy/style edit, a small
+  behavior fix, a config change, one self-contained presentational feature. **Default small and
+  interim-UI visual changes here** — the UI is a PoC pending a ground-up rework, so it rarely earns
+  the full three-artifact paper trail (see [CLAUDE.md](../CLAUDE.md) → "What this is" / "Interim UI —
+  minimize polish").
+- **Full `/spec` → `/plan` → `/implement`** — a real feature: a new data model / contract, multiple
+  stores or components, genuine open product questions, or work that wants independently committable
+  steps. Front it with `/spike` when the idea is unproven.
+
+When in doubt, **start in `/tweak`**; if it grows a data model, multiple components, or open product
+questions mid-flight, **stop and route to `/spec`** — the tweak escalates, it doesn't balloon.
+
 ## Artifacts & roles
 
 Each command forces the role(s) that own its step and emits **exactly one** artifact in
