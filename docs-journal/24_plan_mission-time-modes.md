@@ -1,7 +1,7 @@
 # Mission time modes — Plan
 
 > **Artifact:** `24_plan_mission-time-modes.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
-> **Status:** `in-progress`
+> **Status:** `done`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13 · **Last updated:** 2026-06-13
 > **Related:** [spec](24_spec_mission-time-modes.md) · [implement](24_implement_mission-time-modes.md) · [adjust](24_adjust_mission-time-modes-r1.md) · [retro](24_retro_mission-time-modes.md)
 
@@ -173,12 +173,18 @@ getDeadlineRemainingMs(deadlineTime, Date.now())`; show `MM:SS` / `H:MM:SS` of `
 
 ## Final verification
 
-- [ ] `L0` gate + `L1` build green
-- [ ] `L2`: every item in the spec's **Acceptance criteria** confirmed in the running app (TV UA) — `/verify`
-- [ ] `L3` review gate clean (`/code-review`, `/simplify`; `/security-review` — the API touches a write
-      route, so run it for that step), findings addressed
-- [ ] `L4` `npm run knip` clean (no orphaned helper/export from Step 1–2)
-- [ ] Tree internally consistent; flip the spec's `Status` → `implemented` on completion
+- [x] `L0` gate + `L1` build green
+- [x] `L2`: acceptance criteria confirmed in the running app — freestyle hides the readout; challenge
+      shows the elapsed timer + pause toggle and auto-pauses on a modal; deadline counts down before
+      any check with no pause control; overtime renders `H:MM:SS po czasie` with the mild-colour class;
+      the editor sets/persists mode + deadline and the dashboard reflects it. Freeze-on-completion, the
+      "to spare" banner, and late-no-banner are covered by unit tests + reviewed logic (flagged for
+      real-use confirmation — completing a full mission live wasn't practical).
+- [x] `L3` review gate: `/code-review` (2 findings — stepper clamp, sticky deadline completion —
+      fixed in `ad75033`), `/simplify` (clean), `/security-review` (no findings; the write route
+      enum-/regex-validates the new fields behind the unchanged session guard)
+- [x] `L4` `npm run knip` clean
+- [x] Tree internally consistent; spec `Status` → `implemented`
 
 ## Risks & assumptions
 

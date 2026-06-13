@@ -1,7 +1,7 @@
 # Mission time modes — Spec
 
 > **Artifact:** `24_spec_mission-time-modes.md` · **Roles:** Product Owner
-> **Status:** `agreed`
+> **Status:** `implemented`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13 · **Last updated:** 2026-06-13
 > **Related:** [spike](../docs-spikes/09_spike_mission-time-modes.md) · [plan](24_plan_mission-time-modes.md) · [implement](24_implement_mission-time-modes.md) · [adjust](24_adjust_mission-time-modes-r1.md) · [retro](24_retro_mission-time-modes.md)
 
