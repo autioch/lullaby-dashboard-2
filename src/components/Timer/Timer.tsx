@@ -6,6 +6,7 @@ import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { useLanguageStore } from '@/stores/useLanguageStore';
 import { computeProgress } from '@/stores/missionProgress';
+import { getDeadlineRemainingMs } from '@/stores/missionTime';
 import { useTimerStore, getElapsedMs } from '@/stores/useTimerStore';
 import { Typography } from '@/components/Typography/Typography';
 import { t } from '@/i18n/translations';
@@ -42,7 +43,7 @@ function usePageVisible() {
 
 // Mode gate: the single mission-time readout under the Clock is chosen by the
 // mission's `timeMode`. `challenge` keeps today's elapsed-timer behavior;
-// `freestyle` shows nothing; `deadline` is handled in a later step.
+// `deadline` shows a wall-clock countdown; `freestyle` shows nothing.
 export function Timer() {
   const mission = useMission();
   const timeMode = mission?.timeMode ?? 'freestyle';
@@ -50,7 +51,81 @@ export function Timer() {
   if (timeMode === 'challenge') {
     return <ChallengeTimer />;
   }
+  if (timeMode === 'deadline') {
+    return <DeadlineTimer />;
+  }
   return null;
+}
+
+// Wall-clock countdown to today's `deadlineTime`. Visible while the mission is
+// selected and incomplete (even before the first check — a deadline matters
+// before you start). Never pauses (real time marches on); has no pause control.
+function DeadlineTimer() {
+  const missionId = useMissionStore((state) => state.missionId);
+  const mission = useMission();
+  const checkedKeys = useMissionStore((state) => state.checkedKeys);
+  const objectiveGroups = useMissionStore((state) => state.objectiveGroups);
+  const objectives = useMissionStore((state) => state.objectives);
+
+  const recordDeadlineResult = useTimerStore(
+    (state) => state.recordDeadlineResult
+  );
+  const frozenResult = useTimerStore((state) =>
+    missionId ? state.deadlineResultByMission[missionId] : undefined
+  );
+
+  const { completed, total } = useMemo(
+    () => computeProgress(objectiveGroups, objectives, checkedKeys, mission),
+    [objectiveGroups, objectives, checkedKeys, mission]
+  );
+  const complete = total > 0 && completed === total;
+  const deadlineTime = mission?.deadlineTime;
+
+  // Tick once a second while running; stop once complete (frozen).
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (complete) {
+      return;
+    }
+    const id = setInterval(() => setTick((tick) => tick + 1), 1000);
+    return () => clearInterval(id);
+  }, [complete]);
+
+  // Freeze the remaining-at-completion on the completion edge (idempotent).
+  useEffect(() => {
+    if (complete && missionId && deadlineTime) {
+      recordDeadlineResult(
+        missionId,
+        getDeadlineRemainingMs(deadlineTime, Date.now())
+      );
+    }
+  }, [complete, missionId, deadlineTime, recordDeadlineResult]);
+
+  if (!deadlineTime) {
+    return null;
+  }
+
+  const remaining =
+    complete && frozenResult !== undefined
+      ? frozenResult
+      : getDeadlineRemainingMs(deadlineTime, Date.now());
+  const overtime = remaining < 0;
+  const display = formatElapsed(Math.abs(remaining));
+
+  return (
+    <div className={`c-timer ${overtime ? 'c-timer--overtime' : ''}`}>
+      {overtime ? (
+        <Typography
+          textKey="timer.over"
+          values={{ time: display }}
+          as="span"
+          className="c-timer__elapsed"
+        />
+      ) : (
+        <span className="c-timer__elapsed">{display}</span>
+      )}
+    </div>
+  );
 }
 
 function ChallengeTimer() {

@@ -86,6 +86,12 @@
   opacity: 0.2;
 }
 
+/* Deadline overtime: a mild, calm colour shift — no red, no alarm. */
+.c-timer--overtime .c-timer__elapsed {
+  color: #c98a3b;
+  opacity: 1;
+}
+
 .c-timer .c-timer__best {
   font-size: 1.5rem;
   font-weight: bold;

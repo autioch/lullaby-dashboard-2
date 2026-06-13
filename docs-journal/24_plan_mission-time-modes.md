@@ -91,7 +91,7 @@ committable. Phases: **Prep/refactor → Build → Wire → Validate.**
   a `freestyle` mission shows only the Clock. (Set a mission's mode via Firestore/seed or temporarily
   in dev to eyeball.)
 
-### Step 4 — Deadline countdown rendering · phase: `build`
+### Step 4 — Deadline countdown rendering · phase: `build` ✅
 
 - **Goal:** the deadline readout — countdown, gentle overtime, freeze on completion.
 - **Read:** spec §Behavior (deadline countdown + completion freeze) + §UI; `missionTime.ts` (Step 1);
