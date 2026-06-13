@@ -67,14 +67,14 @@ export function Stepper(props: {
       if (wrap && max !== undefined) onChange(max);
       return;
     }
-    onChange(value - step);
+    onChange(Math.max(min, value - step));
   };
   const inc = () => {
     if (atMax) {
       if (wrap) onChange(min);
       return;
     }
-    onChange(value + step);
+    onChange(max !== undefined ? Math.min(max, value + step) : value + step);
   };
 
   return (

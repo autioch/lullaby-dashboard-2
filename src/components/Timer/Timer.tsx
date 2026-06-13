@@ -78,7 +78,11 @@ function DeadlineTimer() {
     () => computeProgress(objectiveGroups, objectives, checkedKeys, mission),
     [objectiveGroups, objectives, checkedKeys, mission]
   );
-  const complete = total > 0 && completed === total;
+  // A frozen result keeps the readout frozen even if an objective is later
+  // unchecked — completion is sticky until Restart, mirroring the challenge
+  // timer's isComplete (the result is cleared by resetTimerState).
+  const frozen = frozenResult !== undefined;
+  const complete = frozen || (total > 0 && completed === total);
   const deadlineTime = mission?.deadlineTime;
 
   // Tick once a second while running; stop once complete (frozen).
@@ -106,7 +110,7 @@ function DeadlineTimer() {
   }
 
   const remaining =
-    complete && frozenResult !== undefined
+    frozenResult !== undefined
       ? frozenResult
       : getDeadlineRemainingMs(deadlineTime, Date.now());
   const overtime = remaining < 0;
