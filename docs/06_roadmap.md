@@ -39,6 +39,8 @@ describes only the current UI.
       auto start/pause/freeze, per-mission `useTimerStore`).
 - [x] **Best completion time / records** — per-mission best run shown under the Timer; "New best!"
       beat in the completion celebration; mission-scoped reset in Settings.
+- [x] **Manual timer pause/resume** — click/Enter the Timer to pause-resume by hand (sticky override
+      of auto-pause, persisted per mission); hover/focus action icon + paused watermark.
 - [ ] **Optional deadline countdown**.
 - [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
       system above).

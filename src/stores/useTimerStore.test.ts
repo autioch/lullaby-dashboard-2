@@ -14,6 +14,7 @@ const run = (over: Partial<TimerRun> = {}): TimerRun => ({
   segmentStartMs: null,
   isComplete: false,
   completionWasBest: false,
+  userPaused: false,
   ...over,
 });
 
@@ -162,7 +163,9 @@ describe('persistence', () => {
     useTimerStore.getState().setRunState('m1', false, true); // complete → best 2000
 
     expect(fakeLs.save).toHaveBeenLastCalledWith({
-      runsByMission: { m1: { accumulatedMs: 2000, isComplete: true } },
+      runsByMission: {
+        m1: { accumulatedMs: 2000, isComplete: true, userPaused: false },
+      },
       bestByMission: { m1: 2000 },
     });
   });
@@ -181,6 +184,7 @@ describe('persistence', () => {
           isComplete: false,
           segmentStartMs: null,
           completionWasBest: false,
+          userPaused: false,
         },
       },
       bestByMission: { m1: 4000 },
@@ -208,6 +212,47 @@ describe('resetTimerState', () => {
       runsByMission: {},
       bestByMission: { m1: 2000 },
     });
+  });
+});
+
+describe('setUserPaused', () => {
+  it('sets the sticky flag and persists it, creating a run if needed', () => {
+    useTimerStore.getState().setUserPaused('m1', true);
+
+    expect(useTimerStore.getState().runsByMission.m1.userPaused).toBe(true);
+    expect(fakeLs.save).toHaveBeenLastCalledWith({
+      runsByMission: {
+        m1: { accumulatedMs: 0, isComplete: false, userPaused: true },
+      },
+      bestByMission: {},
+    });
+  });
+
+  it('is preserved across a setRunState transition', () => {
+    useTimerStore.getState().setRunState('m1', true, false);
+    vi.advanceTimersByTime(2000);
+    useTimerStore.getState().setUserPaused('m1', true);
+    // Component re-derives running=false because userPaused; banks the segment.
+    useTimerStore.getState().setRunState('m1', false, false);
+
+    const r = useTimerStore.getState().runsByMission.m1;
+    expect(r.userPaused).toBe(true);
+    expect(r.segmentStartMs).toBeNull();
+    expect(r.accumulatedMs).toBe(2000);
+
+    // Manual resume: flag clears, segment reopens.
+    useTimerStore.getState().setUserPaused('m1', false);
+    useTimerStore.getState().setRunState('m1', true, false);
+    expect(useTimerStore.getState().runsByMission.m1.userPaused).toBe(false);
+    expect(useTimerStore.getState().runsByMission.m1.segmentStartMs).toBe(
+      Date.now()
+    );
+  });
+
+  it('is cleared by resetTimerState (fresh run is un-paused)', () => {
+    useTimerStore.getState().setUserPaused('m1', true);
+    useTimerStore.getState().resetTimerState();
+    expect(useTimerStore.getState().runsByMission.m1).toBeUndefined();
   });
 });
 

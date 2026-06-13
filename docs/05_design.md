@@ -26,8 +26,11 @@ deadline, records — lives in the roadmap's Future section, not here. See
 - **Timer** — elapsed mission duration (`MM:SS`, rolling to `H:MM:SS` past an hour), shown under the
   Clock. Starts on the first checked objective; auto-pauses when a modal covers the launchpad, the
   page is hidden, or the mission is switched; freezes the final time at 100%; the run resets on
-  Restart. Below it, a smaller **`Best …`** line shows the mission's best completion time, once one
-  exists (the best persists across Restart).
+  Restart. While a run is in progress the readout is a **toggle button**: click or Enter pauses /
+  resumes by hand (a sticky override of the auto-pause, persisted per mission). Hover or focus reveals
+  the action icon (pause while running, play while paused); when paused, a faint pause **watermark**
+  stays visible so the stopped state is never silent. Below it, a smaller **`Best …`** line shows the
+  mission's best completion time, once one exists (the best persists across Restart).
 - **Menu** — icon row: Mission select · Restart (confirm → reset mission checks + current run; the
   best record is kept) · Edit (content editor) · Settings.
 

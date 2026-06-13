@@ -4,11 +4,86 @@
   text-align: center;
 }
 
+/* The elapsed readout is a button while a run is in progress. Reset the native
+   chrome so it reads as plain text until it reveals its icon. */
+.c-timer__toggle {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.c-timer__toggle:disabled {
+  cursor: default;
+}
+
+.c-timer__toggle:focus-visible {
+  outline: 0.25rem solid currentColor;
+  outline-offset: 0.5rem;
+  border-radius: 0.5rem;
+}
+
 .c-timer__elapsed {
+  display: block;
   font-size: 4rem;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
   opacity: 0.85;
+}
+
+/* Action icon overlays the readout; hidden until a state reveals it. */
+.c-timer__icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.c-timer__icon svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Running: reveal the pause (action) icon on hover/focus and dim the readout. */
+.c-timer--running .c-timer__toggle:hover .c-timer__icon--pause,
+.c-timer--running .c-timer__toggle:focus-visible .c-timer__icon--pause {
+  opacity: 0.9;
+}
+.c-timer--running .c-timer__toggle:hover .c-timer__elapsed,
+.c-timer--running .c-timer__toggle:focus-visible .c-timer__elapsed {
+  opacity: 0.2;
+}
+
+/* Paused: persistent faint pause watermark so the stopped state is never silent. */
+.c-timer--paused .c-timer__elapsed {
+  opacity: 0.5;
+}
+.c-timer--paused .c-timer__icon--pause {
+  opacity: 0.3;
+}
+
+/* Paused + hover/focus: the play (resume) action takes precedence over the
+   watermark. */
+.c-timer--paused .c-timer__toggle:hover .c-timer__icon--pause,
+.c-timer--paused .c-timer__toggle:focus-visible .c-timer__icon--pause {
+  opacity: 0;
+}
+.c-timer--paused .c-timer__toggle:hover .c-timer__icon--play,
+.c-timer--paused .c-timer__toggle:focus-visible .c-timer__icon--play {
+  opacity: 0.9;
+}
+.c-timer--paused .c-timer__toggle:hover .c-timer__elapsed,
+.c-timer--paused .c-timer__toggle:focus-visible .c-timer__elapsed {
+  opacity: 0.2;
 }
 
 .c-timer .c-timer__best {

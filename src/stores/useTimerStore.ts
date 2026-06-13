@@ -8,14 +8,23 @@ import { lsWrapper } from '@/utils/ls';
 // final duration at 100% until a Restart. `completionWasBest` is a runtime-only
 // flag the completion celebration reads to show a "New best!" beat; it is set
 // true only when this run beat a *prior* record (not on the first completion).
+// `userPaused` is a sticky manual-pause override (persisted): while true the run
+// stays paused regardless of the auto-pause inputs, until manually resumed.
 export type TimerRun = {
   accumulatedMs: number;
   segmentStartMs: number | null;
   isComplete: boolean;
   completionWasBest: boolean;
+  userPaused: boolean;
 };
 
-type PersistedRun = { accumulatedMs: number; isComplete: boolean };
+// `userPaused` is optional on load so pre-existing persisted runs (written before
+// this field existed) hydrate as un-paused — no lsWrapper version bump needed.
+type PersistedRun = {
+  accumulatedMs: number;
+  isComplete: boolean;
+  userPaused?: boolean;
+};
 type PersistedState = {
   runsByMission: Record<string, PersistedRun>;
   bestByMission: Record<string, number>;
@@ -34,6 +43,9 @@ type TimerMethods = {
   // so switching missions pauses the previous run for free. On the completion
   // transition it records the best and flags a record-beating run.
   setRunState(missionId: string, running: boolean, complete: boolean): void;
+  // Sets the sticky manual-pause flag for a mission; the component re-derives
+  // effective running from it, so the bank/segment math stays in `setRunState`.
+  setUserPaused(missionId: string, paused: boolean): void;
   // Clears the best record for one mission (the separate, Settings-housed reset).
   resetBest(missionId: string): void;
   // Resets the current runs; keeps the best records (objectives Restart).
@@ -69,6 +81,7 @@ function loadState(): Pick<TimerState, 'runsByMission' | 'bestByMission'> {
       isComplete: run.isComplete,
       segmentStartMs: null,
       completionWasBest: false,
+      userPaused: run.userPaused ?? false,
     };
   }
 
@@ -84,6 +97,7 @@ function persist(
     runsToPersist[missionId] = {
       accumulatedMs: run.accumulatedMs,
       isComplete: run.isComplete,
+      userPaused: run.userPaused,
     };
   }
   ls.save({ runsByMission: runsToPersist, bestByMission });
@@ -118,6 +132,7 @@ export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
         segmentStartMs: null,
         isComplete: false,
         completionWasBest: false,
+        userPaused: false,
       };
 
       let { accumulatedMs, segmentStartMs } = current;
@@ -154,10 +169,31 @@ export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
         segmentStartMs,
         isComplete,
         completionWasBest,
+        userPaused: current.userPaused,
       };
 
       persist(nextRuns, nextBest);
       return { runsByMission: nextRuns, bestByMission: nextBest };
+    });
+  },
+
+  setUserPaused(missionId, paused) {
+    set((state) => {
+      const current: TimerRun = state.runsByMission[missionId] ?? {
+        accumulatedMs: 0,
+        segmentStartMs: null,
+        isComplete: false,
+        completionWasBest: false,
+        userPaused: false,
+      };
+
+      const nextRuns = {
+        ...state.runsByMission,
+        [missionId]: { ...current, userPaused: paused },
+      };
+
+      persist(nextRuns, state.bestByMission);
+      return { runsByMission: nextRuns };
     });
   },
 

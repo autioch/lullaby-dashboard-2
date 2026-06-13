@@ -1,10 +1,14 @@
 import './Timer.css';
 import { useEffect, useMemo, useState } from 'react';
+import PauseSvg from '@/icons/pause.svg?react';
+import PlaySvg from '@/icons/play.svg?react';
 import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { useControlsStore } from '@/stores/useControlsStore';
+import { useLanguageStore } from '@/stores/useLanguageStore';
 import { computeProgress } from '@/stores/missionProgress';
 import { useTimerStore, getElapsedMs } from '@/stores/useTimerStore';
 import { Typography } from '@/components/Typography/Typography';
+import { t } from '@/i18n/translations';
 
 function pad(num: number) {
   return num.toString().padStart(2, '0');
@@ -42,6 +46,7 @@ export function Timer() {
   const checkedKeys = useMissionStore((state) => state.checkedKeys);
   const objectiveGroups = useMissionStore((state) => state.objectiveGroups);
   const objectives = useMissionStore((state) => state.objectives);
+  const language = useLanguageStore((state) => state.language);
 
   const isAppOptions = useControlsStore((state) => state.isAppOptions);
   const isMissionSelect = useControlsStore((state) => state.isMissionSelect);
@@ -49,6 +54,7 @@ export function Timer() {
   const pageVisible = usePageVisible();
 
   const setRunState = useTimerStore((state) => state.setRunState);
+  const setUserPaused = useTimerStore((state) => state.setUserPaused);
   const run = useTimerStore((state) =>
     missionId ? state.runsByMission[missionId] : undefined
   );
@@ -63,7 +69,11 @@ export function Timer() {
 
   const anyModalOpen = isAppOptions || isMissionSelect || isContentEditor;
   const complete = total > 0 && completed === total;
-  const running = completed >= 1 && !complete && !anyModalOpen && pageVisible;
+  const userPaused = run?.userPaused ?? false;
+  // A run is interactive (toggleable) only while in progress: started and not
+  // yet complete. `running` folds the manual pause into the auto-pause inputs.
+  const inProgress = completed >= 1 && !complete;
+  const running = inProgress && !anyModalOpen && pageVisible && !userPaused;
 
   // Drive the store only when the derived inputs change — not every tick.
   useEffect(() => {
@@ -84,11 +94,39 @@ export function Timer() {
     return () => clearInterval(id);
   }, [ticking]);
 
+  const stateClass = !inProgress
+    ? ''
+    : userPaused
+      ? 'c-timer--paused'
+      : 'c-timer--running';
+  const actionLabel = t(
+    userPaused ? 'timer.resumeLabel' : 'timer.pauseLabel',
+    language
+  );
+
   return (
-    <div className="c-timer">
-      <div className="c-timer__elapsed">
-        {formatElapsed(getElapsedMs(run, Date.now()))}
-      </div>
+    <div className={`c-timer ${stateClass}`}>
+      <button
+        type="button"
+        className="c-timer__toggle"
+        disabled={!inProgress}
+        aria-label={actionLabel}
+        onClick={() => {
+          if (missionId) {
+            setUserPaused(missionId, !userPaused);
+          }
+        }}
+      >
+        <span className="c-timer__elapsed">
+          {formatElapsed(getElapsedMs(run, Date.now()))}
+        </span>
+        <span className="c-timer__icon c-timer__icon--pause" aria-hidden="true">
+          <PauseSvg />
+        </span>
+        <span className="c-timer__icon c-timer__icon--play" aria-hidden="true">
+          <PlaySvg />
+        </span>
+      </button>
       {best !== undefined ? (
         <Typography
           textKey="timer.best"
