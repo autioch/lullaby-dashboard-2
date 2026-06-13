@@ -1,7 +1,7 @@
 # Mission time modes — Plan
 
 > **Artifact:** `24_plan_mission-time-modes.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
-> **Status:** `ready`
+> **Status:** `in-progress`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13 · **Last updated:** 2026-06-13
 > **Related:** [spec](24_spec_mission-time-modes.md) · [implement](24_implement_mission-time-modes.md) · [adjust](24_adjust_mission-time-modes-r1.md) · [retro](24_retro_mission-time-modes.md)
 
@@ -42,7 +42,7 @@ the aside), so no `Dashboard` change. Editor follows the established field → d
 Ordered and self-contained — each leaves the tree green (`npm run ci`) and is independently
 committable. Phases: **Prep/refactor → Build → Wire → Validate.**
 
-### Step 1 — Mission time fields + pure deadline helpers · phase: `prep`
+### Step 1 — Mission time fields + pure deadline helpers · phase: `prep` ✅
 
 - **Goal:** land the data types and the pure, testable time logic everything else builds on.
 - **Read:** spec §Behavior + §Impact; [`src/database/missionRepository.ts`](../src/database/missionRepository.ts)

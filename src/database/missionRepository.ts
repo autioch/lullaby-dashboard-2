@@ -6,6 +6,10 @@ type MissionDoc = {
   youtubeUrl: string;
   retentionHours: number;
   objectiveGroupIds: string[];
+  // Optional so existing docs hydrate as `freestyle`. `deadlineTime` is only
+  // meaningful when `timeMode === 'deadline'`.
+  timeMode?: 'freestyle' | 'challenge' | 'deadline';
+  deadlineTime?: string; // 'HH:MM', local
 };
 
 export type MissionRec = WithId<MissionDoc>;
