@@ -27,7 +27,7 @@ describes only the current UI.
 
 - [x] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
       message marks completion).
-- [ ] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
+- [x] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
       (today they're only de-emphasized in place).
 - [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
@@ -55,12 +55,13 @@ describes only the current UI.
 ## Features & UX
 
 - [ ] Dark/light mode
-- [ ] Animations
 - [ ] Checklist: reset a single objective, turning the list into repeatable chores
 - [ ] Display a task's completion time (e.g. when the cat got its medicine and can next be fed)
 - [ ] Complete the full Firebase authorization
 - [ ] AI: auto-suggest groups and objectives from the mission description
 - [ ] In-progress state of an objective
+- [ ] Animations — _deprioritized: the UI is an interim PoC; skip non-mandatory animation until the
+      post-stabilization UI rework_
 - [ ] History tracking
 - [ ] User accounts
 - [ ] Multi-household support
@@ -91,6 +92,7 @@ describes only the current UI.
 
 Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement`→`/adjust`→`/retro` commands), surfaced in the feature 01 retro.
 
+- [ ] **Lighten the workflow for small / interim-UI changes** — add lane-selection guidance (`/tweak` vs the full `/spec`→`/plan`→`/implement` pipeline) and record the interim-UI default (UI is a PoC: minimize polish, skip non-mandatory animation) so small visual changes stop over-spending the pipeline (feature 17 retro)
 - [ ] Add a distinct UI/UX design step before/within `/spec` — MVP-first, complexity driven by how the user operates the app (TV-readability lens), not derived from the data shape (today only the "MVP-first" wording exists, not a design pass)
 - [ ] Add a distinct, non-skippable security/maintenance step after `/implement` (today it's only a per-trigger `/security-review` reference inside the review step, which can be silently skipped)
 - [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
