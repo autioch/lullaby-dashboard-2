@@ -21,7 +21,11 @@ const run = (over: Partial<TimerRun> = {}): TimerRun => ({
 beforeEach(() => {
   vi.clearAllMocks();
   fakeLs.load.mockReturnValue(undefined);
-  useTimerStore.setState({ runsByMission: {}, bestByMission: {} });
+  useTimerStore.setState({
+    runsByMission: {},
+    bestByMission: {},
+    deadlineResultByMission: {},
+  });
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2026-06-13T00:00:00Z'));
 });
@@ -167,6 +171,7 @@ describe('persistence', () => {
         m1: { accumulatedMs: 2000, isComplete: true, userPaused: false },
       },
       bestByMission: { m1: 2000 },
+      deadlineResultByMission: {},
     });
   });
 
@@ -211,6 +216,33 @@ describe('resetTimerState', () => {
     expect(fakeLs.save).toHaveBeenLastCalledWith({
       runsByMission: {},
       bestByMission: { m1: 2000 },
+      deadlineResultByMission: {},
+    });
+  });
+
+  it('clears a frozen deadline result (a fresh run begins)', () => {
+    useTimerStore.getState().recordDeadlineResult('m1', 60000);
+    useTimerStore.getState().resetTimerState();
+    expect(useTimerStore.getState().deadlineResultByMission).toEqual({});
+  });
+});
+
+describe('recordDeadlineResult', () => {
+  it('freezes the first result and is idempotent', () => {
+    useTimerStore.getState().recordDeadlineResult('m1', 60000);
+    expect(useTimerStore.getState().deadlineResultByMission.m1).toBe(60000);
+
+    // A later edge must NOT overwrite the frozen result.
+    useTimerStore.getState().recordDeadlineResult('m1', -5000);
+    expect(useTimerStore.getState().deadlineResultByMission.m1).toBe(60000);
+  });
+
+  it('persists the frozen result', () => {
+    useTimerStore.getState().recordDeadlineResult('m1', -4000);
+    expect(fakeLs.save).toHaveBeenLastCalledWith({
+      runsByMission: {},
+      bestByMission: {},
+      deadlineResultByMission: { m1: -4000 },
     });
   });
 });
@@ -225,6 +257,7 @@ describe('setUserPaused', () => {
         m1: { accumulatedMs: 0, isComplete: false, userPaused: true },
       },
       bestByMission: {},
+      deadlineResultByMission: {},
     });
   });
 

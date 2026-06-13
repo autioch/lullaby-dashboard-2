@@ -28,6 +28,9 @@ type PersistedRun = {
 type PersistedState = {
   runsByMission: Record<string, PersistedRun>;
   bestByMission: Record<string, number>;
+  // Optional on load so pre-existing payloads (written before this field) hydrate
+  // as `{}` — additive, no lsWrapper version bump (mirrors `userPaused`).
+  deadlineResultByMission?: Record<string, number>;
 };
 
 type TimerState = {
@@ -35,6 +38,10 @@ type TimerState = {
   // Lowest frozen final duration (ms) among completed runs, per mission.
   // Persisted separately from runs so the objectives Restart keeps records.
   bestByMission: Record<string, number>;
+  // Signed deadline remaining (ms) frozen at a mission's completion (positive =
+  // time to spare, negative = overtime). Persisted so it survives a reload;
+  // cleared on Restart.
+  deadlineResultByMission: Record<string, number>;
 };
 
 type TimerMethods = {
@@ -48,6 +55,9 @@ type TimerMethods = {
   setUserPaused(missionId: string, paused: boolean): void;
   // Clears the best record for one mission (the separate, Settings-housed reset).
   resetBest(missionId: string): void;
+  // Freezes the signed deadline-remaining at a mission's completion. Idempotent:
+  // only sets when the mission has no result yet, so the first completion sticks.
+  recordDeadlineResult(missionId: string, remainingMs: number): void;
   // Resets the current runs; keeps the best records (objectives Restart).
   resetTimerState(): void;
 };
@@ -66,10 +76,17 @@ export function getElapsedMs(run: TimerRun | undefined, now: number): number {
 
 const ls = lsWrapper<PersistedState>('timer', 4);
 
-function loadState(): Pick<TimerState, 'runsByMission' | 'bestByMission'> {
+function loadState(): Pick<
+  TimerState,
+  'runsByMission' | 'bestByMission' | 'deadlineResultByMission'
+> {
   const persisted = ls.load();
   if (!persisted) {
-    return { runsByMission: {}, bestByMission: {} };
+    return {
+      runsByMission: {},
+      bestByMission: {},
+      deadlineResultByMission: {},
+    };
   }
 
   const runsByMission: Record<string, TimerRun> = {};
@@ -85,12 +102,17 @@ function loadState(): Pick<TimerState, 'runsByMission' | 'bestByMission'> {
     };
   }
 
-  return { runsByMission, bestByMission: persisted.bestByMission ?? {} };
+  return {
+    runsByMission,
+    bestByMission: persisted.bestByMission ?? {},
+    deadlineResultByMission: persisted.deadlineResultByMission ?? {},
+  };
 }
 
 function persist(
   runsByMission: Record<string, TimerRun>,
-  bestByMission: Record<string, number>
+  bestByMission: Record<string, number>,
+  deadlineResultByMission: Record<string, number>
 ) {
   const runsToPersist: Record<string, PersistedRun> = {};
   for (const [missionId, run] of Object.entries(runsByMission)) {
@@ -100,7 +122,11 @@ function persist(
       userPaused: run.userPaused,
     };
   }
-  ls.save({ runsByMission: runsToPersist, bestByMission });
+  ls.save({
+    runsByMission: runsToPersist,
+    bestByMission,
+    deadlineResultByMission,
+  });
 }
 
 export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
@@ -172,7 +198,7 @@ export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
         userPaused: current.userPaused,
       };
 
-      persist(nextRuns, nextBest);
+      persist(nextRuns, nextBest, state.deadlineResultByMission);
       return { runsByMission: nextRuns, bestByMission: nextBest };
     });
   },
@@ -192,7 +218,7 @@ export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
         [missionId]: { ...current, userPaused: paused },
       };
 
-      persist(nextRuns, state.bestByMission);
+      persist(nextRuns, state.bestByMission, state.deadlineResultByMission);
       return { runsByMission: nextRuns };
     });
   },
@@ -201,15 +227,30 @@ export const useTimerStore = create<TimerState & TimerMethods>((set) => ({
     set((state) => {
       const nextBest = { ...state.bestByMission };
       delete nextBest[missionId];
-      persist(state.runsByMission, nextBest);
+      persist(state.runsByMission, nextBest, state.deadlineResultByMission);
       return { bestByMission: nextBest };
+    });
+  },
+
+  recordDeadlineResult(missionId, remainingMs) {
+    set((state) => {
+      // Idempotent: the first completion freezes the result; ignore later edges.
+      if (state.deadlineResultByMission[missionId] !== undefined) {
+        return state;
+      }
+      const next = {
+        ...state.deadlineResultByMission,
+        [missionId]: remainingMs,
+      };
+      persist(state.runsByMission, state.bestByMission, next);
+      return { deadlineResultByMission: next };
     });
   },
 
   resetTimerState() {
     set((state) => {
-      persist({}, state.bestByMission);
-      return { runsByMission: {} };
+      persist({}, state.bestByMission, {});
+      return { runsByMission: {}, deadlineResultByMission: {} };
     });
   },
 }));

@@ -61,7 +61,7 @@ committable. Phases: **Prep/refactor → Build → Wire → Validate.**
     `H:MM:SS`-range value; a `parse`/`format` round-trip. No `Intl`, no `Array.prototype.at`.
 - **Done-check:** `npm run ci` (tsc + lint + new unit tests + format) green.
 
-### Step 2 — Timer store: deadline result capture + reset · phase: `build`
+### Step 2 — Timer store: deadline result capture + reset · phase: `build` ✅
 
 - **Goal:** a place to freeze the deadline remaining at completion that survives reload and clears on
   Restart.
