@@ -24,6 +24,12 @@ type ContentEditorTranslationKeys =
   | 'fieldLabel'
   | 'fieldYoutubeUrl'
   | 'fieldRetentionHours'
+  | 'fieldTimeMode'
+  | 'modeFreestyle'
+  | 'modeChallenge'
+  | 'modeDeadline'
+  | 'fieldDeadlineHour'
+  | 'fieldDeadlineMinute'
   | 'fieldHidden'
   | 'toggleOn'
   | 'toggleOff'
@@ -63,6 +69,12 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       fieldLabel: 'Label',
       fieldYoutubeUrl: 'YouTube URL',
       fieldRetentionHours: 'Retention (hours)',
+      fieldTimeMode: 'Time mode',
+      modeFreestyle: 'Freestyle',
+      modeChallenge: 'Challenge',
+      modeDeadline: 'Deadline',
+      fieldDeadlineHour: 'Deadline hour',
+      fieldDeadlineMinute: 'Deadline minute',
       fieldHidden: 'Hidden',
       toggleOn: 'On',
       toggleOff: 'Off',
@@ -100,6 +112,12 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       fieldLabel: 'Etykieta',
       fieldYoutubeUrl: 'Adres YouTube',
       fieldRetentionHours: 'Ważność (godziny)',
+      fieldTimeMode: 'Tryb czasu',
+      modeFreestyle: 'Dowolny',
+      modeChallenge: 'Wyzwanie',
+      modeDeadline: 'Termin',
+      fieldDeadlineHour: 'Godzina terminu',
+      fieldDeadlineMinute: 'Minuta terminu',
       fieldHidden: 'Ukryte',
       toggleOn: 'Tak',
       toggleOff: 'Nie',

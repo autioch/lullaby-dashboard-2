@@ -33,13 +33,49 @@ export function TextField(props: {
   );
 }
 
+// Numeric stepper. Defaults (step 1, min 0, no max, no wrap) match the original
+// retention-hours use; `max`/`step`/`wrap`/`format` support the bounded, wrapping
+// deadline hour/minute steppers.
 export function Stepper(props: {
   labelKey: string;
   value: number;
   disabled?: boolean;
+  step?: number;
+  min?: number;
+  max?: number;
+  wrap?: boolean;
+  format?: (value: number) => string;
   onChange: (value: number) => void;
 }) {
-  const { labelKey, value, disabled = false, onChange } = props;
+  const {
+    labelKey,
+    value,
+    disabled = false,
+    step = 1,
+    min = 0,
+    max,
+    wrap = false,
+    format,
+    onChange,
+  } = props;
+
+  const atMin = value <= min;
+  const atMax = max !== undefined && value >= max;
+
+  const dec = () => {
+    if (atMin) {
+      if (wrap && max !== undefined) onChange(max);
+      return;
+    }
+    onChange(value - step);
+  };
+  const inc = () => {
+    if (atMax) {
+      if (wrap) onChange(min);
+      return;
+    }
+    onChange(value + step);
+  };
 
   return (
     <div className="c-content-editor__field">
@@ -52,20 +88,65 @@ export function Stepper(props: {
         <button
           type="button"
           className="c-content-editor__icon-btn"
-          disabled={disabled || value <= 0}
-          onClick={() => onChange(value - 1)}
+          disabled={disabled || (atMin && !wrap)}
+          onClick={dec}
         >
           −
         </button>
-        <span className="c-content-editor__stepper-value">{value}</span>
+        <span className="c-content-editor__stepper-value">
+          {format ? format(value) : value}
+        </span>
         <button
           type="button"
           className="c-content-editor__icon-btn"
-          disabled={disabled}
-          onClick={() => onChange(value + 1)}
+          disabled={disabled || (atMax && !wrap)}
+          onClick={inc}
         >
           ＋
         </button>
+      </span>
+    </div>
+  );
+}
+
+const TIME_MODES = ['freestyle', 'challenge', 'deadline'] as const;
+export type TimeMode = (typeof TIME_MODES)[number];
+
+const MODE_LABEL_KEYS: Record<TimeMode, string> = {
+  freestyle: 'contentEditor.modeFreestyle',
+  challenge: 'contentEditor.modeChallenge',
+  deadline: 'contentEditor.modeDeadline',
+};
+
+// Mission time-mode selector: three D-pad-focusable buttons (no native select),
+// the active one marked `aria-pressed` / `is-on`.
+export function ModeField(props: {
+  value: TimeMode;
+  disabled?: boolean;
+  onChange: (value: TimeMode) => void;
+}) {
+  const { value, disabled = false, onChange } = props;
+
+  return (
+    <div className="c-content-editor__field">
+      <Typography
+        as="span"
+        className="c-content-editor__field-label"
+        textKey="contentEditor.fieldTimeMode"
+      />
+      <span className="c-content-editor__stepper">
+        {TIME_MODES.map((mode) => (
+          <button
+            key={mode}
+            type="button"
+            className={`c-content-editor__toggle ${mode === value ? 'is-on' : ''}`}
+            aria-pressed={mode === value}
+            disabled={disabled}
+            onClick={() => onChange(mode)}
+          >
+            <Typography textKey={MODE_LABEL_KEYS[mode]} />
+          </button>
+        ))}
       </span>
     </div>
   );

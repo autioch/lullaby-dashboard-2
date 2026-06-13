@@ -11,7 +11,11 @@ import {
   Header,
   RowLabel,
 } from './controls';
-import { SaveBar, Stepper, TextField } from './fields';
+import { ModeField, SaveBar, Stepper, TextField } from './fields';
+import { parseHhMm, formatHhMm } from '@/stores/missionTime';
+
+const pad2 = (n: number) => n.toString().padStart(2, '0');
+const DEFAULT_DEADLINE = '07:00';
 
 const edit = useEditStore.getState();
 const { resetBest } = useTimerStore.getState();
@@ -35,16 +39,23 @@ export function MissionLevel() {
     label: mission?.label ?? '',
     youtubeUrl: mission?.youtubeUrl ?? '',
     retentionHours: mission?.retentionHours ?? 0,
+    timeMode: mission?.timeMode ?? ('freestyle' as const),
+    deadlineTime: mission?.deadlineTime ?? DEFAULT_DEADLINE,
   });
 
   if (!missionId || !mission) {
     return <Header trail={[{ textKey: 'contentEditor.missionTitle' }]} />;
   }
 
+  const savedMode = mission.timeMode ?? 'freestyle';
+  const deadline = parseHhMm(draft.deadlineTime) ?? { hour: 7, minute: 0 };
   const dirty =
     draft.label !== mission.label ||
     draft.youtubeUrl !== mission.youtubeUrl ||
-    draft.retentionHours !== mission.retentionHours;
+    draft.retentionHours !== mission.retentionHours ||
+    draft.timeMode !== savedMode ||
+    (draft.timeMode === 'deadline' &&
+      draft.deadlineTime !== mission.deadlineTime);
 
   return (
     <>
@@ -79,15 +90,69 @@ export function MissionLevel() {
           setDraft((current) => ({ ...current, retentionHours }))
         }
       />
+      <ModeField
+        value={draft.timeMode}
+        disabled={pending}
+        onChange={(timeMode) =>
+          setDraft((current) => ({ ...current, timeMode }))
+        }
+      />
+      {draft.timeMode === 'deadline' ? (
+        <>
+          <Stepper
+            labelKey="contentEditor.fieldDeadlineHour"
+            value={deadline.hour}
+            min={0}
+            max={23}
+            wrap
+            format={pad2}
+            disabled={pending}
+            onChange={(hour) =>
+              setDraft((current) => ({
+                ...current,
+                deadlineTime: formatHhMm(hour, deadline.minute),
+              }))
+            }
+          />
+          <Stepper
+            labelKey="contentEditor.fieldDeadlineMinute"
+            value={deadline.minute}
+            min={0}
+            max={55}
+            step={5}
+            wrap
+            format={pad2}
+            disabled={pending}
+            onChange={(minute) =>
+              setDraft((current) => ({
+                ...current,
+                deadlineTime: formatHhMm(deadline.hour, minute),
+              }))
+            }
+          />
+        </>
+      ) : null}
       <SaveBar
         controlId={saveId}
         dirty={dirty}
-        onSave={() => edit.updateMission(saveId, mission.id, draft)}
+        onSave={() =>
+          edit.updateMission(saveId, mission.id, {
+            label: draft.label,
+            youtubeUrl: draft.youtubeUrl,
+            retentionHours: draft.retentionHours,
+            timeMode: draft.timeMode,
+            ...(draft.timeMode === 'deadline'
+              ? { deadlineTime: draft.deadlineTime }
+              : {}),
+          })
+        }
         onCancel={() =>
           setDraft({
             label: mission.label,
             youtubeUrl: mission.youtubeUrl,
             retentionHours: mission.retentionHours,
+            timeMode: mission.timeMode ?? 'freestyle',
+            deadlineTime: mission.deadlineTime ?? DEFAULT_DEADLINE,
           })
         }
       />

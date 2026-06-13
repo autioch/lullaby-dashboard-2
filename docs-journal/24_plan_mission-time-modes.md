@@ -141,7 +141,7 @@ getDeadlineRemainingMs(deadlineTime, Date.now())`; show `MM:SS` / `H:MM:SS` of `
   - `useEditStore.ts`: add `timeMode?` / `deadlineTime?` to `MissionPatch`.
 - **Done-check:** `npm run ci` green (server code is off the Chrome 87 floor).
 
-### Step 7 — Editor UI: mode selector + deadline steppers · phase: `wire`
+### Step 7 — Editor UI: mode selector + deadline steppers · phase: `wire` ✅
 
 - **Goal:** let the owner set the mode and deadline time in the content editor.
 - **Read:** spec §Behavior (editor); [`src/components/ContentEditor/MissionLevel.tsx`](../src/components/ContentEditor/MissionLevel.tsx)
