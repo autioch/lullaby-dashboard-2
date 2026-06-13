@@ -25,7 +25,7 @@ The shipped MVP — the working dashboard.
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
 describes only the current UI.
 
-- [ ] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
+- [x] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
       message marks completion).
 - [ ] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
       (today they're only de-emphasized in place).
