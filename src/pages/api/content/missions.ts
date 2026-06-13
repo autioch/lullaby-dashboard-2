@@ -3,9 +3,11 @@ import { getFirestoreDb, jsonResponse } from '../_utils';
 import {
   guardRequest,
   readDirection,
+  readHhMm,
   readIdList,
   readNumber,
   readString,
+  readTimeMode,
   reorderById,
 } from './_shared';
 
@@ -29,12 +31,15 @@ export async function POST(ctx: APIContext) {
 
   switch (action) {
     case 'create': {
+      const deadlineTime = readHhMm(body.deadlineTime);
       const ref = await missions.add({
         label: readString(body.label) ?? '',
         youtubeUrl: readString(body.youtubeUrl) ?? '',
         retentionHours:
           readNumber(body.retentionHours) ?? DEFAULT_RETENTION_HOURS,
         objectiveGroupIds: [],
+        timeMode: readTimeMode(body.timeMode) ?? 'freestyle',
+        ...(deadlineTime ? { deadlineTime } : {}),
       });
       return jsonResponse({ ok: true, id: ref.id });
     }
@@ -52,6 +57,10 @@ export async function POST(ctx: APIContext) {
       if (youtubeUrl !== undefined) patch.youtubeUrl = youtubeUrl;
       const retentionHours = readNumber(body.retentionHours);
       if (retentionHours !== undefined) patch.retentionHours = retentionHours;
+      const timeMode = readTimeMode(body.timeMode);
+      if (timeMode !== undefined) patch.timeMode = timeMode;
+      const deadlineTime = readHhMm(body.deadlineTime);
+      if (deadlineTime !== undefined) patch.deadlineTime = deadlineTime;
       if (Object.keys(patch).length === 0) {
         return jsonResponse({ ok: false, error: 'Nothing to update.' }, 400);
       }

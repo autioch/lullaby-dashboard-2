@@ -124,7 +124,7 @@ getDeadlineRemainingMs(deadlineTime, Date.now())`; show `MM:SS` / `H:MM:SS` of `
 - **Done-check:** `npm run ci` green; preview — completing a deadline mission early shows the banner;
   late shows the normal celebration only.
 
-### Step 6 — Transport: edit store + repository + API · phase: `wire`
+### Step 6 — Transport: edit store + repository + API · phase: `wire` ✅
 
 - **Goal:** the write path can persist `timeMode` / `deadlineTime` (UI added next).
 - **Read:** spec §Impact (API); [`src/pages/api/content/missions.ts`](../src/pages/api/content/missions.ts);

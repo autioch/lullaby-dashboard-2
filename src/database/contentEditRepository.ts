@@ -61,6 +61,8 @@ export const contentEditRepository = {
     label?: string;
     youtubeUrl?: string;
     retentionHours?: number;
+    timeMode?: 'freestyle' | 'challenge' | 'deadline';
+    deadlineTime?: string;
   }): Promise<EditResult> {
     return post('missions', { action: 'create', ...payload });
   },
@@ -69,6 +71,8 @@ export const contentEditRepository = {
     label?: string;
     youtubeUrl?: string;
     retentionHours?: number;
+    timeMode?: 'freestyle' | 'challenge' | 'deadline';
+    deadlineTime?: string;
   }): Promise<EditResult> {
     return post('missions', { action: 'update', ...payload });
   },

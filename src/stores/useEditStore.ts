@@ -34,6 +34,8 @@ type MissionPatch = {
   label?: string;
   youtubeUrl?: string;
   retentionHours?: number;
+  timeMode?: 'freestyle' | 'challenge' | 'deadline';
+  deadlineTime?: string;
 };
 
 type GroupPatch = { label?: string; isHidden?: boolean };

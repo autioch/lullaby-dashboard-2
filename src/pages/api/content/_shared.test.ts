@@ -4,7 +4,9 @@ import {
   readNumber,
   readBoolean,
   readDirection,
+  readHhMm,
   readIdList,
+  readTimeMode,
   reorderById,
 } from './_shared';
 
@@ -36,6 +38,24 @@ describe('body readers', () => {
     expect(readDirection('down')).toBe('down');
     expect(readDirection('sideways')).toBeUndefined();
     expect(readDirection(undefined)).toBeUndefined();
+  });
+
+  it('readTimeMode accepts only the three enum values', () => {
+    expect(readTimeMode('freestyle')).toBe('freestyle');
+    expect(readTimeMode('challenge')).toBe('challenge');
+    expect(readTimeMode('deadline')).toBe('deadline');
+    expect(readTimeMode('timebox')).toBeUndefined();
+    expect(readTimeMode(undefined)).toBeUndefined();
+  });
+
+  it('readHhMm accepts only a valid 24h HH:MM', () => {
+    expect(readHhMm('00:00')).toBe('00:00');
+    expect(readHhMm('07:05')).toBe('07:05');
+    expect(readHhMm('23:59')).toBe('23:59');
+    expect(readHhMm('24:00')).toBeUndefined();
+    expect(readHhMm('12:60')).toBeUndefined();
+    expect(readHhMm('7:5')).toBeUndefined();
+    expect(readHhMm(700)).toBeUndefined();
   });
 });
 

@@ -41,6 +41,23 @@ export function readDirection(value: unknown): 'up' | 'down' | undefined {
   return value === 'up' || value === 'down' ? value : undefined;
 }
 
+const TIME_MODES = ['freestyle', 'challenge', 'deadline'] as const;
+type TimeMode = (typeof TIME_MODES)[number];
+
+// Accept only the three mission time-mode enum values; anything else is ignored.
+export function readTimeMode(value: unknown): TimeMode | undefined {
+  return TIME_MODES.includes(value as TimeMode)
+    ? (value as TimeMode)
+    : undefined;
+}
+
+// Accept only a well-formed, in-range `HH:MM` (24h, zero-padded); else ignore.
+export function readHhMm(value: unknown): string | undefined {
+  return typeof value === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(value)
+    ? value
+    : undefined;
+}
+
 // Read an id array off a Firestore document's data, defaulting to empty.
 export function readIdList(
   data: DocumentData | undefined,
