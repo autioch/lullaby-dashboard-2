@@ -13,6 +13,7 @@ import {
   type ObjectiveRec,
 } from '@/database/objectiveRepository';
 import { colorRepository, type ColorRec } from '@/database/colorRepository';
+import { useTimerStore } from './useTimerStore';
 import { filterObject } from '@/utils/object';
 
 export type MissionLSState = {
@@ -112,6 +113,14 @@ export const useMissionStore = create<MissionState & MissionMethods>(
         checkedKeys: nextCheckedKeys,
         listExpiryTimestamps: nextListExpiryTimestamps,
       });
+
+      // Interacting with an objective means the family is back at it — clear a
+      // manual timer pause so the run resumes. Guarded so a normal toggle
+      // doesn't create a spurious run or persist when nothing is paused.
+      const timer = useTimerStore.getState();
+      if (timer.runsByMission[missionId]?.userPaused) {
+        timer.setUserPaused(missionId, false);
+      }
     },
 
     hydrateState() {

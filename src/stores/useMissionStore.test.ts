@@ -21,6 +21,7 @@ vi.mock('@/database/colorRepository', () => ({
 }));
 
 import { useMissionStore } from './useMissionStore';
+import { useTimerStore } from './useTimerStore';
 
 const blankState = {
   missions: {},
@@ -84,6 +85,55 @@ describe('toggleObjective', () => {
   it('is a no-op when no mission is selected', () => {
     useMissionStore.getState().toggleObjective('o1');
     expect(useMissionStore.getState().checkedKeys).toEqual({});
+  });
+
+  it('resumes a manually-paused timer for the mission', () => {
+    const store = useMissionStore.getState();
+    store.setMissions([
+      {
+        id: 'm1',
+        label: 'M',
+        youtubeUrl: '',
+        retentionHours: 10,
+        objectiveGroupIds: [],
+      },
+    ]);
+    store.selectMission('m1');
+    useTimerStore.setState({
+      runsByMission: {
+        m1: {
+          accumulatedMs: 0,
+          segmentStartMs: null,
+          isComplete: false,
+          completionWasBest: false,
+          userPaused: true,
+        },
+      },
+      bestByMission: {},
+    });
+
+    store.toggleObjective('o1');
+
+    expect(useTimerStore.getState().runsByMission.m1.userPaused).toBe(false);
+  });
+
+  it('does not create a timer run when nothing is paused', () => {
+    const store = useMissionStore.getState();
+    store.setMissions([
+      {
+        id: 'm1',
+        label: 'M',
+        youtubeUrl: '',
+        retentionHours: 10,
+        objectiveGroupIds: [],
+      },
+    ]);
+    store.selectMission('m1');
+    useTimerStore.setState({ runsByMission: {}, bestByMission: {} });
+
+    store.toggleObjective('o1');
+
+    expect(useTimerStore.getState().runsByMission.m1).toBeUndefined();
   });
 });
 

@@ -27,7 +27,8 @@ deadline, records — lives in the roadmap's Future section, not here. See
   Clock. Starts on the first checked objective; auto-pauses when a modal covers the launchpad, the
   page is hidden, or the mission is switched; freezes the final time at 100%; the run resets on
   Restart. While a run is in progress the readout is a **toggle button**: click or Enter pauses /
-  resumes by hand (a sticky override of the auto-pause, persisted per mission). Hover or focus reveals
+  resumes by hand (a sticky override of the auto-pause, persisted per mission). Checking or
+  unchecking an objective also resumes a manually paused run (the family is back at it). Hover or focus reveals
   the action icon (pause while running, play while paused); when paused, a faint pause **watermark**
   stays visible so the stopped state is never silent. Below it, a smaller **`Best …`** line shows the
   mission's best completion time, once one exists (the best persists across Restart).
