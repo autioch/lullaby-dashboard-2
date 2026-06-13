@@ -40,11 +40,12 @@ section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-no
 ## Completion celebration
 
 When **visible progress reaches 100%**, a presentation-only celebration (`CompletionCelebration`)
-paints a CSS-only confetti/fireworks **burst that settles into a glow**, full-bleed **behind** the
-dashboard content (`pointer-events: none`, so the list/menu stay clickable). It renders only at
-100%, so dropping below removes it and re-completing replays the burst. `prefers-reduced-motion`
-viewers get the static glow only. Visual only — no sound, no added text (the footer status still
-reads "Success!").
+paints a CSS-only sequence of **several staggered fireworks bursts** (varied screen positions and
+sizes, ~3.4 s) over a **glow that grows from a point to cover the screen** and then settles —
+full-bleed **behind** the dashboard content (`pointer-events: none`, so the list/menu stay
+clickable). It renders only at 100%, so dropping below removes it and re-completing replays the
+sequence. `prefers-reduced-motion` viewers get the static glow only. Visual only — no sound, no
+added text (the footer status still reads "Success!").
 
 ## Theming today
 
