@@ -4,8 +4,7 @@ type AppOptionsTranslationKeys =
   | 'languageMenu'
   | 'english'
   | 'polish'
-  | 'buildInfo'
-  | 'resetBest';
+  | 'buildInfo';
 
 export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
   {
@@ -14,13 +13,11 @@ export const appOptionsTranslations: TranslationMap<AppOptionsTranslationKeys> =
       english: 'English',
       polish: 'Polish',
       buildInfo: 'Build {commit} · {time}',
-      resetBest: 'Reset best time',
     },
     pl: {
       languageMenu: 'Język',
       english: 'Angielski',
       polish: 'Polski',
       buildInfo: 'Wersja {commit} · {time}',
-      resetBest: 'Wyczyść najlepszy czas',
     },
   };

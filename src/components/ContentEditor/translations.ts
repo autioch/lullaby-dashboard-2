@@ -18,6 +18,7 @@ type ContentEditorTranslationKeys =
   | 'addMission'
   | 'addGroup'
   | 'addObjective'
+  | 'resetBest'
   | 'groupsHeading'
   | 'objectivesHeading'
   | 'fieldLabel'
@@ -56,6 +57,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       addMission: 'Add mission',
       addGroup: 'Add group',
       addObjective: 'Add objective',
+      resetBest: 'Reset best time',
       groupsHeading: 'Groups',
       objectivesHeading: 'Objectives',
       fieldLabel: 'Label',
@@ -92,6 +94,7 @@ export const contentEditorTranslations: TranslationMap<ContentEditorTranslationK
       addMission: 'Dodaj misję',
       addGroup: 'Dodaj grupę',
       addObjective: 'Dodaj zadanie',
+      resetBest: 'Wyczyść najlepszy czas',
       groupsHeading: 'Grupy',
       objectivesHeading: 'Zadania',
       fieldLabel: 'Etykieta',

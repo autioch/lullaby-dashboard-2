@@ -41,10 +41,10 @@ deadline, records — lives in the roadmap's Future section, not here. See
 ## Overlays
 
 - **Mission select** — pick the active mission.
-- **Settings** (app options) — switch language (en / pl); reset the current mission's best time
-  (shown only when that mission has a best).
+- **Settings** (app options) — switch language (en / pl).
 - **Content editor** — create / rename / delete / reorder missions, objective groups, and
-  objectives (parent-only, via the write API).
+  objectives (parent-only, via the write API). Each mission's edit screen also has a **Reset best
+  time** action (shown only when that mission has a best), so records are cleared per mission.
 
 ## Completion celebration
 

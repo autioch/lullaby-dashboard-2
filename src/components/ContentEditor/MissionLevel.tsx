@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Typography } from '@/components/Typography/Typography';
 import { useMissionStore } from '@/stores/useMissionStore';
 import { useEditStore } from '@/stores/useEditStore';
+import { useTimerStore } from '@/stores/useTimerStore';
 import {
   ActionButton,
   AddButton,
@@ -13,6 +14,7 @@ import {
 import { SaveBar, Stepper, TextField } from './fields';
 
 const edit = useEditStore.getState();
+const { resetBest } = useTimerStore.getState();
 
 // Mission detail: editable fields committed as one form, then the mission's
 // ordered groups (Edit / Move / Delete) and Add group. Mounted with a key on
@@ -25,6 +27,9 @@ export function MissionLevel() {
   const groups = useMissionStore((state) => state.objectiveGroups);
   const saveId = `mission-save-${missionId}`;
   const pending = useEditStore((state) => Boolean(state.pending[saveId]));
+  const hasBest = useTimerStore((state) =>
+    missionId ? state.bestByMission[missionId] !== undefined : false
+  );
 
   const [draft, setDraft] = useState({
     label: mission?.label ?? '',
@@ -86,6 +91,18 @@ export function MissionLevel() {
           })
         }
       />
+
+      {hasBest ? (
+        <ActionButton
+          textKey="contentEditor.resetBest"
+          variant="danger"
+          onClick={() => {
+            if (confirm('Reset best time?')) {
+              resetBest(mission.id);
+            }
+          }}
+        />
+      ) : null}
 
       <Typography
         as="div"
