@@ -23,10 +23,7 @@ The shipped MVP — the working dashboard.
 - [x] Per-objective colors
 - [x] Content editing (missions / groups / objectives)
 
-## Dashboard design (specced, not yet built)
-
-Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
-describes only the current UI.
+## Dashboard design
 
 - [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
@@ -34,8 +31,6 @@ describes only the current UI.
   - Space — Mission Control · Crew Boarding · Launch Ready · Orbit Achieved
   - Minecraft Adventure — Village Preparation · Supplies Ready · Entering Cave · Expedition Complete
   - Pirate Voyage — Crew Boarding · Raise the Sails · Leaving Port · Treasure Expedition Complete
-- [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
-      system above).
 - [x] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
       message marks completion).
 - [x] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
@@ -82,6 +77,9 @@ describes only the current UI.
 - [ ] Multi-household support
 - [ ] Social features
 - [ ] Editor code imported dynamically or moved to a separate page
+- [ ] syncing state between devices
+- [ ] support for the desktop/mobile devices
+- [ ] proper support for the TV browser
 
 ## Product & onboarding
 
