@@ -1,7 +1,7 @@
 # Completed-objective behavior — Plan
 
 > **Artifact:** `17_plan_completed-objective-behavior.md` · **Roles:** Product Owner · Solution Architect / Tech Lead
-> **Status:** `in-progress`
+> **Status:** `done`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13 · **Last updated:** 2026-06-13
 > **Related:** [spec](17_spec_completed-objective-behavior.md) · [implement](17_implement_completed-objective-behavior.md) · [retro](17_retro_completed-objective-behavior.md)
 
@@ -83,7 +83,7 @@ checkedForMission: Record<string, boolean> | undefined): string[]`. Stable parti
   `npm run dev` under the **TV user agent** (`Chrome/87 … SmartTV`) — checking an objective sinks it
   to the bottom of its group, compact; un-checking pops it back up full-size at its authored position.
 
-### Step 3 — TV-UA validation · phase: `validate`
+### Step 3 — TV-UA validation · phase: `validate` ✅
 
 - **Goal:** Prove every acceptance criterion against the running app on the TV UA.
 - **Read:** spec §Acceptance criteria; [docs/qa.md](../docs/qa.md) L2 + the Component/UI test-by-scope row.

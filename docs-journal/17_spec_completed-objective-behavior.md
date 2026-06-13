@@ -1,7 +1,7 @@
 # Completed-objective behavior — Spec
 
 > **Artifact:** `17_spec_completed-objective-behavior.md` · **Roles:** Product Owner
-> **Status:** `agreed`
+> **Status:** `implemented`
 > **Owner:** Jakub Szczepaniak · **Created:** 2026-06-13 · **Last updated:** 2026-06-13
 > **Related:** [plan](17_plan_completed-objective-behavior.md) · [implement](17_implement_completed-objective-behavior.md) · [retro](17_retro_completed-objective-behavior.md)
 
