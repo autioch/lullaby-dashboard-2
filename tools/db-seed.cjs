@@ -76,6 +76,10 @@ async function importConfiguration() {
       youtubeUrl: mission.youtubeUrl,
       retentionHours: mission.retentionHours,
       objectiveGroupIds,
+      // Optional time mode: written only when set, so missions without one
+      // hydrate as `freestyle` (absent ⇒ freestyle, no migration write).
+      ...(mission.timeMode ? { timeMode: mission.timeMode } : {}),
+      ...(mission.deadlineTime ? { deadlineTime: mission.deadlineTime } : {}),
     });
   }
 }

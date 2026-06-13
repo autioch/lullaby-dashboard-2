@@ -146,6 +146,8 @@
       "label": "Rano",
       "youtubeUrl": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
       "retentionHours": 8,
+      "timeMode": "deadline",
+      "deadlineTime": "08:00",
       "objectiveGroups": [
         {
           "id": "main",
@@ -387,6 +389,7 @@
       "label": "Sprzątanie",
       "youtubeUrl": "https://www.youtube.com/embed/xKCWzccZRys?si=X9tac4bnCvGhq9sZ",
       "retentionHours": 24,
+      "timeMode": "challenge",
       "objectiveGroups": [
         {
           "id": "main",

@@ -23,15 +23,24 @@ deadline, records — lives in the roadmap's Future section, not here. See
 
 - **Video** — YouTube embed, shown only when the mission has a `youtubeUrl`.
 - **Clock** — wall-clock `HH:MM`, font auto-sized to its container.
-- **Timer** — elapsed mission duration (`MM:SS`, rolling to `H:MM:SS` past an hour), shown under the
-  Clock. Starts on the first checked objective; auto-pauses when a modal covers the launchpad, the
-  page is hidden, or the mission is switched; freezes the final time at 100%; the run resets on
-  Restart. While a run is in progress the readout is a **toggle button**: click or Enter pauses /
-  resumes by hand (a sticky override of the auto-pause, persisted per mission). Checking or
-  unchecking an objective also resumes a manually paused run (the family is back at it). Hover or focus reveals
-  the action icon (pause while running, play while paused); when paused, a faint pause **watermark**
-  stays visible so the stopped state is never silent. Below it, a smaller **`Best …`** line shows the
-  mission's best completion time, once one exists (the best persists across Restart).
+- **Time readout** — a single line under the Clock, **gated by the mission's `timeMode`**
+  (`freestyle` · `challenge` · `deadline`, default `freestyle`):
+  - **`freestyle`** — nothing (Clock only); no timer, best, or pause control.
+  - **`challenge`** — elapsed mission duration (`MM:SS`, rolling to `H:MM:SS` past an hour). Starts on
+    the first checked objective; auto-pauses when a modal covers the launchpad, the page is hidden, or
+    the mission is switched; freezes the final time at 100%; the run resets on Restart. While a run is
+    in progress the readout is a **toggle button**: click or Enter pauses / resumes by hand (a sticky
+    override of the auto-pause, persisted per mission). Checking or unchecking an objective also
+    resumes a manually paused run (the family is back at it). Hover or focus reveals the action icon
+    (pause while running, play while paused); when paused, a faint pause **watermark** stays visible so
+    the stopped state is never silent. Below it, a smaller **`Best …`** line shows the mission's best
+    completion time, once one exists (the best persists across Restart).
+  - **`deadline`** — a wall-clock **countdown** to today's `deadlineTime` (`HH:MM`), shown while the
+    mission is selected and incomplete (even before the first check). Ticks ~once a second and never
+    pauses (no modal/visibility/switch pause, no pause control). Past the deadline it shows the time
+    over (e.g. `4:00 over`) with a **mild colour shift only** — no alarm. On completion it **freezes**
+    the signed remaining (positive = spare, negative = overtime), persisted and cleared on Restart.
+    Best records stay `challenge`-only.
 - **Menu** — icon row: Mission select · Restart (confirm → reset mission checks + current run; the
   best record is kept) · Edit (content editor) · Settings.
 
@@ -47,8 +56,10 @@ deadline, records — lives in the roadmap's Future section, not here. See
 - **Mission select** — pick the active mission.
 - **Settings** (app options) — switch language (en / pl).
 - **Content editor** — create / rename / delete / reorder missions, objective groups, and
-  objectives (parent-only, via the write API). Each mission's edit screen also has a **Reset best
-  time** action (shown only when that mission has a best), so records are cleared per mission.
+  objectives (parent-only, via the write API). A mission's edit screen sets its **time mode**
+  (`freestyle` / `challenge` / `deadline`, D-pad-operable buttons) and, in `deadline` mode, the
+  **hour** and **minute** steppers for `deadlineTime`. It also has a **Reset best time** action
+  (shown only when that mission has a best), so records are cleared per mission.
 
 ## Completion celebration
 
@@ -60,7 +71,9 @@ clickable). It renders only at 100%, so dropping below removes it and re-complet
 sequence. `prefers-reduced-motion` viewers get the static glow only. No sound (the footer status
 still reads "Success!"). When the completing run **beats the mission's previous best time**, a
 transient, pointer-transparent **"New best!"** banner also shows, painted above the content for
-legibility (the first-ever completion sets the record silently).
+legibility (the first-ever completion sets the record silently). In `deadline` mode, finishing
+**early** shows a **"X to spare"** banner in the same style; finishing **late** shows the normal
+celebration with no penalty banner.
 
 ## Theming today
 

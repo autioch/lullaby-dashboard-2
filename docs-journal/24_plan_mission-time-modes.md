@@ -159,7 +159,7 @@ getDeadlineRemainingMs(deadlineTime, Date.now())`; show `MM:SS` / `H:MM:SS` of `
 - **Done-check:** `npm run ci` green; preview — set a mission to deadline 1 min ahead, save, reopen
   (values persisted), and confirm the dashboard countdown reflects it.
 
-### Step 8 — Seed demo + final verification · phase: `validate`
+### Step 8 — Seed demo + final verification · phase: `validate` ✅
 
 - **Goal:** demonstrate each mode in seed data and close the feature.
 - **Read:** [`tools/configuration.json`](../tools/configuration.json) (mission entries with
