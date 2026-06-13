@@ -66,8 +66,11 @@ verdict is a successful outcome, not a failure.
    the agreed shape**, set the `Verdict` and today's date.
 
 7. **Inform** the user of the artifact's path, the **verdict**, and the suggested next step. If the
-   verdict says proceed, the next step is `/spec` (which will read this spike as grounding) — but
-   `/spike` stops here; it never writes the spec.
+   verdict says proceed, the next step is `/spec` (which will read this spike as grounding), or
+   `/tweak` for a small change — but `/spike` stops here; it never writes the spec. If a viable idea
+   is **deferred** rather than picked up now, recommend the owner file it into
+   [`docs/06_roadmap.md`](../../docs/06_roadmap.md) (title · one-sentence why · `(spike [NN])` source)
+   so `/steer` — which no longer scans `docs-spikes/` — can rank it later.
 
 ## Rules
 

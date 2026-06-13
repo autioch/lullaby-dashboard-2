@@ -56,7 +56,9 @@ change about process or result. Their words, not paraphrased into agreement. Att
 
 Concrete, prioritized — each tied to a problem above. Suggestions only; the owner decides.
 Candidates: a follow-up `/spec` for descoped scope · a process / tooling tweak · tech-debt to
-schedule · nothing, ship as is.
+schedule · nothing, ship as is. The ones the owner carries forward are **also filed into
+`docs/06_roadmap.md`** (title · one-sentence why · `(retro [NN])` source); this section keeps the
+record.
 
 - ...
 

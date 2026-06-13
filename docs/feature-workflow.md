@@ -9,15 +9,15 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
 ## Pipeline
 
 ```text
-/steer → (/spike) → /spec  →  /plan  →  /implement   pick → de-risk → contract → plan → code → record
+/steer → (/spike) → /spec  →  /plan  →  /implement
                                 ├─ review:  /verify · /code-review · /simplify · /security-review
                                 └─ /adjust  apply post-review changes as code (spec/plan/record stay frozen)
-/retro       product-owner review of the iteration; its next-actions feed back into /steer
+/retro       product-owner review; closes its roadmap item + files follow-ups into the backlog /steer reads
 ```
 
-- **`/steer`** — _(top of loop)_ grooms the roadmap backlog and picks the single highest-value next
-  item; no code, **no journal artifact** (it updates `docs/06_roadmap.md`). Routes the pick to
-  `/spike`, `/spec`, or `/tweak`.
+- **`/steer`** — _(top of loop)_ **reads** the roadmap backlog and picks the single highest-value
+  next item, reprioritizing as it goes; no code, **no journal artifact** (its only write is
+  reordering `docs/06_roadmap.md`). Routes the pick to `/spike`, `/spec`, or `/tweak`.
 - **`/spike`** — _(optional)_ investigates an idea and records a verdict; no code, no spec.
 - **`/spec`** — elicits and writes the spec (the contract); reads a prior spike if one exists.
 - **`/plan`** — turns an agreed spec into an ordered, independently committable plan.
@@ -25,7 +25,8 @@ fits the wider dev workflow, see **"Adding a feature"** in [development.md](deve
   gate, writes the implementation record.
 - **`/adjust`** — applies post-review change requests as code; spec, plan, and record stay
   **frozen** and drift.
-- **`/retro`** — reviews the whole iteration and writes the wrap-up; its next-actions feed `/steer`.
+- **`/retro`** — reviews the whole iteration and writes the wrap-up; closes its own roadmap item and
+  files follow-ups into the backlog for `/steer` to rank.
 - **`/tweak`** — the lightweight lane: one command runs the Q&A, plan, and code for a small,
   well-bounded change and records a single terminal artifact. Skips the spec/plan/implement
   documents. Routes to `/spec` when a "tweak" turns out to be a real feature.
@@ -55,9 +56,12 @@ by every artifact for that feature. **Each template is the single source for its
 sections and how to write them** (terse, factual, every claim tracing to a commit) — commands copy
 and fill it; they don't restate its structure or its writing guidance.
 
-**`/steer` is the exception** — it writes **no** journal artifact; its output is the durable backlog
-`docs/06_roadmap.md` (priority order, with shipped picks marked done), since a per-run snapshot would
-only rot. It is the one pipeline command that maintains a durable doc instead of emitting a record.
+**`/steer` is the exception** — it writes **no** journal artifact; its only output is the priority
+order of the durable backlog `docs/06_roadmap.md`, since a per-run snapshot would only rot. The
+roadmap is a **single inbox with many writers**: the commands that finish or generate work keep it
+current — `/retro` and `/tweak` mark their own item done and file follow-ups, and the owner files a
+deferred `/spike` idea — while `/steer` is the **reader** that ranks and picks. It no longer scans
+`docs-journal/` to reconcile done-state.
 
 | Command      | Artifact                                                     | Role(s)                                               | Status                                     |
 | ------------ | ------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------ |

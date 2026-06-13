@@ -9,8 +9,9 @@ bluntly what worked and what didn't,
 take the user's own read, then propose what to do next and write it all to a **retro** artifact.
 This is the **wrap-up** of the lifecycle: the user reads it and decides the next move.
 **Do not write app code or edit the contract artifacts** (spec, plan, implementation record,
-adjustments) in this command. Besides the retro, it writes **only durable docs**, and only in
-the reconcile phase (step 6) — never the frozen feature artifacts.
+adjustments) in this command. Besides the retro, it writes **only durable docs** — closing this
+feature's roadmap item and filing its follow-ups (steps 5–6), and reconciling the durable docs
+(step 6) — never the frozen feature artifacts.
 
 First read [docs/feature-workflow.md](../../docs/feature-workflow.md) — the pipeline guide with the
 shared grounding reads and rules for every command.
@@ -61,21 +62,28 @@ them; leave the **Decision** to the user.
    step-3 verdict, but always leave room for their own words. Keep going until their view is
    captured; don't put words in their mouth.
 
-5. **Synthesize next moves.** With both reads in hand, propose **possible solutions / next
-   actions** — concrete and prioritized, each tied to a problem found in step 2-4. Typical
-   candidates: a follow-up `/spec` for descoped scope, a tooling or process tweak, tech-debt to
-   schedule, or "nothing — ship as is." These are **suggestions**; the user decides. Don't start
-   doing them.
+5. **Synthesize next moves — and file them into the roadmap.** With both reads in hand, propose
+   **possible solutions / next actions** — concrete and prioritized, each tied to a problem found in
+   step 2-4. Typical candidates: a follow-up `/spec` for descoped scope, a tooling or process tweak,
+   tech-debt to schedule, or "nothing — ship as is." For each follow-up the owner wants carried
+   forward, **add it to [`docs/06_roadmap.md`](../../docs/06_roadmap.md)** in the relevant bucket — a
+   short **title**, a one-sentence why, and a **source** ref back to this feature (e.g.
+   `(retro [24])`); `/steer` reprioritizes across buckets later. The retro artifact still records
+   them (step 8) for history, but the actionable copy lives in the roadmap so `/steer` never re-reads
+   retros. These are **suggestions**; the owner decides what to file. Don't start doing them.
 
-6. **Reconcile the durable docs (full pass).** This is the iteration's backstop: the per-commit
-   syncs should have kept the durable docs current, so this pass usually finds little — but run
-   it repo-wide regardless. Walk the **doc-sync map** ([dev guide](../../docs/development.md#keeping-docs-in-sync))
-   and audit each durable doc — CLAUDE.md, README.md, every `docs/*.md`, the command
-   files — against the **actual current code**, not against the artifacts (which may be optimistic).
-   Fix every durable-doc statement the code now contradicts. **Code is the authority; the feature
-   artifacts are only the checklist of where to look. Never edit the frozen feature artifacts.**
-   Commit the durable-doc fixes via `/ship` (own commit), and note what was reconciled in the retro
-   artifact's **Doc reconciliation** section. If nothing drifted, say so.
+6. **Reconcile the durable docs (full pass), and close this feature's roadmap item.** This is the
+   iteration's backstop: the per-commit syncs should have kept the durable docs current, so this pass
+   usually finds little — but run it repo-wide regardless. Walk the **doc-sync map**
+   ([dev guide](../../docs/development.md#keeping-docs-in-sync)) and audit each durable doc —
+   CLAUDE.md, README.md, every `docs/*.md`, the command files — against the **actual current code**,
+   not against the artifacts (which may be optimistic). Fix every durable-doc statement the code now
+   contradicts. **Mark this feature's own item `[x]` in `docs/06_roadmap.md`** — the wrap-up closes
+   its own item; `/steer` no longer scans to reconcile done-state. **Code is the authority; the
+   feature artifacts are only the checklist of where to look. Never edit the frozen feature
+   artifacts.** Commit the roadmap close + the step-5 follow-up entries + the durable-doc fixes via
+   `/ship` (own commit), and note what was reconciled in the retro artifact's **Doc reconciliation**
+   section. If nothing drifted, say so.
 
 7. **Converge with the user before recording.** Confirm the verdict and the suggested next actions
    reflect the user's reads from steps 3–5 — adjust and play them back if not. You're agreeing on the

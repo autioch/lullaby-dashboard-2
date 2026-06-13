@@ -61,7 +61,10 @@ only the user can make — ask.
 7. **Commit + push via `/ship`.** Once the gate is green, stage the code change, the tweak
    artifact, **and any durable doc the change affects** (per the doc-sync map —
    [dev guide](../../docs/development.md#keeping-docs-in-sync)) together (`git add <paths>`), then
-   run `/ship` with a Conventional Commits subject (the change's intent).
+   run `/ship` with a Conventional Commits subject (the change's intent). **If this tweak maps to a
+   roadmap item, mark it `[x]` in [`docs/06_roadmap.md`](../../docs/06_roadmap.md)** (and file any
+   follow-up it spawned as a new entry — title · one-sentence why · `(tweak [NN])` source); the tweak
+   closes its own item, since `/steer` no longer reconciles done-state.
 
 8. **Inform** the user in one line: the artifact path, the gate result, and anything flagged for
    real-TV confirmation. No summary.

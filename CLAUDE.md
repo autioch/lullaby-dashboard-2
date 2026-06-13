@@ -105,15 +105,16 @@ Node/npm pinned via `.nvmrc` + `engines` + `netlify.toml` (Node 24.11.1, npm 11.
 
 ## Features
 
-Not sure what to build next? `/steer` sits at the top of the loop — as product owner it grooms the
+Not sure what to build next? `/steer` sits at the top of the loop — as product owner it **reads** the
 roadmap backlog (`docs/06_roadmap.md`) and picks the single highest-value next item, then routes it
-into the pipeline below (it writes no journal artifact; it maintains the roadmap). New features start
+into the pipeline below (it writes no journal artifact; its only write is reprioritizing the roadmap,
+which `/retro` and `/tweak` keep current by closing their own item and filing follow-ups). New features start
 with no design — derive a spec through Q&A first. When an idea is unproven, an
 optional `/spike` runs an investigation-only feasibility & discovery pass (TV / Chrome 87 viability,
 UX, product sense), records a verdict under `docs-spikes/`, and feeds `/spec`. Then run
 `/spec`, then `/plan` and `/implement`. Each pipeline command forces the role(s) that own its step
 and emits one artifact in `docs-journal/` on the `NN_<command>_<short-name>.md` scheme (`/steer` is
-the exception — it maintains the roadmap instead). For a change too small for that,
+the exception — it reprioritizes the roadmap instead). For a change too small for that,
 `/tweak` runs the Q&A, plan, and code in one pass and records a single `NN_tweak_<short-name>.md`
 artifact (escalating to `/spec` if it grows). Full pipeline guide:
 [docs/feature-workflow.md](docs/feature-workflow.md).

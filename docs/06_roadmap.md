@@ -2,11 +2,14 @@
 
 The prioritized backlog: every candidate change, grouped by type of change.
 
-> **`/steer` maintains this doc** as its single writer. Within each group, items are ordered by
-> priority (top = pick next); `/steer` adds new items, reprioritizes, and at the top of each loop
-> marks shipped picks `[x]` (reconciled against `docs-journal/`). Ordering _is_ the priority
-> signal — no per-item estimates. The order things were actually built, and why, lives in
-> `docs-journal/`.
+> **This doc is the backlog inbox — many writers, one reader.** The commands that finish or generate
+> work keep it current: `/retro` and `/tweak` mark their own item `[x]` when it ships and file
+> follow-ups as new entries, and the owner files a deferred `/spike` idea. `/steer` is the
+> **reader** — it ranks the whole backlog, reprioritizes across groups, and picks the next item; it
+> no longer scans `docs-journal/` to reconcile done-state. Within each group, items are ordered by
+> priority (top = pick next) — ordering _is_ the priority signal, no per-item estimates. A filed
+> entry is a short **title**, a one-sentence why, and its **source** ref (e.g. `(retro [24])`). The
+> order things were actually built, and why, lives in `docs-journal/`.
 
 ## Core dashboard
 
