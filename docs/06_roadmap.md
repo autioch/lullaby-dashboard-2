@@ -25,25 +25,30 @@ The shipped MVP — the working dashboard.
 Specified for the dashboard but not implemented — relocated from `05_design.md` so that doc
 describes only the current UI.
 
-- [x] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
-      message marks completion).
-- [x] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
-      (today they're only de-emphasized in place).
+- [ ] **Mission time modes** — one per-mission `timeMode` (freestyle / challenge / deadline) that
+      gates the time readout under the always-on Clock: freestyle = clock only, challenge = the
+      shipped elapsed timer + best, deadline = a wall-clock countdown to an `HH:MM` with a gentle
+      overtime and a "time to spare" completion beat (`target − actual`). Absorbs the former
+      "Optional deadline countdown"; `timebox` (fixed-duration budget) is the fast-follow. Default
+      `freestyle`. (spike [09](../docs-spikes/09_spike_mission-time-modes.md), `viable-with-changes`)
 - [ ] **Mission-name header** — show the active mission's name on the dashboard.
 - [ ] **Theme system** — presentation-only skins that never alter mission logic, each with its own
       status vocabulary. Initial themes:
   - Space — Mission Control · Crew Boarding · Launch Ready · Orbit Achieved
   - Minecraft Adventure — Village Preparation · Supplies Ready · Entering Cave · Expedition Complete
   - Pirate Voyage — Crew Boarding · Raise the Sails · Leaving Port · Treasure Expedition Complete
+- [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
+      system above).
+- [x] **Completion celebration** — a distinct 100%-complete moment (today only the "done" status
+      message marks completion).
+- [x] **Completed-objective behavior** — move completed objectives to the bottom and collapse them
+      (today they're only de-emphasized in place).
 - [x] **Mission timer display** — show mission duration (always-visible readout under the Clock;
       auto start/pause/freeze, per-mission `useTimerStore`).
 - [x] **Best completion time / records** — per-mission best run shown under the Timer; "New best!"
       beat in the completion celebration; mission-scoped reset in Settings.
 - [x] **Manual timer pause/resume** — click/Enter the Timer to pause-resume by hand (sticky override
       of auto-pause, persisted per mission); hover/focus action icon + paused watermark.
-- [ ] **Optional deadline countdown**.
-- [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
-      system above).
 
 ## Tooling & infrastructure
 
@@ -94,7 +99,7 @@ describes only the current UI.
 
 Improvements to the feature pipeline itself (the `/spec`→`/plan`→`/implement`→`/adjust`→`/retro` commands), surfaced in the feature 01 retro.
 
-- [ ] **Lighten the workflow for small / interim-UI changes** — add lane-selection guidance (`/tweak` vs the full `/spec`→`/plan`→`/implement` pipeline) and record the interim-UI default (UI is a PoC: minimize polish, skip non-mandatory animation) so small visual changes stop over-spending the pipeline (feature 17 retro)
+- [x] **Lighten the workflow for small / interim-UI changes** — add lane-selection guidance (`/tweak` vs the full `/spec`→`/plan`→`/implement` pipeline) and record the interim-UI default (UI is a PoC: minimize polish, skip non-mandatory animation) so small visual changes stop over-spending the pipeline (feature 17 retro; tweak [18](../docs-journal/18_tweak_lighten-workflow.md))
 - [ ] Add a distinct UI/UX design step before/within `/spec` — MVP-first, complexity driven by how the user operates the app (TV-readability lens), not derived from the data shape (today only the "MVP-first" wording exists, not a design pass)
 - [ ] Add a distinct, non-skippable security/maintenance step after `/implement` (today it's only a per-trigger `/security-review` reference inside the review step, which can be silently skipped)
 - [x] Add a top-of-loop `/steer` step to groom the backlog and pick the highest-value next item (spike [04](../docs-spikes/04_spike_steer-command.md), tweak [13](../docs-journal/13_tweak_steer-command.md))
