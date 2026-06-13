@@ -40,7 +40,20 @@ function usePageVisible() {
   return visible;
 }
 
+// Mode gate: the single mission-time readout under the Clock is chosen by the
+// mission's `timeMode`. `challenge` keeps today's elapsed-timer behavior;
+// `freestyle` shows nothing; `deadline` is handled in a later step.
 export function Timer() {
+  const mission = useMission();
+  const timeMode = mission?.timeMode ?? 'freestyle';
+
+  if (timeMode === 'challenge') {
+    return <ChallengeTimer />;
+  }
+  return null;
+}
+
+function ChallengeTimer() {
   const missionId = useMissionStore((state) => state.missionId);
   const mission = useMission();
   const checkedKeys = useMissionStore((state) => state.checkedKeys);

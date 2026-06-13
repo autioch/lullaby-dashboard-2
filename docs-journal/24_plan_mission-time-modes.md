@@ -78,7 +78,7 @@ committable. Phases: **Prep/refactor → Build → Wire → Validate.**
     clears it.
 - **Done-check:** `npm run ci` green.
 
-### Step 3 — Gate the Timer by mode · phase: `build`
+### Step 3 — Gate the Timer by mode · phase: `build` ✅
 
 - **Goal:** make the existing readout mode-aware without changing challenge behavior; freestyle and
   (interim) deadline render nothing.
