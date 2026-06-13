@@ -38,7 +38,7 @@ deadline, records — lives in the roadmap's Future section, not here. See
   - **`deadline`** — a wall-clock **countdown** to today's `deadlineTime` (`HH:MM`), shown while the
     mission is selected and incomplete (even before the first check). Ticks ~once a second and never
     pauses (no modal/visibility/switch pause, no pause control). Past the deadline it shows the time
-    over (e.g. `4:00 over`) with a **mild colour shift only** — no alarm. On completion it **freezes**
+    as a signed value (e.g. `-4:00`) with a **mild colour shift only** — no alarm. On completion it **freezes**
     the signed remaining (positive = spare, negative = overtime), persisted and cleared on Restart.
     Best records stay `challenge`-only.
 - **Menu** — icon row: Mission select · Restart (confirm → reset mission checks + current run; the

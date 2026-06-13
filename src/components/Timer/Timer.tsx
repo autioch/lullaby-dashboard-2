@@ -114,20 +114,13 @@ function DeadlineTimer() {
       ? frozenResult
       : getDeadlineRemainingMs(deadlineTime, Date.now());
   const overtime = remaining < 0;
-  const display = formatElapsed(Math.abs(remaining));
+  // Overtime reads as a signed time (`-MM:SS`) — the colour shift carries the
+  // meaning; a leading minus keeps the readout compact and steady.
+  const display = `${overtime ? '-' : ''}${formatElapsed(Math.abs(remaining))}`;
 
   return (
     <div className={`c-timer ${overtime ? 'c-timer--overtime' : ''}`}>
-      {overtime ? (
-        <Typography
-          textKey="timer.over"
-          values={{ time: display }}
-          as="span"
-          className="c-timer__elapsed"
-        />
-      ) : (
-        <span className="c-timer__elapsed">{display}</span>
-      )}
+      <span className="c-timer__elapsed">{display}</span>
     </div>
   );
 }
