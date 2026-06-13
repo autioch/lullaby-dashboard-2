@@ -1,9 +1,19 @@
 .c-timer {
-  font-size: 4rem;
-  text-align: center;
-  font-weight: bold;
-  font-variant-numeric: tabular-nums;
   width: 100%;
   margin-bottom: auto;
+  text-align: center;
+}
+
+.c-timer__elapsed {
+  font-size: 4rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
   opacity: 0.85;
+}
+
+.c-timer .c-timer__best {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
 }

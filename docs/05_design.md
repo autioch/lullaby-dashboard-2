@@ -25,9 +25,11 @@ deadline, records — lives in the roadmap's Future section, not here. See
 - **Clock** — wall-clock `HH:MM`, font auto-sized to its container.
 - **Timer** — elapsed mission duration (`MM:SS`, rolling to `H:MM:SS` past an hour), shown under the
   Clock. Starts on the first checked objective; auto-pauses when a modal covers the launchpad, the
-  page is hidden, or the mission is switched; freezes the final time at 100%; resets on Restart.
-- **Menu** — icon row: Mission select · Restart (confirm → reset mission + timer state) · Edit
-  (content editor) · Settings.
+  page is hidden, or the mission is switched; freezes the final time at 100%; the run resets on
+  Restart. Below it, a smaller **`Best …`** line shows the mission's best completion time, once one
+  exists (the best persists across Restart).
+- **Menu** — icon row: Mission select · Restart (confirm → reset mission checks + current run; the
+  best record is kept) · Edit (content editor) · Settings.
 
 ### Footer — progress bar
 
@@ -39,7 +41,8 @@ deadline, records — lives in the roadmap's Future section, not here. See
 ## Overlays
 
 - **Mission select** — pick the active mission.
-- **Settings** (app options) — switch language (en / pl).
+- **Settings** (app options) — switch language (en / pl); reset the current mission's best time
+  (shown only when that mission has a best).
 - **Content editor** — create / rename / delete / reorder missions, objective groups, and
   objectives (parent-only, via the write API).
 
@@ -50,8 +53,10 @@ paints a CSS-only sequence of **several staggered fireworks bursts** (varied scr
 sizes, ~3.4 s) over a **glow that grows from a point to cover the screen** and then settles —
 full-bleed **behind** the dashboard content (`pointer-events: none`, so the list/menu stay
 clickable). It renders only at 100%, so dropping below removes it and re-completing replays the
-sequence. `prefers-reduced-motion` viewers get the static glow only. Visual only — no sound, no
-added text (the footer status still reads "Success!").
+sequence. `prefers-reduced-motion` viewers get the static glow only. No sound (the footer status
+still reads "Success!"). When the completing run **beats the mission's previous best time**, a
+transient, pointer-transparent **"New best!"** banner also shows, painted above the content for
+legibility (the first-ever completion sets the record silently).
 
 ## Theming today
 

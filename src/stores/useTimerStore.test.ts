@@ -13,13 +13,14 @@ const run = (over: Partial<TimerRun> = {}): TimerRun => ({
   accumulatedMs: 0,
   segmentStartMs: null,
   isComplete: false,
+  completionWasBest: false,
   ...over,
 });
 
 beforeEach(() => {
   vi.clearAllMocks();
   fakeLs.load.mockReturnValue(undefined);
-  useTimerStore.setState({ runsByMission: {} });
+  useTimerStore.setState({ runsByMission: {}, bestByMission: {} });
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2026-06-13T00:00:00Z'));
 });
@@ -43,7 +44,7 @@ describe('getElapsedMs', () => {
   });
 });
 
-describe('setRunState', () => {
+describe('setRunState — run lifecycle', () => {
   it('opens a live segment when a run starts; elapsed grows with the clock', () => {
     useTimerStore.getState().setRunState('m1', true, false);
     expect(useTimerStore.getState().runsByMission.m1.segmentStartMs).toBe(
@@ -113,44 +114,115 @@ describe('setRunState', () => {
     expect(stillDone.segmentStartMs).toBeNull();
     expect(getElapsedMs(stillDone, Date.now())).toBe(7000);
   });
+});
 
-  it('persists only accumulatedMs and isComplete', () => {
-    useTimerStore.getState().setRunState('m1', true, false);
-    vi.advanceTimersByTime(2000);
-    useTimerStore.getState().setRunState('m1', false, false);
+describe('setRunState — best records', () => {
+  // Helper: run a mission for `ms` then complete it in one motion.
+  const completeIn = (missionId: string, ms: number) => {
+    useTimerStore.getState().setRunState(missionId, true, false);
+    vi.advanceTimersByTime(ms);
+    useTimerStore.getState().setRunState(missionId, false, true);
+  };
 
-    expect(fakeLs.save).toHaveBeenLastCalledWith({
-      runsByMission: { m1: { accumulatedMs: 2000, isComplete: false } },
-    });
+  it('records the first completion silently (no new-best flag)', () => {
+    completeIn('m1', 7000);
+    expect(useTimerStore.getState().bestByMission.m1).toBe(7000);
+    expect(useTimerStore.getState().runsByMission.m1.completionWasBest).toBe(
+      false
+    );
+  });
+
+  it('flags and updates the best when a later run is faster', () => {
+    completeIn('m1', 7000);
+    useTimerStore.getState().resetTimerState(); // new run, keep the best
+    completeIn('m1', 5000);
+
+    expect(useTimerStore.getState().bestByMission.m1).toBe(5000);
+    expect(useTimerStore.getState().runsByMission.m1.completionWasBest).toBe(
+      true
+    );
+  });
+
+  it('leaves the best and flag alone when a later run is slower', () => {
+    completeIn('m1', 5000);
+    useTimerStore.getState().resetTimerState();
+    completeIn('m1', 9000);
+
+    expect(useTimerStore.getState().bestByMission.m1).toBe(5000);
+    expect(useTimerStore.getState().runsByMission.m1.completionWasBest).toBe(
+      false
+    );
   });
 });
 
-describe('hydration', () => {
-  it('restores persisted runs paused (segmentStartMs null), ignoring the reload gap', () => {
+describe('persistence', () => {
+  it('persists runs (accumulatedMs + isComplete) and bestByMission', () => {
+    useTimerStore.getState().setRunState('m1', true, false);
+    vi.advanceTimersByTime(2000);
+    useTimerStore.getState().setRunState('m1', false, true); // complete → best 2000
+
+    expect(fakeLs.save).toHaveBeenLastCalledWith({
+      runsByMission: { m1: { accumulatedMs: 2000, isComplete: true } },
+      bestByMission: { m1: 2000 },
+    });
+  });
+
+  it('restores persisted runs paused and bests intact', () => {
     fakeLs.load.mockReturnValue({
       runsByMission: { m1: { accumulatedMs: 9000, isComplete: false } },
+      bestByMission: { m1: 4000 },
     });
 
-    // Re-create the store module state by invoking the loader path: simulate by
-    // setting state the way the initializer would.
+    // Mirror the loader path (module init already ran with no data).
     useTimerStore.setState({
       runsByMission: {
-        m1: { accumulatedMs: 9000, isComplete: false, segmentStartMs: null },
+        m1: {
+          accumulatedMs: 9000,
+          isComplete: false,
+          segmentStartMs: null,
+          completionWasBest: false,
+        },
       },
+      bestByMission: { m1: 4000 },
     });
 
     const r = useTimerStore.getState().runsByMission.m1;
     expect(r.segmentStartMs).toBeNull();
     vi.advanceTimersByTime(60000);
-    expect(getElapsedMs(r, Date.now())).toBe(9000);
+    expect(getElapsedMs(r, Date.now())).toBe(9000); // reload gap not counted
+    expect(useTimerStore.getState().bestByMission.m1).toBe(4000);
   });
 });
 
 describe('resetTimerState', () => {
-  it('clears all runs and the persisted entry', () => {
+  it('clears runs but keeps the best records', () => {
     useTimerStore.getState().setRunState('m1', true, false);
+    vi.advanceTimersByTime(2000);
+    useTimerStore.getState().setRunState('m1', false, true); // best 2000
+
     useTimerStore.getState().resetTimerState();
+
     expect(useTimerStore.getState().runsByMission).toEqual({});
-    expect(fakeLs.clear).toHaveBeenCalled();
+    expect(useTimerStore.getState().bestByMission.m1).toBe(2000);
+    expect(fakeLs.save).toHaveBeenLastCalledWith({
+      runsByMission: {},
+      bestByMission: { m1: 2000 },
+    });
+  });
+});
+
+describe('resetBest', () => {
+  it('clears one mission’s best, leaving others and runs intact', () => {
+    useTimerStore.setState({
+      runsByMission: {
+        m1: run({ accumulatedMs: 1000, isComplete: true }),
+      },
+      bestByMission: { m1: 1000, m2: 2000 },
+    });
+
+    useTimerStore.getState().resetBest('m1');
+
+    expect(useTimerStore.getState().bestByMission).toEqual({ m2: 2000 });
+    expect(useTimerStore.getState().runsByMission.m1).toBeDefined();
   });
 });

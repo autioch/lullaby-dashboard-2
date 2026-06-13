@@ -4,6 +4,8 @@ import { appOptionsTranslations } from '@/components/AppOptions/translations';
 import { progressBarTranslations } from '@/components/ProgressBar/translations';
 import { missionSelectTranslations } from '@/components/MissionSelect/translations';
 import { contentEditorTranslations } from '@/components/ContentEditor/translations';
+import { timerTranslations } from '@/components/Timer/translations';
+import { completionCelebrationTranslations } from '@/components/CompletionCelebration/translations';
 
 export type AppLanguage = 'en' | 'pl';
 
@@ -20,6 +22,8 @@ const translations = {
     progressBar: progressBarTranslations.en,
     missionSelect: missionSelectTranslations.en,
     contentEditor: contentEditorTranslations.en,
+    timer: timerTranslations.en,
+    completionCelebration: completionCelebrationTranslations.en,
   },
   pl: {
     authGate: authGateTranslations.pl,
@@ -28,6 +32,8 @@ const translations = {
     progressBar: progressBarTranslations.pl,
     missionSelect: missionSelectTranslations.pl,
     contentEditor: contentEditorTranslations.pl,
+    timer: timerTranslations.pl,
+    completionCelebration: completionCelebrationTranslations.pl,
   },
 } as const;
 

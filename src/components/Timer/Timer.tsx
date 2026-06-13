@@ -4,6 +4,7 @@ import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { useControlsStore } from '@/stores/useControlsStore';
 import { computeProgress } from '@/stores/missionProgress';
 import { useTimerStore, getElapsedMs } from '@/stores/useTimerStore';
+import { Typography } from '@/components/Typography/Typography';
 
 function pad(num: number) {
   return num.toString().padStart(2, '0');
@@ -51,6 +52,9 @@ export function Timer() {
   const run = useTimerStore((state) =>
     missionId ? state.runsByMission[missionId] : undefined
   );
+  const best = useTimerStore((state) =>
+    missionId ? state.bestByMission[missionId] : undefined
+  );
 
   const { completed, total } = useMemo(
     () => computeProgress(objectiveGroups, objectives, checkedKeys, mission),
@@ -82,7 +86,17 @@ export function Timer() {
 
   return (
     <div className="c-timer">
-      {formatElapsed(getElapsedMs(run, Date.now()))}
+      <div className="c-timer__elapsed">
+        {formatElapsed(getElapsedMs(run, Date.now()))}
+      </div>
+      {best !== undefined ? (
+        <Typography
+          textKey="timer.best"
+          values={{ time: formatElapsed(best) }}
+          as="div"
+          className="c-timer__best"
+        />
+      ) : null}
     </div>
   );
 }

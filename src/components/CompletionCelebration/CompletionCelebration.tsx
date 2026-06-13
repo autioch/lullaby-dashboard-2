@@ -2,6 +2,8 @@ import './CompletionCelebration.css';
 import { useMemo, type CSSProperties } from 'react';
 import { useMissionStore, useMission } from '@/stores/useMissionStore';
 import { computeProgress } from '@/stores/missionProgress';
+import { useTimerStore } from '@/stores/useTimerStore';
+import { Typography } from '@/components/Typography/Typography';
 
 // Each firework is a radial cluster of particles. Several fire across the
 // screen, staggered, at varied positions and sizes (--cc-burst-scale), then the
@@ -57,6 +59,13 @@ export function CompletionCelebration() {
     [objectiveGroups, objectives, checkedKeys, mission]
   );
 
+  // Did this completing run beat a prior record? Drives the "New best!" beat.
+  const newBest = useTimerStore((state) =>
+    mission
+      ? state.runsByMission[mission.id]?.completionWasBest === true
+      : false
+  );
+
   // Celebrate only a real completion — every visible objective checked. Guard on
   // counts, not the ceil-rounded percent (which hits 100 one objective early on
   // very large missions), and require total > 0 so empty/all-hidden missions
@@ -66,25 +75,34 @@ export function CompletionCelebration() {
   }
 
   return (
-    <div className="c-completion-celebration" aria-hidden="true">
-      <div className="c-completion-celebration__glow" />
-      <div className="c-completion-celebration__bursts">
-        {BURSTS.map((b, bi) => (
-          <div
-            key={bi}
-            className="c-completion-celebration__burst"
-            style={burstStyle(b)}
-          >
-            {PARTICLE_INDICES.map((i) => (
-              <span
-                key={i}
-                className="c-completion-celebration__particle"
-                style={particleStyle(i)}
-              />
-            ))}
-          </div>
-        ))}
+    <>
+      <div className="c-completion-celebration" aria-hidden="true">
+        <div className="c-completion-celebration__glow" />
+        <div className="c-completion-celebration__bursts">
+          {BURSTS.map((b, bi) => (
+            <div
+              key={bi}
+              className="c-completion-celebration__burst"
+              style={burstStyle(b)}
+            >
+              {PARTICLE_INDICES.map((i) => (
+                <span
+                  key={i}
+                  className="c-completion-celebration__particle"
+                  style={particleStyle(i)}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      {/* The one celebration element above the content (legibility): a
+          transient, pointer-transparent banner — no focus trap, no list block. */}
+      {newBest ? (
+        <div className="c-completion-celebration__new-best" aria-hidden="true">
+          <Typography textKey="completionCelebration.newBest" as="span" />
+        </div>
+      ) : null}
+    </>
   );
 }

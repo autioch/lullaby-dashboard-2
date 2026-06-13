@@ -37,8 +37,8 @@ describes only the current UI.
   - Pirate Voyage — Crew Boarding · Raise the Sails · Leaving Port · Treasure Expedition Complete
 - [x] **Mission timer display** — show mission duration (always-visible readout under the Clock;
       auto start/pause/freeze, per-mission `useTimerStore`).
-- [ ] **Best completion time / records** — surface the fastest run per mission (computed by the
-      unwired `completeRun`, never displayed).
+- [x] **Best completion time / records** — per-mission best run shown under the Timer; "New best!"
+      beat in the completion celebration; mission-scoped reset in Settings.
 - [ ] **Optional deadline countdown**.
 - [ ] **User-created themes** — let users author their own skins (extends the predefined Theme
       system above).
