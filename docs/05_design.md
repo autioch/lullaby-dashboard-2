@@ -14,7 +14,10 @@ section, not here. See [06_roadmap.md](06_roadmap.md#dashboard-design-specced-no
 - Each objective row toggles done on click/tap — shows a ✓ and a de-emphasis style
   (`c-objective--checked`) when checked.
 - Per-objective color comes from the `colors` collection.
-- Completed objectives stay in place — de-emphasized only, **not** reordered or collapsed.
+- Completed objectives sink to the **bottom of their own group** (presentation-only — authored
+  order in Firestore is unchanged) and render in a **compact, de-emphasized** style, but stay
+  individually visible and clickable so they can be un-checked. Un-checking restores a row to its
+  authored position, full size. The reorder/compact is instant (no animation).
 
 ### Aside
 

@@ -1,5 +1,6 @@
 import { ObjectiveRow } from './Objective';
 import { useMissionStore, useMission } from '@/stores/useMissionStore';
+import { orderByCompletion } from '@/stores/objectiveOrder';
 import './ObjectiveList.css';
 
 export function ObjectiveList() {
@@ -32,9 +33,13 @@ function ObjectiveGroup(props: { groupId: string; missionId: string }) {
   if (!group || group.isHidden) {
     return null;
   }
+  const orderedObjectiveIds = orderByCompletion(
+    group.objectiveIds,
+    checkedKeys[missionId]
+  );
   return (
     <div className="c-objective-list__group">
-      {group.objectiveIds.map((objectiveId) => (
+      {orderedObjectiveIds.map((objectiveId) => (
         <ObjectiveRow
           key={objectiveId}
           objectiveId={objectiveId}

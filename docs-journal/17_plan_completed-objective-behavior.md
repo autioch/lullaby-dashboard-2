@@ -62,7 +62,7 @@ checkedForMission: Record<string, boolean> | undefined): string[]`. Stable parti
 - **Done-check:** `npm run ci` green (incl. the new Vitest cases). Helper is unused until Step 2
   (exported, so no lint error).
 
-### Step 2 — Use the ordering in `ObjectiveGroup` + compact completed style · phase: `wire`
+### Step 2 — Use the ordering in `ObjectiveGroup` + compact completed style · phase: `wire` ✅
 
 - **Goal:** Completed objectives render at the bottom of their group, compact but legible and
   clickable.

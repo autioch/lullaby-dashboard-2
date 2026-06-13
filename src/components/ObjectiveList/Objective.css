@@ -11,8 +11,22 @@
   color: #212121 !important; /* eslint-disable-line */
 }
 
+/* Completed rows compact to the bottom of their group: smaller and de-emphasized
+   but still legible and clickable at TV distance. */
+.c-objective--checked {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.78em;
+  opacity: 0.6;
+}
+
 .c-objective--checked > .c-objective__text {
   text-decoration: line-through;
+}
+
+.c-objective--checked > .c-objective__state {
+  width: 1.4rem;
+  height: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .c-objective__state {
